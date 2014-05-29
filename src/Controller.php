@@ -215,4 +215,13 @@ class Controller {
     }
 
 
+    public function next() {
+        return $this->soap("AVTransport","Next");
+    }
+
+    public function previous() {
+        return $this->soap("AVTransport","Previous");
+    }
+
+
 }
