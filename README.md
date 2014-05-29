@@ -9,6 +9,7 @@ Inspired by [DjMomo/sonos](https://github.com/DjMomo/sonos) and [phil-lavin/sono
 Static Methods
 --------------
 * getSpeakers() - Returns an array of Controller instances for all speakers on the network
+* getGroups() - As above, but only returns one instance per group of speakers
 
 
 Public Properties
