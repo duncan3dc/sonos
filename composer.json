@@ -14,6 +14,7 @@
     "require": {
         "ext-curl": "*",
         "ext-SimpleXML": "*",
+        "ext-soap": "*",
         "ext-sockets": "*",
         "php": ">=5.4.0"
     },

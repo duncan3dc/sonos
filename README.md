@@ -19,6 +19,13 @@ Public Properties
 * room - The room name assigned to this speaker
 
 
+Public Methods
+--------------
+* getState() - Returns the current state of the speaker (PLAYING, PAUSED_PLAYBACK, etc)
+> _This method doesn't return the correct state for a speaker that is part of a group, but not the coordinator of that group._
+> _Because of this, recommended use is with getGroups() rather than getSpeakers()_
+
+
 Examples
 --------
 
@@ -27,5 +34,13 @@ $speakers = \Sonos\Controller::getSpeakers();
 foreach($speakers as $sonos) {
 	echo $sonos->ip . "\n";
 	echo "\t" . $sonos->name . " (" . $sonos->room . ")\n";
+}
+```
+
+```
+$groups = \Sonos\Controller::getGroups();
+foreach($groups as $sonos) {
+	echo $sonos->name . " (" . $sonos->room . ")\n";
+	echo "\tState: " . $sonos->getState() . "\n";
 }
 ```
