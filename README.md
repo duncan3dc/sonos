@@ -28,6 +28,8 @@ _This method doesn't return the correct state for a speaker that is part of a gr
 _Because of this, recommended use is with getGroups() rather than getSpeakers()_
 * play() - Start playing the active music for this speaker/group
 * pause() - Pause the speaker/group
+* next() - Skip to the next track in the current queue
+* previous() - Skip back to the previous track in the current queue
 
 
 Examples
