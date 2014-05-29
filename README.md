@@ -22,8 +22,8 @@ Public Properties
 Public Methods
 --------------
 * getState() - Returns the current state of the speaker (PLAYING, PAUSED_PLAYBACK, etc)
-> _This method doesn't return the correct state for a speaker that is part of a group, but not the coordinator of that group._
-> _Because of this, recommended use is with getGroups() rather than getSpeakers()_
+   _This method doesn't return the correct state for a speaker that is part of a group, but not the coordinator of that group._
+   _Because of this, recommended use is with getGroups() rather than getSpeakers()_
 
 
 Examples
