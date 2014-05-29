@@ -203,4 +203,16 @@ class Controller {
     }
 
 
+    public function play() {
+        return $this->soap("AVTransport","Play",[
+            "Speed"         =>  1,
+        ]);
+    }
+
+
+    public function pause() {
+        return $this->soap("AVTransport","Pause");
+    }
+
+
 }
