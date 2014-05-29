@@ -10,6 +10,8 @@ Static Methods
 --------------
 * getSpeakers() - Returns an array of Controller instances for all speakers on the network
 * getGroups() - As above, but only returns one instance per group of speakers
+* getSpeakersByRoom(string $room) - Returns an array of Controller instances for all speakers with the specified room name
+* getSpeakerByRoom(string $room) - Returns a Controller instance for the first speaker with the specified room name
 
 
 Public Properties
@@ -22,6 +24,7 @@ Public Properties
 Public Methods
 --------------
 * getState() - Returns the current state of the speaker (PLAYING, PAUSED_PLAYBACK, etc)
+
    _This method doesn't return the correct state for a speaker that is part of a group, but not the coordinator of that group._
    _Because of this, recommended use is with getGroups() rather than getSpeakers()_
 

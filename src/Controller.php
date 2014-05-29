@@ -21,6 +21,37 @@ class Controller {
 
     }
 
+    public static function getSpeakerByRoom($room) {
+
+        $speakers = static::getSpeakers();
+        foreach($speakers as $controller) {
+            if($controller->room == $room) {
+                return $controller;
+            }
+        }
+
+        throw new \Exception("No device found with the room name '" . $room . "'");
+    }
+
+
+    public static function getSpeakersByRoom($room) {
+
+        $return = [];
+
+        $speakers = static::getSpeakers();
+        foreach($speakers as $controller) {
+            if($controller->room == $room) {
+                $return[] = $controller;
+            }
+        }
+
+        if(count($return) < 1) {
+            throw new \Exception("No devices found with the room name '" . $room . "'");
+        }
+
+        return $return;
+    }
+
 
     public static function getSpeakers() {
 
@@ -170,5 +201,6 @@ class Controller {
         $data = $this->soap("AVTransport","GetTransportInfo");
         return $data["CurrentTransportState"];
     }
+
 
 }
