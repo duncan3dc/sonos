@@ -1,0 +1,21 @@
+{
+    "name": "duncan3dc/sonos",
+    "type": "library",
+    "description": "A class to control Sonos speakers",
+    "keywords": ["sonos","upnp","streaming"],
+    "homepage": "https://github.com/duncan3dc/sonos",
+    "license": "Apache-2.0",
+    "authors": [{
+        "name": "Craig Duncan",
+        "email": "git@duncanc.co.uk",
+        "homepage": "https://github.com/duncan3dc",
+        "role": "Developer"
+    }],
+    "require": {
+        "ext-sockets": "*",
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "psr-4": {"Sonos\\": "src/"}
+    }
+}
