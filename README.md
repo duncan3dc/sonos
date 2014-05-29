@@ -3,7 +3,7 @@ sonos
 
 A PHP class to control Sonos speakers
 
-Inspired by DjMomo/sonos and phil-lavin/sonos
+Inspired by [DjMomo/sonos](https://github.com/DjMomo/sonos) and [phil-lavin/sonos](https://github.com/phil-lavin/sonos)
 
 
 Static Methods
