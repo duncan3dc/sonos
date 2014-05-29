@@ -89,6 +89,30 @@ class Controller {
     }
 
 
+    public static function getGroups() {
+
+        # Grab any room so that we can request the topology info from it
+        $speakers = static::getSpeakers();
+        $controller = reset($speakers);
+
+        $topology = $controller->curl("/status/topology");
+
+        $groups = [];
+        foreach ($topology->ZonePlayers->ZonePlayer as $player) {
+            $player_data = $player->attributes();
+            if(!$player_data->coordinator) {
+                continue;
+            }
+
+            $ip = parse_url($player_data->location)["host"];
+
+            $groups[(string)$player_data->group] = new static($ip);
+        }
+
+        return $groups;
+    }
+
+
     protected function curl($url) {
 
         if($xml = $this->cache[$url]) {
