@@ -48,7 +48,7 @@ class Speaker {
     public function setTopology($attributes) {
 
         $this->group = (string)$attributes->group;
-        $this->coordinator = (boolean)$attributes->coordinator;
+        $this->coordinator = ($attributes->coordinator == "true");
 
     }
 
