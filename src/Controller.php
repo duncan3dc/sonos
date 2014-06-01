@@ -1,7 +1,6 @@
 <?php
 
 namespace Sonos;
-
 use \duncan3dc\DomParser\XmlParser;
 
 class Controller extends Speaker {
@@ -71,6 +70,24 @@ class Controller extends Speaker {
             "album"         =>  $parser->getTag("album")->nodeValue,
             "track-number"  =>  $parser->getTag("originalTrackNumber")->nodeValue,
         ];
+    }
+
+
+    public function setState($state) {
+        switch($state) {
+            case self::STATE_PLAYING:
+                return $this->play();
+            break;
+            case self::STATE_PAUSED:
+                return $this->pause();
+            break;
+            case self::STATE_STOPPED;
+                return $this->pause();
+            break;
+            default:
+                throw new \Exception("Unknown state (" . $state . ")");
+            break;
+        }
     }
 
 
