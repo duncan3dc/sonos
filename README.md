@@ -42,6 +42,9 @@ The Controller class extends the Speaker class, so all the public properties/met
 * pause() - Pause the group
 * next() - Skip to the next track in the current queue
 * previous() - Skip back to the previous track in the current queue
+* getSpeakers() - Returns an array of Speaker instances that are in the group of this Controller
+* addSpeaker(Speaker $speaker) - Adds the specified speaker to the group of this Controller
+* removeSpeaker(Speaker $speaker) - Removes the specified speaker from the group of this Controller
 
 
 Examples

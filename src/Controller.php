@@ -12,37 +12,8 @@ class Controller extends Speaker {
         $this->name = $speaker->name;
         $this->room = $speaker->room;
         $this->group = $speaker->getGroup();
+        $this->uuid = $speaker->getUuid();
 
-    }
-
-
-    protected function soap($service,$action,$params=[]) {
-
-        switch($service) {
-            case "AVTransport";
-            case "RenderingControl":
-                $path = "MediaRenderer";
-            break;
-            case "ContentDirectory":
-                $path = "MediaServer";
-            break;
-            default:
-                throw new \Exception("Unknown service (" . $service . ")");
-            break;
-        }
-
-        $soap = new \SoapClient(null,[
-            "location"  =>  "http://" . $this->ip . ":1400/" . $path . "/" . $service . "/Control",
-            "uri"       =>  "urn:schemas-upnp-org:service:" . $service . ":1",
-        ]);
-
-        $soapParams = [];
-        $params["InstanceID"] = 0;
-        foreach($params as $key => $val) {
-            $soapParams[] = new \SoapParam(new \SoapVar($val,XSD_STRING),$key);
-        }
-
-        return $soap->__soapCall($action,$soapParams);
     }
 
 
@@ -76,6 +47,40 @@ class Controller extends Speaker {
 
     public function previous() {
         return $this->soap("AVTransport","Previous");
+    }
+
+
+    public function getSpeakers() {
+        $group = [];
+        $speakers = Network::getSpeakers();
+        foreach($speakers as $speaker) {
+            if($speaker->getGroup() == $this->getGroup()) {
+                $group[] = $speaker;
+            }
+        }
+        return $group;
+    }
+
+
+    public function addSpeaker(Speaker $speaker) {
+        if($speaker->getUuid() == $this->getUuid()) {
+            return;
+        }
+        $speaker->soap("AVTransport","SetAVTransportURI",array(
+            "CurrentURI"            =>  "x-rincon:" . $this->getUuid(),
+            "CurrentURIMetaData"    =>  "",
+        ));
+    }
+
+
+    public function removeSpeaker(Speaker $speaker) {
+        if($speaker->isCoordinator()) {
+            throw new \Exception("You cannot remove the coordinator from it's group");
+        }
+        $speaker->soap("AVTransport","SetAVTransportURI",array(
+            "CurrentURI"            =>  "",
+            "CurrentURIMetaData"    =>  "",
+        ));
     }
 
 
