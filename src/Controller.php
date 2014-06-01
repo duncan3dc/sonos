@@ -2,6 +2,8 @@
 
 namespace Sonos;
 
+use \duncan3dc\DomParser\XmlParser;
+
 class Controller extends Speaker {
 
     const STATE_STOPPED         =   201;
@@ -54,6 +56,21 @@ class Controller extends Speaker {
                 break;
         }
         return $state;
+    }
+
+
+    public function getStateDetails() {
+        $data = $this->soap("AVTransport","GetPositionInfo");
+        $parser = new XmlParser($data["TrackMetaData"]);
+        return [
+            "queue-number"  =>  $data["Track"],
+            "duration"      =>  $data["TrackDuration"],
+            "position"      =>  $data["RelTime"],
+            "title"         =>  $parser->getTag("title")->nodeValue,
+            "artist"        =>  $parser->getTag("creator")->nodeValue,
+            "album"         =>  $parser->getTag("album")->nodeValue,
+            "track-number"  =>  $parser->getTag("originalTrackNumber")->nodeValue,
+        ];
     }
 
 

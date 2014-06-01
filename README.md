@@ -41,12 +41,13 @@ Controller Class
 ----------------
 The Controller class extends the Speaker class, so all the public properties/methods listed above are available, in addition to the following public methods
 * getState() - Returns the current state of the group of speakers using the Controller class constants:
-** STATE_STOPPED
-** STATE_PLAYING
-** STATE_PAUSED
-** STATE_TRANSITIONING
-** STATE_UNKNOWN
+STATE_STOPPED
+STATE_PLAYING
+STATE_PAUSED
+STATE_TRANSITIONING
+STATE_UNKNOWN
 * getStateName() - Returns the current state of the group of speakers as the string reported by sonos: PLAYING, PAUSED_PLAYBACK, etc
+* getStateDetails() - Returns an array of attributes about the currently active track in the queue
 * play() - Start playing the active music for this group
 * pause() - Pause the group
 * next() - Skip to the next track in the current queue
