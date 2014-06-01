@@ -12,8 +12,7 @@
         "role": "Developer"
     }],
     "require": {
-        "ext-curl": "*",
-        "ext-SimpleXML": "*",
+        "duncan3dc/domparser": "*",
         "ext-soap": "*",
         "ext-sockets": "*",
         "php": ">=5.4.0"

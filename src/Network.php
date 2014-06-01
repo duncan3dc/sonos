@@ -76,11 +76,11 @@ class Network {
         }
 
         $speaker = reset($speakers);
-        $topology = $speaker->curl("/status/topology");
-
-        foreach($topology->ZonePlayers->ZonePlayer as $player) {
-            $attributes = $player->attributes();
-            $ip = parse_url($attributes->location)["host"];
+        $topology = $speaker->getXml("/status/topology");
+        $players = $topology->getTag("ZonePlayers")->getTags("ZonePlayer");
+        foreach($players as $player) {
+            $attributes = $player->getAttributes();
+            $ip = parse_url($attributes["location"])["host"];
             if(array_key_exists($ip,$speakers)) {
                 $speakers[$ip]->setTopology($attributes);
             }
