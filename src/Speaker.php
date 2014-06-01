@@ -110,4 +110,27 @@ class Speaker {
     }
 
 
+    public function getVolume() {
+        return $this->soap("RenderingControl","GetVolume",array(
+            "Channel"   =>  "Master",
+        ));
+    }
+
+
+    public function setVolume($volume) {
+        return $this->soap("RenderingControl","SetVolume",array(
+            "Channel"       =>  "Master",
+            "DesiredVolume" =>  $volume,
+        ));
+    }
+
+
+    public function adjustVolume($adjust) {
+        return $this->soap("RenderingControl","SetRelativeVolume",array(
+            "Channel"       =>  "Master",
+            "Adjustment"    =>  $adjust,
+        ));
+    }
+
+
 }

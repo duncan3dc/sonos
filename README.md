@@ -30,8 +30,11 @@ All of these properties are public
 * ip - The IP address of the speaker
 * name - The "Friendly" name reported by the speaker
 * room - The room name assigned to this speaker
-There is also a public method to check if this speaker is the coordinator of it's current group
-* isCoordinator() - Returns true if it is the coordinator, or false otherwise
+There are also the folllwing public methods
+* isCoordinator() - Returns true if this speaker is the coordinator of it's current group
+* getVolume() - Get the current volume of this speaker as an integer between 0 and 100
+* setVolume(int $volume) - Set the current volume of this speaker
+* adjustVolme(int $adjust) - Adjust the volume of this speaker by a relative amount between -100 and 100
 
 
 Controller Class
@@ -51,6 +54,8 @@ The Controller class extends the Speaker class, so all the public properties/met
 * getSpeakers() - Returns an array of Speaker instances that are in the group of this Controller
 * addSpeaker(Speaker $speaker) - Adds the specified speaker to the group of this Controller
 * removeSpeaker(Speaker $speaker) - Removes the specified speaker from the group of this Controller
+* setVolume(int $volume) - Set the current volume of all the speakers controlled by this Controller
+* adjustVolme(int $adjust) - Adjust the volume of all the speakers controlled by this Controller by a relative amount between -100 and 100
 
 
 Examples

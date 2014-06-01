@@ -113,4 +113,20 @@ class Controller extends Speaker {
     }
 
 
+    public function setVolume($volume) {
+        $speakers = $this->getSpeakers();
+        foreach($speakers as $speaker) {
+            $speaker->setVolume($volume);
+        }
+    }
+
+
+    public function adjustVolume($adjust) {
+        $speakers = $this->getSpeakers();
+        foreach($speakers as $speaker) {
+            $speaker->adjustVolume($adjust);
+        }
+    }
+
+
 }
