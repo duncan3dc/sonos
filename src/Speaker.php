@@ -12,6 +12,7 @@ class Speaker {
     protected $group;
     protected $coordinator;
     protected $uuid;
+    protected $topology;
 
 
     public function __construct($ip) {
@@ -70,8 +71,29 @@ class Speaker {
     }
 
 
+    protected function getTopology() {
+
+        if($this->topology) {
+            return true;
+        }
+
+        $topology = $this->getXml("/status/topology");
+        $players = $topology->getTag("ZonePlayers")->getTags("ZonePlayer");
+        foreach($players as $player) {
+            $attributes = $player->getAttributes();
+            $ip = parse_url($attributes["location"])["host"];
+            if($ip == $this->ip) {
+                return $this->setTopology($attributes);
+            }
+        }
+
+        throw new \Exception("Failed to lookup the topology info for this speaker");
+    }
+
+
     public function setTopology($attributes) {
 
+        $this->topology = true;
         $this->group = $attributes["group"];
         $this->coordinator = ($attributes["coordinator"] == "true");
         $this->uuid = $attributes["uuid"];
@@ -80,26 +102,19 @@ class Speaker {
 
 
     public function getGroup() {
-
-        if(!$this->group) {
-            throw new \Exception("Unable to establish the group of this speaker");
-        }
-
+        $this->getTopology();
         return $this->group;
     }
 
 
     public function isCoordinator() {
+        $this->getTopology();
         return $this->coordinator;
     }
 
 
     public function getUuid() {
-
-        if(!$this->uuid) {
-            throw new \Exception("Unable to establish the uuid of this speaker");
-        }
-
+        $this->getTopology();
         return $this->uuid;
     }
 
