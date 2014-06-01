@@ -37,7 +37,13 @@ There is also a public method to check if this speaker is the coordinator of it'
 Controller Class
 ----------------
 The Controller class extends the Speaker class, so all the public properties/methods listed above are available, in addition to the following public methods
-* getState() - Returns the current state of the group of speakers: PLAYING, PAUSED_PLAYBACK, etc
+* getState() - Returns the current state of the group of speakers using the Controller class constants:
+** STATE_STOPPED
+** STATE_PLAYING
+** STATE_PAUSED
+** STATE_TRANSITIONING
+** STATE_UNKNOWN
+* getStateName() - Returns the current state of the group of speakers as the string reported by sonos: PLAYING, PAUSED_PLAYBACK, etc
 * play() - Start playing the active music for this group
 * pause() - Pause the group
 * next() - Skip to the next track in the current queue
