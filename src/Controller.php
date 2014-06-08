@@ -60,16 +60,23 @@ class Controller extends Speaker {
 
     public function getStateDetails() {
         $data = $this->soap("AVTransport","GetPositionInfo");
-        $parser = new XmlParser($data["TrackMetaData"]);
-        return [
+        $state = [
             "queue-number"  =>  $data["Track"],
             "duration"      =>  $data["TrackDuration"],
             "position"      =>  $data["RelTime"],
-            "title"         =>  $parser->getTag("title")->nodeValue,
-            "artist"        =>  $parser->getTag("creator")->nodeValue,
-            "album"         =>  $parser->getTag("album")->nodeValue,
-            "track-number"  =>  $parser->getTag("originalTrackNumber")->nodeValue,
         ];
+
+        if($data["TrackMetaData"]) {
+            $parser = new XmlParser($data["TrackMetaData"]);
+            $state = array_merge($state,[
+                "title"         =>  $parser->getTag("title")->nodeValue,
+                "artist"        =>  $parser->getTag("creator")->nodeValue,
+                "album"         =>  $parser->getTag("album")->nodeValue,
+                "track-number"  =>  $parser->getTag("originalTrackNumber")->nodeValue,
+            ]);
+        }
+
+        return $state;
     }
 
 
