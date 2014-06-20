@@ -174,4 +174,74 @@ class Controller extends Speaker {
     }
 
 
+    public function getMode() {
+        $data = $this->soap("AVTransport","GetTransportSettings");
+        $options = [
+            "shuffle"   =>  false,
+            "repeat"    =>  false,
+        ];
+        if(in_array($data["PlayMode"],["REPEAT_ALL","SHUFFLE"])) {
+            $options["repeat"] = true;
+        }
+        if(in_array($data["PlayMode"],["SHUFFLE_NOREPEAT","SHUFFLE"])) {
+            $options["shuffle"] = true;
+        }
+        return $options;
+    }
+
+
+    public function setMode($options) {
+        if($options["shuffle"]) {
+            if($options["repeat"]) {
+                $mode = "SHUFFLE";
+            } else {
+                $mode = "SHUFFLE_NOREPEAT";
+            }
+        } else {
+            if($options["repeat"]) {
+                $mode = "REPEAT_ALL";
+            } else {
+                $mode = "NORMAL";
+            }
+        }
+        $data = $this->soap("AVTransport","SetPlayMode",[
+            "NewPlayMode"   =>  $mode,
+        ]);
+    }
+
+
+    public function getRepeat() {
+        $mode = $this->getMode();
+        return $mode["repeat"];
+    }
+
+
+    public function setRepeat($repeat) {
+        $mode = $this->getMode();
+        if($mode["repeat"] == $repeat) {
+            return;
+        }
+
+        $mode["repeat"] = $repeat;
+        $this->setMode($mode);
+    }
+
+
+    public function getShuffle() {
+        $mode = $this->getMode();
+        return $mode["shuffle"];
+    }
+
+
+    public function setShuffle($shuffle) {
+        $mode = $this->getMode();
+        if($mode["shuffle"] == $shuffle) {
+            return;
+        }
+
+        $mode["shuffle"] = $shuffle;
+        $this->setMode($mode);
+    }
+
+
 }

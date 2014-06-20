@@ -57,6 +57,12 @@ STATE_UNKNOWN
 * removeSpeaker(Speaker $speaker): null - Removes the specified speaker from the group of this Controller
 * setVolume(int $volume): null - Set the current volume of all the speakers controlled by this Controller
 * adjustVolme(int $adjust): null - Adjust the volume of all the speakers controlled by this Controller by a relative amount between -100 and 100
+* getMode(): array - Get the current play mode settings, the array contains 2 boolean elements (shuffle & repeat)
+* setMode(array $options): null - Set the current play mode settings, using the array returned by getMode()
+* getRepeat(): boolean - Check if repeat is currently active
+* setRepeat(boolean $repeat): null - Turn repeat mode on or off
+* getShuffle(): boolean - Check if shuffle is currently active
+* setShuffle(boolean $shuffle): null - Turn shuffle mode on or off
 
 
 Examples
