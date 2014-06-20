@@ -1,6 +1,6 @@
 <?php
 
-namespace Sonos;
+namespace duncan3dc\Sonos;
 
 class Network {
 

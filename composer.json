@@ -18,6 +18,6 @@
         "php": ">=5.4.0"
     },
     "autoload": {
-        "psr-4": {"Sonos\\": "src/"}
+        "psr-4": {"duncan3dc\\Sonos\\": "src/"}
     }
 }

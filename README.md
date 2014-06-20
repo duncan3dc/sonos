@@ -69,9 +69,14 @@ STATE_UNKNOWN
 Examples
 --------
 
+The classes use a namespace of duncan3dc\Sonos
+```
+use \duncan3dc\Sonos;
+```
+
 Get all the speakers on the network
 ```
-$speakers = \Sonos\Network::getSpeakers();
+$speakers = Sonos\Network::getSpeakers();
 foreach($speakers as $speaker) {
     echo $speaker->ip . "\n";
     echo "\t" . $speaker->name . " (" . $speaker->room . ")\n";
@@ -80,7 +85,7 @@ foreach($speakers as $speaker) {
 
 Start all groups playing music
 ```
-$controllers = \Sonos\Network::getControllers();
+$controllers = Sonos\Network::getControllers();
 foreach($controllers as $controller) {
     echo $controller->name . " (" . $controller->room . ")\n";
     echo "\tState: " . $controller->getState() . "\n";
@@ -90,7 +95,7 @@ foreach($controllers as $controller) {
 
 Control what is currently playing in the Living Room, even if it is not the coordinator of it's current group
 ```
-$controller = \Sonos\Network::getControllerByRoom("Living Room");
+$controller = Sonos\Network::getControllerByRoom("Living Room");
 echo $controller->room . "\n";
 $controller->pause();
 ```

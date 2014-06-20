@@ -1,6 +1,6 @@
 <?php
 
-namespace Sonos;
+namespace duncan3dc\Sonos;
 use \duncan3dc\DomParser\XmlParser;
 
 class Speaker {
