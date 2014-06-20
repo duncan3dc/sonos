@@ -10,8 +10,8 @@ Classes
 -------
 Three classes are available:
 * Network - Provides static methods to locate speakers/controllers on the current network
-* Speaker - Provides a read-only interface to individual speakers
-* Controller - Allows interactive with the groups of speakers. Although sometimes a Controller is synonymous with a Speaker, when speakers are grouped together only the coordinator can receive events (play/pause/etc)
+* Speaker - Provides an interface to individual speakers that is mostly read-only, although the volume can be set using this class
+* Controller - Allows interaction with the groups of speakers. Although sometimes a Controller is synonymous with a Speaker, when speakers are grouped together only the coordinator can receive events (play/pause/etc)
 
 
 Network Class
