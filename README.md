@@ -16,7 +16,9 @@ Three classes are available:
 
 Network Class
 -------------
-All of these methods are static
+Public static properties
+* $cache: boolean - Setting this to true will cache the expensive multicast discover to find sonos devices on the network  
+Public static methods
 * getSpeakers(): array - Returns an array of Speaker instances for all speakers on the network
 * getSpeakersByRoom(string $room): array - Returns an array of Speaker instances for all speakers with the specified room name
 * getSpeakerByRoom(string $room): Speaker - Returns a Speaker instance for the first speaker with the specified room name
@@ -29,7 +31,7 @@ Speaker Class
 All of these properties are public
 * ip: string - The IP address of the speaker
 * name: string - The "Friendly" name reported by the speaker
-* room: string - The room name assigned to this speaker
+* room: string - The room name assigned to this speaker  
 There are also the folllwing public methods
 * isCoordinator(): boolean - Returns true if this speaker is the coordinator of it's current group
 * getVolume(): int - Get the current volume of this speaker as an integer between 0 and 100
@@ -40,12 +42,12 @@ There are also the folllwing public methods
 Controller Class
 ----------------
 The Controller class extends the Speaker class, so all the public properties/methods listed above are available, in addition to the following public methods
-* getState(): int - Returns the current state of the group of speakers using the Controller class constants:
-STATE_STOPPED
-STATE_PLAYING
-STATE_PAUSED
-STATE_TRANSITIONING
-STATE_UNKNOWN
+* getState(): int - Returns the current state of the group of speakers using the Controller class constants:  
+STATE_STOPPED  
+STATE_PLAYING  
+STATE_PAUSED  
+STATE_TRANSITIONING  
+STATE_UNKNOWN  
 * getStateName(): string - Returns the current state of the group of speakers as the string reported by sonos: PLAYING, PAUSED_PLAYBACK, etc
 * getStateDetails(): array - Returns an array of attributes about the currently active track in the queue
 * play(): null - Start playing the active music for this group
@@ -72,6 +74,11 @@ Examples
 The classes use a namespace of duncan3dc\Sonos
 ```
 use \duncan3dc\Sonos;
+```
+
+It is advisable to switch cache on to speed up the initial network lookup, be aware that you will need to clear this if you add/remove sonos devices from your network
+```
+Network::$cache = true;
 ```
 
 Get all the speakers on the network

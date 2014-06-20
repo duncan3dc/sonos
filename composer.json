@@ -12,7 +12,8 @@
         "role": "Developer"
     }],
     "require": {
-        "duncan3dc/domparser": "*",
+        "duncan3dc/domparser": ">=1.1.4",
+        "duncan3dc/helpers": ">=1.0.13",
         "ext-soap": "*",
         "ext-sockets": "*",
         "php": ">=5.4.0"

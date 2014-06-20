@@ -1,17 +1,15 @@
 <?php
 
 namespace duncan3dc\Sonos;
+use \duncan3dc\Helpers\DiskCache;
 
 class Network {
 
     protected static $speakers = false;
+    public static $cache = false;
 
 
-    public static function getSpeakers() {
-
-        if(is_array(static::$speakers)) {
-            return static::$speakers;
-        }
+    protected static function getDevices() {
 
         $ip = "239.255.255.250";
         $port = 1900;
@@ -46,7 +44,7 @@ class Network {
                 continue;
             }
 
-            $data = array();
+            $data = [];
             foreach(explode("\r\n", $reply) as $line) {
                 if(!$pos = strpos($line,':')) {
                     continue;
@@ -58,7 +56,7 @@ class Network {
             $devices[] = $data;
         }
 
-        $speakers = [];
+        $return = [];
         $unique = [];
         foreach($devices as $device) {
             if(in_array($device["usn"],$unique)) {
@@ -67,12 +65,36 @@ class Network {
             $url = parse_url($device["location"]);
             $ip = $url["host"];
 
-            $speakers[$ip] = new Speaker($ip);
+            $return[] = $ip;
             $unique[] = $device["usn"];
         }
 
-        if(count($speakers) < 1) {
-            throw new \Exception("No speakers found on the current network");
+        return $return;
+
+    }
+
+
+    public static function getSpeakers() {
+
+        if(is_array(static::$speakers)) {
+            return static::$speakers;
+        }
+
+        if(static::$cache) {
+            $devices = DiskCache::call("ip-addresses",function() {
+                return static::getDevices();
+            });
+        } else {
+            $devices = static::getDevices();
+        }
+
+        if(count($devices) < 1) {
+            throw new \Exception("No devices found on the current network");
+        }
+
+        $speakers = [];
+        foreach($devices as $ip) {
+            $speakers[$ip] = new Speaker($ip);
         }
 
         $speaker = reset($speakers);
@@ -153,5 +175,6 @@ class Network {
 
         throw new \Exception("No controller found with the room name '" . $room . "'");
     }
+
 
 }
