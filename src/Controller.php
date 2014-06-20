@@ -72,8 +72,10 @@ class Controller extends Speaker {
     protected function getTrackMetaData($xml) {
         if(is_object($xml)) {
             $parser = $xml;
-        } else {
+        } elseif($xml) {
             $parser = new XmlParser($xml);
+        } else {
+            return [];
         }
         return [
             "title"         =>  $parser->getTag("title")->nodeValue,
