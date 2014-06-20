@@ -63,6 +63,7 @@ STATE_UNKNOWN
 * setRepeat(boolean $repeat): null - Turn repeat mode on or off
 * getShuffle(): boolean - Check if shuffle is currently active
 * setShuffle(boolean $shuffle): null - Turn shuffle mode on or off
+* getQueue([int $start, int $limit]): array - Get details of the queue
 
 
 Examples
