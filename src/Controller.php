@@ -142,21 +142,15 @@ class Controller extends Speaker {
         if($speaker->getUuid() == $this->getUuid()) {
             return;
         }
-        $speaker->soap("AVTransport","SetAVTransportURI",array(
+        $speaker->soap("AVTransport","SetAVTransportURI",[
             "CurrentURI"            =>  "x-rincon:" . $this->getUuid(),
             "CurrentURIMetaData"    =>  "",
-        ));
+        ]);
     }
 
 
     public function removeSpeaker(Speaker $speaker) {
-        if($speaker->isCoordinator()) {
-            throw new \Exception("You cannot remove the coordinator from it's group");
-        }
-        $speaker->soap("AVTransport","SetAVTransportURI",array(
-            "CurrentURI"            =>  "",
-            "CurrentURIMetaData"    =>  "",
-        ));
+        $speaker->soap("AVTransport","BecomeCoordinatorOfStandaloneGroup");
     }
 
 
