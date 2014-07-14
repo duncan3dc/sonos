@@ -72,17 +72,17 @@ Examples
 --------
 
 The classes use a namespace of duncan3dc\Sonos
-```
-use \duncan3dc\Sonos;
+```php
+use duncan3dc\Sonos;
 ```
 
 It is advisable to switch cache on to speed up the initial network lookup, be aware that you will need to clear this if you add/remove sonos devices from your network
-```
+```php
 Network::$cache = true;
 ```
 
 Get all the speakers on the network
-```
+```php
 $speakers = Sonos\Network::getSpeakers();
 foreach($speakers as $speaker) {
     echo $speaker->ip . "\n";
@@ -91,7 +91,7 @@ foreach($speakers as $speaker) {
 ```
 
 Start all groups playing music
-```
+```php
 $controllers = Sonos\Network::getControllers();
 foreach($controllers as $controller) {
     echo $controller->name . " (" . $controller->room . ")\n";
@@ -101,7 +101,7 @@ foreach($controllers as $controller) {
 ```
 
 Control what is currently playing in the Living Room, even if it is not the coordinator of it's current group
-```
+```php
 $controller = Sonos\Network::getControllerByRoom("Living Room");
 echo $controller->room . "\n";
 $controller->pause();

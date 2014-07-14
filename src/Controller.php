@@ -1,7 +1,7 @@
 <?php
 
 namespace duncan3dc\Sonos;
-use \duncan3dc\DomParser\XmlParser;
+use duncan3dc\DomParser\XmlParser;
 
 class Controller extends Speaker {
 

@@ -1,7 +1,7 @@
 <?php
 
 namespace duncan3dc\Sonos;
-use \duncan3dc\Helpers\DiskCache;
+use duncan3dc\Helpers\DiskCache;
 
 class Network {
 
