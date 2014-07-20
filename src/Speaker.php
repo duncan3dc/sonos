@@ -1,10 +1,11 @@
 <?php
 
 namespace duncan3dc\Sonos;
+
 use duncan3dc\DomParser\XmlParser;
 
-class Speaker {
-
+class Speaker
+{
     public $ip;
     public $name;
     public $room;
@@ -15,20 +16,19 @@ class Speaker {
     protected $topology;
 
 
-    public function __construct($ip) {
-
+    public function __construct($ip)
+    {
         $this->ip = $ip;
 
         $parser = $this->getXml("/xml/device_description.xml");
         $device = $parser->getTag("device");
         $this->name = $device->getTag("friendlyName")->nodeValue;
         $this->room = $device->getTag("roomName")->nodeValue;
-
     }
 
 
-    public function getXml($url) {
-
+    public function getXml($url)
+    {
         if($xml = $this->cache[$url]) {
             return $xml;
         }
@@ -41,22 +41,21 @@ class Speaker {
     }
 
 
-    public function soap($service,$action,$params=[]) {
-
+    public function soap($service, $action, $params = [])
+    {
         switch($service) {
             case "AVTransport";
             case "RenderingControl":
                 $path = "MediaRenderer";
-            break;
+                break;
             case "ContentDirectory":
                 $path = "MediaServer";
-            break;
+                break;
             default:
                 throw new \Exception("Unknown service (" . $service . ")");
-            break;
         }
 
-        $soap = new \SoapClient(null,[
+        $soap = new \SoapClient(null, [
             "location"  =>  "http://" . $this->ip . ":1400/" . $path . "/" . $service . "/Control",
             "uri"       =>  "urn:schemas-upnp-org:service:" . $service . ":1",
         ]);
@@ -64,15 +63,15 @@ class Speaker {
         $soapParams = [];
         $params["InstanceID"] = 0;
         foreach($params as $key => $val) {
-            $soapParams[] = new \SoapParam(new \SoapVar($val,XSD_STRING),$key);
+            $soapParams[] = new \SoapParam(new \SoapVar($val, XSD_STRING), $key);
         }
 
-        return $soap->__soapCall($action,$soapParams);
+        return $soap->__soapCall($action, $soapParams);
     }
 
 
-    protected function getTopology() {
-
+    protected function getTopology()
+    {
         if($this->topology) {
             return true;
         }
@@ -91,55 +90,58 @@ class Speaker {
     }
 
 
-    public function setTopology($attributes) {
-
+    public function setTopology($attributes)
+    {
         $this->topology = true;
         $this->group = $attributes["group"];
         $this->coordinator = ($attributes["coordinator"] == "true");
         $this->uuid = $attributes["uuid"];
-
     }
 
 
-    public function getGroup() {
+    public function getGroup()
+    {
         $this->getTopology();
         return $this->group;
     }
 
 
-    public function isCoordinator() {
+    public function isCoordinator()
+    {
         $this->getTopology();
         return $this->coordinator;
     }
 
 
-    public function getUuid() {
+    public function getUuid()
+    {
         $this->getTopology();
         return $this->uuid;
     }
 
 
-    public function getVolume() {
-        return $this->soap("RenderingControl","GetVolume",array(
+    public function getVolume()
+    {
+        return $this->soap("RenderingControl", "GetVolume", [
             "Channel"   =>  "Master",
-        ));
+        ]);
     }
 
 
-    public function setVolume($volume) {
-        return $this->soap("RenderingControl","SetVolume",array(
+    public function setVolume($volume)
+    {
+        return $this->soap("RenderingControl", "SetVolume", [
             "Channel"       =>  "Master",
             "DesiredVolume" =>  $volume,
-        ));
+        ]);
     }
 
 
-    public function adjustVolume($adjust) {
-        return $this->soap("RenderingControl","SetRelativeVolume",array(
+    public function adjustVolume($adjust)
+    {
+        return $this->soap("RenderingControl", "SetRelativeVolume", [
             "Channel"       =>  "Master",
             "Adjustment"    =>  $adjust,
-        ));
+        ]);
     }
-
-
 }

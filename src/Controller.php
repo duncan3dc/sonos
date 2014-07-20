@@ -1,10 +1,11 @@
 <?php
 
 namespace duncan3dc\Sonos;
+
 use duncan3dc\DomParser\XmlParser;
 
-class Controller extends Speaker {
-
+class Controller extends Speaker
+{
     const STATE_STOPPED         =   201;
     const STATE_PLAYING         =   202;
     const STATE_PAUSED          =   203;
@@ -12,56 +13,52 @@ class Controller extends Speaker {
     const STATE_UNKNOWN         =   205;
 
 
-    public function __construct(Speaker $speaker) {
-
+    public function __construct(Speaker $speaker)
+    {
         $this->ip = $speaker->ip;
 
         $this->name = $speaker->name;
         $this->room = $speaker->room;
         $this->group = $speaker->getGroup();
         $this->uuid = $speaker->getUuid();
-
     }
 
 
-    public function isCoordinator() {
+    public function isCoordinator()
+    {
         return true;
     }
 
 
-    public function getStateName() {
-        $data = $this->soap("AVTransport","GetTransportInfo");
+    public function getStateName()
+    {
+        $data = $this->soap("AVTransport", "GetTransportInfo");
         return $data["CurrentTransportState"];
     }
 
 
-    public function getState() {
+    public function getState()
+    {
         $name = $this->getStateName();
         switch($name) {
             case "STOPPED":
-                $state = self::STATE_STOPPED;
-                break;
+                return self::STATE_STOPPED;
             case "PLAYING":
-                $state = self::STATE_PLAYING;
-                break;
+                return self::STATE_PLAYING;
             case "PAUSED_PLAYBACK":
-                $state = self::STATE_PAUSED;
-                break;
+                return self::STATE_PAUSED;
             case "TRANSITIONING":
-                $state = self::STATE_TRANSITIONING;
-                break;
-            default:
-                $state = self::STATE_UNKNOWN;
-                break;
+                return self::STATE_TRANSITIONING;
         }
-        return $state;
+        return self::STATE_UNKNOWN;
     }
 
 
-    public function getStateDetails() {
-        $data = $this->soap("AVTransport","GetPositionInfo");
+    public function getStateDetails()
+    {
+        $data = $this->soap("AVTransport", "GetPositionInfo");
         $meta = $this->getTrackMetaData($data["TrackMetaData"]);
-        return array_merge($meta,[
+        return array_merge($meta, [
             "queue-number"  =>  $data["Track"],
             "duration"      =>  $data["TrackDuration"],
             "position"      =>  $data["RelTime"],
@@ -69,7 +66,8 @@ class Controller extends Speaker {
     }
 
 
-    protected function getTrackMetaData($xml) {
+    protected function getTrackMetaData($xml)
+    {
         if(is_object($xml)) {
             $parser = $xml;
         } elseif($xml) {
@@ -86,47 +84,48 @@ class Controller extends Speaker {
     }
 
 
-    public function setState($state) {
+    public function setState($state)
+    {
         switch($state) {
             case self::STATE_PLAYING:
                 return $this->play();
-            break;
             case self::STATE_PAUSED:
                 return $this->pause();
-            break;
             case self::STATE_STOPPED;
                 return $this->pause();
-            break;
-            default:
-                throw new \Exception("Unknown state (" . $state . ")");
-            break;
         }
+        throw new \Exception("Unknown state (" . $state . ")");
     }
 
 
-    public function play() {
-        return $this->soap("AVTransport","Play",[
-            "Speed"         =>  1,
+    public function play()
+    {
+        return $this->soap("AVTransport", "Play", [
+            "Speed" =>  1,
         ]);
     }
 
 
-    public function pause() {
-        return $this->soap("AVTransport","Pause");
+    public function pause()
+    {
+        return $this->soap("AVTransport", "Pause");
     }
 
 
-    public function next() {
-        return $this->soap("AVTransport","Next");
+    public function next()
+    {
+        return $this->soap("AVTransport", "Next");
     }
 
 
-    public function previous() {
-        return $this->soap("AVTransport","Previous");
+    public function previous()
+    {
+        return $this->soap("AVTransport", "Previous");
     }
 
 
-    public function getSpeakers() {
+    public function getSpeakers()
+    {
         $group = [];
         $speakers = Network::getSpeakers();
         foreach($speakers as $speaker) {
@@ -138,23 +137,26 @@ class Controller extends Speaker {
     }
 
 
-    public function addSpeaker(Speaker $speaker) {
+    public function addSpeaker(Speaker $speaker)
+    {
         if($speaker->getUuid() == $this->getUuid()) {
             return;
         }
-        $speaker->soap("AVTransport","SetAVTransportURI",[
+        $speaker->soap("AVTransport", "SetAVTransportURI", [
             "CurrentURI"            =>  "x-rincon:" . $this->getUuid(),
             "CurrentURIMetaData"    =>  "",
         ]);
     }
 
 
-    public function removeSpeaker(Speaker $speaker) {
-        $speaker->soap("AVTransport","BecomeCoordinatorOfStandaloneGroup");
+    public function removeSpeaker(Speaker $speaker)
+    {
+        $speaker->soap("AVTransport", "BecomeCoordinatorOfStandaloneGroup");
     }
 
 
-    public function setVolume($volume) {
+    public function setVolume($volume)
+    {
         $speakers = $this->getSpeakers();
         foreach($speakers as $speaker) {
             $speaker->setVolume($volume);
@@ -162,7 +164,8 @@ class Controller extends Speaker {
     }
 
 
-    public function adjustVolume($adjust) {
+    public function adjustVolume($adjust)
+    {
         $speakers = $this->getSpeakers();
         foreach($speakers as $speaker) {
             $speaker->adjustVolume($adjust);
@@ -170,23 +173,25 @@ class Controller extends Speaker {
     }
 
 
-    public function getMode() {
-        $data = $this->soap("AVTransport","GetTransportSettings");
+    public function getMode()
+    {
+        $data = $this->soap("AVTransport", "GetTransportSettings");
         $options = [
             "shuffle"   =>  false,
             "repeat"    =>  false,
         ];
-        if(in_array($data["PlayMode"],["REPEAT_ALL","SHUFFLE"])) {
+        if(in_array($data["PlayMode"], ["REPEAT_ALL", "SHUFFLE"])) {
             $options["repeat"] = true;
         }
-        if(in_array($data["PlayMode"],["SHUFFLE_NOREPEAT","SHUFFLE"])) {
+        if(in_array($data["PlayMode"], ["SHUFFLE_NOREPEAT", "SHUFFLE"])) {
             $options["shuffle"] = true;
         }
         return $options;
     }
 
 
-    public function setMode($options) {
+    public function setMode($options)
+    {
         if($options["shuffle"]) {
             if($options["repeat"]) {
                 $mode = "SHUFFLE";
@@ -200,19 +205,21 @@ class Controller extends Speaker {
                 $mode = "NORMAL";
             }
         }
-        $data = $this->soap("AVTransport","SetPlayMode",[
+        $data = $this->soap("AVTransport", "SetPlayMode", [
             "NewPlayMode"   =>  $mode,
         ]);
     }
 
 
-    public function getRepeat() {
+    public function getRepeat()
+    {
         $mode = $this->getMode();
         return $mode["repeat"];
     }
 
 
-    public function setRepeat($repeat) {
+    public function setRepeat($repeat)
+    {
         $mode = $this->getMode();
         if($mode["repeat"] == $repeat) {
             return;
@@ -223,13 +230,15 @@ class Controller extends Speaker {
     }
 
 
-    public function getShuffle() {
+    public function getShuffle()
+    {
         $mode = $this->getMode();
         return $mode["shuffle"];
     }
 
 
-    public function setShuffle($shuffle) {
+    public function setShuffle($shuffle)
+    {
         $mode = $this->getMode();
         if($mode["shuffle"] == $shuffle) {
             return;
@@ -240,7 +249,8 @@ class Controller extends Speaker {
     }
 
 
-    public function getQueue($start=0,$limit=100) {
+    public function getQueue($start = 0, $limit = 100)
+    {
         if($start < 0) {
             $limit += $start;
             $start = 0;
@@ -248,7 +258,7 @@ class Controller extends Speaker {
         if($limit < 1) {
             return [];
         }
-        $data = $this->soap("ContentDirectory","Browse",[
+        $data = $this->soap("ContentDirectory", "Browse", [
             "ObjectID"          =>  "Q:0",
             "BrowseFlag"        =>  "BrowseDirectChildren",
             "Filter"            =>  "",
@@ -263,6 +273,4 @@ class Controller extends Speaker {
         }
         return $queue;
     }
-
-
 }

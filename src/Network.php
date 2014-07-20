@@ -1,16 +1,17 @@
 <?php
 
 namespace duncan3dc\Sonos;
+
 use duncan3dc\Helpers\DiskCache;
 
-class Network {
-
+class Network
+{
     protected static $speakers = false;
     public static $cache = false;
 
 
-    protected static function getDevices() {
-
+    protected static function getDevices()
+    {
         $ip = "239.255.255.250";
         $port = 1900;
 
@@ -33,24 +34,24 @@ class Network {
         $tmp = "";
 
         $response = "";
-        while(socket_select($read,$write,$except,1) && $read) {
-            socket_recvfrom($sock,$tmp,2048,null,$name,$port);
+        while(socket_select($read, $write, $except, 1) && $read) {
+            socket_recvfrom($sock, $tmp, 2048, null, $name, $port);
             $response .= $tmp;
         }
 
         $devices = [];
-        foreach(explode("\r\n\r\n",$response) as $reply) {
+        foreach(explode("\r\n\r\n", $response) as $reply) {
             if(!$reply) {
                 continue;
             }
 
             $data = [];
             foreach(explode("\r\n", $reply) as $line) {
-                if(!$pos = strpos($line,':')) {
+                if(!$pos = strpos($line, ":")) {
                     continue;
                 }
-                $key = strtolower(substr($line,0,$pos));
-                $val = trim(substr($line,$pos+1));
+                $key = strtolower(substr($line, 0, $pos));
+                $val = trim(substr($line, $pos + 1));
                 $data[$key] = $val;
             }
             $devices[] = $data;
@@ -59,7 +60,7 @@ class Network {
         $return = [];
         $unique = [];
         foreach($devices as $device) {
-            if(in_array($device["usn"],$unique)) {
+            if(in_array($device["usn"], $unique)) {
                 continue;
             }
             $url = parse_url($device["location"]);
@@ -70,18 +71,17 @@ class Network {
         }
 
         return $return;
-
     }
 
 
-    public static function getSpeakers() {
-
+    public static function getSpeakers()
+    {
         if(is_array(static::$speakers)) {
             return static::$speakers;
         }
 
         if(static::$cache) {
-            $devices = DiskCache::call("ip-addresses",function() {
+            $devices = DiskCache::call("ip-addresses", function() {
                 return static::getDevices();
             });
         } else {
@@ -103,18 +103,17 @@ class Network {
         foreach($players as $player) {
             $attributes = $player->getAttributes();
             $ip = parse_url($attributes["location"])["host"];
-            if(array_key_exists($ip,$speakers)) {
+            if(array_key_exists($ip, $speakers)) {
                 $speakers[$ip]->setTopology($attributes);
             }
         }
 
         return static::$speakers = $speakers;
-
     }
 
 
-    public static function getSpeakerByRoom($room) {
-
+    public static function getSpeakerByRoom($room)
+    {
         $speakers = static::getSpeakers();
         foreach($speakers as $speaker) {
             if($speaker->room == $room) {
@@ -126,8 +125,8 @@ class Network {
     }
 
 
-    public static function getSpeakersByRoom($room) {
-
+    public static function getSpeakersByRoom($room)
+    {
         $return = [];
 
         $speakers = static::getSpeakers();
@@ -145,8 +144,8 @@ class Network {
     }
 
 
-    public static function getControllers() {
-
+    public static function getControllers()
+    {
         $controllers = [];
 
         $speakers = static::getSpeakers();
@@ -161,8 +160,8 @@ class Network {
     }
 
 
-    public static function getControllerByRoom($room) {
-
+    public static function getControllerByRoom($room)
+    {
         $speaker = static::getSpeakerByRoom($room);
         $group = $speaker->getGroup();
 
@@ -175,6 +174,4 @@ class Network {
 
         throw new \Exception("No controller found with the room name '" . $room . "'");
     }
-
-
 }
