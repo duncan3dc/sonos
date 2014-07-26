@@ -240,4 +240,32 @@ class Network
 
         return $items;
     }
+
+
+    public static function addToPlaylist($id, $uri, $position = null)
+    {
+        $speaker = static::getSpeaker();
+
+        $data = $speaker->soap("ContentDirectory", "Browse", [
+            "ObjectID"          =>  $id,
+            "BrowseFlag"        =>  "BrowseDirectChildren",
+            "Filter"            =>  "",
+            "StartingIndex"     =>  0,
+            "RequestedCount"    =>  1,
+            "SortCriteria"      =>  "",
+        ]);
+
+        if($position === null) {
+            $position = $data["TotalMatches"];
+        }
+
+        $data = $speaker->soap("AVTransport", "AddURIToSavedQueue", [
+            "ObjectID"              =>  $id,
+            "UpdateID"              =>  $data["UpdateID"],
+            "EnqueuedURI"           =>  $uri,
+            "EnqueuedURIMetaData"   =>  '',
+            "AddAtIndex"            =>  $position,
+        ]);
+        return ($data["NumTracksAdded"] == 1);
+    }
 }
