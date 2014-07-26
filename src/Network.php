@@ -3,6 +3,7 @@
 namespace duncan3dc\Sonos;
 
 use duncan3dc\Helpers\DiskCache;
+use duncan3dc\DomParser\XmlParser;
 
 class Network
 {
@@ -112,6 +113,13 @@ class Network
     }
 
 
+    public static function getSpeaker()
+    {
+        $speakers = static::getSpeakers();
+        return reset($speakers);
+    }
+
+
     public static function getSpeakerByRoom($room)
     {
         $speakers = static::getSpeakers();
@@ -173,5 +181,63 @@ class Network
         }
 
         throw new \Exception("No controller found with the room name '" . $room . "'");
+    }
+
+
+    public static function getPlaylists()
+    {
+        $speaker = static::getSpeaker();
+
+        $data = $speaker->soap("ContentDirectory", "Browse", [
+            "ObjectID"          =>  "SQ:",
+            "BrowseFlag"        =>  "BrowseDirectChildren",
+            "Filter"            =>  "",
+            "StartingIndex"     =>  0,
+            "RequestedCount"    =>  100,
+            "SortCriteria"      =>  "",
+        ]);
+        $parser = new XmlParser($data["Result"]);
+
+        $playlists = [];
+        foreach($parser->getTags("container") as $container) {
+            $playlists[$container->getAttribute("id")] = $container->getTag("title")->nodeValue;
+        }
+
+        return $playlists;
+    }
+
+
+    public static function getPlaylist($id)
+    {
+        $speaker = static::getSpeaker();
+
+        $items = [];
+
+        $start = 0;
+        $limit = 100;
+        do {
+            $data = $speaker->soap("ContentDirectory", "Browse", [
+                "ObjectID"          =>  $id,
+                "BrowseFlag"        =>  "BrowseDirectChildren",
+                "Filter"            =>  "",
+                "StartingIndex"     =>  $start,
+                "RequestedCount"    =>  $limit,
+                "SortCriteria"      =>  "",
+            ]);
+            $parser = new XmlParser($data["Result"]);
+            foreach($parser->getTags("item") as $item) {
+                $items[] = [
+                    "id"        =>  $item->getAttribute("id"),
+                    "uri"       =>  $item->getTag("res")->nodeValue,
+                    "title"     =>  $item->getTag("title")->nodeValue,
+                    "artist"    =>  $item->getTag("creator")->nodeValue,
+                    "album"     =>  $item->getTag("album")->nodeValue,
+                ];
+            }
+
+            $start += $limit;
+        } while(!$data["TotalMatches"] || count($items) < $data["TotalMatches"]);
+
+        return $items;
     }
 }

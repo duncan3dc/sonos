@@ -20,10 +20,13 @@ Public static properties
 * $cache: boolean - Setting this to true will cache the expensive multicast discover to find sonos devices on the network  
 Public static methods
 * getSpeakers(): array - Returns an array of Speaker instances for all speakers on the network
+* getSpeaker(): Speaker - Returns a Speaker instance for the first speaker found on the network
 * getSpeakersByRoom(string $room): array - Returns an array of Speaker instances for all speakers with the specified room name
 * getSpeakerByRoom(string $room): Speaker - Returns a Speaker instance for the first speaker with the specified room name
 * getControllers(): array - Returns an array of Controller instances, one instance per group of speakers
 * getControllerByRoom(string $room): Controller - Returns a Controller instance for the speaker assigned as coordinator of the specified room name
+* getPlaylists(): array - Returns an array of playlists, where the key is the playlist id and the value is the title of the playlist
+* getPlaylist(string $id): array - Returns an array of tracks on the playlist, using an id returned by getPlaylists()
 
 
 Speaker Class
@@ -43,11 +46,11 @@ Controller Class
 ----------------
 The Controller class extends the Speaker class, so all the public properties/methods listed above are available, in addition to the following public methods
 * getState(): int - Returns the current state of the group of speakers using the Controller class constants:  
-STATE_STOPPED  
-STATE_PLAYING  
-STATE_PAUSED  
-STATE_TRANSITIONING  
-STATE_UNKNOWN  
+  STATE_STOPPED  
+  STATE_PLAYING  
+  STATE_PAUSED  
+  STATE_TRANSITIONING  
+  STATE_UNKNOWN  
 * getStateName(): string - Returns the current state of the group of speakers as the string reported by sonos: PLAYING, PAUSED_PLAYBACK, etc
 * getStateDetails(): array - Returns an array of attributes about the currently active track in the queue
 * play(): null - Start playing the active music for this group
