@@ -8,6 +8,7 @@ use duncan3dc\DomParser\XmlParser;
 class Network
 {
     protected static $speakers = false;
+    protected static $playlists = false;
     public static $cache = false;
 
 
@@ -186,6 +187,10 @@ class Network
 
     public static function getPlaylists()
     {
+        if(is_array(static::$playlists)) {
+            return static::$playlists;
+        }
+
         $speaker = static::getSpeaker();
 
         $data = $speaker->soap("ContentDirectory", "Browse", [
@@ -200,113 +205,31 @@ class Network
 
         $playlists = [];
         foreach($parser->getTags("container") as $container) {
-            $playlists[$container->getAttribute("id")] = $container->getTag("title")->nodeValue;
+            $playlists[] = new Playlist($container);
         }
 
-        return $playlists;
+        return static::$playlists = $playlists;
     }
 
 
-    public static function getPlaylist($playlist)
+    public static function getPlaylistByName($name)
     {
-        $speaker = static::getSpeaker();
+        $roughMatch = false;
 
-        $items = [];
-
-        $start = 0;
-        $limit = 100;
-        do {
-            $data = $speaker->soap("ContentDirectory", "Browse", [
-                "ObjectID"          =>  $playlist,
-                "BrowseFlag"        =>  "BrowseDirectChildren",
-                "Filter"            =>  "",
-                "StartingIndex"     =>  $start,
-                "RequestedCount"    =>  $limit,
-                "SortCriteria"      =>  "",
-            ]);
-            $parser = new XmlParser($data["Result"]);
-            foreach($parser->getTags("item") as $item) {
-                $items[] = [
-                    "id"        =>  $item->getAttribute("id"),
-                    "uri"       =>  $item->getTag("res")->nodeValue,
-                    "title"     =>  $item->getTag("title")->nodeValue,
-                    "artist"    =>  $item->getTag("creator")->nodeValue,
-                    "album"     =>  $item->getTag("album")->nodeValue,
-                ];
+        $playlists = static::getPlaylists();
+        foreach($playlists as $playlist) {
+            if($playlist->getName() == $name) {
+                return $playlist;
             }
-
-            $start += $limit;
-        } while($data["TotalMatches"] && count($items) < $data["TotalMatches"]);
-
-        return $items;
-    }
-
-
-    protected static function getPlaylistUpdateID($playlist)
-    {
-        $speaker = static::getSpeaker();
-
-        $data = $speaker->soap("ContentDirectory", "Browse", [
-            "ObjectID"          =>  $playlist,
-            "BrowseFlag"        =>  "BrowseDirectChildren",
-            "Filter"            =>  "",
-            "StartingIndex"     =>  0,
-            "RequestedCount"    =>  1,
-            "SortCriteria"      =>  "",
-        ]);
-
-        return $data["UpdateID"];
-    }
-
-
-    public static function addToPlaylist($playlist, $tracks, $position = null)
-    {
-        $speaker = static::getSpeaker();
-
-        $update = static::getPlaylistUpdateID($playlist);
-
-        if($position === null) {
-            $position = $data["TotalMatches"];
-        }
-
-        if(!is_array($tracks)) {
-            $tracks = [$tracks];
-        }
-
-        foreach($tracks as $uri) {
-            $data = $speaker->soap("AVTransport", "AddURIToSavedQueue", [
-                "ObjectID"              =>  $playlist,
-                "UpdateID"              =>  $update,
-                "EnqueuedURI"           =>  $uri,
-                "EnqueuedURIMetaData"   =>  "",
-                "AddAtIndex"            =>  $position++,
-            ]);
-            if($data["NumTracksAdded"] != 1) {
-                return false;
+            if(strtolower($playlist->getName()) == strtolower($name)) {
+                $roughMatch = $playlist;
             }
-            $update = $data["NewUpdateID"];
-        }
-        return true;
-    }
-
-
-    public static function removeFromPlaylist($playlist, $positions)
-    {
-        $speaker = static::getSpeaker();
-
-        $update = static::getPlaylistUpdateID($playlist);
-
-        if(!is_array($positions)) {
-            $positions = [$positions];
         }
 
-        $data = $speaker->soap("AVTransport", "ReorderTracksInSavedQueue", [
-            "ObjectID"              =>  $playlist,
-            "UpdateID"              =>  $update,
-            "TrackList"             =>  implode(",", $positions),
-            "NewPositionList"       =>  "",
-        ]);
+        if($roughMatch) {
+            return $roughMatch;
+        }
 
-        return ($data["QueueLengthChange"] == (count($positions) * -1));
+        throw new \Exception("No playlist found with the name '" . $name . "'");
     }
 }

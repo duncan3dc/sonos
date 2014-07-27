@@ -12,6 +12,7 @@ Three classes are available:
 * Network - Provides static methods to locate speakers/controllers on the current network
 * Speaker - Provides an interface to individual speakers that is mostly read-only, although the volume can be set using this class
 * Controller - Allows interaction with the groups of speakers. Although sometimes a Controller is synonymous with a Speaker, when speakers are grouped together only the coordinator can receive events (play/pause/etc)
+* Playlist - Provides an interface for managing Sonos playlists on the current network
 
 
 Network Class
@@ -25,10 +26,8 @@ Public static methods
 * getSpeakerByRoom(string $room): Speaker - Returns a Speaker instance for the first speaker with the specified room name
 * getControllers(): array - Returns an array of Controller instances, one instance per group of speakers
 * getControllerByRoom(string $room): Controller - Returns a Controller instance for the speaker assigned as coordinator of the specified room name
-* getPlaylists(): array - Returns an array of playlists, where the key is the playlist id and the value is the title of the playlist
-* getPlaylist(string $playlist): array - Returns an array of tracks on the playlist, using a playlist id returned by getPlaylists()
-* addToPlaylist(string $playlist, mixed $tracks [, int $position]): boolean - Add a track to a playlist, optionally specifying the position, by default it will add the track to the end. Tracks are specified using the URI, and multiple tracks can be added by passing $tracks as an array of URIs
-* removeFromPlaylist(string $playlist, mixed $positions): boolean - Remove tracks from a playlist by their zero-indexed position. A single track can be removed or multiple by passing an array of positions
+* getPlaylists(): array - Returns an array of Playlist instances
+* getPlaylistByName($name): Playlist - Returns a Playlist instance for the playlist with the specified name. If no case-sensitive match is found it will return a case-insensitive match, or throw an Exception if no match is found
 
 
 Speaker Class
@@ -73,6 +72,15 @@ The Controller class extends the Speaker class, so all the public properties/met
 * getQueue([int $start, int $limit]): array - Get details of the queue
 
 
+Playlist Class
+-------------
+Public methods
+* getName(): string - Returns the name of the playlist
+* getTracks(): array - Returns an array of tracks on the playlist
+* addTracks(mixed $tracks [, int $position]): boolean - Add a track to a playlist, optionally specifying the position, by default it will add the track to the end. Tracks are specified using the URI, and multiple tracks can be added by passing $tracks as an array of URIs
+* removeTracks(mixed $positions): boolean - Remove tracks from a playlist by their zero-indexed position. A single track can be removed or multiple by passing an array of positions
+
+
 Examples
 --------
 
@@ -111,3 +119,31 @@ $controller = Sonos\Network::getControllerByRoom("Living Room");
 echo $controller->room . "\n";
 $controller->pause();
 ```
+
+Add all the tracks from one playlist to another
+```php
+$protest = Sonos\Network::getPlaylistByName("protest the hero");
+$progmetal = Sonos\Network::getPlaylistByName("progmetal");
+
+foreach($protest->getTracks() as $track) {
+    $progmetal->addTracks($track["uri"]);
+}
+```
+
+Remove tracks from a playlist  
+```php
+$progmetal = Sonos\Network::getPlaylistByName("progmetal");
+
+$remove = [];
+foreach($progmetal->getTracks() as $position => $track) {
+    if($track["artist"] == "protest the hero") {
+      $remove[] = $position;
+    }
+}
+if(count($remove) > 0) {
+    $progmetal->removeTracks($remove);
+}
+```
+_This is done using a single call to removeTracks() for 2 reasons:_
+* _1, this is more efficient as Sonos supports removing multiple tracks at once (unlike adding which must be done either by single track or album/artist/etc)_
+* _2, when a track is removed all the track position indexes are recalculated, so our $position would no longer be valid_
