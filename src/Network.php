@@ -242,7 +242,7 @@ class Network
     }
 
 
-    public static function addToPlaylist($id, $uri, $position = null)
+    public static function addToPlaylist($id, $uris, $position = null)
     {
         $speaker = static::getSpeaker();
 
@@ -254,18 +254,29 @@ class Network
             "RequestedCount"    =>  1,
             "SortCriteria"      =>  "",
         ]);
+        $update = $data["UpdateID"];
 
         if($position === null) {
             $position = $data["TotalMatches"];
         }
 
-        $data = $speaker->soap("AVTransport", "AddURIToSavedQueue", [
-            "ObjectID"              =>  $id,
-            "UpdateID"              =>  $data["UpdateID"],
-            "EnqueuedURI"           =>  $uri,
-            "EnqueuedURIMetaData"   =>  '',
-            "AddAtIndex"            =>  $position,
-        ]);
-        return ($data["NumTracksAdded"] == 1);
+        if(!is_array($uris)) {
+            $uris = [$uris];
+        }
+
+        foreach($uris as $uri) {
+            $data = $speaker->soap("AVTransport", "AddURIToSavedQueue", [
+                "ObjectID"              =>  $id,
+                "UpdateID"              =>  $update,
+                "EnqueuedURI"           =>  $uri,
+                "EnqueuedURIMetaData"   =>  "",
+                "AddAtIndex"            =>  $position++,
+            ]);
+            if($data["NumTracksAdded"] != 1) {
+                return false;
+            }
+            $update = $data["NewUpdateID"];
+        }
+        return true;
     }
 }

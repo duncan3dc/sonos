@@ -27,7 +27,7 @@ Public static methods
 * getControllerByRoom(string $room): Controller - Returns a Controller instance for the speaker assigned as coordinator of the specified room name
 * getPlaylists(): array - Returns an array of playlists, where the key is the playlist id and the value is the title of the playlist
 * getPlaylist(string $id): array - Returns an array of tracks on the playlist, using an id returned by getPlaylists()
-* addToPlaylist(string $id, string $uri [, int $position]): boolean - Add a track to a playlist, optionally specifying the position, by default it will add the track to the end
+* addToPlaylist(string $id, mixed $tracks [, int $position]): boolean - Add a track to a playlist, optionally specifying the position, by default it will add the track to the end. Tracks are specified using the URI, and multiple tracks can be added by passing $tracks as an array of URIs
 
 
 Speaker Class
