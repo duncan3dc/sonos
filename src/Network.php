@@ -207,7 +207,7 @@ class Network
     }
 
 
-    public static function getPlaylist($id)
+    public static function getPlaylist($playlist)
     {
         $speaker = static::getSpeaker();
 
@@ -217,7 +217,7 @@ class Network
         $limit = 100;
         do {
             $data = $speaker->soap("ContentDirectory", "Browse", [
-                "ObjectID"          =>  $id,
+                "ObjectID"          =>  $playlist,
                 "BrowseFlag"        =>  "BrowseDirectChildren",
                 "Filter"            =>  "",
                 "StartingIndex"     =>  $start,
@@ -242,31 +242,40 @@ class Network
     }
 
 
-    public static function addToPlaylist($id, $uris, $position = null)
+    protected static function getPlaylistUpdateID($playlist)
     {
         $speaker = static::getSpeaker();
 
         $data = $speaker->soap("ContentDirectory", "Browse", [
-            "ObjectID"          =>  $id,
+            "ObjectID"          =>  $playlist,
             "BrowseFlag"        =>  "BrowseDirectChildren",
             "Filter"            =>  "",
             "StartingIndex"     =>  0,
             "RequestedCount"    =>  1,
             "SortCriteria"      =>  "",
         ]);
-        $update = $data["UpdateID"];
+
+        return $data["UpdateID"];
+    }
+
+
+    public static function addToPlaylist($playlist, $tracks, $position = null)
+    {
+        $speaker = static::getSpeaker();
+
+        $update = static::getPlaylistUpdateID($playlist);
 
         if($position === null) {
             $position = $data["TotalMatches"];
         }
 
-        if(!is_array($uris)) {
-            $uris = [$uris];
+        if(!is_array($tracks)) {
+            $tracks = [$tracks];
         }
 
-        foreach($uris as $uri) {
+        foreach($tracks as $uri) {
             $data = $speaker->soap("AVTransport", "AddURIToSavedQueue", [
-                "ObjectID"              =>  $id,
+                "ObjectID"              =>  $playlist,
                 "UpdateID"              =>  $update,
                 "EnqueuedURI"           =>  $uri,
                 "EnqueuedURIMetaData"   =>  "",
