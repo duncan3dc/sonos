@@ -236,7 +236,7 @@ class Network
             }
 
             $start += $limit;
-        } while(!$data["TotalMatches"] || count($items) < $data["TotalMatches"]);
+        } while($data["TotalMatches"] && count($items) < $data["TotalMatches"]);
 
         return $items;
     }
