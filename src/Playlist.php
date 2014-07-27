@@ -58,6 +58,8 @@ class Playlist extends Queue
     public function addTracks($tracks, $position = null)
     {
         if($position === null) {
+            $data = $this->browse("DirectChildren");
+            $this->updateId = $data["UpdateID"];
             $position = $data["TotalMatches"];
         }
 
