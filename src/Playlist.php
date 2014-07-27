@@ -4,12 +4,23 @@ namespace duncan3dc\Sonos;
 
 use duncan3dc\DomParser\XmlParser;
 
-class Playlist
+class Playlist extends Queue
 {
-    protected $id = false;
     protected $name = false;
-    protected $updateId = false;
-    protected $speaker = false;
+    protected $type = "SavedQueue";
+
+
+    public static function create($name)
+    {
+        $controller = Network::getController();
+
+        $data = $controller->soap("AVTransport", "CreateSavedQueue", [
+            "Title"                 =>  $name,
+            "EnqueuedURI"           =>  "",
+            "EnqueuedURIMetaData"   =>  "",
+        ]);
+        return new static($data["AssignedObjectID"]);
+    }
 
 
     public function __construct($param)
@@ -23,43 +34,13 @@ class Playlist
         }
 
         $this->updateId = false;
-        $this->speaker = Network::getSpeaker();
+        $this->controller = Network::getController();
     }
 
 
-    protected function soap($service, $action, $params = [])
+    public function getId()
     {
-        $params["ObjectID"] = $this->id;
-
-        if($action == "Browse") {
-            $params["Filter"] = "";
-            $params["SortCriteria"] = "";
-        }
-
-        return $this->speaker->soap($service, $action, $params);
-    }
-
-
-    protected function browse($type, $start = 0, $limit = 1)
-    {
-        return $this->soap("ContentDirectory", "Browse", [
-            "BrowseFlag"        =>  "Browse" . $type,
-            "StartingIndex"     =>  $start,
-            "RequestedCount"    =>  $limit,
-            "Filter"            =>  "",
-            "SortCriteria"      =>  "",
-        ]);
-    }
-
-
-    protected function getUpdateId()
-    {
-        if(!$this->updateId || !Network::$cache) {
-            echo "getting update id for (" . $this->id . ")...\n";
-            $data = $this->browse("DirectChildren");
-            $this->updateId = $data["UpdateID"];
-        }
-        return $this->updateId;
+        return $this->id;
     }
 
 
@@ -71,32 +52,6 @@ class Playlist
             $this->name = $xml->getTag("title")->nodeValue;
         }
         return $this->name;
-    }
-
-
-    public function getTracks()
-    {
-        $items = [];
-
-        $start = 0;
-        $limit = 100;
-        do {
-            $data = $this->browse("DirectChildren", $start, $limit);
-            $parser = new XmlParser($data["Result"]);
-            foreach($parser->getTags("item") as $item) {
-                $items[] = [
-                    "id"        =>  $item->getAttribute("id"),
-                    "uri"       =>  $item->getTag("res")->nodeValue,
-                    "title"     =>  $item->getTag("title")->nodeValue,
-                    "artist"    =>  $item->getTag("creator")->nodeValue,
-                    "album"     =>  $item->getTag("album")->nodeValue,
-                ];
-            }
-
-            $start += $limit;
-        } while($data["TotalMatches"] && count($items) < $data["TotalMatches"]);
-
-        return $items;
     }
 
 
@@ -144,5 +99,12 @@ class Playlist
         $this->updateId = $data["NewUpdateID"];
 
         return ($data["QueueLengthChange"] == (count($positions) * -1));
+    }
+
+
+    public function delete()
+    {
+        $this->soap("ContentDirectory", "DestroyObject");
+        return true;
     }
 }

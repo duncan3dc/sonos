@@ -114,10 +114,10 @@ class Network
     }
 
 
-    public static function getSpeaker()
+    public static function getController()
     {
-        $speakers = static::getSpeakers();
-        return reset($speakers);
+        $controllers = static::getControllers();
+        return reset($controllers);
     }
 
 
@@ -191,9 +191,9 @@ class Network
             return static::$playlists;
         }
 
-        $speaker = static::getSpeaker();
+        $controller = static::getController();
 
-        $data = $speaker->soap("ContentDirectory", "Browse", [
+        $data = $controller->soap("ContentDirectory", "Browse", [
             "ObjectID"          =>  "SQ:",
             "BrowseFlag"        =>  "BrowseDirectChildren",
             "Filter"            =>  "",

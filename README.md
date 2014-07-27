@@ -12,7 +12,8 @@ Three classes are available:
 * Network - Provides static methods to locate speakers/controllers on the current network
 * Speaker - Provides an interface to individual speakers that is mostly read-only, although the volume can be set using this class
 * Controller - Allows interaction with the groups of speakers. Although sometimes a Controller is synonymous with a Speaker, when speakers are grouped together only the coordinator can receive events (play/pause/etc)
-* Playlist - Provides an interface for managing Sonos playlists on the current network
+* Queue - Provides an interface for managing the queue of a controller
+* Playlist - Provides an interface for managing Sonos playlists on the current network (extends the Queue class)
 
 
 Network Class
@@ -69,16 +70,26 @@ The Controller class extends the Speaker class, so all the public properties/met
 * setRepeat(boolean $repeat): null - Turn repeat mode on or off
 * getShuffle(): boolean - Check if shuffle is currently active
 * setShuffle(boolean $shuffle): null - Turn shuffle mode on or off
-* getQueue([int $start, int $limit]): array - Get details of the queue
+* getQueue(): Queue - Returns a Queue instance representing the queue for this controller
+
+
+Queue Class
+-----------
+Public methods
+* getTracks([int $start, int $limit]): array - Returns an array of tracks on the queue, with optional start position (zero-based) and total tracks to return
+* addTracks(mixed $tracks [, int $position]): boolean - Add a track to the queue, optionally specifying the position, by default it will add the track to the end. Tracks are specified using the URI, and multiple tracks can be added by passing $tracks as an array of URIs
+* removeTracks(mixed $positions): boolean - Remove tracks from the queue by their one-based position. A single track can be removed or multiple by passing an array of positions
 
 
 Playlist Class
 -------------
-Public methods
+As this class extends the Queue class all of the public methods above are available, along with the following
+* getId(): string - Returns the id of the playlist
 * getName(): string - Returns the name of the playlist
-* getTracks(): array - Returns an array of tracks on the playlist
-* addTracks(mixed $tracks [, int $position]): boolean - Add a track to a playlist, optionally specifying the position, by default it will add the track to the end. Tracks are specified using the URI, and multiple tracks can be added by passing $tracks as an array of URIs
-* removeTracks(mixed $positions): boolean - Remove tracks from a playlist by their zero-indexed position. A single track can be removed or multiple by passing an array of positions
+* delete(): boolean - Deletes this playlist entirely
+_Note that removeTracks() when working with playlists uses zero-based positions_  
+There is also a static method for creating new playlists
+* create(string $name): Playlist - Creates a new playlist with the specified name and returns a Playlist instance
 
 
 Examples

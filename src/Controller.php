@@ -249,28 +249,8 @@ class Controller extends Speaker
     }
 
 
-    public function getQueue($start = 0, $limit = 100)
+    public function getQueue()
     {
-        if($start < 0) {
-            $limit += $start;
-            $start = 0;
-        }
-        if($limit < 1) {
-            return [];
-        }
-        $data = $this->soap("ContentDirectory", "Browse", [
-            "ObjectID"          =>  "Q:0",
-            "BrowseFlag"        =>  "BrowseDirectChildren",
-            "Filter"            =>  "",
-            "StartingIndex"     =>  $start,
-            "RequestedCount"    =>  $limit,
-            "SortCriteria"      =>  "",
-        ]);
-        $parser = new XmlParser($data["Result"]);
-        $queue = [];
-        foreach($parser->getTags("item") as $item) {
-            $queue[] = $this->getTrackMetaData($item);
-        }
-        return $queue;
+        return new Queue($this);
     }
 }
