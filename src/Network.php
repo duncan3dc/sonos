@@ -288,4 +288,25 @@ class Network
         }
         return true;
     }
+
+
+    public static function removeFromPlaylist($playlist, $positions)
+    {
+        $speaker = static::getSpeaker();
+
+        $update = static::getPlaylistUpdateID($playlist);
+
+        if(!is_array($positions)) {
+            $positions = [$positions];
+        }
+
+        $data = $speaker->soap("AVTransport", "ReorderTracksInSavedQueue", [
+            "ObjectID"              =>  $playlist,
+            "UpdateID"              =>  $update,
+            "TrackList"             =>  implode(",", $positions),
+            "NewPositionList"       =>  "",
+        ]);
+
+        return ($data["QueueLengthChange"] == (count($positions) * -1));
+    }
 }
