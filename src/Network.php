@@ -36,20 +36,20 @@ class Network
         $tmp = "";
 
         $response = "";
-        while(socket_select($read, $write, $except, 1) && $read) {
+        while (socket_select($read, $write, $except, 1) && $read) {
             socket_recvfrom($sock, $tmp, 2048, null, $name, $port);
             $response .= $tmp;
         }
 
         $devices = [];
-        foreach(explode("\r\n\r\n", $response) as $reply) {
-            if(!$reply) {
+        foreach (explode("\r\n\r\n", $response) as $reply) {
+            if (!$reply) {
                 continue;
             }
 
             $data = [];
-            foreach(explode("\r\n", $reply) as $line) {
-                if(!$pos = strpos($line, ":")) {
+            foreach (explode("\r\n", $reply) as $line) {
+                if (!$pos = strpos($line, ":")) {
                     continue;
                 }
                 $key = strtolower(substr($line, 0, $pos));
@@ -61,8 +61,8 @@ class Network
 
         $return = [];
         $unique = [];
-        foreach($devices as $device) {
-            if(in_array($device["usn"], $unique)) {
+        foreach ($devices as $device) {
+            if (in_array($device["usn"], $unique)) {
                 continue;
             }
             $url = parse_url($device["location"]);
@@ -78,11 +78,11 @@ class Network
 
     public static function getSpeakers()
     {
-        if(is_array(static::$speakers)) {
+        if (is_array(static::$speakers)) {
             return static::$speakers;
         }
 
-        if(static::$cache) {
+        if (static::$cache) {
             $devices = DiskCache::call("ip-addresses", function() {
                 return static::getDevices();
             });
@@ -90,22 +90,22 @@ class Network
             $devices = static::getDevices();
         }
 
-        if(count($devices) < 1) {
+        if (count($devices) < 1) {
             throw new \Exception("No devices found on the current network");
         }
 
         $speakers = [];
-        foreach($devices as $ip) {
+        foreach ($devices as $ip) {
             $speakers[$ip] = new Speaker($ip);
         }
 
         $speaker = reset($speakers);
         $topology = $speaker->getXml("/status/topology");
         $players = $topology->getTag("ZonePlayers")->getTags("ZonePlayer");
-        foreach($players as $player) {
+        foreach ($players as $player) {
             $attributes = $player->getAttributes();
             $ip = parse_url($attributes["location"])["host"];
-            if(array_key_exists($ip, $speakers)) {
+            if (array_key_exists($ip, $speakers)) {
                 $speakers[$ip]->setTopology($attributes);
             }
         }
@@ -124,8 +124,8 @@ class Network
     public static function getSpeakerByRoom($room)
     {
         $speakers = static::getSpeakers();
-        foreach($speakers as $speaker) {
-            if($speaker->room == $room) {
+        foreach ($speakers as $speaker) {
+            if ($speaker->room == $room) {
                 return $speaker;
             }
         }
@@ -139,13 +139,13 @@ class Network
         $return = [];
 
         $speakers = static::getSpeakers();
-        foreach($speakers as $controller) {
-            if($controller->room == $room) {
+        foreach ($speakers as $controller) {
+            if ($controller->room == $room) {
                 $return[] = $controller;
             }
         }
 
-        if(count($return) < 1) {
+        if (count($return) < 1) {
             throw new \Exception("No speakers found with the room name '" . $room . "'");
         }
 
@@ -158,8 +158,8 @@ class Network
         $controllers = [];
 
         $speakers = static::getSpeakers();
-        foreach($speakers as $speaker) {
-            if(!$speaker->isCoordinator()) {
+        foreach ($speakers as $speaker) {
+            if (!$speaker->isCoordinator()) {
                 continue;
             }
             $controllers[$speaker->ip] = new Controller($speaker);
@@ -175,8 +175,8 @@ class Network
         $group = $speaker->getGroup();
 
         $controllers = static::getControllers();
-        foreach($controllers as $controller) {
-            if($controller->getGroup() == $group) {
+        foreach ($controllers as $controller) {
+            if ($controller->getGroup() == $group) {
                 return $controller;
             }
         }
@@ -187,7 +187,7 @@ class Network
 
     public static function getPlaylists()
     {
-        if(is_array(static::$playlists)) {
+        if (is_array(static::$playlists)) {
             return static::$playlists;
         }
 
@@ -204,7 +204,7 @@ class Network
         $parser = new XmlParser($data["Result"]);
 
         $playlists = [];
-        foreach($parser->getTags("container") as $container) {
+        foreach ($parser->getTags("container") as $container) {
             $playlists[] = new Playlist($container);
         }
 
@@ -217,16 +217,16 @@ class Network
         $roughMatch = false;
 
         $playlists = static::getPlaylists();
-        foreach($playlists as $playlist) {
-            if($playlist->getName() == $name) {
+        foreach ($playlists as $playlist) {
+            if ($playlist->getName() == $name) {
                 return $playlist;
             }
-            if(strtolower($playlist->getName()) == strtolower($name)) {
+            if (strtolower($playlist->getName()) == strtolower($name)) {
                 $roughMatch = $playlist;
             }
         }
 
-        if($roughMatch) {
+        if ($roughMatch) {
             return $roughMatch;
         }
 

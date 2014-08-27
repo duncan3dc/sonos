@@ -40,7 +40,7 @@ class Controller extends Speaker
     public function getState()
     {
         $name = $this->getStateName();
-        switch($name) {
+        switch ($name) {
             case "STOPPED":
                 return self::STATE_STOPPED;
             case "PLAYING":
@@ -68,9 +68,9 @@ class Controller extends Speaker
 
     protected function getTrackMetaData($xml)
     {
-        if(is_object($xml)) {
+        if (is_object($xml)) {
             $parser = $xml;
-        } elseif($xml) {
+        } elseif ($xml) {
             $parser = new XmlParser($xml);
         } else {
             return [];
@@ -86,7 +86,7 @@ class Controller extends Speaker
 
     public function setState($state)
     {
-        switch($state) {
+        switch ($state) {
             case self::STATE_PLAYING:
                 return $this->play();
             case self::STATE_PAUSED:
@@ -128,8 +128,8 @@ class Controller extends Speaker
     {
         $group = [];
         $speakers = Network::getSpeakers();
-        foreach($speakers as $speaker) {
-            if($speaker->getGroup() == $this->getGroup()) {
+        foreach ($speakers as $speaker) {
+            if ($speaker->getGroup() == $this->getGroup()) {
                 $group[] = $speaker;
             }
         }
@@ -139,7 +139,7 @@ class Controller extends Speaker
 
     public function addSpeaker(Speaker $speaker)
     {
-        if($speaker->getUuid() == $this->getUuid()) {
+        if ($speaker->getUuid() == $this->getUuid()) {
             return;
         }
         $speaker->soap("AVTransport", "SetAVTransportURI", [
@@ -158,7 +158,7 @@ class Controller extends Speaker
     public function setVolume($volume)
     {
         $speakers = $this->getSpeakers();
-        foreach($speakers as $speaker) {
+        foreach ($speakers as $speaker) {
             $speaker->setVolume($volume);
         }
     }
@@ -167,7 +167,7 @@ class Controller extends Speaker
     public function adjustVolume($adjust)
     {
         $speakers = $this->getSpeakers();
-        foreach($speakers as $speaker) {
+        foreach ($speakers as $speaker) {
             $speaker->adjustVolume($adjust);
         }
     }
@@ -180,10 +180,10 @@ class Controller extends Speaker
             "shuffle"   =>  false,
             "repeat"    =>  false,
         ];
-        if(in_array($data["PlayMode"], ["REPEAT_ALL", "SHUFFLE"])) {
+        if (in_array($data["PlayMode"], ["REPEAT_ALL", "SHUFFLE"])) {
             $options["repeat"] = true;
         }
-        if(in_array($data["PlayMode"], ["SHUFFLE_NOREPEAT", "SHUFFLE"])) {
+        if (in_array($data["PlayMode"], ["SHUFFLE_NOREPEAT", "SHUFFLE"])) {
             $options["shuffle"] = true;
         }
         return $options;
@@ -192,14 +192,14 @@ class Controller extends Speaker
 
     public function setMode($options)
     {
-        if($options["shuffle"]) {
-            if($options["repeat"]) {
+        if ($options["shuffle"]) {
+            if ($options["repeat"]) {
                 $mode = "SHUFFLE";
             } else {
                 $mode = "SHUFFLE_NOREPEAT";
             }
         } else {
-            if($options["repeat"]) {
+            if ($options["repeat"]) {
                 $mode = "REPEAT_ALL";
             } else {
                 $mode = "NORMAL";
@@ -221,7 +221,7 @@ class Controller extends Speaker
     public function setRepeat($repeat)
     {
         $mode = $this->getMode();
-        if($mode["repeat"] == $repeat) {
+        if ($mode["repeat"] == $repeat) {
             return;
         }
 
@@ -240,7 +240,7 @@ class Controller extends Speaker
     public function setShuffle($shuffle)
     {
         $mode = $this->getMode();
-        if($mode["shuffle"] == $shuffle) {
+        if ($mode["shuffle"] == $shuffle) {
             return;
         }
 

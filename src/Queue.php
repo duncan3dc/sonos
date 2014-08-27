@@ -23,7 +23,7 @@ class Queue
     {
         $params["ObjectID"] = $this->id;
 
-        if($action == "Browse") {
+        if ($action == "Browse") {
             $params["Filter"] = "";
             $params["SortCriteria"] = "";
         }
@@ -46,7 +46,7 @@ class Queue
 
     protected function getUpdateId()
     {
-        if(!$this->updateId || !Network::$cache) {
+        if (!$this->updateId || !Network::$cache) {
             $data = $this->browse("DirectChildren");
             $this->updateId = $data["UpdateID"];
         }
@@ -58,7 +58,7 @@ class Queue
     {
         $tracks = [];
 
-        if($total > 0 && $total < 100) {
+        if ($total > 0 && $total < 100) {
             $limit = $total;
         } else {
             $limit = 100;
@@ -67,7 +67,7 @@ class Queue
         do {
             $data = $this->browse("DirectChildren", $start, $limit);
             $parser = new XmlParser($data["Result"]);
-            foreach($parser->getTags("item") as $item) {
+            foreach ($parser->getTags("item") as $item) {
                 $tracks[] = [
                     "id"        =>  $item->getAttribute("id"),
                     "uri"       =>  $item->getTag("res")->nodeValue,
@@ -75,13 +75,13 @@ class Queue
                     "artist"    =>  $item->getTag("creator")->nodeValue,
                     "album"     =>  $item->getTag("album")->nodeValue,
                 ];
-                if($total > 0 && count($tracks) >= $total) {
+                if ($total > 0 && count($tracks) >= $total) {
                     return $tracks;
                 }
             }
 
             $start += $limit;
-        } while($data["TotalMatches"] && count($tracks) < $data["TotalMatches"]);
+        } while ($data["TotalMatches"] && count($tracks) < $data["TotalMatches"]);
 
         return $tracks;
     }
@@ -89,20 +89,20 @@ class Queue
 
     public function addTracks($tracks, $position = null)
     {
-        if($position === null) {
+        if ($position === null) {
             $data = $this->browse("DirectChildren");
             $this->updateId = $data["UpdateID"];
             $position = $data["TotalMatches"] + 1;
         }
 
-        if(!is_array($tracks)) {
+        if (!is_array($tracks)) {
             $tracks = [$tracks];
         }
 
         # Ensure the update id is set to begin with
         $this->getUpdateID();
 
-        foreach($tracks as $uri) {
+        foreach ($tracks as $uri) {
             $data = $this->soap("AVTransport", "AddURIToQueue", [
                 "UpdateID"                          =>  $this->updateId,
                 "EnqueuedURI"                       =>  $uri,
@@ -112,7 +112,7 @@ class Queue
             ]);
             $this->updateId = $data["NewUpdateID"];
 
-            if($data["NumTracksAdded"] != 1) {
+            if ($data["NumTracksAdded"] != 1) {
                 return false;
             }
         }
@@ -122,7 +122,7 @@ class Queue
 
     public function removeTracks($positions)
     {
-        if(!is_array($positions)) {
+        if (!is_array($positions)) {
             $positions = [$positions];
         }
 
@@ -130,9 +130,9 @@ class Queue
         $key = 0;
         $last = -1;
         sort($positions);
-        foreach($positions as $position) {
-            if($last > -1) {
-                if($position == $last + 1) {
+        foreach ($positions as $position) {
+            if ($last > -1) {
+                if ($position == $last + 1) {
                     $ranges[$key]++;
                     $last = $position;
                     continue;
@@ -144,7 +144,7 @@ class Queue
         }
 
         $offset = 0;
-        foreach($ranges as $position => $limit) {
+        foreach ($ranges as $position => $limit) {
             $position -= $offset;
             $data = $this->soap("AVTransport", "RemoveTrackRangeFromQueue", [
                 "UpdateID"          =>  $this->getUpdateID(),

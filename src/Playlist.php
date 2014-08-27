@@ -25,7 +25,7 @@ class Playlist extends Queue
 
     public function __construct($param)
     {
-        if(is_string($param)) {
+        if (is_string($param)) {
             $this->id = $param;
             $this->name = false;
         } else {
@@ -46,7 +46,7 @@ class Playlist extends Queue
 
     public function getName()
     {
-        if(!$this->name) {
+        if (!$this->name) {
             $data = $this->browse("Metadata");
             $xml = new XmlParser($data["Result"]);
             $this->name = $xml->getTag("title")->nodeValue;
@@ -57,20 +57,20 @@ class Playlist extends Queue
 
     public function addTracks($tracks, $position = null)
     {
-        if($position === null) {
+        if ($position === null) {
             $data = $this->browse("DirectChildren");
             $this->updateId = $data["UpdateID"];
             $position = $data["TotalMatches"];
         }
 
-        if(!is_array($tracks)) {
+        if (!is_array($tracks)) {
             $tracks = [$tracks];
         }
 
         # Ensure the update id is set to begin with
         $this->getUpdateID();
 
-        foreach($tracks as $uri) {
+        foreach ($tracks as $uri) {
             $data = $this->soap("AVTransport", "AddURIToSavedQueue", [
                 "UpdateID"              =>  $this->updateId,
                 "EnqueuedURI"           =>  $uri,
@@ -79,7 +79,7 @@ class Playlist extends Queue
             ]);
             $this->updateId = $data["NewUpdateID"];
 
-            if($data["NumTracksAdded"] != 1) {
+            if ($data["NumTracksAdded"] != 1) {
                 return false;
             }
         }
@@ -89,7 +89,7 @@ class Playlist extends Queue
 
     public function removeTracks($positions)
     {
-        if(!is_array($positions)) {
+        if (!is_array($positions)) {
             $positions = [$positions];
         }
 
