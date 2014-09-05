@@ -131,6 +131,7 @@ class Queue
         $last = -1;
         sort($positions);
         foreach ($positions as $position) {
+            $position++;
             if ($last > -1) {
                 if ($position == $last + 1) {
                     $ranges[$key]++;
