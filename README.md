@@ -3,6 +3,8 @@ sonos
 
 PHP classes to control Sonos speakers
 
+[![Build Status](https://travis-ci.org/duncan3dc/sonos.svg?branch=master)](https://travis-ci.org/duncan3dc/sonos)
+
 Inspired by [DjMomo/sonos](https://github.com/DjMomo/sonos) and [phil-lavin/sonos](https://github.com/phil-lavin/sonos)
 
 
