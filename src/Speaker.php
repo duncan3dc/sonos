@@ -29,21 +29,17 @@ class Speaker
 
     public function getXml($url)
     {
-        if($xml = $this->cache[$url]) {
-            return $xml;
+        if (!isset($this->cache[$url])) {
+            $this->cache[$url] = new XmlParser("http://" . $this->ip . ":1400" . $url);
         }
 
-        $parser = new XmlParser("http://" . $this->ip . ":1400" . $url);
-
-        $this->cache[$url] = $parser;
-
-        return $parser;
+        return $this->cache[$url];
     }
 
 
     public function soap($service, $action, $params = [])
     {
-        switch($service) {
+        switch ($service) {
             case "AVTransport";
             case "RenderingControl":
                 $path = "MediaRenderer";
@@ -62,7 +58,7 @@ class Speaker
 
         $soapParams = [];
         $params["InstanceID"] = 0;
-        foreach($params as $key => $val) {
+        foreach ($params as $key => $val) {
             $soapParams[] = new \SoapParam(new \SoapVar($val, XSD_STRING), $key);
         }
 
@@ -72,16 +68,16 @@ class Speaker
 
     protected function getTopology()
     {
-        if($this->topology) {
+        if ($this->topology) {
             return true;
         }
 
         $topology = $this->getXml("/status/topology");
         $players = $topology->getTag("ZonePlayers")->getTags("ZonePlayer");
-        foreach($players as $player) {
+        foreach ($players as $player) {
             $attributes = $player->getAttributes();
             $ip = parse_url($attributes["location"])["host"];
-            if($ip == $this->ip) {
+            if ($ip == $this->ip) {
                 return $this->setTopology($attributes);
             }
         }
