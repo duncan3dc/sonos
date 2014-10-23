@@ -5,13 +5,31 @@ namespace duncan3dc\Sonos;
 use duncan3dc\Helpers\DiskCache;
 use duncan3dc\DomParser\XmlParser;
 
+/**
+ * Provides static methods to locate speakers/controllers/playlists on the current network.
+ */
 class Network
 {
-    protected static $speakers = false;
+    /**
+     * @var array Speakers that are available on the current network.
+     */
+    protected static $speakers;
+
+    /**
+     * @var array Playlists that are available on the current network.
+     */
     protected static $playlists = false;
+
+    /**
+     * @var boolean Setting this to true will cache the expensive multicast discover to find Sonos devices on the network
+     */
     public static $cache = false;
 
-
+    /**
+     * Get all the devices on the current network.
+     *
+     * @return string[] An array of ip addresses
+     */
     protected static function getDevices()
     {
         $ip = "239.255.255.250";
@@ -76,6 +94,11 @@ class Network
     }
 
 
+    /**
+     * Get all the speakers on the network.
+     *
+     * @return duncan3dc\Sonos\Speaker[]
+     */
     public static function getSpeakers()
     {
         if (is_array(static::$speakers)) {
@@ -114,6 +137,13 @@ class Network
     }
 
 
+    /**
+     * Get a Controller instance from the network.
+     *
+     * Useful for managing playlists, as these need a controller but it doesn't matter which one.
+     *
+     * @return duncan3dc\Sonos\Controller
+     */
     public static function getController()
     {
         $controllers = static::getControllers();
@@ -121,6 +151,13 @@ class Network
     }
 
 
+    /**
+     * Get a speaker with the specified room name.
+     *
+     * @param string The name of the room to look for
+     *
+     * @return duncan3dc\Sonos\Speaker
+     */
     public static function getSpeakerByRoom($room)
     {
         $speakers = static::getSpeakers();
@@ -134,6 +171,13 @@ class Network
     }
 
 
+    /**
+     * Get all the speakers with the specified room name.
+     *
+     * @param string The name of the room to look for
+     *
+     * @return duncan3dc\Sonos\Speaker[]
+     */
     public static function getSpeakersByRoom($room)
     {
         $return = [];
@@ -153,6 +197,11 @@ class Network
     }
 
 
+    /**
+     * Get all the coordinators on the network.
+     *
+     * @return duncan3dc\Sonos\Controller[]
+     */
     public static function getControllers()
     {
         $controllers = [];
@@ -169,6 +218,13 @@ class Network
     }
 
 
+    /**
+     * Get the coordinator for the specified room name.
+     *
+     * @param string The name of the room to look for
+     *
+     * @return duncan3dc\Sonos\Controller[]
+     */
     public static function getControllerByRoom($room)
     {
         $speaker = static::getSpeakerByRoom($room);
@@ -185,6 +241,11 @@ class Network
     }
 
 
+    /**
+     * Get all the playlists available on the network.
+     *
+     * @return duncan3dc\Sonos\Playlist[]
+     */
     public static function getPlaylists()
     {
         if (is_array(static::$playlists)) {
@@ -212,6 +273,13 @@ class Network
     }
 
 
+    /**
+     * Get the playlist with the specified name.
+     *
+     * If no case-sensitive match is found it will return a case-insensitive match.
+     *
+     * @return duncan3dc\Sonos\Playlist
+     */
     public static function getPlaylistByName($name)
     {
         $roughMatch = false;

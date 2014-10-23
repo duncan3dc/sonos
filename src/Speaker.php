@@ -4,18 +4,57 @@ namespace duncan3dc\Sonos;
 
 use duncan3dc\DomParser\XmlParser;
 
+/**
+ * Provides an interface to individual speakers that is mostly read-only, although the volume can be set using this class.
+ */
 class Speaker
 {
+    /**
+     * @var string The IP address of the speaker.
+     */
     public $ip;
+
+    /**
+     * @var string The "Friendly" name reported by the speaker.
+     */
     public $name;
+
+    /**
+     * @var string The room name assigned to this speaker.
+     */
     public $room;
+
+    /**
+     * @var array Cached data to increase performance.
+     */
     protected $cache = [];
+
+    /**
+     * @var string The group id this speaker is a part of.
+     */
     protected $group;
+
+    /**
+     * @var boolean Whether this speaker is the coordinator of it's current group.
+     */
     protected $coordinator;
+
+    /**
+     * @var string The unique id of this speaker.
+     */
     protected $uuid;
+
+    /**
+     * @var boolean A flag to indicate whether we have gathered the topology for this speaker or not.
+     */
     protected $topology;
 
 
+    /**
+     * Create an instance of the Speaker class.
+     *
+     * @param string The ip address that the controller is listening on
+     */
     public function __construct($ip)
     {
         $this->ip = $ip;
@@ -27,6 +66,14 @@ class Speaker
     }
 
 
+    /**
+     * Retrieve some xml from the controller.
+     * _This method is intended for internal use only._
+     *
+     * @param string The url to retrieve
+     *
+     * @return duncan3dc\DomParser\XmlParser
+     */
     public function getXml($url)
     {
         if (!isset($this->cache[$url])) {
@@ -37,6 +84,16 @@ class Speaker
     }
 
 
+    /**
+     * Send a soap request to the speaker.
+     * _This method is intended for internal use only_.
+     *
+     * @param string The service to send the request to
+     * @param string The action to call
+     * @param array The parameters to pass
+     *
+     * @return mixed
+     */
     public function soap($service, $action, $params = [])
     {
         switch ($service) {
@@ -66,6 +123,12 @@ class Speaker
     }
 
 
+    /**
+     * Get the attributes needed for the classes instance variables.
+     * _This method is intended for internal use only_.
+     *
+     * @return void
+     */
     protected function getTopology()
     {
         if ($this->topology) {
@@ -86,7 +149,15 @@ class Speaker
     }
 
 
-    public function setTopology($attributes)
+    /**
+     * Set the instance variables based on the xml attributes.
+     * _This method is intended for internal use only_.
+     *
+     * @param array The attributes from the xml that represent this speaker
+     *
+     * @return void
+     */
+    public function setTopology(array $attributes)
     {
         $this->topology = true;
         $this->group = $attributes["group"];
@@ -95,6 +166,11 @@ class Speaker
     }
 
 
+    /**
+     * Get the uuid of the group this speaker is a member of.
+     *
+     * @return string
+     */
     public function getGroup()
     {
         $this->getTopology();
@@ -102,6 +178,11 @@ class Speaker
     }
 
 
+    /**
+     * Check if this speaker is the coordinator of it's current group.
+     *
+     * @return boolean
+     */
     public function isCoordinator()
     {
         $this->getTopology();
@@ -109,6 +190,11 @@ class Speaker
     }
 
 
+    /**
+     * Get the uuid of this speaker.
+     *
+     * @return string The uuid of this speaker
+     */
     public function getUuid()
     {
         $this->getTopology();
@@ -116,6 +202,13 @@ class Speaker
     }
 
 
+    /**
+     * Get the current volume of this speaker.
+     *
+     * @param int The current volume between 0 and 100
+     *
+     * @return void
+     */
     public function getVolume()
     {
         return $this->soap("RenderingControl", "GetVolume", [
@@ -124,6 +217,13 @@ class Speaker
     }
 
 
+    /**
+     * Adjust the volume of this speaker to a specific value.
+     *
+     * @param int The amount to set the volume to between 0 and 100
+     *
+     * @return void
+     */
     public function setVolume($volume)
     {
         return $this->soap("RenderingControl", "SetVolume", [
@@ -133,6 +233,13 @@ class Speaker
     }
 
 
+    /**
+     * Adjust the volume of this speaker by a relative amount.
+     *
+     * @param int The amount to adjust by between -100 and 100
+     *
+     * @return void
+     */
     public function adjustVolume($adjust)
     {
         return $this->soap("RenderingControl", "SetRelativeVolume", [
