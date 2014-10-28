@@ -48,7 +48,7 @@ class Controller extends Speaker
      *
      * The speaker must be a coordinator.
      *
-     * @param duncan3dc\Sonos\Speaker
+     * @param Speaker $speaker
      */
     public function __construct(Speaker $speaker)
     {
@@ -132,7 +132,7 @@ class Controller extends Speaker
     /**
      * Extract track data from the passed content.
      *
-     * @param mixed
+     * @param mixed $xml
      *
      * @return array Track data containing the following elements (title, atrist, album, track-number)
      */
@@ -157,7 +157,7 @@ class Controller extends Speaker
     /**
      * Set the state of the group.
      *
-     * @param int One of the class STATE_ constants
+     * @param int $state One of the class STATE_ constants
      *
      * @return void
      */
@@ -224,7 +224,7 @@ class Controller extends Speaker
     /*
      * Get the speakers that are in the group of this controller.
      *
-     * @return duncan3dc\Sonos\Speaker[]
+     * @return Speaker[]
      */
     public function getSpeakers()
     {
@@ -242,7 +242,7 @@ class Controller extends Speaker
     /**
      * Adds the specified speaker to the group of this Controller.
      *
-     * @param duncan3dc\Sonos\Speaker The speaker to add to the group
+     * @param Speaker $speaker The speaker to add to the group
      *
      * @return void
      */
@@ -261,7 +261,7 @@ class Controller extends Speaker
     /**
      * Removes the specified speaker from the group of this Controller.
      *
-     * @param duncan3dc\Sonos\Speaker The speaker to remove from the group
+     * @param Speaker $speaker The speaker to remove from the group
      *
      * @return void
      */
@@ -274,7 +274,7 @@ class Controller extends Speaker
     /**
      * Set the current volume of all the speakers controlled by this Controller.
      *
-     * @param int An amount between 0 and 100
+     * @param int $volume An amount between 0 and 100
      *
      * @return void
      */
@@ -290,7 +290,7 @@ class Controller extends Speaker
     /**
      * Adjust the volume of all the speakers controlled by this Controller.
      *
-     * @param int A relative amount between -100 and 100
+     * @param int $adjust A relative amount between -100 and 100
      *
      * @return void
      */
@@ -328,7 +328,7 @@ class Controller extends Speaker
     /**
      * Set the current play mode settings.
      *
-     * @param array An array with 2 boolean elements (shuffle and repeat)
+     * @param array $options An array with 2 boolean elements (shuffle and repeat)
      *
      * @return void
      */
@@ -368,7 +368,7 @@ class Controller extends Speaker
     /**
      * Turn repeat mode on or off.
      *
-     * @param Whether repeat should be on or not
+     * @param boolean $repeat Whether repeat should be on or not
      *
      * @return void
      */
@@ -399,7 +399,7 @@ class Controller extends Speaker
     /**
      * Turn shuffle mode on or off.
      *
-     * @param boolean Whether shuffle should be on or not
+     * @param boolean $shuffle Whether shuffle should be on or not
      *
      * @return void
      */
@@ -418,7 +418,7 @@ class Controller extends Speaker
     /**
      * Get the queue for this controller.
      *
-     * @return duncan3dc\Sonos\Queue
+     * @return Queue
      */
     public function getQueue()
     {

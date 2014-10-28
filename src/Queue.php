@@ -10,40 +10,40 @@ use duncan3dc\DomParser\XmlParser;
 class Queue
 {
     /**
-     * The unique id of the queue
+     * @var string $id The unique id of the queue
      */
-    protected $id = false;
+    protected $id;
 
     /**
-     * The current update id to be issued with upnp requests
+     * @var int The current update id to be issued with upnp requests
      */
-    protected $updateId = false;
+    protected $updateId = 0;
 
     /**
-     * The Controller instance this queue is for
+     * @var Controller $controller The Controller instance this queue is for
      */
-    protected $controller = false;
+    protected $controller;
 
 
     /**
      * Create an instance of the Queue class.
      *
-     * @param duncan3dc\Sonos\Controller The Controller instance that this queue is for
+     * @param Controller $controller The Controller instance that this queue is for
      */
-    public function __construct(Controller $param)
+    public function __construct(Controller $controller)
     {
         $this->id = "Q:0";
         $this->updateId = false;
-        $this->controller = $param;
+        $this->controller = $controller;
     }
 
 
     /**
      * Send a soap request to the controller for this queue.
      *
-     * @param string The service to send the request to
-     * @param string The action to call
-     * @param array The parameters to pass
+     * @param string $service The service to send the request to
+     * @param string $action The action to call
+     * @param array $params The parameters to pass
      *
      * @return mixed
      */
@@ -63,9 +63,9 @@ class Queue
     /**
      * Send a browse request to the controller to get queue info.
      *
-     * @param string The type of browse request to send
-     * @param int The position to start browsing from
-     * @param int The number of tracks from the queue to return
+     * @param string $type The type of browse request to send
+     * @param int $start The position to start browsing from
+     * @param int $limit The number of tracks from the queue to return
      *
      * @return mixed
      */
@@ -99,8 +99,8 @@ class Queue
     /**
      * Get tracks from the queue.
      *
-     * @param int The zero-based position in the queue to start from
-     * @param int The maximum number of tracks to return
+     * @param int $start The zero-based position in the queue to start from
+     * @param int $total The maximum number of tracks to return
      *
      * @return array
      */
@@ -140,8 +140,8 @@ class Queue
     /**
      * Add tracks to the queue.
      *
-     * @param string|string[] The URI of the track to add, multiple tracks can be added by passing an array of URIs
-     * @param int The position to insert the tracks in the queue (zero-based), by default the track(s) will be added to the end of the queue
+     * @param string|string[] $tracks The URI of the track to add, multiple tracks can be added by passing an array of URIs
+     * @param int $position The position to insert the tracks in the queue (zero-based), by default the track(s) will be added to the end of the queue
      *
      * @return boolean
      */
@@ -181,7 +181,7 @@ class Queue
     /**
      * Remove tracks from the queue.
      *
-     * @param int|int[] The zero-based position of the track to remove, or an array of positions
+     * @param int|int[] $positions The zero-based position of the track to remove, or an array of positions
      *
      * @return boolean
      */

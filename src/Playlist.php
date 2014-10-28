@@ -10,7 +10,7 @@ use duncan3dc\DomParser\XmlParser;
 class Playlist extends Queue
 {
     /**
-     * @var string The name of the playlist.
+     * @var string $name The name of the playlist.
      */
     protected $name = false;
 
@@ -18,9 +18,9 @@ class Playlist extends Queue
     /**
      * Create a new playlist.
      *
-     * @var string The name to give to the playlist
+     * @param string The name to give to the playlist
      *
-     * @return duncan3dc\Sonos\Playlist
+     * @return Playlist
      */
     public static function create($name)
     {
@@ -38,7 +38,7 @@ class Playlist extends Queue
     /**
      * Create an instance of the Playlist class.
      *
-     * @param string|duncan3dc\DomParser\XmlElement The id of the playlist, or an xml element with the relevant attributes
+     * @param string|duncan3dc\DomParser\XmlElement $param The id of the playlist, or an xml element with the relevant attributes
      */
     public function __construct($param)
     {
@@ -85,8 +85,8 @@ class Playlist extends Queue
     /**
      * Add tracks to the playlist.
      *
-     * @param string|string[] The URI of the track to add, multiple tracks can be added by passing an array of URIs
-     * @param int The position to insert the tracks in the playlist (zero-based), by default the track(s) will be added to the end of the playlist
+     * @param string|string[] $tracks The URI of the track to add, multiple tracks can be added by passing an array of URIs
+     * @param int $position The position to insert the tracks in the playlist (zero-based), by default the track(s) will be added to the end of the playlist
      *
      * @return boolean
      */
@@ -125,7 +125,7 @@ class Playlist extends Queue
     /**
      * Remove tracks from the playlist.
      *
-     * @param int|int[] The zero-based position of the track to remove, or an array of positions
+     * @param int|int[] $positions The zero-based position of the track to remove, or an array of positions
      *
      * @return boolean
      */

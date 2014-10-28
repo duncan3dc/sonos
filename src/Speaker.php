@@ -10,42 +10,42 @@ use duncan3dc\DomParser\XmlParser;
 class Speaker
 {
     /**
-     * @var string The IP address of the speaker.
+     * @var string $ip The IP address of the speaker.
      */
     public $ip;
 
     /**
-     * @var string The "Friendly" name reported by the speaker.
+     * @var string $name The "Friendly" name reported by the speaker.
      */
     public $name;
 
     /**
-     * @var string The room name assigned to this speaker.
+     * @var string $room The room name assigned to this speaker.
      */
     public $room;
 
     /**
-     * @var array Cached data to increase performance.
+     * @var array $cache Cached data to increase performance.
      */
     protected $cache = [];
 
     /**
-     * @var string The group id this speaker is a part of.
+     * @var string $group The group id this speaker is a part of.
      */
     protected $group;
 
     /**
-     * @var boolean Whether this speaker is the coordinator of it's current group.
+     * @var boolean $coordinator Whether this speaker is the coordinator of it's current group.
      */
     protected $coordinator;
 
     /**
-     * @var string The unique id of this speaker.
+     * @var string $uuid The unique id of this speaker.
      */
     protected $uuid;
 
     /**
-     * @var boolean A flag to indicate whether we have gathered the topology for this speaker or not.
+     * @var boolean $topology A flag to indicate whether we have gathered the topology for this speaker or not.
      */
     protected $topology;
 
@@ -53,7 +53,7 @@ class Speaker
     /**
      * Create an instance of the Speaker class.
      *
-     * @param string The ip address that the controller is listening on
+     * @param string $ip The ip address that the controller is listening on
      */
     public function __construct($ip)
     {
@@ -70,9 +70,9 @@ class Speaker
      * Retrieve some xml from the controller.
      * _This method is intended for internal use only._
      *
-     * @param string The url to retrieve
+     * @param string $url The url to retrieve
      *
-     * @return duncan3dc\DomParser\XmlParser
+     * @return XmlParser
      */
     public function getXml($url)
     {
@@ -88,9 +88,9 @@ class Speaker
      * Send a soap request to the speaker.
      * _This method is intended for internal use only_.
      *
-     * @param string The service to send the request to
-     * @param string The action to call
-     * @param array The parameters to pass
+     * @param string $service The service to send the request to
+     * @param string $action The action to call
+     * @param array $params The parameters to pass
      *
      * @return mixed
      */
@@ -153,7 +153,7 @@ class Speaker
      * Set the instance variables based on the xml attributes.
      * _This method is intended for internal use only_.
      *
-     * @param array The attributes from the xml that represent this speaker
+     * @param array $attributes The attributes from the xml that represent this speaker
      *
      * @return void
      */
@@ -205,8 +205,6 @@ class Speaker
     /**
      * Get the current volume of this speaker.
      *
-     * @param int The current volume between 0 and 100
-     *
      * @return void
      */
     public function getVolume()
@@ -220,7 +218,7 @@ class Speaker
     /**
      * Adjust the volume of this speaker to a specific value.
      *
-     * @param int The amount to set the volume to between 0 and 100
+     * @param int $volume The amount to set the volume to between 0 and 100
      *
      * @return void
      */
@@ -236,7 +234,7 @@ class Speaker
     /**
      * Adjust the volume of this speaker by a relative amount.
      *
-     * @param int The amount to adjust by between -100 and 100
+     * @param int $adjust The amount to adjust by between -100 and 100
      *
      * @return void
      */
