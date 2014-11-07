@@ -147,6 +147,22 @@ class Playlist extends Queue
 
 
     /**
+     * Remove all tracks from the queue.
+     *
+     * @return void
+     */
+    public function clear()
+    {
+        $positions = [];
+        $max = $this->count();
+        for ($i = 0; $i < $max; $i++) {
+            $positions[] = $i;
+        }
+        $this->removeTracks($positions);
+    }
+
+
+    /**
      * Delete this playlist from the network.
      *
      * @return void

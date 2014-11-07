@@ -233,4 +233,15 @@ class Queue implements \Countable
         }
         return true;
     }
+
+
+    /**
+     * Remove all tracks from the queue.
+     *
+     * @return void
+     */
+    public function clear()
+    {
+        $this->soap("AVTransport", "RemoveAllTracksFromQueue");
+    }
 }
