@@ -2,8 +2,6 @@
 
 namespace duncan3dc\Sonos;
 
-use duncan3dc\DomParser\XmlParser;
-
 /**
  * Allows interaction with the groups of speakers.
  *
@@ -120,37 +118,12 @@ class Controller extends Speaker
     public function getStateDetails()
     {
         $data = $this->soap("AVTransport", "GetPositionInfo");
-        $meta = $this->getTrackMetaData($data["TrackMetaData"]);
+        $meta = Helper::getTrackMetaData($data["TrackMetaData"]);
         return array_merge($meta, [
             "queue-number"  =>  (int) $data["Track"],
             "duration"      =>  $data["TrackDuration"],
             "position"      =>  $data["RelTime"],
         ]);
-    }
-
-
-    /**
-     * Extract track data from the passed content.
-     *
-     * @param mixed $xml
-     *
-     * @return array Track data containing the following elements (title, atrist, album, track-number)
-     */
-    protected function getTrackMetaData($xml)
-    {
-        if (is_object($xml)) {
-            $parser = $xml;
-        } elseif ($xml) {
-            $parser = new XmlParser($xml);
-        } else {
-            return [];
-        }
-        return [
-            "title"         =>  (string) $parser->getTag("title"),
-            "artist"        =>  (string) $parser->getTag("creator"),
-            "album"         =>  (string) $parser->getTag("album"),
-            "track-number"  =>  (int) $parser->getTag("originalTrackNumber"),
-        ];
     }
 
 
