@@ -118,13 +118,12 @@ class Queue
             $data = $this->browse("DirectChildren", $start, $limit);
             $parser = new XmlParser($data["Result"]);
             foreach ($parser->getTags("item") as $item) {
-                $tracks[] = [
+                $meta = Helper::getTrackMetaData($item);
+                unset($meta["track-number"]);
+                $tracks[] = array_merge($meta, [
                     "id"        =>  $item->getAttribute("id"),
                     "uri"       =>  $item->getTag("res")->nodeValue,
-                    "title"     =>  $item->getTag("title")->nodeValue,
-                    "artist"    =>  $item->getTag("creator")->nodeValue,
-                    "album"     =>  $item->getTag("album")->nodeValue,
-                ];
+                ]);
                 if ($total > 0 && count($tracks) >= $total) {
                     return $tracks;
                 }
