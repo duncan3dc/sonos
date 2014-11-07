@@ -30,7 +30,7 @@ class Helper extends \duncan3dc\Helpers\Helper
             "title"         =>  (string) $parser->getTag("title"),
             "artist"        =>  (string) $parser->getTag("creator"),
             "album"         =>  (string) $parser->getTag("album"),
-            "track-number"  =>  (int) $parser->getTag("originalTrackNumber"),
+            "track-number"  =>  (int)(string) $parser->getTag("originalTrackNumber"),
         ];
     }
 }
