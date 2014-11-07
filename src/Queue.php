@@ -7,7 +7,7 @@ use duncan3dc\DomParser\XmlParser;
 /**
  * Provides an interface for managing the queue of a controller.
  */
-class Queue
+class Queue implements \Countable
 {
     /**
      * @var string $id The unique id of the queue
@@ -93,6 +93,18 @@ class Queue
             $this->updateId = $data["UpdateID"];
         }
         return $this->updateId;
+    }
+
+
+    /**
+     * The the number of tracks in the queue.
+     *
+     * @return int
+     */
+    public function count()
+    {
+        $data = $this->browse("DirectChildren");
+        return $data["TotalMatches"];
     }
 
 
