@@ -2,6 +2,8 @@
 
 namespace duncan3dc\Sonos;
 
+use duncan3dc\DomParser\XmlParser;
+
 /**
  * Allows interaction with the groups of speakers.
  *
@@ -113,16 +115,28 @@ class Controller extends Speaker
     /**
      * Get attributes about the currently active track in the queue.
      *
-     * @return array Track data containing the following elements (title, atrist, album, track-number, queue-number, duration, position)
+     * @return array Track data containing the following elements (title, artist, album, track-number, queue-number, duration, position, stream)
      */
     public function getStateDetails()
     {
         $data = $this->soap("AVTransport", "GetPositionInfo");
-        $meta = Helper::getTrackMetaData($data["TrackMetaData"]);
+
+        $parser = new XmlParser($data["TrackMetaData"]);
+        $meta = Helper::getTrackMetaData($parser);
+
+        $stream = false;
+        if ((string) $parser->getTag("streamContent")) {
+            $info = $this->soap("AVTransport", "GetMediaInfo");
+            if (!$stream = (string) (new XmlParser($info["CurrentURIMetaData"]))->getTag("title")) {
+                $stream = (string) $parser->getTag("title");
+            }
+        }
+
         return array_merge($meta, [
             "queue-number"  =>  (int) $data["Track"],
             "duration"      =>  $data["TrackDuration"],
             "position"      =>  $data["RelTime"],
+            "stream"        =>  $stream,
         ]);
     }
 
