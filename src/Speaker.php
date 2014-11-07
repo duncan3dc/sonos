@@ -248,4 +248,45 @@ class Speaker
             "Adjustment"    =>  $adjust,
         ]);
     }
+
+
+    /**
+     * Check if this speaker is currently muted.
+     *
+     * @return boolean
+     */
+    public function isMuted()
+    {
+        return $this->soap("RenderingControl", "GetMute", [
+            "Channel"   =>  "Master",
+        ]);
+    }
+
+
+    /**
+     * Mute this speaker.
+     *
+     * @return void
+     */
+    public function mute()
+    {
+        $this->soap("RenderingControl", "SetMute", [
+            "Channel"       =>  "Master",
+            "DesiredMute"   =>  1,
+        ]);
+    }
+
+
+    /**
+     * Unmute this speaker.
+     *
+     * @return void
+     */
+    public function unmute()
+    {
+        $this->soap("RenderingControl", "SetMute", [
+            "Channel"       =>  "Master",
+            "DesiredMute"   =>  0,
+        ]);
+    }
 }
