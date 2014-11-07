@@ -132,7 +132,7 @@ class Speaker
     protected function getTopology()
     {
         if ($this->topology) {
-            return true;
+            return;
         }
 
         $topology = $this->getXml("/status/topology");
@@ -141,7 +141,8 @@ class Speaker
             $attributes = $player->getAttributes();
             $ip = parse_url($attributes["location"])["host"];
             if ($ip == $this->ip) {
-                return $this->setTopology($attributes);
+                $this->setTopology($attributes);
+                return;
             }
         }
 
@@ -205,7 +206,9 @@ class Speaker
     /**
      * Get the current volume of this speaker.
      *
-     * @return void
+     * @param int The current volume between 0 and 100
+     *
+     * @return int
      */
     public function getVolume()
     {

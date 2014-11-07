@@ -38,7 +38,7 @@ class Playlist extends Queue
     /**
      * Create an instance of the Playlist class.
      *
-     * @param string|duncan3dc\DomParser\XmlElement $param The id of the playlist, or an xml element with the relevant attributes
+     * @param string|XmlElement $param The id of the playlist, or an xml element with the relevant attributes
      */
     public function __construct($param)
     {
