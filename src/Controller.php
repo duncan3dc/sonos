@@ -122,7 +122,7 @@ class Controller extends Speaker
         $data = $this->soap("AVTransport", "GetPositionInfo");
         $meta = $this->getTrackMetaData($data["TrackMetaData"]);
         return array_merge($meta, [
-            "queue-number"  =>  $data["Track"],
+            "queue-number"  =>  (int) $data["Track"],
             "duration"      =>  $data["TrackDuration"],
             "position"      =>  $data["RelTime"],
         ]);
@@ -146,10 +146,10 @@ class Controller extends Speaker
             return [];
         }
         return [
-            "title"         =>  $parser->getTag("title")->nodeValue,
-            "artist"        =>  $parser->getTag("creator")->nodeValue,
-            "album"         =>  $parser->getTag("album")->nodeValue,
-            "track-number"  =>  $parser->getTag("originalTrackNumber")->nodeValue,
+            "title"         =>  (string) $parser->getTag("title"),
+            "artist"        =>  (string) $parser->getTag("creator"),
+            "album"         =>  (string) $parser->getTag("album"),
+            "track-number"  =>  (int) $parser->getTag("originalTrackNumber"),
         ];
     }
 
