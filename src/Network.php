@@ -21,6 +21,11 @@ class Network
     protected static $playlists = false;
 
     /**
+     * @var Alarm[] $alarms Alarms that are available on the current network.
+     */
+    protected static $alarms = false;
+
+    /**
      * @var boolean $cache Setting this to true will cache the expensive multicast discover to find Sonos devices on the network
      */
     public static $cache = false;
@@ -140,7 +145,7 @@ class Network
     /**
      * Get a Controller instance from the network.
      *
-     * Useful for managing playlists, as these need a controller but it doesn't matter which one.
+     * Useful for managing playlists/alarms, as these need a controller but it doesn't matter which one.
      *
      * @return Controller
      */
@@ -299,5 +304,30 @@ class Network
         }
 
         throw new \InvalidArgumentException("No playlist found with the name '" . $name . "'");
+    }
+
+
+    /**
+     * Get all the alarms available on the network.
+     *
+     * @return Alarm[]
+     */
+    public static function getAlarms()
+    {
+        if (is_array(static::$alarms)) {
+            return static::$alarms;
+        }
+
+        $controller = static::getController();
+
+        $data = $controller->soap("AlarmClock", "ListAlarms");
+        $parser = new XmlParser($data["CurrentAlarmList"]);
+
+        $alarms = [];
+        foreach ($parser->getTags("Alarm") as $tag) {
+            $alarms[] = new Alarm($tag);
+        }
+
+        return static::$alarms = $alarms;
     }
 }

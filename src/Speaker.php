@@ -104,12 +104,21 @@ class Speaker
             case "ContentDirectory":
                 $path = "MediaServer";
                 break;
+            case "AlarmClock":
+                $path = null;
+                break;
             default:
-                throw new \Exception("Unknown service (" . $service . ")");
+                throw new \InvalidArgumentException("Unknown service (" . $service . ")");
         }
 
+        $location = "http://" . $this->ip . ":1400/";
+        if ($path) {
+            $location .= $path . "/";
+        }
+        $location .= $service . "/Control";
+
         $soap = new \SoapClient(null, [
-            "location"  =>  "http://" . $this->ip . ":1400/" . $path . "/" . $service . "/Control",
+            "location"  =>  $location,
             "uri"       =>  "urn:schemas-upnp-org:service:" . $service . ":1",
         ]);
 
