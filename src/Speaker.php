@@ -212,7 +212,7 @@ class Speaker
      */
     public function getVolume()
     {
-        return $this->soap("RenderingControl", "GetVolume", [
+        return (int) $this->soap("RenderingControl", "GetVolume", [
             "Channel"   =>  "Master",
         ]);
     }
