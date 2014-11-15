@@ -298,17 +298,7 @@ class Controller extends Speaker
     public function getMode()
     {
         $data = $this->soap("AVTransport", "GetTransportSettings");
-        $options = [
-            "shuffle"   =>  false,
-            "repeat"    =>  false,
-        ];
-        if (in_array($data["PlayMode"], ["REPEAT_ALL", "SHUFFLE"])) {
-            $options["repeat"] = true;
-        }
-        if (in_array($data["PlayMode"], ["SHUFFLE_NOREPEAT", "SHUFFLE"])) {
-            $options["shuffle"] = true;
-        }
-        return $options;
+        return Helper::getMode($data["PlayMode"]);
     }
 
 

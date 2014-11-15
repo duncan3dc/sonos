@@ -43,4 +43,29 @@ class Helper extends \duncan3dc\Helpers\Helper
             "album-art"     =>  $art,
         ];
     }
+
+
+    /**
+     * Create a mode array from the mode text value.
+     *
+     * @param string $mode
+     *
+     * @return array Mode data containing the following boolean elements (shuffle, repeat)
+     */
+    public static function getMode($mode)
+    {
+        $options = [
+            "shuffle"   =>  false,
+            "repeat"    =>  false,
+        ];
+
+        if (in_array($mode, ["REPEAT_ALL", "SHUFFLE"])) {
+            $options["repeat"] = true;
+        }
+        if (in_array($mode, ["SHUFFLE_NOREPEAT", "SHUFFLE"])) {
+            $options["shuffle"] = true;
+        }
+
+        return $options;
+    }
 }
