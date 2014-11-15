@@ -2,6 +2,7 @@
 
 namespace duncan3dc\Sonos;
 
+use duncan3dc\DomParser\XmlElement;
 use duncan3dc\DomParser\XmlParser;
 
 /**
