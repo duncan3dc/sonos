@@ -1,7 +1,8 @@
 <?php
 
-namespace duncan3dc\Sonos;
+namespace duncan3dc\Sonos\Test;
 
+use duncan3dc\Sonos\Helper;
 use duncan3dc\DomParser\XmlParser;
 
 class HelperTest extends \PHPUnit_Framework_TestCase
