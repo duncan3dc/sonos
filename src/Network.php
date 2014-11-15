@@ -167,7 +167,7 @@ class Network
             }
         }
 
-        throw new \Exception("No speaker found with the room name '" . $room . "'");
+        throw new \InvalidArgumentException("No speaker found with the room name '" . $room . "'");
     }
 
 
@@ -190,7 +190,7 @@ class Network
         }
 
         if (count($return) < 1) {
-            throw new \Exception("No speakers found with the room name '" . $room . "'");
+            throw new \InvalidArgumentException("No speakers found with the room name '" . $room . "'");
         }
 
         return $return;
@@ -237,7 +237,7 @@ class Network
             }
         }
 
-        throw new \Exception("No controller found with the room name '" . $room . "'");
+        throw new \InvalidArgumentException("No controller found with the room name '" . $room . "'");
     }
 
 
@@ -298,6 +298,6 @@ class Network
             return $roughMatch;
         }
 
-        throw new \Exception("No playlist found with the name '" . $name . "'");
+        throw new \InvalidArgumentException("No playlist found with the name '" . $name . "'");
     }
 }

@@ -53,7 +53,7 @@ class Controller extends Speaker
     public function __construct(Speaker $speaker)
     {
         if (!$speaker->isCoordinator()) {
-            throw new \Exception("You cannot create a Controller instance from a Speaker that is not the coordinator of it's group");
+            throw new \InvalidArgumentException("You cannot create a Controller instance from a Speaker that is not the coordinator of it's group");
         }
         $this->ip = $speaker->ip;
 
@@ -158,7 +158,7 @@ class Controller extends Speaker
             case self::STATE_STOPPED;
                 return $this->pause();
         }
-        throw new \Exception("Unknown state (" . $state . ")");
+        throw new \InvalidArgumentException("Unknown state (" . $state . ")");
     }
 
 
