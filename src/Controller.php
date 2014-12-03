@@ -121,6 +121,20 @@ class Controller extends Speaker
     {
         $data = $this->soap("AVTransport", "GetPositionInfo");
 
+        if (!$data["TrackMetaData"]) {
+            return [
+                "title"         =>  "",
+                "artist"        =>  "",
+                "album"         =>  "",
+                "track-number"  =>  0,
+                "album-art"     =>  "",
+                "queue-number"  =>  0,
+                "duration"      =>  $data["TrackDuration"],
+                "position"      =>  $data["RelTime"],
+                "stream"        =>  false,
+            ];
+        }
+
         $parser = new XmlParser($data["TrackMetaData"]);
         $meta = Helper::getTrackMetaData($parser);
 
