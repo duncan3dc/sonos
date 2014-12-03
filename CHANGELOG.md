@@ -5,8 +5,15 @@ Changelog
 
 ### Added
 
-* [Docs] Created a changelog!
 * [Alarms] Allow alarm information to be read, and managed using the Alarm class
+
+--------
+
+## 0.8.8 - 2014-12-03
+
+### Added
+
+* [Docs] Created a changelog!
 
 ### Changed
 
@@ -19,5 +26,9 @@ Network::getSpeakersByRoom()
 Network::getControllerByRoom()
 Network::getPlaylistByName()
 ```
+
+### Fixed
+
+* [Controllers] The getStateDetails() method can now handle empty queues and return a valid array.
 
 --------
