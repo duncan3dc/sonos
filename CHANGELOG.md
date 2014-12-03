@@ -11,8 +11,10 @@ Changelog
 
 * [Network] The Network class is no longer static, it should be instantiated before calling its methods.
 * [Network] The cache handling is now provided by doctrine/cache
+* [Controllers] The getStateDetails() method now returns an instance of the State class.
 * [Playlists] Creating playlists is now done using the createPlaylist() method on the Network class.
 * [Queues/Playlists] Adding individual tracks is now doing using addTrack(), and addTracks() only supports arrays.
+* [Queues/Playlists] The getTracks() method now returns an array of QueueTrack instances.
 
 --------
 

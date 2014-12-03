@@ -63,14 +63,14 @@ class ControllerTest extends SonosTest
 
     public function testGetStateDetails()
     {
-        $keys = ["title", "artist", "album", "track-number", "queue-number", "duration", "position", "stream"];
+        $keys = ["title", "artist", "album", "trackNumber", "queueNumber", "duration", "position", "stream"];
         $state = $this->network->getController()->getStateDetails();
         foreach ($keys as $key) {
-            $this->assertArrayHasKey($key, $state);
-            if (in_array($key, ["track-number", "queue-number"])) {
-                $this->assertInternalType("integer", $state[$key]);
+            $this->assertObjectHasAttribute($key, $state);
+            if (in_array($key, ["trackNumber", "queueNumber"])) {
+                $this->assertInternalType("integer", $state->$key);
             } elseif ($key !== "stream") {
-                $this->assertInternalType("string", $state[$key]);
+                $this->assertInternalType("string", $state->$key);
             }
         }
     }
@@ -79,18 +79,18 @@ class ControllerTest extends SonosTest
     public function testNext()
     {
         $controller = $this->network->getController();
-        $number = $controller->getStateDetails()["queue-number"];
+        $number = $controller->getStateDetails()->queueNumber;
         $controller->next();
-        $this->assertSame($controller->getStateDetails()["queue-number"], $number + 1);
+        $this->assertSame($controller->getStateDetails()->queueNumber, $number + 1);
     }
 
 
     public function testPrevious()
     {
         $controller = $this->network->getController();
-        $number = $controller->getStateDetails()["queue-number"];
+        $number = $controller->getStateDetails()->queueNumber;
         $controller->previous();
-        $this->assertSame($controller->getStateDetails()["queue-number"], $number - 1);
+        $this->assertSame($controller->getStateDetails()->queueNumber, $number - 1);
     }
 
 
