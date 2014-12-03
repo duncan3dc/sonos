@@ -62,6 +62,7 @@ class Controller extends Speaker
             throw new \InvalidArgumentException("You cannot create a Controller instance from a Speaker that is not the coordinator of it's group");
         }
         $this->ip = $speaker->ip;
+        $this->device = $speaker->device;
 
         $this->network = $network;
         $this->name = $speaker->name;

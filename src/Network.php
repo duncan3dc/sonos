@@ -141,17 +141,6 @@ class Network
             $speakers[$ip] = new Speaker($ip);
         }
 
-        $speaker = reset($speakers);
-        $topology = $speaker->getXml("/status/topology");
-        $players = $topology->getTag("ZonePlayers")->getTags("ZonePlayer");
-        foreach ($players as $player) {
-            $attributes = $player->getAttributes();
-            $ip = parse_url($attributes["location"])["host"];
-            if (array_key_exists($ip, $speakers)) {
-                $speakers[$ip]->setTopology($attributes);
-            }
-        }
-
         return $this->speakers = $speakers;
     }
 

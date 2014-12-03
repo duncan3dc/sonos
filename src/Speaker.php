@@ -2,8 +2,6 @@
 
 namespace duncan3dc\Sonos;
 
-use duncan3dc\DomParser\XmlParser;
-
 /**
  * Provides an interface to individual speakers that is mostly read-only, although the volume can be set using this class.
  */
@@ -15,6 +13,11 @@ class Speaker
     public $ip;
 
     /**
+     * @var Device $device The instance of the Device class to send requests to.
+     */
+    protected $device;
+
+    /**
      * @var string $name The "Friendly" name reported by the speaker.
      */
     public $name;
@@ -23,11 +26,6 @@ class Speaker
      * @var string $room The room name assigned to this speaker.
      */
     public $room;
-
-    /**
-     * @var array $cache Cached data to increase performance.
-     */
-    protected $cache = [];
 
     /**
      * @var string $group The group id this speaker is a part of.
@@ -53,42 +51,27 @@ class Speaker
     /**
      * Create an instance of the Speaker class.
      *
-     * @param string $ip The ip address that the speaker is listening on
+     * @param Device|string $param An Device instance or the ip address that the speaker is listening on
      */
-    public function __construct($ip)
+    public function __construct($param)
     {
-        $this->ip = $ip;
-
-        $parser = $this->getXml("/xml/device_description.xml");
-        $device = $parser->getTag("device");
-        $this->name = $device->getTag("friendlyName")->nodeValue;
-        $this->room = $device->getTag("roomName")->nodeValue;
-    }
-
-
-    /**
-     * Retrieve some xml from the speaker.
-     *
-     * _This method is intended for internal use only._
-     *
-     * @param string $url The url to retrieve
-     *
-     * @return XmlParser
-     */
-    public function getXml($url)
-    {
-        if (!isset($this->cache[$url])) {
-            $this->cache[$url] = new XmlParser("http://" . $this->ip . ":1400" . $url);
+        if ($param instanceof Device) {
+            $this->device = $param;
+            $this->ip = $this->device->ip;
+        } else {
+            $this->ip = $param;
+            $this->device = new Device($this->ip);
         }
 
-        return $this->cache[$url];
+        $parser = $this->device->getXml("/xml/device_description.xml");
+        $device = $parser->getTag("device");
+        $this->name = (string) $device->getTag("friendlyName");
+        $this->room = (string) $device->getTag("roomName");
     }
 
 
     /**
      * Send a soap request to the speaker.
-     *
-     * _This method is intended for internal use only_.
      *
      * @param string $service The service to send the request to
      * @param string $action The action to call
@@ -98,44 +81,7 @@ class Speaker
      */
     public function soap($service, $action, $params = [])
     {
-        switch ($service) {
-            case "AVTransport";
-            case "RenderingControl":
-                $path = "MediaRenderer";
-                break;
-            case "ContentDirectory":
-                $path = "MediaServer";
-                break;
-            case "AlarmClock":
-                $path = null;
-                break;
-            default:
-                throw new \InvalidArgumentException("Unknown service (" . $service . ")");
-        }
-
-        $location = "http://" . $this->ip . ":1400/";
-        if ($path) {
-            $location .= $path . "/";
-        }
-        $location .= $service . "/Control";
-
-        $soap = new \SoapClient(null, [
-            "location"  =>  $location,
-            "uri"       =>  "urn:schemas-upnp-org:service:" . $service . ":1",
-            "trace"     =>  true,
-        ]);
-
-        $soapParams = [];
-        $params["InstanceID"] = 0;
-        foreach ($params as $key => $val) {
-            $soapParams[] = new \SoapParam(new \SoapVar($val, XSD_STRING), $key);
-        }
-
-        try {
-            return $soap->__soapCall($action, $soapParams);
-        } catch (\SoapFault $e) {
-            throw new Exceptions\SoapException($e, $soap);
-        }
+        return $this->device->soap($service, $action, $params);
     }
 
 
@@ -152,36 +98,22 @@ class Speaker
             return;
         }
 
-        $topology = $this->getXml("/status/topology");
+        $topology = $this->device->getXml("/status/topology");
         $players = $topology->getTag("ZonePlayers")->getTags("ZonePlayer");
         foreach ($players as $player) {
             $attributes = $player->getAttributes();
             $ip = parse_url($attributes["location"])["host"];
+
             if ($ip === $this->ip) {
-                $this->setTopology($attributes);
+                $this->topology = true;
+                $this->group = $attributes["group"];
+                $this->coordinator = ($attributes["coordinator"] === "true");
+                $this->uuid = $attributes["uuid"];
                 return;
             }
         }
 
         throw new \Exception("Failed to lookup the topology info for this speaker");
-    }
-
-
-    /**
-     * Set the instance variables based on the xml attributes.
-     *
-     * _This method is intended for internal use only_.
-     *
-     * @param array $attributes The attributes from the xml that represent this speaker
-     *
-     * @return void
-     */
-    public function setTopology(array $attributes)
-    {
-        $this->topology = true;
-        $this->group = $attributes["group"];
-        $this->coordinator = ($attributes["coordinator"] === "true");
-        $this->uuid = $attributes["uuid"];
     }
 
 
