@@ -3,6 +3,9 @@
 namespace duncan3dc\Sonos;
 
 use duncan3dc\DomParser\XmlParser;
+use duncan3dc\Sonos\Tracks\QueueTrack;
+use duncan3dc\Sonos\Tracks\Track;
+use duncan3dc\Sonos\Tracks\UriInterface;
 
 /**
  * Provides an interface for managing the queue of a controller.
@@ -114,7 +117,7 @@ class Queue implements \Countable
      * @param int $start The zero-based position in the queue to start from
      * @param int $total The maximum number of tracks to return
      *
-     * @return array
+     * @return QueueTrack[]
      */
     public function getTracks($start = 0, $total = 0)
     {
@@ -130,12 +133,7 @@ class Queue implements \Countable
             $data = $this->browse("DirectChildren", $start, $limit);
             $parser = new XmlParser($data["Result"]);
             foreach ($parser->getTags("item") as $item) {
-                $meta = Helper::getTrackMetaData($item);
-                unset($meta["track-number"]);
-                $tracks[] = array_merge($meta, [
-                    "id"        =>  $item->getAttribute("id"),
-                    "uri"       =>  $item->getTag("res")->nodeValue,
-                ]);
+                $tracks[] = QueueTrack::createFromXml($item, $this->controller);
                 if ($total > 0 && count($tracks) >= $total) {
                     return $tracks;
                 }
@@ -182,9 +180,19 @@ class Queue implements \Countable
         $this->getUpdateID();
 
         foreach ($tracks as $track) {
+
+            # If a simple uri has been passed then convert it to a Track instance
+            if (is_string($track)) {
+                $track = new Track($track);
+            }
+
+            if (!$track instanceof UriInterface) {
+                throw new \InvalidArgumentException("The addTracks() array must contain either string URIs or objects that implement \duncan3dc\Sonos\Tracks\UriInterface");
+            }
+
             $data = $this->soap("AVTransport", "AddURIToQueue", [
                 "UpdateID"                          =>  $this->updateId,
-                "EnqueuedURI"                       =>  $track,
+                "EnqueuedURI"                       =>  $track->getUri(),
                 "EnqueuedURIMetaData"               =>  "",
                 "DesiredFirstTrackNumberEnqueued"   =>  $position++,
                 "EnqueueAsNext"                     =>  0,

@@ -4,6 +4,8 @@ namespace duncan3dc\Sonos;
 
 use duncan3dc\DomParser\XmlElement;
 use duncan3dc\DomParser\XmlParser;
+use duncan3dc\Sonos\Tracks\Track;
+use duncan3dc\Sonos\Tracks\UriInterface;
 
 /**
  * Provides an interface for managing Sonos playlists on the current network.
@@ -84,9 +86,19 @@ class Playlist extends Queue
         $this->getUpdateID();
 
         foreach ($tracks as $track) {
+
+            # If a simple uri has been passed then convert it to a Track instance
+            if (is_string($track)) {
+                $track = new Track($track);
+            }
+
+            if (!$track instanceof UriInterface) {
+                throw new \InvalidArgumentException("The addTracks() array must contain either string URIs or objects that implement \duncan3dc\Sonos\Tracks\UriInterface");
+            }
+
             $data = $this->soap("AVTransport", "AddURIToSavedQueue", [
                 "UpdateID"              =>  $this->updateId,
-                "EnqueuedURI"           =>  $track,
+                "EnqueuedURI"           =>  $track->getUri(),
                 "EnqueuedURIMetaData"   =>  "",
                 "AddAtIndex"            =>  $position++,
             ]);
