@@ -18,6 +18,9 @@
         "ext-sockets": "*",
         "php": ">=5.4.0"
     },
+    "require-dev": {
+        "mockery/mockery": ">=0.9.2"
+    },
     "autoload": {
         "psr-4": {
             "duncan3dc\\Sonos\\": "src/",
