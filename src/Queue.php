@@ -51,7 +51,7 @@ class Queue implements \Countable
     {
         $params["ObjectID"] = $this->id;
 
-        if ($action == "Browse") {
+        if ($action === "Browse") {
             $params["Filter"] = "";
             $params["SortCriteria"] = "";
         }
@@ -88,7 +88,7 @@ class Queue implements \Countable
      */
     protected function getUpdateId()
     {
-        if (!$this->updateId || !Network::$cache) {
+        if (!$this->updateId) {
             $data = $this->browse("DirectChildren");
             $this->updateId = $data["UpdateID"];
         }
@@ -209,7 +209,7 @@ class Queue implements \Countable
         foreach ($positions as $position) {
             $position++;
             if ($last > -1) {
-                if ($position == $last + 1) {
+                if ($position === $last + 1) {
                     $ranges[$key]++;
                     $last = $position;
                     continue;

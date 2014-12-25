@@ -68,4 +68,28 @@ class Helper extends \duncan3dc\Helpers\Helper
 
         return $options;
     }
+
+
+    /**
+     * Create a mode string from a mode array.
+     *
+     * @param array $options An array with 2 boolean elements (shuffle and repeat)
+     *
+     * @return string
+     */
+    public static function setMode(array $options)
+    {
+        if ($options["shuffle"]) {
+            if (!$options["repeat"]) {
+                return "SHUFFLE_NOREPEAT";
+            }
+            return "SHUFFLE";
+        }
+
+        if ($options["repeat"]) {
+            return "REPEAT_ALL";
+        }
+
+        return "NORMAL";
+    }
 }

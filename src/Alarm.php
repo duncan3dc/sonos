@@ -48,7 +48,7 @@ class Alarm
      */
     public function getId()
     {
-        return $this->id;
+        return (int) $this->id;
     }
 
 

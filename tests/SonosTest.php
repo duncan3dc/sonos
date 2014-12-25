@@ -6,11 +6,15 @@ use duncan3dc\Sonos\Network;
 
 abstract class SonosTest extends \PHPUnit_Framework_TestCase
 {
+    protected $network;
+
     public function setUp()
     {
-        Network::$cache = true;
+        $this->network = new Network;
+
+        $this->network->cache = true;
         try {
-            Network::getSpeakers();
+            $this->network->getSpeakers();
         } catch (\Exception $e) {
             $this->markTestSkipped("No speakers found on the current network");
         }

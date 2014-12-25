@@ -149,7 +149,7 @@ class Speaker
         foreach ($players as $player) {
             $attributes = $player->getAttributes();
             $ip = parse_url($attributes["location"])["host"];
-            if ($ip == $this->ip) {
+            if ($ip === $this->ip) {
                 $this->setTopology($attributes);
                 return;
             }
@@ -171,7 +171,7 @@ class Speaker
     {
         $this->topology = true;
         $this->group = $attributes["group"];
-        $this->coordinator = ($attributes["coordinator"] == "true");
+        $this->coordinator = ($attributes["coordinator"] === "true");
         $this->uuid = $attributes["uuid"];
     }
 

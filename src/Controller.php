@@ -44,19 +44,26 @@ class Controller extends Speaker
 
 
     /**
+     * @var Network $network The network instance this Controller is part of.
+     */
+    protected $network;
+
+
+    /**
      * Create a Controller instance from a speaker.
      *
      * The speaker must be a coordinator.
      *
      * @param Speaker $speaker
      */
-    public function __construct(Speaker $speaker)
+    public function __construct(Speaker $speaker, Network $network)
     {
         if (!$speaker->isCoordinator()) {
             throw new \InvalidArgumentException("You cannot create a Controller instance from a Speaker that is not the coordinator of it's group");
         }
         $this->ip = $speaker->ip;
 
+        $this->network = $network;
         $this->name = $speaker->name;
         $this->room = $speaker->room;
         $this->group = $speaker->getGroup();
@@ -230,9 +237,9 @@ class Controller extends Speaker
     public function getSpeakers()
     {
         $group = [];
-        $speakers = Network::getSpeakers();
+        $speakers = $this->network->getSpeakers();
         foreach ($speakers as $speaker) {
-            if ($speaker->getGroup() == $this->getGroup()) {
+            if ($speaker->getGroup() === $this->getGroup()) {
                 $group[] = $speaker;
             }
         }
@@ -249,7 +256,7 @@ class Controller extends Speaker
      */
     public function addSpeaker(Speaker $speaker)
     {
-        if ($speaker->getUuid() == $this->getUuid()) {
+        if ($speaker->getUuid() === $this->getUuid()) {
             return;
         }
         $speaker->soap("AVTransport", "SetAVTransportURI", [
@@ -323,23 +330,10 @@ class Controller extends Speaker
      *
      * @return void
      */
-    public function setMode($options)
+    public function setMode(array $options)
     {
-        if ($options["shuffle"]) {
-            if ($options["repeat"]) {
-                $mode = "SHUFFLE";
-            } else {
-                $mode = "SHUFFLE_NOREPEAT";
-            }
-        } else {
-            if ($options["repeat"]) {
-                $mode = "REPEAT_ALL";
-            } else {
-                $mode = "NORMAL";
-            }
-        }
         $data = $this->soap("AVTransport", "SetPlayMode", [
-            "NewPlayMode"   =>  $mode,
+            "NewPlayMode"   =>  Helper::setMode($options),
         ]);
     }
 
@@ -365,8 +359,10 @@ class Controller extends Speaker
      */
     public function setRepeat($repeat)
     {
+        $repeat = (boolean) $repeat;
+
         $mode = $this->getMode();
-        if ($mode["repeat"] == $repeat) {
+        if ($mode["repeat"] === $repeat) {
             return;
         }
 
@@ -396,8 +392,10 @@ class Controller extends Speaker
      */
     public function setShuffle($shuffle)
     {
+        $shuffle = (boolean) $shuffle;
+
         $mode = $this->getMode();
-        if ($mode["shuffle"] == $shuffle) {
+        if ($mode["shuffle"] === $shuffle) {
             return;
         }
 

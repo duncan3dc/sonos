@@ -6,36 +6,36 @@ use duncan3dc\Helpers\DiskCache;
 use duncan3dc\DomParser\XmlParser;
 
 /**
- * Provides static methods to locate speakers/controllers/playlists on the current network.
+ * Provides methods to locate speakers/controllers/playlists on the current network.
  */
 class Network
 {
     /**
      * @var Speaker[] $speakers Speakers that are available on the current network.
      */
-    protected static $speakers;
+    protected $speakers;
 
     /**
      * @var Playlists[] $playlists Playlists that are available on the current network.
      */
-    protected static $playlists = false;
+    protected $playlists = false;
 
     /**
      * @var Alarm[] $alarms Alarms that are available on the current network.
      */
-    protected static $alarms = false;
+    protected $alarms = false;
 
     /**
      * @var boolean $cache Setting this to true will cache the expensive multicast discover to find Sonos devices on the network
      */
-    public static $cache = false;
+    public $cache = false;
 
     /**
      * Get all the devices on the current network.
      *
      * @return string[] An array of ip addresses
      */
-    protected static function getDevices()
+    protected function getDevices()
     {
         $ip = "239.255.255.250";
         $port = 1900;
@@ -104,18 +104,18 @@ class Network
      *
      * @return Speaker[]
      */
-    public static function getSpeakers()
+    public function getSpeakers()
     {
-        if (is_array(static::$speakers)) {
-            return static::$speakers;
+        if (is_array($this->speakers)) {
+            return $this->speakers;
         }
 
-        if (static::$cache) {
+        if ($this->cache) {
             $devices = DiskCache::call("ip-addresses", function() {
-                return static::getDevices();
+                return $this->getDevices();
             });
         } else {
-            $devices = static::getDevices();
+            $devices = $this->getDevices();
         }
 
         if (count($devices) < 1) {
@@ -138,7 +138,7 @@ class Network
             }
         }
 
-        return static::$speakers = $speakers;
+        return $this->speakers = $speakers;
     }
 
 
@@ -149,9 +149,9 @@ class Network
      *
      * @return Controller
      */
-    public static function getController()
+    public function getController()
     {
-        $controllers = static::getControllers();
+        $controllers = $this->getControllers();
         return reset($controllers);
     }
 
@@ -163,11 +163,11 @@ class Network
      *
      * @return Speaker
      */
-    public static function getSpeakerByRoom($room)
+    public function getSpeakerByRoom($room)
     {
-        $speakers = static::getSpeakers();
+        $speakers = $this->getSpeakers();
         foreach ($speakers as $speaker) {
-            if ($speaker->room == $room) {
+            if ($speaker->room === $room) {
                 return $speaker;
             }
         }
@@ -183,13 +183,13 @@ class Network
      *
      * @return Speaker[]
      */
-    public static function getSpeakersByRoom($room)
+    public function getSpeakersByRoom($room)
     {
         $return = [];
 
-        $speakers = static::getSpeakers();
+        $speakers = $this->getSpeakers();
         foreach ($speakers as $controller) {
-            if ($controller->room == $room) {
+            if ($controller->room === $room) {
                 $return[] = $controller;
             }
         }
@@ -207,16 +207,16 @@ class Network
      *
      * @return Controller[]
      */
-    public static function getControllers()
+    public function getControllers()
     {
         $controllers = [];
 
-        $speakers = static::getSpeakers();
+        $speakers = $this->getSpeakers();
         foreach ($speakers as $speaker) {
             if (!$speaker->isCoordinator()) {
                 continue;
             }
-            $controllers[$speaker->ip] = new Controller($speaker);
+            $controllers[$speaker->ip] = new Controller($speaker, $this);
         }
 
         return $controllers;
@@ -230,14 +230,14 @@ class Network
      *
      * @return Controller[]
      */
-    public static function getControllerByRoom($room)
+    public function getControllerByRoom($room)
     {
-        $speaker = static::getSpeakerByRoom($room);
+        $speaker = $this->getSpeakerByRoom($room);
         $group = $speaker->getGroup();
 
-        $controllers = static::getControllers();
+        $controllers = $this->getControllers();
         foreach ($controllers as $controller) {
-            if ($controller->getGroup() == $group) {
+            if ($controller->getGroup() === $group) {
                 return $controller;
             }
         }
@@ -247,17 +247,39 @@ class Network
 
 
     /**
+     * Get the coordinator for the specified ip address.
+     *
+     * @param string $ip The ip address of the speaker
+     *
+     * @return Controller
+     */
+    public function getControllerByIp($ip)
+    {
+        $speaker = new Speaker($ip);
+        $group = $speaker->getGroup();
+
+        foreach ($this->getControllers() as $controller) {
+            if ($controller->getGroup() === $group) {
+                return $controller;
+            }
+        }
+
+        throw new \InvalidArgumentException("No controller found for the IP address '" . $room . "'");
+    }
+
+
+    /**
      * Get all the playlists available on the network.
      *
      * @return Playlist[]
      */
-    public static function getPlaylists()
+    public function getPlaylists()
     {
-        if (is_array(static::$playlists)) {
-            return static::$playlists;
+        if (is_array($this->playlists)) {
+            return $this->playlists;
         }
 
-        $controller = static::getController();
+        $controller = $this->getController();
 
         $data = $controller->soap("ContentDirectory", "Browse", [
             "ObjectID"          =>  "SQ:",
@@ -271,10 +293,10 @@ class Network
 
         $playlists = [];
         foreach ($parser->getTags("container") as $container) {
-            $playlists[] = new Playlist($container);
+            $playlists[] = new Playlist($container, $controller);
         }
 
-        return static::$playlists = $playlists;
+        return $this->playlists = $playlists;
     }
 
 
@@ -283,18 +305,20 @@ class Network
      *
      * If no case-sensitive match is found it will return a case-insensitive match.
      *
+     * @param string The name of the playlist
+     *
      * @return Playlist
      */
-    public static function getPlaylistByName($name)
+    public function getPlaylistByName($name)
     {
         $roughMatch = false;
 
-        $playlists = static::getPlaylists();
+        $playlists = $this->getPlaylists();
         foreach ($playlists as $playlist) {
-            if ($playlist->getName() == $name) {
+            if ($playlist->getName() === $name) {
                 return $playlist;
             }
-            if (strtolower($playlist->getName()) == strtolower($name)) {
+            if (strtolower($playlist->getName()) === strtolower($name)) {
                 $roughMatch = $playlist;
             }
         }
@@ -308,17 +332,50 @@ class Network
 
 
     /**
+     * Get the playlist with the specified id.
+     *
+     * @param int The ID of the playlist
+     *
+     * @return Playlist
+     */
+    public function getPlaylistById($id)
+    {
+        return new Playlist($id, $this->getController());
+    }
+
+
+    /**
+     * Create a new playlist.
+     *
+     * @param string The name to give to the playlist
+     *
+     * @return Playlist
+     */
+    public function createPlaylist($name)
+    {
+        $controller = $this->getController();
+
+        $data = $controller->soap("AVTransport", "CreateSavedQueue", [
+            "Title"                 =>  $name,
+            "EnqueuedURI"           =>  "",
+            "EnqueuedURIMetaData"   =>  "",
+        ]);
+        return new Playlist($data["AssignedObjectID"], $controller);
+    }
+
+
+    /**
      * Get all the alarms available on the network.
      *
      * @return Alarm[]
      */
-    public static function getAlarms()
+    public function getAlarms()
     {
-        if (is_array(static::$alarms)) {
-            return static::$alarms;
+        if (is_array($this->alarms)) {
+            return $this->alarms;
         }
 
-        $controller = static::getController();
+        $controller = $this->getController();
 
         $data = $controller->soap("AlarmClock", "ListAlarms");
         $parser = new XmlParser($data["CurrentAlarmList"]);
@@ -328,6 +385,21 @@ class Network
             $alarms[] = new Alarm($tag);
         }
 
-        return static::$alarms = $alarms;
+        return $this->alarms = $alarms;
+    }
+
+
+    public function getAlarmById($id)
+    {
+        $id = (integer) $id;
+
+        $alarms = $this->getAlarms();
+        foreach ($alarms as $alarm) {
+            if ($alarm->getId() === $id) {
+                return $alarm;
+            }
+        }
+
+        throw new \InvalidArgumentException("No alarm found with the ID " . $id);
     }
 }

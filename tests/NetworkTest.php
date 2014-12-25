@@ -9,19 +9,19 @@ class NetworkTest extends SonosTest
 
     public function testGetSpeakers()
     {
-        $this->assertContainsOnlyInstancesOf("duncan3dc\\Sonos\\Speaker", Network::getSpeakers());
+        $this->assertContainsOnlyInstancesOf("duncan3dc\\Sonos\\Speaker", $this->network->getSpeakers());
     }
 
 
     public function testGetController()
     {
-        $this->assertInstanceOf("duncan3dc\\Sonos\\Controller", Network::getController());
+        $this->assertInstanceOf("duncan3dc\\Sonos\\Controller", $this->network->getController());
     }
 
 
     public function testGetSpeakerByRoom1()
     {
-        $this->assertInstanceOf("duncan3dc\\Sonos\\Speaker", Network::getSpeakerByRoom("Kitchen"));
+        $this->assertInstanceOf("duncan3dc\\Sonos\\Speaker", $this->network->getSpeakerByRoom("Kitchen"));
     }
 
 
@@ -30,13 +30,13 @@ class NetworkTest extends SonosTest
      */
     public function testGetSpeakerByRoom2()
     {
-        Network::getSpeakerByRoom("No such room");
+        $this->network->getSpeakerByRoom("No such room");
     }
 
 
     public function testGetSpeakersByRoom1()
     {
-        $this->assertContainsOnlyInstancesOf("duncan3dc\\Sonos\\Speaker", Network::getSpeakersByRoom("Kitchen"));
+        $this->assertContainsOnlyInstancesOf("duncan3dc\\Sonos\\Speaker", $this->network->getSpeakersByRoom("Kitchen"));
     }
 
 
@@ -45,19 +45,19 @@ class NetworkTest extends SonosTest
      */
     public function testGetSpeakersByRoom2()
     {
-        Network::getSpeakersByRoom("No such room");
+        $this->network->getSpeakersByRoom("No such room");
     }
 
 
     public function testGetControllers()
     {
-        $this->assertContainsOnlyInstancesOf("duncan3dc\\Sonos\\Controller", Network::getControllers());
+        $this->assertContainsOnlyInstancesOf("duncan3dc\\Sonos\\Controller", $this->network->getControllers());
     }
 
 
     public function testGetControllerByRoom1()
     {
-        $this->assertInstanceOf("duncan3dc\\Sonos\\Controller", Network::getControllerByRoom("Kitchen"));
+        $this->assertInstanceOf("duncan3dc\\Sonos\\Controller", $this->network->getControllerByRoom("Kitchen"));
     }
 
 
@@ -66,13 +66,13 @@ class NetworkTest extends SonosTest
      */
     public function testGetControllerByRoom2()
     {
-        Network::getControllerByRoom("No such room");
+        $this->network->getControllerByRoom("No such room");
     }
 
 
     public function testGetPlaylists()
     {
-        $this->assertContainsOnlyInstancesOf("duncan3dc\\Sonos\\Playlist", Network::getPlaylists());
+        $this->assertContainsOnlyInstancesOf("duncan3dc\\Sonos\\Playlist", $this->network->getPlaylists());
     }
 
 
@@ -81,12 +81,12 @@ class NetworkTest extends SonosTest
      */
     public function testGetPlaylistByName()
     {
-        Network::getPlaylistByName("No such playlist");
+        $this->network->getPlaylistByName("No such playlist");
     }
 
 
     public function testGetAlarms()
     {
-        $this->assertContainsOnlyInstancesOf("duncan3dc\\Sonos\\Alarm", Network::getAlarms());
+        $this->assertContainsOnlyInstancesOf("duncan3dc\\Sonos\\Alarm", $this->network->getAlarms());
     }
 }

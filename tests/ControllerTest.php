@@ -10,9 +10,9 @@ class ControllerTest extends SonosTest
 
     public function testConstructor1()
     {
-        foreach (Network::getSpeakers() as $speaker) {
+        foreach ($this->network->getSpeakers() as $speaker) {
             if ($speaker->isCoordinator()) {
-                $controller = new Controller($speaker);
+                $controller = new Controller($speaker, $this->network);
                 $this->assertSame($speaker->ip, $controller->ip);
                 return;
             }
@@ -26,9 +26,9 @@ class ControllerTest extends SonosTest
      */
     public function testConstructor2()
     {
-        foreach (Network::getSpeakers() as $speaker) {
+        foreach ($this->network->getSpeakers() as $speaker) {
             if (!$speaker->isCoordinator()) {
-                $controller = new Controller($speaker);
+                $controller = new Controller($speaker, $this->network);
                 return;
             }
         }
@@ -39,14 +39,14 @@ class ControllerTest extends SonosTest
 
     public function testIsCoordinator()
     {
-        $this->assertTrue(Network::getController()->isCoordinator());
+        $this->assertTrue($this->network->getController()->isCoordinator());
     }
 
 
     public function testGetStateName()
     {
         $states = ["STOPPED", "PAUSED_PLAYBACK", "PLAYING", "TRANSITIONING"];
-        foreach (Network::getControllers() as $controller) {
+        foreach ($this->network->getControllers() as $controller) {
             $this->assertContains($controller->getStateName(), $states);
         }
     }
@@ -55,7 +55,7 @@ class ControllerTest extends SonosTest
     public function testGetState()
     {
         $states = [Controller::STATE_STOPPED, Controller::STATE_PLAYING, Controller::STATE_PAUSED, Controller::STATE_TRANSITIONING];
-        foreach (Network::getControllers() as $controller) {
+        foreach ($this->network->getControllers() as $controller) {
             $this->assertContains($controller->getState(), $states);
         }
     }
@@ -64,7 +64,7 @@ class ControllerTest extends SonosTest
     public function testGetStateDetails()
     {
         $keys = ["title", "artist", "album", "track-number", "queue-number", "duration", "position", "stream"];
-        $state = Network::getController()->getStateDetails();
+        $state = $this->network->getController()->getStateDetails();
         foreach ($keys as $key) {
             $this->assertArrayHasKey($key, $state);
             if (in_array($key, ["track-number", "queue-number"])) {
@@ -78,7 +78,7 @@ class ControllerTest extends SonosTest
 
     public function testNext()
     {
-        $controller = Network::getController();
+        $controller = $this->network->getController();
         $number = $controller->getStateDetails()["queue-number"];
         $controller->next();
         $this->assertSame($controller->getStateDetails()["queue-number"], $number + 1);
@@ -87,7 +87,7 @@ class ControllerTest extends SonosTest
 
     public function testPrevious()
     {
-        $controller = Network::getController();
+        $controller = $this->network->getController();
         $number = $controller->getStateDetails()["queue-number"];
         $controller->previous();
         $this->assertSame($controller->getStateDetails()["queue-number"], $number - 1);
@@ -96,14 +96,14 @@ class ControllerTest extends SonosTest
 
     public function testGetSpeakers()
     {
-        $speakers = Network::getController()->getSpeakers();
+        $speakers = $this->network->getController()->getSpeakers();
         $this->assertContainsOnlyInstancesOf("duncan3dc\\Sonos\\Speaker", $speakers);
     }
 
 
     public function testSetVolume()
     {
-        $controller = Network::getController();
+        $controller = $this->network->getController();
         $volume = 3;
         $controller->setVolume($volume);
         foreach ($controller->getSpeakers() as $speaker) {
@@ -114,7 +114,7 @@ class ControllerTest extends SonosTest
 
     public function testAdjustVolume1()
     {
-        $controller = Network::getController();
+        $controller = $this->network->getController();
         $volume = 3;
         $controller->setVolume($volume);
         $controller->adjustVolume($volume);
@@ -126,7 +126,7 @@ class ControllerTest extends SonosTest
 
     public function testAdjustVolume2()
     {
-        $controller = Network::getController();
+        $controller = $this->network->getController();
         $volume = 3;
         $controller->setVolume($volume);
         $controller->adjustVolume($volume * -1);
@@ -138,7 +138,7 @@ class ControllerTest extends SonosTest
 
     public function testGetMode()
     {
-        $mode = Network::getController()->getMode();
+        $mode = $this->network->getController()->getMode();
         $this->assertInternalType("boolean", $mode["shuffle"]);
         $this->assertInternalType("boolean", $mode["repeat"]);
     }
@@ -146,7 +146,7 @@ class ControllerTest extends SonosTest
 
     public function testSetMode1()
     {
-        $controller = Network::getController();
+        $controller = $this->network->getController();
 
         $controller->setMode([
             "shuffle"   =>  true,
@@ -161,7 +161,7 @@ class ControllerTest extends SonosTest
 
     public function testSetMode2()
     {
-        $controller = Network::getController();
+        $controller = $this->network->getController();
 
         $controller->setMode([
             "shuffle"   =>  false,
@@ -176,7 +176,7 @@ class ControllerTest extends SonosTest
 
     public function testGetRepeat()
     {
-        $controller = Network::getController();
+        $controller = $this->network->getController();
         $controller->setRepeat(true);
         $this->assertTrue($controller->getRepeat());
     }
@@ -184,7 +184,7 @@ class ControllerTest extends SonosTest
 
     public function testSetRepeat()
     {
-        $controller = Network::getController();
+        $controller = $this->network->getController();
         $controller->setRepeat(false);
         $this->assertFalse($controller->getRepeat());
     }
@@ -192,7 +192,7 @@ class ControllerTest extends SonosTest
 
     public function testGetShuffle()
     {
-        $controller = Network::getController();
+        $controller = $this->network->getController();
         $controller->setShuffle(true);
         $this->assertTrue($controller->getShuffle());
     }
@@ -200,7 +200,7 @@ class ControllerTest extends SonosTest
 
     public function testSetShuffle()
     {
-        $controller = Network::getController();
+        $controller = $this->network->getController();
         $controller->setShuffle(false);
         $this->assertFalse($controller->getShuffle());
     }
@@ -208,6 +208,6 @@ class ControllerTest extends SonosTest
 
     public function testGetQueue()
     {
-        $this->assertInstanceOf("duncan3dc\\Sonos\\Queue", Network::getController()->getQueue());
+        $this->assertInstanceOf("duncan3dc\\Sonos\\Queue", $this->network->getController()->getQueue());
     }
 }

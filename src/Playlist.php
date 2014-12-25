@@ -17,31 +17,12 @@ class Playlist extends Queue
 
 
     /**
-     * Create a new playlist.
-     *
-     * @param string The name to give to the playlist
-     *
-     * @return Playlist
-     */
-    public static function create($name)
-    {
-        $controller = Network::getController();
-
-        $data = $controller->soap("AVTransport", "CreateSavedQueue", [
-            "Title"                 =>  $name,
-            "EnqueuedURI"           =>  "",
-            "EnqueuedURIMetaData"   =>  "",
-        ]);
-        return new static($data["AssignedObjectID"]);
-    }
-
-
-    /**
      * Create an instance of the Playlist class.
      *
      * @param string|XmlElement $param The id of the playlist, or an xml element with the relevant attributes
+     * @param Controller $controller A controller instance on the playlist's network
      */
-    public function __construct($param)
+    public function __construct($param, Controller $controller)
     {
         if (is_string($param)) {
             $this->id = $param;
@@ -52,7 +33,7 @@ class Playlist extends Queue
         }
 
         $this->updateId = false;
-        $this->controller = Network::getController();
+        $this->controller = $controller;
     }
 
 
