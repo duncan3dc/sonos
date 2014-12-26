@@ -1,11 +1,16 @@
 Changelog
 =========
 
-## 0.9.0 - UNRELEASED
+## 1.0.0 - UNRELEASED
 
 ### Added
 
 * [Alarms] Allow alarm information to be read, and managed using the Alarm class
+
+### Changed
+
+* [Network] The Network class is no longer static, it should be instantiated before calling its methods.
+* [Playlists] Creating playlists is now done using the createPlaylist() method on the Network class
 
 --------
 
