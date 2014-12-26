@@ -1,0 +1,18 @@
+Getting Started:
+    Introduction: "/"
+    Installation: "/installation/"
+    Setup: "/setup/"
+
+Usage:
+    Getting Started: "/usage/getting-started/"
+    Speakers: "/usage/speakers/"
+    Playlists: "/usage/playlists/"
+    Alarms: "/usage/alarms/"
+    Tracks: "/usage/tracks/"
+
+Controllers:
+    Play Some Music: "/controllers/play-some-music/"
+    Playing Mode: "/controllers/playing-mode/"
+    Volume: "/controllers/volume/"
+    Speakers: "/controllers/speakers/"
+    Queue: "/controllers/queue/"
