@@ -12,7 +12,6 @@ abstract class SonosTest extends \PHPUnit_Framework_TestCase
     {
         $this->network = new Network;
 
-        $this->network->cache = true;
         try {
             $this->network->getSpeakers();
         } catch (\Exception $e) {

@@ -10,6 +10,7 @@ Changelog
 ### Changed
 
 * [Network] The Network class is no longer static, it should be instantiated before calling its methods.
+* [Network] The cache handling is now provided by doctrine/cache
 * [Playlists] Creating playlists is now done using the createPlaylist() method on the Network class.
 
 --------
