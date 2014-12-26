@@ -2,7 +2,8 @@
 
 namespace duncan3dc\Sonos;
 
-use duncan3dc\Helpers\DiskCache;
+use Doctrine\Common\Cache\Cache;
+use Doctrine\Common\Cache\FilesystemCache;
 use duncan3dc\DomParser\XmlParser;
 
 /**
@@ -18,17 +19,27 @@ class Network
     /**
      * @var Playlists[] $playlists Playlists that are available on the current network.
      */
-    protected $playlists = false;
+    protected $playlists;
 
     /**
      * @var Alarm[] $alarms Alarms that are available on the current network.
      */
-    protected $alarms = false;
+    protected $alarms;
 
     /**
-     * @var boolean $cache Setting this to true will cache the expensive multicast discover to find Sonos devices on the network
+     * @var Cache $cache The cache object to use for the expensive multicast discover to find Sonos devices on the network
      */
-    public $cache = false;
+    protected $cache;
+
+
+    public function __construct(Cache $cache = null)
+    {
+        if ($cache === null) {
+            $cache = new FilesystemCache(sys_get_temp_dir() . DIRECTORY_SEPARATOR . "sonos");
+        }
+        $this->cache = $cache;
+    }
+
 
     /**
      * Get all the devices on the current network.
@@ -110,12 +121,11 @@ class Network
             return $this->speakers;
         }
 
-        if ($this->cache) {
-            $devices = DiskCache::call("ip-addresses", function() {
-                return $this->getDevices();
-            });
+        if ($this->cache->contains("devices")) {
+            $devices = $this->cache->fetch("devices");
         } else {
             $devices = $this->getDevices();
+            $this->cache->save("devices", $devices);
         }
 
         if (count($devices) < 1) {

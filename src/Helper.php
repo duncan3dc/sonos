@@ -7,7 +7,7 @@ use duncan3dc\DomParser\XmlBase;
 /**
  * Provides helper functions for the classes.
  */
-class Helper extends \duncan3dc\Helpers\Helper
+class Helper
 {
 
     /**
