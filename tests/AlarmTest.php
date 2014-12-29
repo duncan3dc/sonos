@@ -15,7 +15,10 @@ class AlarmTest extends \PHPUnit_Framework_TestCase
         $xml->shouldReceive("getAttributes")->once()->andReturn([
             "Recurrence"    =>  $recurrence,
         ]);
-        return new Alarm($xml);
+
+        $controller = Mockery::mock("duncan3dc\Sonos\Controller");
+
+        return new Alarm($xml, $controller);
     }
 
 
@@ -30,7 +33,7 @@ class AlarmTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(0, $alarm->getFrequency() & Alarm::SATURDAY);
         $this->assertSame(0, $alarm->getFrequency() & Alarm::SUNDAY);
         $this->assertFalse($alarm->getFrequency() === Alarm::ONCE);
-        $this->assertFalse($alarm->getFrequency() === Alarm::EVERYDAY);
+        $this->assertFalse($alarm->getFrequency() === Alarm::DAILY);
     }
 
 
@@ -45,7 +48,7 @@ class AlarmTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(0, $alarm->getFrequency() & Alarm::SATURDAY);
         $this->assertSame(0, $alarm->getFrequency() & Alarm::SUNDAY);
         $this->assertFalse($alarm->getFrequency() === Alarm::ONCE);
-        $this->assertFalse($alarm->getFrequency() === Alarm::EVERYDAY);
+        $this->assertFalse($alarm->getFrequency() === Alarm::DAILY);
     }
 
 
@@ -60,7 +63,7 @@ class AlarmTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(0, $alarm->getFrequency() & Alarm::SATURDAY);
         $this->assertSame(Alarm::SUNDAY, $alarm->getFrequency() & Alarm::SUNDAY);
         $this->assertFalse($alarm->getFrequency() === Alarm::ONCE);
-        $this->assertFalse($alarm->getFrequency() === Alarm::EVERYDAY);
+        $this->assertFalse($alarm->getFrequency() === Alarm::DAILY);
     }
 
 
@@ -76,7 +79,7 @@ class AlarmTest extends \PHPUnit_Framework_TestCase
             $this->assertSame(Alarm::SATURDAY, $alarm->getFrequency() & Alarm::SATURDAY);
             $this->assertSame(Alarm::SUNDAY, $alarm->getFrequency() & Alarm::SUNDAY);
             $this->assertFalse($alarm->getFrequency() === Alarm::ONCE);
-            $this->assertFalse($alarm->getFrequency() === Alarm::EVERYDAY);
+            $this->assertFalse($alarm->getFrequency() === Alarm::DAILY);
         }
     }
 
@@ -93,7 +96,7 @@ class AlarmTest extends \PHPUnit_Framework_TestCase
             $this->assertSame(0, $alarm->getFrequency() & Alarm::SATURDAY);
             $this->assertSame(0, $alarm->getFrequency() & Alarm::SUNDAY);
             $this->assertFalse($alarm->getFrequency() === Alarm::ONCE);
-            $this->assertFalse($alarm->getFrequency() === Alarm::EVERYDAY);
+            $this->assertFalse($alarm->getFrequency() === Alarm::DAILY);
         }
     }
 
@@ -109,7 +112,7 @@ class AlarmTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(0, $alarm->getFrequency() & Alarm::SATURDAY);
         $this->assertSame(0, $alarm->getFrequency() & Alarm::SUNDAY);
         $this->assertSame(Alarm::ONCE, $alarm->getFrequency());
-        $this->assertFalse($alarm->getFrequency() === Alarm::EVERYDAY);
+        $this->assertFalse($alarm->getFrequency() === Alarm::DAILY);
     }
 
 
@@ -125,7 +128,7 @@ class AlarmTest extends \PHPUnit_Framework_TestCase
             $this->assertSame(Alarm::SATURDAY, $alarm->getFrequency() & Alarm::SATURDAY);
             $this->assertSame(Alarm::SUNDAY, $alarm->getFrequency() & Alarm::SUNDAY);
             $this->assertFalse($alarm->getFrequency() === Alarm::ONCE);
-            $this->assertSame(Alarm::EVERYDAY, $alarm->getFrequency());
+            $this->assertSame(Alarm::DAILY, $alarm->getFrequency());
         }
     }
 
@@ -141,7 +144,7 @@ class AlarmTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($alarm->onSaturday());
         $this->assertFalse($alarm->onSunday());
         $this->assertFalse($alarm->once());
-        $this->assertFalse($alarm->everyday());
+        $this->assertFalse($alarm->daily());
     }
 
 
@@ -156,7 +159,7 @@ class AlarmTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($alarm->onSaturday());
         $this->assertFalse($alarm->onSunday());
         $this->assertFalse($alarm->once());
-        $this->assertFalse($alarm->everyday());
+        $this->assertFalse($alarm->daily());
     }
 
 
@@ -171,7 +174,7 @@ class AlarmTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($alarm->onSaturday());
         $this->assertTrue($alarm->onSunday());
         $this->assertFalse($alarm->once());
-        $this->assertFalse($alarm->everyday());
+        $this->assertFalse($alarm->daily());
     }
 
 
@@ -187,7 +190,7 @@ class AlarmTest extends \PHPUnit_Framework_TestCase
             $this->assertTrue($alarm->onSaturday());
             $this->assertTrue($alarm->onSunday());
             $this->assertFalse($alarm->once());
-            $this->assertFalse($alarm->everyday());
+            $this->assertFalse($alarm->daily());
     }
     }
 
@@ -204,7 +207,7 @@ class AlarmTest extends \PHPUnit_Framework_TestCase
             $this->assertFalse($alarm->onSaturday());
             $this->assertFalse($alarm->onSunday());
             $this->assertFalse($alarm->once());
-            $this->assertFalse($alarm->everyday());
+            $this->assertFalse($alarm->daily());
         }
     }
 
@@ -220,7 +223,7 @@ class AlarmTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($alarm->onSaturday());
         $this->assertFalse($alarm->onSunday());
         $this->assertTrue($alarm->once());
-        $this->assertFalse($alarm->everyday());
+        $this->assertFalse($alarm->daily());
     }
 
 
@@ -236,7 +239,7 @@ class AlarmTest extends \PHPUnit_Framework_TestCase
             $this->assertTrue($alarm->onSaturday());
             $this->assertTrue($alarm->onSunday());
             $this->assertFalse($alarm->once());
-            $this->assertTrue($alarm->everyday());
+            $this->assertTrue($alarm->daily());
         }
     }
 }

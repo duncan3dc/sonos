@@ -392,7 +392,7 @@ class Network
 
         $alarms = [];
         foreach ($parser->getTags("Alarm") as $tag) {
-            $alarms[] = new Alarm($tag);
+            $alarms[] = new Alarm($tag, $controller);
         }
 
         return $this->alarms = $alarms;

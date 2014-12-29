@@ -229,7 +229,7 @@ class Controller extends Speaker
     }
 
 
-    /*
+    /**
      * Get the speakers that are in the group of this controller.
      *
      * @return Speaker[]
