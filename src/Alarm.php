@@ -17,7 +17,7 @@ class Alarm
     const FRIDAY = 16;
     const SATURDAY = 32;
     const SUNDAY = 64;
-    const EVERYDAY = 127;
+    const DAILY = 127;
 
     /**
      * @var string $id The unique id of the alarm
@@ -30,14 +30,38 @@ class Alarm
     protected $attributes;
 
     /**
+     * @var Controller $controller A Controller instance this alarm can be reached via
+     */
+    protected $controller;
+
+    /**
      * Create an instance of the Alarm class.
      *
-     * @param int|XmlElement $param The id of the alarm, or an xml element with the relevant attributes
+     * @param XmlElement $xml The xml element with the relevant attributes
+     * @param Controller $controller A Controller instance this alarm can be reached via
      */
-    public function __construct(XmlElement $param)
+    public function __construct(XmlElement $xml, Controller $controller)
     {
-        $this->id = $param->getAttribute("ID");
-        $this->attributes = $param->getAttributes();
+        $this->id = $xml->getAttribute("ID");
+        $this->attributes = $xml->getAttributes();
+        $this->controller = $controller;
+    }
+
+
+    /**
+     * Send a soap request to the controller for this alarm.
+     *
+     * @param string $service The service to send the request to
+     * @param string $action The action to call
+     * @param array $params The parameters to pass
+     *
+     * @return mixed
+     */
+    protected function soap($service, $action, $params = [])
+    {
+        $params["ID"] = $this->id;
+
+        return $this->controller->soap($service, $action, $params);
     }
 
 
@@ -59,18 +83,62 @@ class Alarm
      */
     public function getTime()
     {
-        return $this->attributes["StartTime"];
+        list($hours, $minutes) = explode(":", $this->attributes["StartTime"]);
+        return sprintf("%02s:%02s", $hours, $minutes);
+    }
+
+
+    /**
+     * Set the start time of the alarm.
+     *
+     * @param string $time The time to set the alarm for (hh:mm)
+     *
+     * @return void
+     */
+    public function setTime($time)
+    {
+        $exception = new \InvalidArgumentException("Invalid time specified, time must be in the format hh:mm");
+        if (!preg_match("/^([0-9]{1,2}):([0-9]{1,2})$/", $time, $matches)) {
+            throw $exception;
+        }
+        $hours = $matches[1];
+        $minutes = $matches[2];
+
+        if ($hours > 23 || $minutes > 59) {
+            throw $exception;
+        }
+
+        $this->attributes["StartTime"] = sprintf("%02s:%02s:%02s", $hours, $minutes, 0);
+        $this->save();
     }
 
 
     /**
      * Get the duration of the alarm.
      *
-     * @return string
+     * @return int The duration in minutes
      */
     public function getDuration()
     {
-        return $this->attributes["Duration"];
+        list($hours, $minutes) = explode(":", $this->attributes["Duration"]);
+        return ($hours * 60) + $minutes;
+    }
+
+
+    /**
+     * Set the duration of the alarm.
+     *
+     * @param int The duration in minutes
+     *
+     * @return void
+     */
+    public function setDuration($duration)
+    {
+        $hours = floor($duration / 60);
+        $minutes = $duration % 60;
+
+        $this->attributes["Duration"] = sprintf("%02s:%02s:%02s", $hours, $minutes, 0);
+        $this->save();
     }
 
 
@@ -121,115 +189,188 @@ class Alarm
 
 
     /**
-     * Check whether this alarm is active on a particular day.
+     * Set the frequency of the alarm.
+     *
+     * @param int $frequency The integer representing the frequency (using the bitwise class constants)
+     *
+     * @return void
+     */
+    public function setFrequency($frequency)
+    {
+        $recurrence = "ON_";
+        $days = [
+            "0" =>  self::MONDAY,
+            "1" =>  self::TUESDAY,
+            "2" =>  self::WEDNESDAY,
+            "3" =>  self::THURSDAY,
+            "4" =>  self::FRIDAY,
+            "5" =>  self::SATURDAY,
+            "6" =>  self::SUNDAY,
+        ];
+        foreach ($days as $key => $val) {
+            if ($frequency & $val) {
+                $recurrence .= $key;
+            }
+        }
+
+        if ($recurrence === "ON_") {
+            $recurrence = "ONCE";
+        } elseif ($recurrence === "ON_0123456") {
+            $recurrence = "DAILY";
+        } elseif ($recurrence === "ON_01234") {
+            $recurrence = "WEEKDAYS";
+        } elseif ($recurrence === "ON_56") {
+            $recurrence = "WEEKENDS";
+        }
+
+        $this->attributes["Recurrence"] = $recurrence;
+        $this->save();
+    }
+
+
+    /**
+     * Check or set whether this alarm is active on a particular day.
      *
      * @param int $day Which day to check/set
+     * @param boolean $set Set this alarm to be active or not on the specified day
      *
-     * @return boolean
+     * @return boolean|void Returns true/false when checking, or void when setting
      */
-    protected function onHandler($day)
+    protected function onHandler($day, $set = null)
     {
         $frequency = $this->getFrequency();
-        return (bool) ($frequency & $day);
+        if ($set === null) {
+            return (bool) ($frequency & $day);
+        }
+        if ($set && $frequency ^ $day) {
+            $this->setFrequency($frequency | $day);
+        }
+        if (!$set && $frequency & $day) {
+            $this->setFrequency($frequency ^ $day);
+        }
     }
 
 
     /**
-     * Check whether this alarm is active on mondays.
+     * Check or set whether this alarm is active on mondays.
      *
-     * @return boolean
+     * @param boolean $set Set this alarm to be active or not on mondays
+     *
+     * @return boolean|void Returns true/false when checking, or void when setting
      */
-    public function onMonday()
+    public function onMonday($set = null)
     {
-        return $this->onHandler(self::MONDAY);
+        return $this->onHandler(self::MONDAY, $set);
     }
 
 
     /**
-     * Check whether this alarm is active on tuesdays.
+     * Check or set whether this alarm is active on tuesdays.
      *
-     * @return boolean
+     * @param boolean $set Set this alarm to be active or not on tuesdays
+     *
+     * @return boolean|void Returns true/false when checking, or void when setting
      */
-    public function onTuesday()
+    public function onTuesday($set = null)
     {
-        return $this->onHandler(self::TUESDAY);
+        return $this->onHandler(self::TUESDAY, $set);
     }
 
 
     /**
-     * Check whether this alarm is active on wednesdays.
+     * Check or set whether this alarm is active on wednesdays.
      *
-     * @return boolean
+     * @param boolean $set Set this alarm to be active or not on wednesdays
+     *
+     * @return boolean|void Returns true/false when checking, or void when setting
      */
-    public function onWednesday()
+    public function onWednesday($set = null)
     {
-        return $this->onHandler(self::WEDNESDAY);
+        return $this->onHandler(self::WEDNESDAY, $set);
     }
 
 
     /**
-     * Check whether this alarm is active on thursdays.
+     * Check or set whether this alarm is active on thursdays.
      *
-     * @return boolean
+     * @param boolean $set Set this alarm to be active or not on thursdays
+     *
+     * @return boolean|void Returns true/false when checking, or void when setting
      */
-    public function onThursday()
+    public function onThursday($set = null)
     {
-        return $this->onHandler(self::THURSDAY);
+        return $this->onHandler(self::THURSDAY, $set);
     }
 
 
     /**
-     * Check whether this alarm is active on fridays.
+     * Check or set whether this alarm is active on fridays.
      *
-     * @return boolean
+     * @param boolean $set Set this alarm to be active or not on fridays
+     *
+     * @return boolean|void Returns true/false when checking, or void when setting
      */
-    public function onFriday()
+    public function onFriday($set = null)
     {
-        return $this->onHandler(self::FRIDAY);
+        return $this->onHandler(self::FRIDAY, $set);
     }
 
 
     /**
-     * Check whether this alarm is active on saturdays.
+     * Check or set whether this alarm is active on saturdays.
      *
-     * @return boolean
+     * @param boolean $set Set this alarm to be active or not on saturdays
+     *
+     * @return boolean|void Returns true/false when checking, or void when setting
      */
-    public function onSaturday()
+    public function onSaturday($set = null)
     {
-        return $this->onHandler(self::SATURDAY);
+        return $this->onHandler(self::SATURDAY, $set);
     }
 
 
     /**
-     * Check whether this alarm is active on sundays.
+     * Check or set whether this alarm is active on sundays.
      *
-     * @return boolean
+     * @param boolean $set Set this alarm to be active or not on sundays
+     *
+     * @return boolean|void Returns true/false when checking, or void when setting
      */
-    public function onSunday()
+    public function onSunday($set = null)
     {
-        return $this->onHandler(self::SUNDAY);
+        return $this->onHandler(self::SUNDAY, $set);
     }
 
 
     /**
-     * Check whether this alarm is a one time only alarm.
+     * Check or set whether this alarm is a one time only alarm.
      *
-     * @return boolean
+     * @param boolean $set Set this alarm to be a one time only alarm
+     *
+     * @return boolean|void Returns true/false when checking, or void when setting
      */
-    public function once()
+    public function once($set = null)
     {
+        if ($set) {
+            $this->setFrequency(self::ONCE);
+        }
         return $this->getFrequency() === self::ONCE;
     }
 
 
     /**
-     * Check whether this alarm runs every day or not.
+     * Check or set whether this alarm runs every day or not.
      *
-     * @return boolean
+     * @param boolean $set Set this alarm to be active every day
+     *
+     * @return boolean|void Returns true/false when checking, or void when setting
      */
-    public function everyday()
+    public function daily($set = null)
     {
-        return $this->getFrequency() === self::EVERYDAY;
+        if ($set) {
+            $this->setFrequency(self::DAILY);
+        }
+        return $this->getFrequency() === self::DAILY;
     }
 
 
@@ -245,7 +386,7 @@ class Alarm
             return "Once";
         }
         if ($data === "DAILY") {
-            return "Every Day";
+            return "Daily";
         }
         if ($data === "WEEKDAYS") {
             return "Weekdays";
@@ -289,6 +430,20 @@ class Alarm
 
 
     /**
+     * Set the volume of the alarm.
+     *
+     * @param int $volume The volume of the alarm
+     *
+     * @return void
+     */
+    public function setVolume($volume)
+    {
+        $this->attributes["Volume"] = $volume;
+        $this->save();
+    }
+
+
+    /**
      * Check if repeat is active.
      *
      * @return boolean
@@ -297,6 +452,28 @@ class Alarm
     {
         $mode = Helper::getMode($this->attributes["PlayMode"]);
         return $mode["repeat"];
+    }
+
+
+    /**
+     * Turn repeat mode on or off.
+     *
+     * @param boolean $repeat Whether repeat should be on or not
+     *
+     * @return void
+     */
+    public function setRepeat($repeat)
+    {
+        $repeat = (boolean) $repeat;
+
+        $mode = Helper::getMode($this->attributes["PlayMode"]);
+        if ($mode["repeat"] === $repeat) {
+            return;
+        }
+
+        $mode["repeat"] = $repeat;
+        $this->attributes["PlayMode"] = Helper::setMode($mode);
+        $this->save();
     }
 
 
@@ -313,6 +490,28 @@ class Alarm
 
 
     /**
+     * Turn shuffle mode on or off.
+     *
+     * @param boolean $repeat Whether repeat should be on or not
+     *
+     * @return void
+     */
+    public function setShuffle($shuffle)
+    {
+        $shuffle = (boolean) $shuffle;
+
+        $mode = Helper::getMode($this->attributes["PlayMode"]);
+        if ($mode["shuffle"] === $shuffle) {
+            return;
+        }
+
+        $mode["shuffle"] = $shuffle;
+        $this->attributes["PlayMode"] = Helper::setMode($mode);
+        $this->save();
+    }
+
+
+    /**
      * Check if the alarm is active.
      *
      * @return boolean
@@ -320,5 +519,65 @@ class Alarm
     public function isActive()
     {
         return $this->attributes["Enabled"] ? true : false;
+    }
+
+
+    /**
+     * Make the alarm active.
+     *
+     * @return void
+     */
+    public function activate()
+    {
+        $this->attributes["Enabled"] = true;
+        $this->save();
+    }
+
+
+    /**
+     * Make the alarm inactive.
+     *
+     * @return void
+     */
+    public function deactivate()
+    {
+        $this->attributes["Enabled"] = false;
+        $this->save();
+    }
+
+
+    /**
+     * Delete this alarm.
+     *
+     * @return void
+     */
+    public function delete()
+    {
+        $this->soap("AlarmClock", "DestroyAlarm");
+        $this->id = null;
+    }
+
+
+    /**
+     * Update the alarm with the current instance settings.
+     *
+     * @return void
+     */
+    protected function save()
+    {
+        $params = [
+            "StartLocalTime"        =>  $this->attributes["StartTime"],
+            "Duration"              =>  $this->attributes["Duration"],
+            "Recurrence"            =>  $this->attributes["Recurrence"],
+            "Enabled"               =>  $this->attributes["Enabled"],
+            "RoomUUID"              =>  $this->attributes["RoomUUID"],
+            "ProgramURI"            =>  $this->attributes["ProgramURI"],
+            "ProgramMetaData"       =>  $this->attributes["ProgramMetaData"],
+            "PlayMode"              =>  $this->attributes["PlayMode"],
+            "Volume"                =>  $this->attributes["Volume"],
+            "IncludeLinkedZones"    =>  $this->attributes["IncludeLinkedZones"],
+        ];
+
+        $this->soap("AlarmClock", "UpdateAlarm", $params);
     }
 }
