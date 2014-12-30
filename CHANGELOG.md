@@ -1,7 +1,11 @@
 Changelog
 =========
 
-## 1.0.0 - UNRELEASED
+## x.y.z - UNRELEASED
+
+--------
+
+## 1.0.1 - 2014-12-30
 
 ### Added
 
