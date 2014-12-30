@@ -67,12 +67,12 @@ class Playlist extends Queue
     /**
      * Add tracks to the playlist.
      *
-     * @param string|string[] $tracks The URI of the track to add, multiple tracks can be added by passing an array of URIs
-     * @param int $position The position to insert the tracks in the playlist (zero-based), by default the track(s) will be added to the end of the playlist
+     * @param string[]|UriInterface[] $tracks An array where each element is either the URI of the tracks to add, or an object that implements the UriInterface
+     * @param int $position The position to insert the tracks in the queue (zero-based), by default the tracks will be added to the end of the queue
      *
      * @return boolean
      */
-    public function addTracks($tracks, $position = null)
+    public function addTracks(array $tracks, $position = null)
     {
         if ($position === null) {
             $data = $this->browse("DirectChildren");
@@ -80,17 +80,13 @@ class Playlist extends Queue
             $position = $data["TotalMatches"];
         }
 
-        if (!is_array($tracks)) {
-            $tracks = [$tracks];
-        }
-
         # Ensure the update id is set to begin with
         $this->getUpdateID();
 
-        foreach ($tracks as $uri) {
+        foreach ($tracks as $track) {
             $data = $this->soap("AVTransport", "AddURIToSavedQueue", [
                 "UpdateID"              =>  $this->updateId,
-                "EnqueuedURI"           =>  $uri,
+                "EnqueuedURI"           =>  $track,
                 "EnqueuedURIMetaData"   =>  "",
                 "AddAtIndex"            =>  $position++,
             ]);
@@ -107,16 +103,12 @@ class Playlist extends Queue
     /**
      * Remove tracks from the playlist.
      *
-     * @param int|int[] $positions The zero-based position of the track to remove, or an array of positions
+     * @param int[] $positions The zero-based positions of the tracks to remove
      *
      * @return boolean
      */
-    public function removeTracks($positions)
+    public function removeTracks(array $positions)
     {
-        if (!is_array($positions)) {
-            $positions = [$positions];
-        }
-
         $data = $this->soap("AVTransport", "ReorderTracksInSavedQueue", [
             "UpdateID"              =>  $this->getUpdateID(),
             "TrackList"             =>  implode(",", $positions),
