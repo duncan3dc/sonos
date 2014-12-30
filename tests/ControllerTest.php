@@ -21,11 +21,11 @@ class ControllerTest extends SonosTest
         $this->markTestSkipped("No speakers found that are the coordinator of their group");
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
+
     public function testConstructor2()
     {
+        $this->setExpectedException("InvalidArgumentException");
+
         foreach ($this->network->getSpeakers() as $speaker) {
             if (!$speaker->isCoordinator()) {
                 $controller = new Controller($speaker, $this->network);

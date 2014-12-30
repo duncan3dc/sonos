@@ -25,11 +25,9 @@ class NetworkTest extends SonosTest
     }
 
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testGetSpeakerByRoom2()
     {
+        $this->setExpectedException("InvalidArgumentException");
         $this->network->getSpeakerByRoom("No such room");
     }
 
@@ -40,11 +38,9 @@ class NetworkTest extends SonosTest
     }
 
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testGetSpeakersByRoom2()
     {
+        $this->setExpectedException("InvalidArgumentException");
         $this->network->getSpeakersByRoom("No such room");
     }
 
@@ -61,11 +57,9 @@ class NetworkTest extends SonosTest
     }
 
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testGetControllerByRoom2()
     {
+        $this->setExpectedException("InvalidArgumentException");
         $this->network->getControllerByRoom("No such room");
     }
 
@@ -76,11 +70,9 @@ class NetworkTest extends SonosTest
     }
 
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testGetPlaylistByName()
     {
+        $this->setExpectedException("InvalidArgumentException");
         $this->network->getPlaylistByName("No such playlist");
     }
 
