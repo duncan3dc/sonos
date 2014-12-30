@@ -99,7 +99,7 @@ class Playlist extends Queue
             $data = $this->soap("AVTransport", "AddURIToSavedQueue", [
                 "UpdateID"              =>  $this->updateId,
                 "EnqueuedURI"           =>  $track->getUri(),
-                "EnqueuedURIMetaData"   =>  "",
+                "EnqueuedURIMetaData"   =>  $track->getMetaData(),
                 "AddAtIndex"            =>  $position++,
             ]);
             $this->updateId = $data["NewUpdateID"];
