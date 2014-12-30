@@ -3,8 +3,8 @@ sonos
 
 A PHP library for interacting with [Sonos](http://www.sonos.com/) speakers.  
 
-Full documentation is available at http://duncan3dc.github.io/sonos/docs/  
-PHPDoc API documentation is also available at http://duncan3dc.github.io/sonos/api/  
+Full documentation is available at http://duncan3dc.github.io/sonos/  
+PHPDoc API documentation is also available at [http://duncan3dc.github.io/sonos/api/](http://duncan3dc.github.io/sonos/api/namespaces/duncan3dc.Sonos.html)  
 
 [![Build Status](https://img.shields.io/travis/duncan3dc/sonos.svg)](https://travis-ci.org/duncan3dc/sonos)
 [![Latest Version](https://img.shields.io/packagist/v/duncan3dc/sonos.svg)](https://packagist.org/packages/duncan3dc/sonos)
@@ -35,7 +35,7 @@ foreach ($protest->getTracks() as $track) {
 }
 ```
 
-_Read more at http://duncan3dc.github.io/sonos/docs/_  
+_Read more at http://duncan3dc.github.io/sonos/_  
 
 
 Changelog
