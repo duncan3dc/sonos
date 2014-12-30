@@ -65,6 +65,44 @@ class Track implements UriInterface
 
 
     /**
+     * Get the metadata xml for this track.
+     *
+     * @return string
+     */
+    public function getMetaData()
+    {
+        $xml = XmlWriter::createXml([
+            "DIDL-Lite" =>  [
+                "_attributes"   =>  [
+                    "xmlns:dc"      =>  "http://purl.org/dc/elements/1.1/",
+                    "xmlns:upnp"    =>  "urn:schemas-upnp-org:metadata-1-0/upnp/",
+                    "xmlns:r"       =>  "urn:schemas-rinconnetworks-com:metadata-1-0/",
+                    "xmlns"         =>  "urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/",
+                ],
+                "item"  =>  [
+                    "_attributes"   =>  [
+                        "id"            =>  "-1",
+                        "parentID"      =>  "-1",
+                        "restricted"    =>  "true",
+                    ],
+                    "res"               =>  $this->uri,
+                    "upnp:albumArtURI"  =>  $this->albumArt,
+                    "dc:title"          =>  $this->title,
+                    "upnp:class"        =>  "object.item.audioItem.musicTrack",
+                    "dc:creator"        =>  $this->artist,
+                    "upnp:album"        =>  $this->album,
+                ],
+            ]
+        ]);
+
+        # Get rid of the xml header as only the DIDL-Lite element is required
+        $meta = explode("\n", $xml)[1];
+
+        return $meta;
+    }
+
+
+    /**
      * Update the track properties using an xml element.
      *
      * @param XmlBase $xml The xml element representing the track meta data.

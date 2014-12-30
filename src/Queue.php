@@ -193,7 +193,7 @@ class Queue implements \Countable
             $data = $this->soap("AVTransport", "AddURIToQueue", [
                 "UpdateID"                          =>  $this->updateId,
                 "EnqueuedURI"                       =>  $track->getUri(),
-                "EnqueuedURIMetaData"               =>  "",
+                "EnqueuedURIMetaData"               =>  $track->getMetaData(),
                 "DesiredFirstTrackNumberEnqueued"   =>  $position++,
                 "EnqueueAsNext"                     =>  0,
             ]);
