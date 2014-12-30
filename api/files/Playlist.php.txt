@@ -2,7 +2,10 @@
 
 namespace duncan3dc\Sonos;
 
+use duncan3dc\DomParser\XmlElement;
 use duncan3dc\DomParser\XmlParser;
+use duncan3dc\Sonos\Tracks\Track;
+use duncan3dc\Sonos\Tracks\UriInterface;
 
 /**
  * Provides an interface for managing Sonos playlists on the current network.
@@ -16,31 +19,12 @@ class Playlist extends Queue
 
 
     /**
-     * Create a new playlist.
-     *
-     * @param string The name to give to the playlist
-     *
-     * @return Playlist
-     */
-    public static function create($name)
-    {
-        $controller = Network::getController();
-
-        $data = $controller->soap("AVTransport", "CreateSavedQueue", [
-            "Title"                 =>  $name,
-            "EnqueuedURI"           =>  "",
-            "EnqueuedURIMetaData"   =>  "",
-        ]);
-        return new static($data["AssignedObjectID"]);
-    }
-
-
-    /**
      * Create an instance of the Playlist class.
      *
-     * @param string|duncan3dc\DomParser\XmlElement $param The id of the playlist, or an xml element with the relevant attributes
+     * @param string|XmlElement $param The id of the playlist, or an xml element with the relevant attributes
+     * @param Controller $controller A controller instance on the playlist's network
      */
-    public function __construct($param)
+    public function __construct($param, Controller $controller)
     {
         if (is_string($param)) {
             $this->id = $param;
@@ -51,7 +35,7 @@ class Playlist extends Queue
         }
 
         $this->updateId = false;
-        $this->controller = Network::getController();
+        $this->controller = $controller;
     }
 
 
@@ -85,12 +69,12 @@ class Playlist extends Queue
     /**
      * Add tracks to the playlist.
      *
-     * @param string|string[] $tracks The URI of the track to add, multiple tracks can be added by passing an array of URIs
-     * @param int $position The position to insert the tracks in the playlist (zero-based), by default the track(s) will be added to the end of the playlist
+     * @param string[]|UriInterface[] $tracks An array where each element is either the URI of the tracks to add, or an object that implements the UriInterface
+     * @param int $position The position to insert the tracks in the queue (zero-based), by default the tracks will be added to the end of the queue
      *
      * @return boolean
      */
-    public function addTracks($tracks, $position = null)
+    public function addTracks(array $tracks, $position = null)
     {
         if ($position === null) {
             $data = $this->browse("DirectChildren");
@@ -98,18 +82,24 @@ class Playlist extends Queue
             $position = $data["TotalMatches"];
         }
 
-        if (!is_array($tracks)) {
-            $tracks = [$tracks];
-        }
-
         # Ensure the update id is set to begin with
         $this->getUpdateID();
 
-        foreach ($tracks as $uri) {
+        foreach ($tracks as $track) {
+
+            # If a simple uri has been passed then convert it to a Track instance
+            if (is_string($track)) {
+                $track = new Track($track);
+            }
+
+            if (!$track instanceof UriInterface) {
+                throw new \InvalidArgumentException("The addTracks() array must contain either string URIs or objects that implement \duncan3dc\Sonos\Tracks\UriInterface");
+            }
+
             $data = $this->soap("AVTransport", "AddURIToSavedQueue", [
                 "UpdateID"              =>  $this->updateId,
-                "EnqueuedURI"           =>  $uri,
-                "EnqueuedURIMetaData"   =>  "",
+                "EnqueuedURI"           =>  $track->getUri(),
+                "EnqueuedURIMetaData"   =>  $track->getMetaData(),
                 "AddAtIndex"            =>  $position++,
             ]);
             $this->updateId = $data["NewUpdateID"];
@@ -125,16 +115,12 @@ class Playlist extends Queue
     /**
      * Remove tracks from the playlist.
      *
-     * @param int|int[] $positions The zero-based position of the track to remove, or an array of positions
+     * @param int[] $positions The zero-based positions of the tracks to remove
      *
      * @return boolean
      */
-    public function removeTracks($positions)
+    public function removeTracks(array $positions)
     {
-        if (!is_array($positions)) {
-            $positions = [$positions];
-        }
-
         $data = $this->soap("AVTransport", "ReorderTracksInSavedQueue", [
             "UpdateID"              =>  $this->getUpdateID(),
             "TrackList"             =>  implode(",", $positions),
@@ -143,6 +129,22 @@ class Playlist extends Queue
         $this->updateId = $data["NewUpdateID"];
 
         return ($data["QueueLengthChange"] == (count($positions) * -1));
+    }
+
+
+    /**
+     * Remove all tracks from the queue.
+     *
+     * @return void
+     */
+    public function clear()
+    {
+        $positions = [];
+        $max = $this->count();
+        for ($i = 0; $i < $max; $i++) {
+            $positions[] = $i;
+        }
+        $this->removeTracks($positions);
     }
 
 

@@ -8,17 +8,17 @@
     <meta name="author" content=""/>
     <meta name="description" content=""/>
 
-    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
-    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/prism.css" rel="stylesheet" media="all"/>
     <link href="../css/template.css" rel="stylesheet" media="all"/>
     
     <!--[if lt IE 9]>
-    <script src="https://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <script src="../js/html5.js"></script>
     <![endif]-->
-    <script src="https://code.jquery.com/jquery-1.11.0.min.js" type="text/javascript"></script>
-    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js" type="text/javascript"></script>
-    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
     <script src="../js/jquery.smooth-scroll.js"></script>
     <script src="../js/prism.min.js"></script>
     <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
@@ -67,12 +67,12 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">7</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">76</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="../reports/markers.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
                                 </a>
                             </li>
                             <li>
@@ -97,12 +97,17 @@
 
             <ul class="side-nav nav nav-list">
                 <li class="nav-header">Navigation</li>
-                                                                            <li><a href="#Queue.php"><i class="icon-file"></i> Queue.php</a></li>
-                                                                                                    <li><a href="#Controller.php"><i class="icon-file"></i> Controller.php</a></li>
+                                                                            <li><a href="#Playlist.php"><i class="icon-file"></i> Playlist.php</a></li>
+                                                                                                    <li><a href="#Queue.php"><i class="icon-file"></i> Queue.php</a></li>
                                                                                                     <li><a href="#Network.php"><i class="icon-file"></i> Network.php</a></li>
-                                                                                                    <li><a href="#Helper.php"><i class="icon-file"></i> Helper.php</a></li>
                                                                                                     <li><a href="#Speaker.php"><i class="icon-file"></i> Speaker.php</a></li>
-                                                                                                    <li><a href="#Playlist.php"><i class="icon-file"></i> Playlist.php</a></li>
+                                                                                                    <li><a href="#Controller.php"><i class="icon-file"></i> Controller.php</a></li>
+                                                                                                    <li><a href="#Helper.php"><i class="icon-file"></i> Helper.php</a></li>
+                                                                                                    <li><a href="#Alarm.php"><i class="icon-file"></i> Alarm.php</a></li>
+                                                                                                    <li><a href="#Tracks/UriInterface.php"><i class="icon-file"></i> Tracks/UriInterface.php</a></li>
+                                                                                                    <li><a href="#Tracks/QueueTrack.php"><i class="icon-file"></i> Tracks/QueueTrack.php</a></li>
+                                                                                                    <li><a href="#Tracks/Track.php"><i class="icon-file"></i> Tracks/Track.php</a></li>
+                                                                                                    <li><a href="#State.php"><i class="icon-file"></i> State.php</a></li>
                                                                     </ul>
         </div>
 
@@ -114,10 +119,492 @@
 
             
                             <div class="package-contents">
+                                            <a name="Playlist.php" id="Playlist.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Playlist.php
+                            <small style="float: right;padding-right: 10px;">4</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>27</td>
+                                        <td>Argument $param is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>77</td>
+                                        <td>Argument $tracks is missing from the Docblock of addTracks</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>122</td>
+                                        <td>Argument $positions is missing from the Docblock of removeTracks</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
                                             <a name="Queue.php" id="Queue.php"></a>
                         <h3>
                             <i class="icon-file"></i>
                             Queue.php
+                            <small style="float: right;padding-right: 10px;">9</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>36</td>
+                                        <td>Argument $controller is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>53</td>
+                                        <td>Argument $service is missing from the Docblock of soap</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>75</td>
+                                        <td>Argument $type is missing from the Docblock of browse</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>122</td>
+                                        <td>Argument $start is missing from the Docblock of getTracks</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>157</td>
+                                        <td>Argument $track is missing from the Docblock of addTrack</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>171</td>
+                                        <td>Argument $tracks is missing from the Docblock of addTracks</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>217</td>
+                                        <td>Argument $position is missing from the Docblock of removeTrack</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>230</td>
+                                        <td>Argument $positions is missing from the Docblock of removeTracks</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Network.php" id="Network.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Network.php
+                            <small style="float: right;padding-right: 10px;">12</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>35</td>
+                                        <td>Argument $cache is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>35</td>
+                                        <td>No summary for method &quot;&quot;</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>176</td>
+                                        <td>Argument $room is missing from the Docblock of getSpeakerByRoom</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>196</td>
+                                        <td>Argument $room is missing from the Docblock of getSpeakersByRoom</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>243</td>
+                                        <td>Argument $room is missing from the Docblock of getControllerByRoom</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>266</td>
+                                        <td>Argument $ip is missing from the Docblock of getControllerByIp</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>322</td>
+                                        <td>Argument $name is missing from the Docblock of getPlaylistByName</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>351</td>
+                                        <td>Argument $id is missing from the Docblock of getPlaylistById</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>364</td>
+                                        <td>Argument $name is missing from the Docblock of createPlaylist</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>402</td>
+                                        <td>Argument $id is missing from the Docblock of getAlarmById</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>402</td>
+                                        <td>No summary for method &quot;&quot;</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Speaker.php" id="Speaker.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Speaker.php
+                            <small style="float: right;padding-right: 10px;">7</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>58</td>
+                                        <td>Argument $ip is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>77</td>
+                                        <td>Argument $url is missing from the Docblock of getXml</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>97</td>
+                                        <td>Argument $service is missing from the Docblock of soap</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>170</td>
+                                        <td>Argument $attributes is missing from the Docblock of setTopology</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>237</td>
+                                        <td>Argument $volume is missing from the Docblock of setVolume</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>253</td>
+                                        <td>Argument $adjust is missing from the Docblock of adjustVolume</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Controller.php" id="Controller.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Controller.php
+                            <small style="float: right;padding-right: 10px;">13</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>59</td>
+                                        <td>Argument $speaker is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>59</td>
+                                        <td>Argument $network is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>59</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $network in __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>160</td>
+                                        <td>Argument $state is missing from the Docblock of setState</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>245</td>
+                                        <td>Argument $speaker is missing from the Docblock of addSpeaker</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>264</td>
+                                        <td>Argument $speaker is missing from the Docblock of removeSpeaker</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>277</td>
+                                        <td>Argument $volume is missing from the Docblock of setVolume</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>293</td>
+                                        <td>Argument $adjust is missing from the Docblock of adjustVolume</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>321</td>
+                                        <td>Argument $options is missing from the Docblock of setMode</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>348</td>
+                                        <td>Argument $repeat is missing from the Docblock of setRepeat</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>381</td>
+                                        <td>Argument $shuffle is missing from the Docblock of setShuffle</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>413</td>
+                                        <td>Argument $crossfade is missing from the Docblock of setCrossfade</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Helper.php" id="Helper.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Helper.php
+                            <small style="float: right;padding-right: 10px;">3</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>18</td>
+                                        <td>Argument $mode is missing from the Docblock of getMode</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>43</td>
+                                        <td>Argument $options is missing from the Docblock of setMode</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Alarm.php" id="Alarm.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Alarm.php
+                            <small style="float: right;padding-right: 10px;">19</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>43</td>
+                                        <td>Argument $xml is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>60</td>
+                                        <td>Argument $service is missing from the Docblock of soap</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>98</td>
+                                        <td>Argument $time is missing from the Docblock of setTime</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>135</td>
+                                        <td>Argument $duration is missing from the Docblock of setDuration</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>198</td>
+                                        <td>Argument $frequency is missing from the Docblock of setFrequency</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>239</td>
+                                        <td>Argument $day is missing from the Docblock of onHandler</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>261</td>
+                                        <td>Argument $set is missing from the Docblock of onMonday</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>274</td>
+                                        <td>Argument $set is missing from the Docblock of onTuesday</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>287</td>
+                                        <td>Argument $set is missing from the Docblock of onWednesday</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>300</td>
+                                        <td>Argument $set is missing from the Docblock of onThursday</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>313</td>
+                                        <td>Argument $set is missing from the Docblock of onFriday</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>326</td>
+                                        <td>Argument $set is missing from the Docblock of onSaturday</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>339</td>
+                                        <td>Argument $set is missing from the Docblock of onSunday</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>352</td>
+                                        <td>Argument $set is missing from the Docblock of once</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>368</td>
+                                        <td>Argument $set is missing from the Docblock of daily</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>439</td>
+                                        <td>Argument $volume is missing from the Docblock of setVolume</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>465</td>
+                                        <td>Argument $repeat is missing from the Docblock of setRepeat</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>499</td>
+                                        <td>Argument $shuffle is missing from the Docblock of setShuffle</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Tracks/UriInterface.php" id="Tracks/UriInterface.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Tracks/UriInterface.php
                             <small style="float: right;padding-right: 10px;">1</small>
                         </h3>
                         <div>
@@ -140,10 +627,10 @@
                         </div>
                                     </div>
                             <div class="package-contents">
-                                            <a name="Controller.php" id="Controller.php"></a>
+                                            <a name="Tracks/QueueTrack.php" id="Tracks/QueueTrack.php"></a>
                         <h3>
                             <i class="icon-file"></i>
-                            Controller.php
+                            Tracks/QueueTrack.php
                             <small style="float: right;padding-right: 10px;">2</small>
                         </h3>
                         <div>
@@ -163,19 +650,19 @@
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>202</td>
-                                        <td>No summary for method getSpeakers()</td>
+                                        <td>26</td>
+                                        <td>Argument $xml is missing from the Docblock of createFromXml</td>
                                     </tr>
                                                             </tbody>
                             </table>
                         </div>
                                     </div>
                             <div class="package-contents">
-                                            <a name="Network.php" id="Network.php"></a>
+                                            <a name="Tracks/Track.php" id="Tracks/Track.php"></a>
                         <h3>
                             <i class="icon-file"></i>
-                            Network.php
-                            <small style="float: right;padding-right: 10px;">1</small>
+                            Tracks/Track.php
+                            <small style="float: right;padding-right: 10px;">3</small>
                         </h3>
                         <div>
                             <table class="table markers table-bordered">
@@ -192,16 +679,26 @@
                                         <td>0</td>
                                         <td>No summary was found for this file</td>
                                     </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>50</td>
+                                        <td>Argument $uri is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>113</td>
+                                        <td>Argument $xml is missing from the Docblock of createFromXml</td>
+                                    </tr>
                                                             </tbody>
                             </table>
                         </div>
                                     </div>
                             <div class="package-contents">
-                                            <a name="Helper.php" id="Helper.php"></a>
+                                            <a name="State.php" id="State.php"></a>
                         <h3>
                             <i class="icon-file"></i>
-                            Helper.php
-                            <small style="float: right;padding-right: 10px;">1</small>
+                            State.php
+                            <small style="float: right;padding-right: 10px;">3</small>
                         </h3>
                         <div>
                             <table class="table markers table-bordered">
@@ -218,57 +715,15 @@
                                         <td>0</td>
                                         <td>No summary was found for this file</td>
                                     </tr>
-                                                            </tbody>
-                            </table>
-                        </div>
-                                    </div>
-                            <div class="package-contents">
-                                            <a name="Speaker.php" id="Speaker.php"></a>
-                        <h3>
-                            <i class="icon-file"></i>
-                            Speaker.php
-                            <small style="float: right;padding-right: 10px;">1</small>
-                        </h3>
-                        <div>
-                            <table class="table markers table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th>Line</th>
-                                    <th>Description</th>
-                                </tr>
-                                </thead>
-                                <tbody>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>0</td>
-                                        <td>No summary was found for this file</td>
+                                        <td>42</td>
+                                        <td>Argument $uri is missing from the Docblock of __construct</td>
                                     </tr>
-                                                            </tbody>
-                            </table>
-                        </div>
-                                    </div>
-                            <div class="package-contents">
-                                            <a name="Playlist.php" id="Playlist.php"></a>
-                        <h3>
-                            <i class="icon-file"></i>
-                            Playlist.php
-                            <small style="float: right;padding-right: 10px;">1</small>
-                        </h3>
-                        <div>
-                            <table class="table markers table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th>Line</th>
-                                    <th>Description</th>
-                                </tr>
-                                </thead>
-                                <tbody>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>0</td>
-                                        <td>No summary was found for this file</td>
+                                        <td>55</td>
+                                        <td>Argument $xml is missing from the Docblock of createFromXml</td>
                                     </tr>
                                                             </tbody>
                             </table>
@@ -314,7 +769,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on November 7th, 2014 at 13:15.
+                    on December 30th, 2014 at 19:04.
                 </section>
             </section>
         </section>
