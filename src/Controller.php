@@ -393,6 +393,32 @@ class Controller extends Speaker
 
 
     /**
+     * Check if crossfade is currently active.
+     *
+     * @return boolean
+     */
+    public function getCrossfade()
+    {
+        return (boolean) $this->soap("AVTransport", "GetCrossfadeMode");
+    }
+
+
+    /**
+     * Turn crossfade on or off.
+     *
+     * @param boolean $crossfade Whether crossfade should be on or not
+     *
+     * @return void
+     */
+    public function setCrossfade($crossfade)
+    {
+        $data = $this->soap("AVTransport", "SetCrossfadeMode", [
+            "CrossfadeMode" =>  (boolean) $crossfade,
+        ]);
+    }
+
+
+    /**
      * Get the queue for this controller.
      *
      * @return Queue

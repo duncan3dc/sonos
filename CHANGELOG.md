@@ -6,6 +6,7 @@ Changelog
 ### Added
 
 * [Alarms] Allow alarm information to be read, and managed using the Alarm class
+* [Controllers] Added support for Crossfade.
 
 ### Changed
 
