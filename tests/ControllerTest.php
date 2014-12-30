@@ -18,7 +18,7 @@ class ControllerTest extends SonosTest
             }
         }
 
-        $this->markTestSkipped("No speakers found that are the coordinator of their group");
+        throw new \Exception("No speakers found that are the coordinator of their group");
     }
 
 
@@ -203,6 +203,22 @@ class ControllerTest extends SonosTest
         $controller = $this->network->getController();
         $controller->setShuffle(false);
         $this->assertFalse($controller->getShuffle());
+    }
+
+
+    public function testGetCrossfade()
+    {
+        $controller = $this->network->getController();
+        $controller->setCrossfade(true);
+        $this->assertTrue($controller->getCrossfade());
+    }
+
+
+    public function testSetCrossfade()
+    {
+        $controller = $this->network->getController();
+        $controller->setCrossfade(false);
+        $this->assertFalse($controller->getCrossfade());
     }
 
 
