@@ -149,14 +149,28 @@ class Queue implements \Countable
 
 
     /**
-     * Add tracks to the queue.
+     * Add a track to the queue.
      *
-     * @param string|string[] $tracks The URI of the track to add, multiple tracks can be added by passing an array of URIs
-     * @param int $position The position to insert the tracks in the queue (zero-based), by default the track(s) will be added to the end of the queue
+     * @param string|UriInterface $track The URI of the track to add, or an object that implements the UriInterface
+     * @param int $position The position to insert the track in the queue (zero-based), by default the track will be added to the end of the queue
      *
      * @return boolean
      */
-    public function addTracks($tracks, $position = null)
+    public function addTrack($track, $position = null)
+    {
+        return $this->addTracks([$track], $position);
+    }
+
+
+    /**
+     * Add tracks to the queue.
+     *
+     * @param string[]|UriInterface[] $tracks An array where each element is either the URI of the tracks to add, or an object that implements the UriInterface
+     * @param int $position The position to insert the tracks in the queue (zero-based), by default the tracks will be added to the end of the queue
+     *
+     * @return boolean
+     */
+    public function addTracks(array $tracks, $position = null)
     {
         if ($position === null) {
             $data = $this->browse("DirectChildren");
@@ -164,17 +178,13 @@ class Queue implements \Countable
             $position = $data["TotalMatches"] + 1;
         }
 
-        if (!is_array($tracks)) {
-            $tracks = [$tracks];
-        }
-
         # Ensure the update id is set to begin with
         $this->getUpdateID();
 
-        foreach ($tracks as $uri) {
+        foreach ($tracks as $track) {
             $data = $this->soap("AVTransport", "AddURIToQueue", [
                 "UpdateID"                          =>  $this->updateId,
-                "EnqueuedURI"                       =>  $uri,
+                "EnqueuedURI"                       =>  $track,
                 "EnqueuedURIMetaData"               =>  "",
                 "DesiredFirstTrackNumberEnqueued"   =>  $position++,
                 "EnqueueAsNext"                     =>  0,
@@ -190,18 +200,27 @@ class Queue implements \Countable
 
 
     /**
-     * Remove tracks from the queue.
+     * Remove a track from the queue.
      *
-     * @param int|int[] $positions The zero-based position of the track to remove, or an array of positions
+     * @param int $position The zero-based position of the track to remove
      *
      * @return boolean
      */
-    public function removeTracks($positions)
+    public function removeTrack($position)
     {
-        if (!is_array($positions)) {
-            $positions = [$positions];
-        }
+        return $this->removeTracks([$position]);
+    }
 
+
+    /**
+     * Remove tracks from the queue.
+     *
+     * @param int[] $positions The zero-based positions of the tracks to remove
+     *
+     * @return boolean
+     */
+    public function removeTracks(array $positions)
+    {
         $ranges = [];
         $key = 0;
         $last = -1;
