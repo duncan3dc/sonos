@@ -3,6 +3,10 @@ Changelog
 
 ## x.y.z - UNRELEASED
 
+### Added
+
+* [Playlists] Created a moveTrack() method to re-order playlist tracks.
+
 --------
 
 ## 1.0.2 - 2015-01-05

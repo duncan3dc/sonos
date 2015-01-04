@@ -133,6 +133,27 @@ class Playlist extends Queue
 
 
     /**
+     * Move a track from one position in the playlist to another.
+     *
+     * @param int $from The current position of the track in the playlist (zero-based)
+     * @param int $to The desired position in the playlist (zero-based)
+     *
+     * @return static
+     */
+    public function moveTrack($from, $to)
+    {
+        $data = $this->soap("AVTransport", "ReorderTracksInSavedQueue", [
+            "UpdateID"              =>  $this->getUpdateID(),
+            "TrackList"             =>  (string) $from,
+            "NewPositionList"       =>  (string) $to,
+        ]);
+        $this->updateId = $data["NewUpdateID"];
+
+        return $this;
+    }
+
+
+    /**
      * Remove all tracks from the queue.
      *
      * @return void
