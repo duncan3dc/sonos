@@ -17,6 +17,9 @@ By default the speakers found on your network are cached, if you frequently add/
  $sonos = new Network;
 ~~~
 
+<p class="message-info">As of v1.0.2, if no speakers are found then this result is not cached, and the discovery will be tried again on the next request.</p>
+
+
 
 We use [doctrine/cache](http://doctrine-common.readthedocs.org/en/latest/reference/caching.html) to handle caching, which means a variety of cache backends are available.
 
