@@ -125,7 +125,11 @@ class Network
             $devices = $this->cache->fetch("devices");
         } else {
             $devices = $this->getDevices();
-            $this->cache->save("devices", $devices);
+
+            # Only cache the devices if we actually found some
+            if (count($devices) > 0) {
+                $this->cache->save("devices", $devices);
+            }
         }
 
         if (count($devices) < 1) {

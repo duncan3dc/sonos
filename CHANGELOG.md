@@ -5,6 +5,14 @@ Changelog
 
 --------
 
+## 1.0.2 - 2015-01-05
+
+### Fixed
+
+* [Network] If no devices are found on the network the result is no longer cached.
+
+--------
+
 ## 1.0.1 - 2014-12-30
 
 ### Added
