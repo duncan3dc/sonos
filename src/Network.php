@@ -156,6 +156,12 @@ class Network
     }
 
 
+    public function clearTopology()
+    {
+        $this->speakers = null;
+    }
+
+
     /**
      * Get a Controller instance from the network.
      *
