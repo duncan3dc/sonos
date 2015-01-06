@@ -6,6 +6,7 @@ Changelog
 ### Added
 
 * [Alarms] Allow the room/speaker of an alarm to be get and set.
+* [Logging] Allow a PSR-3 compatible logger to be passed for logging support.
 
 ### Fixed
 * [Network] Ignore any non Sonos devices from the discovery.

@@ -2,6 +2,10 @@
 
 namespace duncan3dc\Sonos;
 
+use duncan3dc\DomParser\XmlParser;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
+
 /**
  * Provides an interface to individual speakers that is mostly read-only, although the volume can be set using this class.
  */
@@ -47,13 +51,19 @@ class Speaker
      */
     protected $topology;
 
+    /**
+     * @var LoggerInterface $logger The logging object
+     */
+    protected $logger;
+
 
     /**
      * Create an instance of the Speaker class.
      *
      * @param Device|string $param An Device instance or the ip address that the speaker is listening on
+     * @param LoggerInterface $logger A logging object
      */
-    public function __construct($param)
+    public function __construct($param, LoggerInterface $logger = null)
     {
         if ($param instanceof Device) {
             $this->device = $param;
@@ -62,6 +72,11 @@ class Speaker
             $this->ip = $param;
             $this->device = new Device($this->ip);
         }
+
+        if ($logger === null) {
+            $logger = new NullLogger;
+        }
+        $this->logger = $logger;
 
         $parser = $this->device->getXml("/xml/device_description.xml");
         $device = $parser->getTag("device");
@@ -84,7 +99,7 @@ class Speaker
      *
      * @return mixed
      */
-    public function soap($service, $action, $params = [])
+    public function soap($service, $action, array $params = [])
     {
         return $this->device->soap($service, $action, $params);
     }

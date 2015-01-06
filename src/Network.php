@@ -5,11 +5,14 @@ namespace duncan3dc\Sonos;
 use Doctrine\Common\Cache\Cache;
 use Doctrine\Common\Cache\FilesystemCache;
 use duncan3dc\DomParser\XmlParser;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 /**
  * Provides methods to locate speakers/controllers/playlists on the current network.
  */
-class Network
+class Network implements LoggerAwareInterface
 {
     /**
      * @var Speaker[] $speakers Speakers that are available on the current network.
@@ -31,13 +34,49 @@ class Network
      */
     protected $cache;
 
+    /**
+     * @var LoggerInterface $logger The logging object
+     */
+    protected $logger;
 
-    public function __construct(Cache $cache = null)
+
+    public function __construct(Cache $cache = null, LoggerInterface $logger = null)
     {
         if ($cache === null) {
             $cache = new FilesystemCache(sys_get_temp_dir() . DIRECTORY_SEPARATOR . "sonos");
         }
         $this->cache = $cache;
+
+        if ($logger === null) {
+            $logger = new NullLogger;
+        }
+        $this->logger = $logger;
+    }
+
+
+    /**
+     * Set the logger object to use.
+     *
+     * @var LoggerInterface $logger The logging object
+     *
+     * @return static
+     */
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+
+        return $this;
+    }
+
+
+    /**
+     * Get the logger object to use.
+     *
+     * @return LoggerInterface $logger The logging object
+     */
+    public function getLogger(LoggerInterface $logger)
+    {
+        return $this->logger;
     }
 
 
@@ -48,6 +87,8 @@ class Network
      */
     protected function getDevices()
     {
+        $this->logger->info("discovering devices");
+
         $ip = "239.255.255.250";
         $port = 1900;
 
@@ -102,6 +143,8 @@ class Network
             if (in_array($device["usn"], $unique)) {
                 continue;
             }
+            $this->logger->info("found device: {usn}", $device);
+
             $url = parse_url($device["location"]);
             $ip = $url["host"];
 
@@ -124,7 +167,10 @@ class Network
             return $this->speakers;
         }
 
+        $this->logger->info("creating speaker instances");
+
         if ($this->cache->contains("devices")) {
+            $this->logger->info("getting device info from cache");
             $devices = $this->cache->fetch("devices");
         } else {
             $devices = $this->getDevices();
@@ -141,9 +187,9 @@ class Network
 
         $speakers = [];
         foreach ($devices as $ip) {
-            $device = new Device($ip);
+            $device = new Device($ip, $this->logger);
             if ($device->isSpeaker()) {
-                $speakers[$ip] = new Speaker($device);
+                $speakers[$ip] = new Speaker($device, $this->logger);
             }
         }
 
@@ -270,8 +316,12 @@ class Network
      */
     public function getControllerByIp($ip)
     {
-        $speaker = new Speaker($ip);
-        $group = $speaker->getGroup();
+        $speakers = $this->getSpeakers();
+        if (!array_key_exists($ip, $speakers)) {
+            throw new \InvalidArgumentException("No speaker found for the IP address '" . $ip . "'");
+        }
+
+        $group = $speakers[$ip]->getGroup();
 
         foreach ($this->getControllers() as $controller) {
             if ($controller->getGroup() === $group) {

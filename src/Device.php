@@ -3,6 +3,8 @@
 namespace duncan3dc\Sonos;
 
 use duncan3dc\DomParser\XmlParser;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 /**
  * Make http requests to a Sonos device.
@@ -19,15 +21,26 @@ class Device
      */
     protected $cache = [];
 
+    /**
+     * @var LoggerInterface $logger The logging object
+     */
+    protected $logger;
+
 
     /**
      * Create an instance of the Device class.
      *
      * @param string $ip The ip address that the speaker is listening on
+     * @param LoggerInterface $logger A logging object
      */
-    public function __construct($ip)
+    public function __construct($ip, LoggerInterface $logger = null)
     {
         $this->ip = $ip;
+
+        if ($logger === null) {
+            $logger = new NullLogger;
+        }
+        $this->logger = $logger;
     }
 
 
@@ -41,7 +54,9 @@ class Device
     public function getXml($url)
     {
         if (!isset($this->cache[$url])) {
-            $this->cache[$url] = new XmlParser("http://{$this->ip}:1400{$url}");
+            $uri = "http://{$this->ip}:1400{$url}";
+            $this->logger->info("requesting xml from: {$uri}");
+            $this->cache[$url] = new XmlParser($uri);
         }
 
         return $this->cache[$url];
@@ -79,6 +94,8 @@ class Device
             $location .= "{$path}/";
         }
         $location .= "{$service}/Control";
+
+        $this->logger->info("sending soap request to: {$location}");
 
         $soap = new \SoapClient(null, [
             "location"  =>  $location,
