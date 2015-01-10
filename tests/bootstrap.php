@@ -16,11 +16,15 @@ if (in_array("--live-tests", $_SERVER["argv"])) {
         echo "    * {$warning}\n";
     }
 
-    $sleep = 5;
-    echo "\nTests will run in " . $sleep . " seconds";
-    for ($i = 0; $i < $sleep; $i++) {
-        echo ".";
-        sleep(1);
+    if (!in_array("--skip-wait", $_SERVER["argv"])) {
+        $sleep = 5;
+        echo "\nTests will run in " . $sleep . " seconds";
+        for ($i = 0; $i < $sleep; $i++) {
+            echo ".";
+            sleep(1);
+        }
+        echo "\n";
     }
-    echo "\n\n";
+
+    echo "\n";
 }
