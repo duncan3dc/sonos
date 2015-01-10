@@ -6,6 +6,7 @@ Changelog
 ### Added
 
 * [Playlists] Created a moveTrack() method to re-order playlist tracks.
+* [Playlists] Created a hasPlaylist() method on the Network class to check if a playlist exists.
 
 --------
 

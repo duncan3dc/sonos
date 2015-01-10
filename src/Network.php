@@ -321,6 +321,31 @@ class Network
 
 
     /**
+     * Check if a playlist with the specified name exists on this network.
+     *
+     * If no case-sensitive match is found it will return a case-insensitive match.
+     *
+     * @param string The name of the playlist
+     *
+     * @return boolean
+     */
+    public function hasPlaylist($name)
+    {
+        $playlists = $this->getPlaylists();
+        foreach ($playlists as $playlist) {
+            if ($playlist->getName() === $name) {
+                return true;
+            }
+            if (strtolower($playlist->getName()) === strtolower($name)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    /**
      * Get the playlist with the specified name.
      *
      * If no case-sensitive match is found it will return a case-insensitive match.
