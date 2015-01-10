@@ -380,7 +380,12 @@ class Network
             "EnqueuedURI"           =>  "",
             "EnqueuedURIMetaData"   =>  "",
         ]);
-        return new Playlist($data["AssignedObjectID"], $controller);
+
+        $playlist = new Playlist($data["AssignedObjectID"], $controller);
+
+        $this->playlists[] = $playlist;
+
+        return $playlist;
     }
 
 
