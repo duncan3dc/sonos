@@ -125,7 +125,11 @@ class Network
             $devices = $this->cache->fetch("devices");
         } else {
             $devices = $this->getDevices();
-            $this->cache->save("devices", $devices);
+
+            # Only cache the devices if we actually found some
+            if (count($devices) > 0) {
+                $this->cache->save("devices", $devices);
+            }
         }
 
         if (count($devices) < 1) {
@@ -152,6 +156,12 @@ class Network
     }
 
 
+    public function clearTopology()
+    {
+        $this->speakers = null;
+    }
+
+
     /**
      * Get a Controller instance from the network.
      *
@@ -171,7 +181,7 @@ class Network
      *
      * @param string $room The name of the room to look for
      *
-     * @return Speaker
+     * @return Speaker|null
      */
     public function getSpeakerByRoom($room)
     {
@@ -181,8 +191,6 @@ class Network
                 return $speaker;
             }
         }
-
-        throw new \InvalidArgumentException("No speaker found with the room name '" . $room . "'");
     }
 
 
@@ -202,10 +210,6 @@ class Network
             if ($controller->room === $room) {
                 $return[] = $controller;
             }
-        }
-
-        if (count($return) < 1) {
-            throw new \InvalidArgumentException("No speakers found with the room name '" . $room . "'");
         }
 
         return $return;
@@ -238,7 +242,7 @@ class Network
      *
      * @param string $room The name of the room to look for
      *
-     * @return Controller[]
+     * @return Controller|null
      */
     public function getControllerByRoom($room)
     {
@@ -251,8 +255,6 @@ class Network
                 return $controller;
             }
         }
-
-        throw new \InvalidArgumentException("No controller found with the room name '" . $room . "'");
     }
 
 
@@ -261,7 +263,7 @@ class Network
      *
      * @param string $ip The ip address of the speaker
      *
-     * @return Controller
+     * @return Controller|null
      */
     public function getControllerByIp($ip)
     {
@@ -273,8 +275,6 @@ class Network
                 return $controller;
             }
         }
-
-        throw new \InvalidArgumentException("No controller found for the IP address '" . $room . "'");
     }
 
 
@@ -311,13 +311,38 @@ class Network
 
 
     /**
+     * Check if a playlist with the specified name exists on this network.
+     *
+     * If no case-sensitive match is found it will return a case-insensitive match.
+     *
+     * @param string The name of the playlist
+     *
+     * @return boolean
+     */
+    public function hasPlaylist($name)
+    {
+        $playlists = $this->getPlaylists();
+        foreach ($playlists as $playlist) {
+            if ($playlist->getName() === $name) {
+                return true;
+            }
+            if (strtolower($playlist->getName()) === strtolower($name)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    /**
      * Get the playlist with the specified name.
      *
      * If no case-sensitive match is found it will return a case-insensitive match.
      *
      * @param string The name of the playlist
      *
-     * @return Playlist
+     * @return Playlist|null
      */
     public function getPlaylistByName($name)
     {
@@ -336,8 +361,6 @@ class Network
         if ($roughMatch) {
             return $roughMatch;
         }
-
-        throw new \InvalidArgumentException("No playlist found with the name '" . $name . "'");
     }
 
 
@@ -370,7 +393,12 @@ class Network
             "EnqueuedURI"           =>  "",
             "EnqueuedURIMetaData"   =>  "",
         ]);
-        return new Playlist($data["AssignedObjectID"], $controller);
+
+        $playlist = new Playlist($data["AssignedObjectID"], $controller);
+
+        $this->playlists[] = $playlist;
+
+        return $playlist;
     }
 
 
@@ -409,8 +437,6 @@ class Network
                 return $alarm;
             }
         }
-
-        throw new \InvalidArgumentException("No alarm found with the ID " . $id);
     }
 }
 

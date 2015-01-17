@@ -251,6 +251,8 @@ class Controller extends Speaker
             "CurrentURI"            =>  "x-rincon:" . $this->getUuid(),
             "CurrentURIMetaData"    =>  "",
         ]);
+
+        $this->network->clearTopology();
     }
 
 
@@ -264,6 +266,8 @@ class Controller extends Speaker
     public function removeSpeaker(Speaker $speaker)
     {
         $speaker->soap("AVTransport", "BecomeCoordinatorOfStandaloneGroup");
+
+        $this->network->clearTopology();
     }
 
 

@@ -53,7 +53,7 @@ class Speaker
     /**
      * Create an instance of the Speaker class.
      *
-     * @param string $ip The ip address that the controller is listening on
+     * @param string $ip The ip address that the speaker is listening on
      */
     public function __construct($ip)
     {
@@ -67,7 +67,7 @@ class Speaker
 
 
     /**
-     * Retrieve some xml from the controller.
+     * Retrieve some xml from the speaker.
      * _This method is intended for internal use only._
      *
      * @param string $url The url to retrieve
