@@ -181,7 +181,7 @@ class Network
      *
      * @param string $room The name of the room to look for
      *
-     * @return Speaker
+     * @return Speaker|null
      */
     public function getSpeakerByRoom($room)
     {
@@ -191,8 +191,6 @@ class Network
                 return $speaker;
             }
         }
-
-        throw new \InvalidArgumentException("No speaker found with the room name '" . $room . "'");
     }
 
 
@@ -212,10 +210,6 @@ class Network
             if ($controller->room === $room) {
                 $return[] = $controller;
             }
-        }
-
-        if (count($return) < 1) {
-            throw new \InvalidArgumentException("No speakers found with the room name '" . $room . "'");
         }
 
         return $return;
@@ -248,7 +242,7 @@ class Network
      *
      * @param string $room The name of the room to look for
      *
-     * @return Controller[]
+     * @return Controller|null
      */
     public function getControllerByRoom($room)
     {
@@ -261,8 +255,6 @@ class Network
                 return $controller;
             }
         }
-
-        throw new \InvalidArgumentException("No controller found with the room name '" . $room . "'");
     }
 
 
@@ -271,7 +263,7 @@ class Network
      *
      * @param string $ip The ip address of the speaker
      *
-     * @return Controller
+     * @return Controller|null
      */
     public function getControllerByIp($ip)
     {
@@ -283,8 +275,6 @@ class Network
                 return $controller;
             }
         }
-
-        throw new \InvalidArgumentException("No controller found for the IP address '" . $room . "'");
     }
 
 
@@ -352,7 +342,7 @@ class Network
      *
      * @param string The name of the playlist
      *
-     * @return Playlist
+     * @return Playlist|null
      */
     public function getPlaylistByName($name)
     {
@@ -371,8 +361,6 @@ class Network
         if ($roughMatch) {
             return $roughMatch;
         }
-
-        throw new \InvalidArgumentException("No playlist found with the name '" . $name . "'");
     }
 
 
@@ -449,7 +437,5 @@ class Network
                 return $alarm;
             }
         }
-
-        throw new \InvalidArgumentException("No alarm found with the ID " . $id);
     }
 }
