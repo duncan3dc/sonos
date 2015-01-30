@@ -246,7 +246,10 @@ class Network
      */
     public function getControllerByRoom($room)
     {
-        $speaker = $this->getSpeakerByRoom($room);
+        if (!$speaker = $this->getSpeakerByRoom($room)) {
+            return;
+        }
+
         $group = $speaker->getGroup();
 
         $controllers = $this->getControllers();
