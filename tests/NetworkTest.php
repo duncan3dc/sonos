@@ -9,76 +9,84 @@ class NetworkTest extends LiveTest
 
     public function testGetSpeakers()
     {
-        $this->assertContainsOnlyInstancesOf("duncan3dc\\Sonos\\Speaker", $this->network->getSpeakers());
+        $result = $this->network->getSpeakers();
+        $this->assertContainsOnlyInstancesOf("duncan3dc\\Sonos\\Speaker", $result);
     }
 
 
     public function testGetController()
     {
-        $this->assertInstanceOf("duncan3dc\\Sonos\\Controller", $this->network->getController());
+        $result = $this->network->getController();
+        $this->assertInstanceOf("duncan3dc\\Sonos\\Controller", $result);
     }
 
 
     public function testGetSpeakerByRoom1()
     {
-        $this->assertInstanceOf("duncan3dc\\Sonos\\Speaker", $this->network->getSpeakerByRoom("Kitchen"));
+        $result = $this->network->getSpeakerByRoom("Kitchen");
+        $this->assertInstanceOf("duncan3dc\\Sonos\\Speaker", $result);
     }
 
 
     public function testGetSpeakerByRoom2()
     {
-        $this->setExpectedException("InvalidArgumentException");
-        $this->network->getSpeakerByRoom("No such room");
+        $result = $this->network->getSpeakerByRoom("No such room");
+        $this->assertNull($result);
     }
 
 
     public function testGetSpeakersByRoom1()
     {
-        $this->assertContainsOnlyInstancesOf("duncan3dc\\Sonos\\Speaker", $this->network->getSpeakersByRoom("Kitchen"));
+        $result = $this->network->getSpeakersByRoom("Kitchen");
+        $this->assertContainsOnlyInstancesOf("duncan3dc\\Sonos\\Speaker", $result);
     }
 
 
     public function testGetSpeakersByRoom2()
     {
-        $this->setExpectedException("InvalidArgumentException");
-        $this->network->getSpeakersByRoom("No such room");
+        $result = $this->network->getSpeakersByRoom("No such room");
+        $this->assertSame([], $result);
     }
 
 
     public function testGetControllers()
     {
-        $this->assertContainsOnlyInstancesOf("duncan3dc\\Sonos\\Controller", $this->network->getControllers());
+        $result = $this->network->getControllers();
+        $this->assertContainsOnlyInstancesOf("duncan3dc\\Sonos\\Controller", $result);
     }
 
 
     public function testGetControllerByRoom1()
     {
-        $this->assertInstanceOf("duncan3dc\\Sonos\\Controller", $this->network->getControllerByRoom("Kitchen"));
+        $result = $this->network->getControllerByRoom("Kitchen");
+        $this->assertInstanceOf("duncan3dc\\Sonos\\Controller", $result);
     }
 
 
     public function testGetControllerByRoom2()
     {
-        $this->setExpectedException("InvalidArgumentException");
-        $this->network->getControllerByRoom("No such room");
+        $result = $this->network->getControllerByRoom("No such room");
+        $this->assertNull($result);
     }
 
 
     public function testGetPlaylists()
     {
-        $this->assertContainsOnlyInstancesOf("duncan3dc\\Sonos\\Playlist", $this->network->getPlaylists());
+        $result = $this->network->getPlaylists();
+        $this->assertContainsOnlyInstancesOf("duncan3dc\\Sonos\\Playlist", $result);
     }
 
 
     public function testGetPlaylistByName()
     {
-        $this->setExpectedException("InvalidArgumentException");
-        $this->network->getPlaylistByName("No such playlist");
+        $result = $this->network->getPlaylistByName("No such playlist");
+        $this->assertNull($result);
     }
 
 
     public function testGetAlarms()
     {
-        $this->assertContainsOnlyInstancesOf("duncan3dc\\Sonos\\Alarm", $this->network->getAlarms());
+        $result = $this->network->getAlarms();
+        $this->assertContainsOnlyInstancesOf("duncan3dc\\Sonos\\Alarm", $result);
     }
 }

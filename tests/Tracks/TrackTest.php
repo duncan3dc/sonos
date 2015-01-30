@@ -37,6 +37,12 @@ XML;
     }
 
 
+    public function tearDown()
+    {
+        Mockery::close();
+    }
+
+
     public function testGetTrackMetaDataTitle()
     {
         $value = "TITLE";
