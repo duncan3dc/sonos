@@ -68,6 +68,7 @@ class Speaker
 
     /**
      * Retrieve some xml from the speaker.
+     *
      * _This method is intended for internal use only._
      *
      * @param string $url The url to retrieve
@@ -86,6 +87,7 @@ class Speaker
 
     /**
      * Send a soap request to the speaker.
+     *
      * _This method is intended for internal use only_.
      *
      * @param string $service The service to send the request to
@@ -134,6 +136,7 @@ class Speaker
 
     /**
      * Get the attributes needed for the classes instance variables.
+     *
      * _This method is intended for internal use only_.
      *
      * @return void
@@ -161,6 +164,7 @@ class Speaker
 
     /**
      * Set the instance variables based on the xml attributes.
+     *
      * _This method is intended for internal use only_.
      *
      * @param array $attributes The attributes from the xml that represent this speaker

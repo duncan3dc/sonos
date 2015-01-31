@@ -156,6 +156,11 @@ class Network
     }
 
 
+    /**
+     * Reset any previously gathered speaker information.
+     *
+     * @return void
+     */
     public function clearTopology()
     {
         $this->speakers = null;
@@ -430,6 +435,11 @@ class Network
     }
 
 
+    /**
+     * Get alarms for the specified id.
+     *
+     * @return Alarm
+     */
     public function getAlarmById($id)
     {
         $id = (integer) $id;
