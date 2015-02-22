@@ -17,7 +17,7 @@ before_install:
     - >
       if [[ "$TRAVIS_PHP_VERSION" == "system" ]]; then
         pushd $HOME;
-        git clone https://github.com/php/php-src.git;
+        git clone --depth=1 https://github.com/php/php-src.git;
         pushd php-src;
         ./buildconf -f;
         ./configure --prefix=$HOME/.phpenv/versions/7 \
