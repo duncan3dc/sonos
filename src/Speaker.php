@@ -122,6 +122,7 @@ class Speaker
         $soap = new \SoapClient(null, [
             "location"  =>  $location,
             "uri"       =>  "urn:schemas-upnp-org:service:" . $service . ":1",
+            "trace"     =>  true,
         ]);
 
         $soapParams = [];
@@ -130,7 +131,11 @@ class Speaker
             $soapParams[] = new \SoapParam(new \SoapVar($val, XSD_STRING), $key);
         }
 
-        return $soap->__soapCall($action, $soapParams);
+        try {
+            return $soap->__soapCall($action, $soapParams);
+        } catch (\SoapFault $e) {
+            throw new Exceptions\SoapException($e, $soap);
+        }
     }
 
 
