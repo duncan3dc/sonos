@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns="urn:schemas-upnp-org:device-1-0">
+  <specVersion>
+    <major>1</major>
+    <minor>0</minor>
+  </specVersion>
+  <device>
+    <deviceType>urn:schemas-upnp-org:device:ZonePlayer:1</deviceType>
+    <friendlyName>192.168.0.40 - Sonos BRIDGE</friendlyName>
+    <manufacturer>Sonos, Inc.</manufacturer>
+    <manufacturerURL>http://www.sonos.com</manufacturerURL>
+    <modelNumber>ZB100</modelNumber>
+    <modelDescription>Sonos BRIDGE</modelDescription>
+    <modelName>Sonos BRIDGE</modelName>
+    <modelURL>http://www.sonos.com/store/products/ZB100</modelURL>
+    <softwareVersion>28.1-83040</softwareVersion>
+    <hardwareVersion>1.5.0.0-2</hardwareVersion>
+    <serialNum>00-0E-58-4E-92-84:2</serialNum>
+    <UDN>uuid:RINCON_000E584E928401400</UDN>
+    <iconList>
+      <icon>
+        <id>0</id>
+        <mimetype>image/png</mimetype>
+        <width>48</width>
+        <height>48</height>
+        <depth>24</depth>
+        <url>/img/icon-ZB100.png</url>
+      </icon>
+    </iconList>
+    <minCompatibleVersion>27.0-00000</minCompatibleVersion>
+    <legacyCompatibleVersion>24.0-0000</legacyCompatibleVersion>
+    <displayVersion>5.2</displayVersion>
+    <extraVersion></extraVersion>
+    <roomName>BRIDGE</roomName>
+    <displayName>BRIDGE</displayName>
+    <zoneType>4</zoneType>
+    <feature1>0x00000000</feature1>
+    <feature2>0x00008173</feature2>
+    <feature3>0x00030000</feature3>
+    <internalSpeakerSize>-1</internalSpeakerSize>
+    <memory>8</memory>
+    <flash>8</flash>
+    <serviceList>
+      <service>
+        <serviceType>urn:schemas-upnp-org:service:DeviceProperties:1</serviceType>
+        <serviceId>urn:upnp-org:serviceId:DeviceProperties</serviceId>
+        <controlURL>/DeviceProperties/Control</controlURL>
+        <eventSubURL>/DeviceProperties/Event</eventSubURL>
+        <SCPDURL>/xml/DeviceProperties1.xml</SCPDURL>
+      </service>    
+      <service>
+        <serviceType>urn:schemas-upnp-org:service:SystemProperties:1</serviceType>
+        <serviceId>urn:upnp-org:serviceId:SystemProperties</serviceId>
+        <controlURL>/SystemProperties/Control</controlURL>
+        <eventSubURL>/SystemProperties/Event</eventSubURL>
+        <SCPDURL>/xml/SystemProperties1.xml</SCPDURL>
+      </service>    
+      <service>
+        <serviceType>urn:schemas-upnp-org:service:ZoneGroupTopology:1</serviceType>
+        <serviceId>urn:upnp-org:serviceId:ZoneGroupTopology</serviceId>
+        <controlURL>/ZoneGroupTopology/Control</controlURL>
+        <eventSubURL>/ZoneGroupTopology/Event</eventSubURL>
+        <SCPDURL>/xml/ZoneGroupTopology1.xml</SCPDURL>
+      </service>    
+      <service>
+        <serviceType>urn:schemas-upnp-org:service:GroupManagement:1</serviceType>
+        <serviceId>urn:upnp-org:serviceId:GroupManagement</serviceId>
+        <controlURL>/GroupManagement/Control</controlURL>
+        <eventSubURL>/GroupManagement/Event</eventSubURL>
+        <SCPDURL>/xml/GroupManagement1.xml</SCPDURL>
+      </service>
+    </serviceList>
+    <deviceList>
+    </deviceList>
+  </device>
+</root>
