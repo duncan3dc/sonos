@@ -96,6 +96,9 @@ class Network
         $return = [];
         $unique = [];
         foreach ($devices as $device) {
+            if ($device["st"] !== "urn:schemas-upnp-org:device:ZonePlayer:1") {
+                continue;
+            }
             if (in_array($device["usn"], $unique)) {
                 continue;
             }

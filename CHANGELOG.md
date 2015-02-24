@@ -3,6 +3,9 @@ Changelog
 
 ## x.y.z - UNRELEASED
 
+### Fixed
+* [Network] Ignore any non Sonos devices from the discovery.
+
 --------
 
 ## 1.0.6 - 2015-01-30
