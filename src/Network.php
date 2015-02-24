@@ -141,7 +141,10 @@ class Network
 
         $speakers = [];
         foreach ($devices as $ip) {
-            $speakers[$ip] = new Speaker($ip);
+            $device = new Device($ip);
+            if ($device->isSpeaker()) {
+                $speakers[$ip] = new Speaker($device);
+            }
         }
 
         return $this->speakers = $speakers;

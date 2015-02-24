@@ -67,6 +67,11 @@ class Speaker
         $device = $parser->getTag("device");
         $this->name = (string) $device->getTag("friendlyName");
         $this->room = (string) $device->getTag("roomName");
+        $this->model = (string) $device->getTag("modelNumber");
+
+        if (!$this->device->isSpeaker()) {
+            throw new \InvalidArgumentException("You cannot create a Speaker instance for this model: {$this->model}");
+        }
     }
 
 

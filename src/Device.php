@@ -98,4 +98,24 @@ class Device
             throw new Exceptions\SoapException($e, $soap);
         }
     }
+
+
+    /**
+     * Check if this sonos device is a speaker.
+     *
+     * @return bool
+     */
+    public function isSpeaker()
+    {
+        $parser = $this->getXml("/xml/device_description.xml");
+
+        if (!$device = $parser->getTag("device")) {
+            return false;
+        }
+        if (!$model = (string) $device->getTag("modelNumber")) {
+            return false;
+        }
+
+        return in_array($model, ["S1", "S3", "S5"], true);
+    }
 }

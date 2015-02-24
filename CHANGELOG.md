@@ -5,6 +5,7 @@ Changelog
 
 ### Fixed
 * [Network] Ignore any non Sonos devices from the discovery.
+* [Network] Ignore any Sonos devices that are not speakers (bridges, etc).
 
 --------
 
