@@ -4,7 +4,7 @@ php:
   - 5.4
   - 5.5
   - 5.6
-  - system
+  - 7.0
   - hhvm
 
 sudo: false
@@ -12,26 +12,6 @@ sudo: false
 env:
   - COMPOSER_OPTS=""
   - COMPOSER_OPTS="--prefer-lowest"
-
-before_install:
-    - >
-      if [[ "$TRAVIS_PHP_VERSION" == "system" ]]; then
-        pushd $HOME;
-        git clone --depth=1 https://github.com/php/php-src.git;
-        pushd php-src;
-        ./buildconf -f;
-        ./configure --prefix=$HOME/.phpenv/versions/7 \
-            --with-curl --enable-soap --enable-sockets \
-            && make && make install;
-        phpenv global 7;
-        popd; popd;
-        php --version;
-        mkdir $PWD/phar;
-        wget http://getcomposer.org/composer.phar -O $PWD/phar/composer;
-        wget https://phar.phpunit.de/phpunit.phar -O $PWD/phar/phpunit;
-        chmod +x $PWD/phar/*;
-        export PATH=$PWD/phar:$PATH;
-      fi
 
 install:
   - composer self-update
