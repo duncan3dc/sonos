@@ -5,7 +5,7 @@ namespace duncan3dc\Sonos\Test;
 use duncan3dc\Sonos\Controller;
 use duncan3dc\Sonos\Network;
 
-class ControllerTest extends LiveTest
+class ControllerLiveTest extends LiveTest
 {
 
     public function testConstructor1()

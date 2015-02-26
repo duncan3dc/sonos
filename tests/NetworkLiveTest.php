@@ -4,7 +4,7 @@ namespace duncan3dc\Sonos\Test;
 
 use duncan3dc\Sonos\Network;
 
-class NetworkTest extends LiveTest
+class NetworkLiveTest extends LiveTest
 {
 
     public function testGetSpeakers()
