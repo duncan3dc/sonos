@@ -4,7 +4,6 @@ namespace duncan3dc\Sonos;
 
 use duncan3dc\DomParser\XmlParser;
 use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
 
 /**
  * Provides an interface to individual speakers that is mostly read-only, although the volume can be set using this class.
@@ -51,11 +50,6 @@ class Speaker
      */
     protected $topology;
 
-    /**
-     * @var LoggerInterface $logger The logging object
-     */
-    protected $logger;
-
 
     /**
      * Create an instance of the Speaker class.
@@ -70,13 +64,8 @@ class Speaker
             $this->ip = $this->device->ip;
         } else {
             $this->ip = $param;
-            $this->device = new Device($this->ip);
+            $this->device = new Device($this->ip, $logger);
         }
-
-        if ($logger === null) {
-            $logger = new NullLogger;
-        }
-        $this->logger = $logger;
 
         $parser = $this->device->getXml("/xml/device_description.xml");
         $device = $parser->getTag("device");
