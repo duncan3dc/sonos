@@ -3,6 +3,10 @@ Changelog
 
 ## x.y.z - UNRELEASED
 
+--------
+
+## 1.1.0 - 2015-02-27
+
 ### Added
 
 * [Alarms] Allow the room/speaker of an alarm to be get and set.
