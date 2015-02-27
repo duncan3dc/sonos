@@ -7,6 +7,18 @@ use Mockery;
 
 class AlarmTest extends \PHPUnit_Framework_TestCase
 {
+    public function getMockAlarm(array $attributes = [])
+    {
+        $attributes = array_merge([
+        ], $attributes);
+
+        $xml = Mockery::mock("duncan3dc\\DomParser\\XmlElement");
+        $xml->shouldReceive("getAttribute")->once()->with("ID")->andReturn(999);
+        $xml->shouldReceive("getAttributes")->once()->andReturn($attributes);
+
+        return new Alarm($xml, Mockery::mock("duncan3dc\\Sonos\\Network"));
+    }
+
     public function tearDown()
     {
         Mockery::close();
@@ -15,15 +27,9 @@ class AlarmTest extends \PHPUnit_Framework_TestCase
 
     protected function getMockRecurrence($recurrence)
     {
-        $xml = Mockery::mock("duncan3dc\DomParser\XmlElement");
-        $xml->shouldReceive("getAttribute")->once()->with("ID")->andReturn(-1);
-        $xml->shouldReceive("getAttributes")->once()->andReturn([
+        return $this->getMockAlarm([
             "Recurrence"    =>  $recurrence,
         ]);
-
-        $network = Mockery::mock("duncan3dc\Sonos\Network");
-
-        return new Alarm($xml, $network);
     }
 
 
@@ -246,5 +252,66 @@ class AlarmTest extends \PHPUnit_Framework_TestCase
             $this->assertFalse($alarm->once());
             $this->assertTrue($alarm->daily());
         }
+    }
+
+
+    public function testGetId()
+    {
+        $alarm = $this->getMockAlarm();
+        $this->assertSame(999, $alarm->getId());
+    }
+
+
+    public function testGetRoom()
+    {
+        $alarm = $this->getMockAlarm([
+            "RoomUUID"  =>  "RINCON_TEST",
+        ]);
+        $this->assertSame("RINCON_TEST", $alarm->getRoom());
+    }
+
+
+    public function testGetTime()
+    {
+        $alarm = $this->getMockAlarm([
+            "StartTime" =>  "1:2",
+        ]);
+        $this->assertSame("01:02", $alarm->getTime());
+    }
+
+
+    public function testGetDuration()
+    {
+        $alarm = $this->getMockAlarm([
+            "Duration"  =>  "1:2",
+        ]);
+        $this->assertSame(62, $alarm->getDuration());
+    }
+
+
+    public function testGetVolume()
+    {
+        $alarm = $this->getMockAlarm([
+            "Volume"    =>  "30",
+        ]);
+        $this->assertSame(30, $alarm->getVolume());
+    }
+
+
+    public function testIsActive()
+    {
+        $alarm = $this->getMockAlarm([
+            "Enabled"   =>  "1",
+        ]);
+        $this->assertTrue($alarm->isActive());
+    }
+
+
+    public function testIsNotActive()
+    {
+        $alarm = $this->getMockAlarm([
+            "Enabled"   =>  "0",
+        ]);
+        $this->assertFalse($alarm->isActive());
     }
 }

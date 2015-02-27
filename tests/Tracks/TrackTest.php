@@ -24,6 +24,7 @@ XML;
                 <album>ALBUM</album>
                 <originalTrackNumber>0</originalTrackNumber>
                 <streamContent>Tesseract - Of Matter - Proxy</streamContent>
+                <albumArtURI>cover.jpg</albumArtURI>
             </track>
 XML;
 
@@ -96,5 +97,32 @@ XML;
     {
         $value = 0;
         $this->assertSame($value, $this->track2->number);
+    }
+
+
+    public function testGetUri()
+    {
+        $track = new Track("URI");
+        $this->assertSame("URI", $track->getUri());
+    }
+
+
+    public function testGetMetaData()
+    {
+        $xml = '<DIDL-Lite ';
+            $xml .= 'xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/" ';
+            $xml .= 'xmlns:dc="http://purl.org/dc/elements/1.1/" ';
+            $xml .= 'xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" ';
+            $xml .= 'xmlns:r="urn:schemas-rinconnetworks-com:metadata-1-0/">';
+            $xml .= '<item id="-1" parentID="-1" restricted="true">';
+                $xml .= '<res></res>';
+                $xml .= '<upnp:albumArtURI></upnp:albumArtURI>';
+                $xml .= '<dc:title>TITLE</dc:title>';
+                $xml .= '<upnp:class>object.item.audioItem.musicTrack</upnp:class>';
+                $xml .= '<dc:creator>ARTIST</dc:creator>';
+                $xml .= '<upnp:album>ALBUM</upnp:album>';
+            $xml .= '</item>';
+        $xml .= '</DIDL-Lite>';
+        $this->assertSame($xml, $this->track1->getMetadata());
     }
 }
