@@ -3,10 +3,38 @@ Changelog
 
 ## x.y.z - UNRELEASED
 
+--------
+
+## 1.0.6 - 2015-01-30
+
+### Fixed
+
+* [Network] Return null from getControllerByRoom() if there are no speakers found for that room.
+
+--------
+
+## 1.0.5 - 2015-01-18
+
+### Added
+
+* [Dependencies] Bumped the doctrine/cache requirement to ~1.4.0
+
+--------
+
+## 1.0.4 - 2015-01-17
+
 ### Added
 
 * [Playlists] Created a moveTrack() method to re-order playlist tracks.
 * [Playlists] Created a hasPlaylist() method on the Network class to check if a playlist exists.
+
+--------
+
+## 1.0.3 - 2015-01-06
+
+### Fixed
+
+* [Network] Clear the internal cache of how speakers are grouped when one is removed/added.
 
 --------
 
