@@ -20,6 +20,9 @@ Get the details of the alarm:
  echo "Duration: {$alarm->getDuration()}\n";
  echo "Volume: {$alarm->getVolume()}\n";
  echo "Frequency: {$alarm->getFrequencyDescription()}\n";
+
+ # Added in v1.1.0
+ echo "Room: {$alarm->getSpeaker()->room}";
 ~~~
 
 
@@ -29,6 +32,17 @@ Update the details of the alarm:
  $alarm->setTime("15:45");
  $alarm->setDuration(15);
  $alarm->setVolume(15);
+~~~
+
+
+Method chaining and room updating was added in v1.1.0:
+
+~~~php
+ $livingRoom = $sonos->getSpeakerByRoom("Living Room");
+ $alarm
+     ->setRepeat(false)
+     ->setShuffle(true)
+     ->setSpeaker($livingRoom);
 ~~~
 
 

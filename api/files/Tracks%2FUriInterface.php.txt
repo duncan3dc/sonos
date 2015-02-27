@@ -3,7 +3,7 @@
 namespace duncan3dc\Sonos\Tracks;
 
 /**
- * An interface for objects that repsent some type of Uri
+ * An interface for objects that repsent some type of Uri.
  */
 interface UriInterface
 {

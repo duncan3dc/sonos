@@ -13,17 +13,17 @@ use duncan3dc\Sonos\Tracks\UriInterface;
 class Queue implements \Countable
 {
     /**
-     * @var string $id The unique id of the queue
+     * @var string $id The unique id of the queue.
      */
     protected $id;
 
     /**
-     * @var int The current update id to be issued with upnp requests
+     * @var int The current update id to be issued with upnp requests.
      */
     protected $updateId = 0;
 
     /**
-     * @var Controller $controller The Controller instance this queue is for
+     * @var Controller $controller The Controller instance this queue is for.
      */
     protected $controller;
 
