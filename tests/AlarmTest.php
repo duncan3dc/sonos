@@ -21,9 +21,9 @@ class AlarmTest extends \PHPUnit_Framework_TestCase
             "Recurrence"    =>  $recurrence,
         ]);
 
-        $controller = Mockery::mock("duncan3dc\Sonos\Controller");
+        $network = Mockery::mock("duncan3dc\Sonos\Network");
 
-        return new Alarm($xml, $controller);
+        return new Alarm($xml, $network);
     }
 
 

@@ -3,6 +3,10 @@ Changelog
 
 ## x.y.z - UNRELEASED
 
+### Added
+
+* [Alarms] Allow the room/speaker of an alarm to be get and set.
+
 ### Fixed
 * [Network] Ignore any non Sonos devices from the discovery.
 * [Network] Ignore any Sonos devices that are not speakers (bridges, etc).

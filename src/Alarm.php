@@ -30,26 +30,26 @@ class Alarm
     protected $attributes;
 
     /**
-     * @var Controller $controller A Controller instance this alarm can be reached via
+     * @var Network $network A Network instance this alarm is from.
      */
-    protected $controller;
+    protected $network;
 
     /**
      * Create an instance of the Alarm class.
      *
      * @param XmlElement $xml The xml element with the relevant attributes
-     * @param Controller $controller A Controller instance this alarm can be reached via
+     * @param Network $network A Network instance this alarm is from
      */
-    public function __construct(XmlElement $xml, Controller $controller)
+    public function __construct(XmlElement $xml, Network $network)
     {
         $this->id = $xml->getAttribute("ID");
         $this->attributes = $xml->getAttributes();
-        $this->controller = $controller;
+        $this->network = $network;
     }
 
 
     /**
-     * Send a soap request to the controller for this alarm.
+     * Send a soap request to the speaker for this alarm.
      *
      * @param string $service The service to send the request to
      * @param string $action The action to call
@@ -61,7 +61,7 @@ class Alarm
     {
         $params["ID"] = $this->id;
 
-        return $this->controller->soap($service, $action, $params);
+        return $this->getSpeaker()->soap($service, $action, $params);
     }
 
 
@@ -73,6 +73,59 @@ class Alarm
     public function getId()
     {
         return (int) $this->id;
+    }
+
+
+    /**
+     * Get the room of the alarm.
+     *
+     * @return string
+     */
+    public function getRoom()
+    {
+        return $this->attributes["RoomUUID"];
+    }
+
+
+    /**
+     * Set the room of the alarm.
+     *
+     * @param string $uuid The unique id of the room (eg, RINCON_B8E93758723601400)
+     *
+     * @return void
+     */
+    public function setRoom($uuid)
+    {
+        $this->attributes["RoomUUID"] = $uuid;
+        $this->save();
+    }
+
+
+    /**
+     * Get the speaker of the alarm.
+     *
+     * @return Speaker
+     */
+    public function getSpeaker()
+    {
+        foreach ($this->network->getSpeakers() as $speaker) {
+            if ($speaker->getUuid() === $this->getRoom()) {
+                return $speaker;
+            }
+        }
+    }
+
+
+    /**
+     * Set the speaker of the alarm.
+     *
+     * @param Speaker $speaker The speaker to attach this alarm to
+     *
+     * @return void
+     */
+    public function setSpeaker(Speaker $speaker)
+    {
+        $this->setRoom($speaker->getUuid());
     }
 
 

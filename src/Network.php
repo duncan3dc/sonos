@@ -416,14 +416,12 @@ class Network
             return $this->alarms;
         }
 
-        $controller = $this->getController();
-
-        $data = $controller->soap("AlarmClock", "ListAlarms");
+        $data = $this->getController()->soap("AlarmClock", "ListAlarms");
         $parser = new XmlParser($data["CurrentAlarmList"]);
 
         $alarms = [];
         foreach ($parser->getTags("Alarm") as $tag) {
-            $alarms[] = new Alarm($tag, $controller);
+            $alarms[] = new Alarm($tag, $this);
         }
 
         return $this->alarms = $alarms;
