@@ -92,12 +92,12 @@ class Alarm
      *
      * @param string $uuid The unique id of the room (eg, RINCON_B8E93758723601400)
      *
-     * @return void
+     * @return static
      */
     public function setRoom($uuid)
     {
         $this->attributes["RoomUUID"] = $uuid;
-        $this->save();
+        return $this->save();
     }
 
 
@@ -121,11 +121,11 @@ class Alarm
      *
      * @param Speaker $speaker The speaker to attach this alarm to
      *
-     * @return void
+     * @return static
      */
     public function setSpeaker(Speaker $speaker)
     {
-        $this->setRoom($speaker->getUuid());
+        return $this->setRoom($speaker->getUuid());
     }
 
 
@@ -146,7 +146,7 @@ class Alarm
      *
      * @param string $time The time to set the alarm for (hh:mm)
      *
-     * @return void
+     * @return static
      */
     public function setTime($time)
     {
@@ -162,7 +162,8 @@ class Alarm
         }
 
         $this->attributes["StartTime"] = sprintf("%02s:%02s:%02s", $hours, $minutes, 0);
-        $this->save();
+
+        return $this->save();
     }
 
 
@@ -183,7 +184,7 @@ class Alarm
      *
      * @param int The duration in minutes
      *
-     * @return void
+     * @return static
      */
     public function setDuration($duration)
     {
@@ -191,7 +192,8 @@ class Alarm
         $minutes = $duration % 60;
 
         $this->attributes["Duration"] = sprintf("%02s:%02s:%02s", $hours, $minutes, 0);
-        $this->save();
+
+        return $this->save();
     }
 
 
@@ -246,7 +248,7 @@ class Alarm
      *
      * @param int $frequency The integer representing the frequency (using the bitwise class constants)
      *
-     * @return void
+     * @return static
      */
     public function setFrequency($frequency)
     {
@@ -277,7 +279,8 @@ class Alarm
         }
 
         $this->attributes["Recurrence"] = $recurrence;
-        $this->save();
+
+        return $this->save();
     }
 
 
@@ -287,7 +290,7 @@ class Alarm
      * @param int $day Which day to check/set
      * @param boolean $set Set this alarm to be active or not on the specified day
      *
-     * @return boolean|void Returns true/false when checking, or void when setting
+     * @return boolean|static Returns true/false when checking, or static when setting
      */
     protected function onHandler($day, $set = null)
     {
@@ -296,11 +299,13 @@ class Alarm
             return (bool) ($frequency & $day);
         }
         if ($set && $frequency ^ $day) {
-            $this->setFrequency($frequency | $day);
+            return $this->setFrequency($frequency | $day);
         }
         if (!$set && $frequency & $day) {
-            $this->setFrequency($frequency ^ $day);
+            return $this->setFrequency($frequency ^ $day);
         }
+
+        return $this;
     }
 
 
@@ -309,7 +314,7 @@ class Alarm
      *
      * @param boolean $set Set this alarm to be active or not on mondays
      *
-     * @return boolean|void Returns true/false when checking, or void when setting
+     * @return boolean|static Returns true/false when checking, or static when setting
      */
     public function onMonday($set = null)
     {
@@ -322,7 +327,7 @@ class Alarm
      *
      * @param boolean $set Set this alarm to be active or not on tuesdays
      *
-     * @return boolean|void Returns true/false when checking, or void when setting
+     * @return boolean|static Returns true/false when checking, or static when setting
      */
     public function onTuesday($set = null)
     {
@@ -335,7 +340,7 @@ class Alarm
      *
      * @param boolean $set Set this alarm to be active or not on wednesdays
      *
-     * @return boolean|void Returns true/false when checking, or void when setting
+     * @return boolean|static Returns true/false when checking, or static when setting
      */
     public function onWednesday($set = null)
     {
@@ -348,7 +353,7 @@ class Alarm
      *
      * @param boolean $set Set this alarm to be active or not on thursdays
      *
-     * @return boolean|void Returns true/false when checking, or void when setting
+     * @return boolean|static Returns true/false when checking, or static when setting
      */
     public function onThursday($set = null)
     {
@@ -361,7 +366,7 @@ class Alarm
      *
      * @param boolean $set Set this alarm to be active or not on fridays
      *
-     * @return boolean|void Returns true/false when checking, or void when setting
+     * @return boolean|static Returns true/false when checking, or static when setting
      */
     public function onFriday($set = null)
     {
@@ -374,7 +379,7 @@ class Alarm
      *
      * @param boolean $set Set this alarm to be active or not on saturdays
      *
-     * @return boolean|void Returns true/false when checking, or void when setting
+     * @return boolean|static Returns true/false when checking, or static when setting
      */
     public function onSaturday($set = null)
     {
@@ -387,7 +392,7 @@ class Alarm
      *
      * @param boolean $set Set this alarm to be active or not on sundays
      *
-     * @return boolean|void Returns true/false when checking, or void when setting
+     * @return boolean|static Returns true/false when checking, or static when setting
      */
     public function onSunday($set = null)
     {
@@ -400,12 +405,12 @@ class Alarm
      *
      * @param boolean $set Set this alarm to be a one time only alarm
      *
-     * @return boolean|void Returns true/false when checking, or void when setting
+     * @return boolean|static Returns true/false when checking, or static when setting
      */
     public function once($set = null)
     {
         if ($set) {
-            $this->setFrequency(self::ONCE);
+            return $this->setFrequency(self::ONCE);
         }
         return $this->getFrequency() === self::ONCE;
     }
@@ -416,12 +421,12 @@ class Alarm
      *
      * @param boolean $set Set this alarm to be active every day
      *
-     * @return boolean|void Returns true/false when checking, or void when setting
+     * @return boolean|static Returns true/false when checking, or static when setting
      */
     public function daily($set = null)
     {
         if ($set) {
-            $this->setFrequency(self::DAILY);
+            return $this->setFrequency(self::DAILY);
         }
         return $this->getFrequency() === self::DAILY;
     }
@@ -487,12 +492,13 @@ class Alarm
      *
      * @param int $volume The volume of the alarm
      *
-     * @return void
+     * @return static
      */
     public function setVolume($volume)
     {
         $this->attributes["Volume"] = $volume;
-        $this->save();
+
+        return $this->save();
     }
 
 
@@ -513,7 +519,7 @@ class Alarm
      *
      * @param boolean $repeat Whether repeat should be on or not
      *
-     * @return void
+     * @return static
      */
     public function setRepeat($repeat)
     {
@@ -526,7 +532,8 @@ class Alarm
 
         $mode["repeat"] = $repeat;
         $this->attributes["PlayMode"] = Helper::setMode($mode);
-        $this->save();
+
+        return $this->save();
     }
 
 
@@ -547,7 +554,7 @@ class Alarm
      *
      * @param boolean $repeat Whether repeat should be on or not
      *
-     * @return void
+     * @return static
      */
     public function setShuffle($shuffle)
     {
@@ -560,7 +567,8 @@ class Alarm
 
         $mode["shuffle"] = $shuffle;
         $this->attributes["PlayMode"] = Helper::setMode($mode);
-        $this->save();
+
+        return $this->save();
     }
 
 
@@ -578,24 +586,26 @@ class Alarm
     /**
      * Make the alarm active.
      *
-     * @return void
+     * @return static
      */
     public function activate()
     {
         $this->attributes["Enabled"] = true;
-        $this->save();
+
+        return $this->save();
     }
 
 
     /**
      * Make the alarm inactive.
      *
-     * @return void
+     * @return static
      */
     public function deactivate()
     {
         $this->attributes["Enabled"] = false;
-        $this->save();
+
+        return $this->save();
     }
 
 
@@ -614,7 +624,7 @@ class Alarm
     /**
      * Update the alarm with the current instance settings.
      *
-     * @return void
+     * @return static
      */
     protected function save()
     {
@@ -632,5 +642,7 @@ class Alarm
         ];
 
         $this->soap("AlarmClock", "UpdateAlarm", $params);
+
+        return $this;
     }
 }
