@@ -22,6 +22,10 @@ class ControllerTest extends MockTest
 
     public function testPlayEmptyQueue()
     {
+        if (defined("HHVM_VERSION")) {
+            $this->markTestSkipped("Unable to mock Exceptions on HHVM");
+        }
+
         $device = $this->getDevice();
         $controller = $this->getController($device);
         $exception = Mockery::mock("duncan3dc\Sonos\Exceptions\SoapException");
