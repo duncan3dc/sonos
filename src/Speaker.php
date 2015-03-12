@@ -182,14 +182,16 @@ class Speaker
      *
      * @param int $volume The amount to set the volume to between 0 and 100
      *
-     * @return void
+     * @return static
      */
     public function setVolume($volume)
     {
-        return $this->soap("RenderingControl", "SetVolume", [
+        $this->soap("RenderingControl", "SetVolume", [
             "Channel"       =>  "Master",
             "DesiredVolume" =>  $volume,
         ]);
+
+        return $this;
     }
 
 
@@ -198,14 +200,16 @@ class Speaker
      *
      * @param int $adjust The amount to adjust by between -100 and 100
      *
-     * @return void
+     * @return static
      */
     public function adjustVolume($adjust)
     {
-        return $this->soap("RenderingControl", "SetRelativeVolume", [
+        $this->soap("RenderingControl", "SetRelativeVolume", [
             "Channel"       =>  "Master",
             "Adjustment"    =>  $adjust,
         ]);
+
+        return $this;
     }
 
 
@@ -225,7 +229,7 @@ class Speaker
     /**
      * Mute this speaker.
      *
-     * @return void
+     * @return static
      */
     public function mute()
     {
@@ -233,13 +237,15 @@ class Speaker
             "Channel"       =>  "Master",
             "DesiredMute"   =>  1,
         ]);
+
+        return $this;
     }
 
 
     /**
      * Unmute this speaker.
      *
-     * @return void
+     * @return static
      */
     public function unmute()
     {
@@ -247,5 +253,7 @@ class Speaker
             "Channel"       =>  "Master",
             "DesiredMute"   =>  0,
         ]);
+
+        return $this;
     }
 }

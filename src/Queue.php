@@ -265,10 +265,12 @@ class Queue implements \Countable
     /**
      * Remove all tracks from the queue.
      *
-     * @return void
+     * @return static
      */
     public function clear()
     {
         $this->soap("AVTransport", "RemoveAllTracksFromQueue");
+
+        return $this;
     }
 }

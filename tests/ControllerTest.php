@@ -15,8 +15,8 @@ class ControllerTest extends MockTest
 
         $device->shouldReceive("soap")->once()->with("AVTransport", "Play", [
             "Speed" =>  1,
-        ])->andReturn("PASSTHRU");
+        ]);
 
-        $this->assertSame("PASSTHRU", $controller->play());
+        $this->assertSame($controller, $controller->play());
     }
 }

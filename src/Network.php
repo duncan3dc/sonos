@@ -200,11 +200,13 @@ class Network implements LoggerAwareInterface
     /**
      * Reset any previously gathered speaker information.
      *
-     * @return void
+     * @return static
      */
     public function clearTopology()
     {
         $this->speakers = null;
+
+        return $this;
     }
 
 

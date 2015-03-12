@@ -156,7 +156,7 @@ class Controller extends Speaker
      *
      * @param int $state One of the class STATE_ constants
      *
-     * @return void
+     * @return static
      */
     public function setState($state)
     {
@@ -175,46 +175,54 @@ class Controller extends Speaker
     /**
      * Start playing the active music for this group.
      *
-     * @return void
+     * @return static
      */
     public function play()
     {
-        return $this->soap("AVTransport", "Play", [
+        $this->soap("AVTransport", "Play", [
             "Speed" =>  1,
         ]);
+
+        return $this;
     }
 
 
     /**
      * Pause the group.
      *
-     * @return void
+     * @return static
      */
     public function pause()
     {
-        return $this->soap("AVTransport", "Pause");
+        $this->soap("AVTransport", "Pause");
+
+        return $this;
     }
 
 
     /**
      * Skip to the next track in the current queue
      *
-     * @return void
+     * @return static
      */
     public function next()
     {
-        return $this->soap("AVTransport", "Next");
+        $this->soap("AVTransport", "Next");
+
+        return $this;
     }
 
 
     /**
      * Skip back to the previous track in the current queue.
      *
-     * @return void
+     * @return static
      */
     public function previous()
     {
-        return $this->soap("AVTransport", "Previous");
+        $this->soap("AVTransport", "Previous");
+
+        return $this;
     }
 
 
@@ -241,12 +249,12 @@ class Controller extends Speaker
      *
      * @param Speaker $speaker The speaker to add to the group
      *
-     * @return void
+     * @return static
      */
     public function addSpeaker(Speaker $speaker)
     {
         if ($speaker->getUuid() === $this->getUuid()) {
-            return;
+            return $this;
         }
         $speaker->soap("AVTransport", "SetAVTransportURI", [
             "CurrentURI"            =>  "x-rincon:" . $this->getUuid(),
@@ -254,6 +262,8 @@ class Controller extends Speaker
         ]);
 
         $this->network->clearTopology();
+
+        return $this;
     }
 
 
@@ -262,13 +272,15 @@ class Controller extends Speaker
      *
      * @param Speaker $speaker The speaker to remove from the group
      *
-     * @return void
+     * @return static
      */
     public function removeSpeaker(Speaker $speaker)
     {
         $speaker->soap("AVTransport", "BecomeCoordinatorOfStandaloneGroup");
 
         $this->network->clearTopology();
+
+        return $this;
     }
 
 
@@ -277,7 +289,7 @@ class Controller extends Speaker
      *
      * @param int $volume An amount between 0 and 100
      *
-     * @return void
+     * @return static
      */
     public function setVolume($volume)
     {
@@ -285,6 +297,8 @@ class Controller extends Speaker
         foreach ($speakers as $speaker) {
             $speaker->setVolume($volume);
         }
+
+        return $this;
     }
 
 
@@ -293,7 +307,7 @@ class Controller extends Speaker
      *
      * @param int $adjust A relative amount between -100 and 100
      *
-     * @return void
+     * @return static
      */
     public function adjustVolume($adjust)
     {
@@ -301,6 +315,8 @@ class Controller extends Speaker
         foreach ($speakers as $speaker) {
             $speaker->adjustVolume($adjust);
         }
+
+        return $this;
     }
 
 
@@ -321,13 +337,15 @@ class Controller extends Speaker
      *
      * @param array $options An array with 2 boolean elements (shuffle and repeat)
      *
-     * @return void
+     * @return static
      */
     public function setMode(array $options)
     {
-        $data = $this->soap("AVTransport", "SetPlayMode", [
+        $this->soap("AVTransport", "SetPlayMode", [
             "NewPlayMode"   =>  Helper::setMode($options),
         ]);
+
+        return $this;
     }
 
 
@@ -348,7 +366,7 @@ class Controller extends Speaker
      *
      * @param boolean $repeat Whether repeat should be on or not
      *
-     * @return void
+     * @return static
      */
     public function setRepeat($repeat)
     {
@@ -361,6 +379,8 @@ class Controller extends Speaker
 
         $mode["repeat"] = $repeat;
         $this->setMode($mode);
+
+        return $this;
     }
 
 
@@ -381,7 +401,7 @@ class Controller extends Speaker
      *
      * @param boolean $shuffle Whether shuffle should be on or not
      *
-     * @return void
+     * @return static
      */
     public function setShuffle($shuffle)
     {
@@ -394,6 +414,8 @@ class Controller extends Speaker
 
         $mode["shuffle"] = $shuffle;
         $this->setMode($mode);
+
+        return $this;
     }
 
 
@@ -413,13 +435,15 @@ class Controller extends Speaker
      *
      * @param boolean $crossfade Whether crossfade should be on or not
      *
-     * @return void
+     * @return static
      */
     public function setCrossfade($crossfade)
     {
         $data = $this->soap("AVTransport", "SetCrossfadeMode", [
             "CrossfadeMode" =>  (boolean) $crossfade,
         ]);
+
+        return $this;
     }
 
 

@@ -156,7 +156,7 @@ class Playlist extends Queue
     /**
      * Remove all tracks from the queue.
      *
-     * @return void
+     * @return static
      */
     public function clear()
     {
@@ -166,6 +166,8 @@ class Playlist extends Queue
             $positions[] = $i;
         }
         $this->removeTracks($positions);
+
+        return $this;
     }
 
 
