@@ -3,6 +3,7 @@
 namespace duncan3dc\Sonos;
 
 use duncan3dc\DomParser\XmlParser;
+use duncan3dc\Sonos\Exceptions\SoapException;
 
 /**
  * Allows interaction with the groups of speakers.
@@ -179,9 +180,16 @@ class Controller extends Speaker
      */
     public function play()
     {
-        $this->soap("AVTransport", "Play", [
-            "Speed" =>  1,
-        ]);
+        try {
+            $this->soap("AVTransport", "Play", [
+                "Speed" =>  1,
+            ]);
+        } catch (SoapException $e) {
+            if (count($this->getQueue()) < 1) {
+                $e = new \BadMethodCallException("Cannot play, the current queue is empty");
+            }
+            throw $e;
+        }
 
         return $this;
     }

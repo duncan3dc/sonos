@@ -2,8 +2,7 @@
 
 namespace duncan3dc\Sonos\Test;
 
-use duncan3dc\Sonos\Controller;
-use duncan3dc\Sonos\Network;
+use Mockery;
 
 class ControllerTest extends MockTest
 {
@@ -19,6 +18,30 @@ class ControllerTest extends MockTest
 
         $this->assertSame($controller, $controller->play());
     }
+
+
+    public function testPlayEmptyQueue()
+    {
+        $device = $this->getDevice();
+        $controller = $this->getController($device);
+        $exception = Mockery::mock("duncan3dc\Sonos\Exceptions\SoapException");
+
+        $device->shouldReceive("soap")->once()->with("AVTransport", "Play", [
+            "Speed" =>  1,
+        ])->andThrow($exception);
+        $device->shouldReceive("soap")->once()->with("ContentDirectory", "Browse", [
+            "BrowseFlag"        =>  "BrowseDirectChildren",
+            "StartingIndex"     =>  0,
+            "RequestedCount"    =>  1,
+            "Filter"            =>  "",
+            "SortCriteria"      =>  "",
+            "ObjectID"          =>  "Q:0",
+        ]);
+
+        $this->setExpectedException("\BadMethodCallException");
+        $controller->play();
+    }
+
 
 
     public function testSelectTrack()
