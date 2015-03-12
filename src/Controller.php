@@ -201,7 +201,7 @@ class Controller extends Speaker
 
 
     /**
-     * Skip to the next track in the current queue
+     * Skip to the next track in the current queue.
      *
      * @return static
      */
@@ -221,6 +221,47 @@ class Controller extends Speaker
     public function previous()
     {
         $this->soap("AVTransport", "Previous");
+
+        return $this;
+    }
+
+
+    /**
+     * Skip to the specific track in the current queue.
+     *
+     * @param int $position The zero-based position of the track to skip to
+     *
+     * @return static
+     */
+    public function selectTrack($position)
+    {
+        $this->soap("AVTransport", "Seek", [
+            "Unit"      =>  "TRACK_NR",
+            "Target"    =>  $position + 1,
+        ]);
+
+        return $this;
+    }
+
+
+    /**
+     * Seeks to a specific position within the current track.
+     *
+     * @param int $seconds The number of seconds to position to in the track
+     *
+     * @return static
+     */
+    public function seek($seconds)
+    {
+        $minutes = floor($seconds / 60);
+        $seconds = $seconds % 60;
+        $hours = floor($minutes / 60);
+        $minutes = $minutes % 60;
+
+        $this->soap("AVTransport", "Seek", [
+            "Unit"      =>  "REL_TIME",
+            "Target"    =>  sprintf("%02s:%02s:%02s", $hours, $minutes, $seconds),
+        ]);
 
         return $this;
     }
