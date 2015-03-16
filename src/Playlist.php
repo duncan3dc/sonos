@@ -4,7 +4,6 @@ namespace duncan3dc\Sonos;
 
 use duncan3dc\DomParser\XmlElement;
 use duncan3dc\DomParser\XmlParser;
-use duncan3dc\Sonos\Tracks\Track;
 use duncan3dc\Sonos\Tracks\UriInterface;
 
 /**
@@ -13,9 +12,9 @@ use duncan3dc\Sonos\Tracks\UriInterface;
 class Playlist extends Queue
 {
     /**
-     * @var string $name The name of the playlist.
+     * @var string|null $name The name of the playlist.
      */
-    protected $name = false;
+    protected $name;
 
 
     /**
@@ -28,13 +27,11 @@ class Playlist extends Queue
     {
         if (is_string($param)) {
             $this->id = $param;
-            $this->name = false;
         } else {
             $this->id = $param->getAttribute("id");
             $this->name = $param->getTag("title")->nodeValue;
         }
 
-        $this->updateId = false;
         $this->controller = $controller;
     }
 
@@ -57,7 +54,7 @@ class Playlist extends Queue
      */
     public function getName()
     {
-        if (!$this->name) {
+        if ($this->name === null) {
             $data = $this->browse("Metadata");
             $xml = new XmlParser($data["Result"]);
             $this->name = $xml->getTag("title")->nodeValue;
@@ -67,48 +64,39 @@ class Playlist extends Queue
 
 
     /**
-     * Add tracks to the playlist.
+     * Calculate the position number to be used to add a track to the end of the playlist.
      *
-     * @param string[]|UriInterface[] $tracks An array where each element is either the URI of the tracks to add, or an object that implements the UriInterface
-     * @param int $position The position to insert the tracks in the queue (zero-based), by default the tracks will be added to the end of the queue
-     *
-     * @return boolean
+     * @return int
      */
-    public function addTracks(array $tracks, $position = null)
+    protected function getNextPosition()
+    {
+        return parent::getNextPosition() - 1;
+    }
+
+
+    /**
+     * Add a uri to the playlist.
+     *
+     * @param UriInterface $track The track to add
+     * @param int $position The position to insert the track in the playlist (zero-based), by default the track will be added to the end of the playlist
+     *
+     * @return bool
+     */
+    protected function addUri(UriInterface $track, $position = null)
     {
         if ($position === null) {
-            $data = $this->browse("DirectChildren");
-            $this->updateId = $data["UpdateID"];
-            $position = $data["TotalMatches"];
+            $position = $this->getNextPosition();
         }
 
-        # Ensure the update id is set to begin with
-        $this->getUpdateID();
+        $data = $this->soap("AVTransport", "AddURIToSavedQueue", [
+            "UpdateID"              =>  $this->updateId,
+            "EnqueuedURI"           =>  $track->getUri(),
+            "EnqueuedURIMetaData"   =>  $track->getMetaData(),
+            "AddAtIndex"            =>  $position,
+        ]);
+        $this->updateId = $data["NewUpdateID"];
 
-        foreach ($tracks as $track) {
-
-            # If a simple uri has been passed then convert it to a Track instance
-            if (is_string($track)) {
-                $track = new Track($track);
-            }
-
-            if (!$track instanceof UriInterface) {
-                throw new \InvalidArgumentException("The addTracks() array must contain either string URIs or objects that implement \duncan3dc\Sonos\Tracks\UriInterface");
-            }
-
-            $data = $this->soap("AVTransport", "AddURIToSavedQueue", [
-                "UpdateID"              =>  $this->updateId,
-                "EnqueuedURI"           =>  $track->getUri(),
-                "EnqueuedURIMetaData"   =>  $track->getMetaData(),
-                "AddAtIndex"            =>  $position++,
-            ]);
-            $this->updateId = $data["NewUpdateID"];
-
-            if ($data["NumTracksAdded"] != 1) {
-                return false;
-            }
-        }
-        return true;
+        return ($data["NumTracksAdded"] == 1);
     }
 
 
@@ -117,7 +105,7 @@ class Playlist extends Queue
      *
      * @param int[] $positions The zero-based positions of the tracks to remove
      *
-     * @return boolean
+     * @return bool
      */
     public function removeTracks(array $positions)
     {

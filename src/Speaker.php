@@ -36,7 +36,7 @@ class Speaker
     protected $group;
 
     /**
-     * @var boolean $coordinator Whether this speaker is the coordinator of it's current group.
+     * @var bool $coordinator Whether this speaker is the coordinator of it's current group.
      */
     protected $coordinator;
 
@@ -46,7 +46,7 @@ class Speaker
     protected $uuid;
 
     /**
-     * @var boolean $topology A flag to indicate whether we have gathered the topology for this speaker or not.
+     * @var bool $topology A flag to indicate whether we have gathered the topology for this speaker or not.
      */
     protected $topology;
 
@@ -71,10 +71,9 @@ class Speaker
         $device = $parser->getTag("device");
         $this->name = (string) $device->getTag("friendlyName");
         $this->room = (string) $device->getTag("roomName");
-        $this->model = (string) $device->getTag("modelNumber");
 
         if (!$this->device->isSpeaker()) {
-            throw new \InvalidArgumentException("You cannot create a Speaker instance for this model: {$this->model}");
+            throw new \InvalidArgumentException("You cannot create a Speaker instance for this model: " . $this->device->getModel());
         }
     }
 
@@ -141,7 +140,7 @@ class Speaker
     /**
      * Check if this speaker is the coordinator of it's current group.
      *
-     * @return boolean
+     * @return bool
      */
     public function isCoordinator()
     {
@@ -216,7 +215,7 @@ class Speaker
     /**
      * Check if this speaker is currently muted.
      *
-     * @return boolean
+     * @return bool
      */
     public function isMuted()
     {
@@ -229,7 +228,7 @@ class Speaker
     /**
      * Mute this speaker.
      *
-     * @param bool $value Whether the speaker should be muted or not
+     * @param bool $mute Whether the speaker should be muted or not
      *
      * @return static
      */
@@ -258,14 +257,14 @@ class Speaker
     /**
      * Turn the indicator light on or off.
      *
-     * @param bool $value Whether the indicator should be on or off
+     * @param bool $on Whether the indicator should be on or off
      *
      * @return static
      */
-    public function setIndicator($value)
+    public function setIndicator($on)
     {
         $this->soap("DeviceProperties", "SetLEDState", [
-            "DesiredLEDState"   =>  $value ? "On" : "Off",
+            "DesiredLEDState"   =>  $on ? "On" : "Off",
         ]);
 
         return $this;
@@ -275,7 +274,7 @@ class Speaker
     /**
      * Check whether the indicator light is on or not.
      *
-     * @return boolean
+     * @return bool
      */
     public function getIndicator()
     {

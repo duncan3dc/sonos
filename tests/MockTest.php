@@ -33,7 +33,6 @@ abstract class MockTest extends \PHPUnit_Framework_TestCase
         $parser->shouldReceive("getTag")->with("device")->once()->andReturn($tag);
         $tag->shouldReceive("getTag")->with("friendlyName")->once()->andReturn("Test Name");
         $tag->shouldReceive("getTag")->with("roomName")->once()->andReturn("Test Room");
-        $tag->shouldReceive("getTag")->with("modelNumber")->once()->andReturn("S3");
         $device->shouldReceive("getXml")->with("/xml/device_description.xml")->once()->andReturn($parser);
 
         return $device;

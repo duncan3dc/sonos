@@ -96,7 +96,7 @@ class Device
         }
 
         $location = "http://{$this->ip}:1400/";
-        if ($path) {
+        if (is_string($path)) {
             $location .= "{$path}/";
         }
         $location .= "{$service}/Control";

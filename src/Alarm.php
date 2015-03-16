@@ -113,6 +113,8 @@ class Alarm
                 return $speaker;
             }
         }
+
+        throw new \RuntimeException("Unable to find a speaker for this alarm");
     }
 
 
@@ -175,7 +177,7 @@ class Alarm
     public function getDuration()
     {
         list($hours, $minutes) = explode(":", $this->attributes["Duration"]);
-        return ($hours * 60) + $minutes;
+        return (int) ($hours * 60) + $minutes;
     }
 
 
@@ -288,9 +290,9 @@ class Alarm
      * Check or set whether this alarm is active on a particular day.
      *
      * @param int $day Which day to check/set
-     * @param boolean $set Set this alarm to be active or not on the specified day
+     * @param bool $set Set this alarm to be active or not on the specified day
      *
-     * @return boolean|static Returns true/false when checking, or static when setting
+     * @return bool|static Returns true/false when checking, or static when setting
      */
     protected function onHandler($day, $set = null)
     {
@@ -312,9 +314,9 @@ class Alarm
     /**
      * Check or set whether this alarm is active on mondays.
      *
-     * @param boolean $set Set this alarm to be active or not on mondays
+     * @param bool $set Set this alarm to be active or not on mondays
      *
-     * @return boolean|static Returns true/false when checking, or static when setting
+     * @return bool|static Returns true/false when checking, or static when setting
      */
     public function onMonday($set = null)
     {
@@ -325,9 +327,9 @@ class Alarm
     /**
      * Check or set whether this alarm is active on tuesdays.
      *
-     * @param boolean $set Set this alarm to be active or not on tuesdays
+     * @param bool $set Set this alarm to be active or not on tuesdays
      *
-     * @return boolean|static Returns true/false when checking, or static when setting
+     * @return bool|static Returns true/false when checking, or static when setting
      */
     public function onTuesday($set = null)
     {
@@ -338,9 +340,9 @@ class Alarm
     /**
      * Check or set whether this alarm is active on wednesdays.
      *
-     * @param boolean $set Set this alarm to be active or not on wednesdays
+     * @param bool $set Set this alarm to be active or not on wednesdays
      *
-     * @return boolean|static Returns true/false when checking, or static when setting
+     * @return bool|static Returns true/false when checking, or static when setting
      */
     public function onWednesday($set = null)
     {
@@ -351,9 +353,9 @@ class Alarm
     /**
      * Check or set whether this alarm is active on thursdays.
      *
-     * @param boolean $set Set this alarm to be active or not on thursdays
+     * @param bool $set Set this alarm to be active or not on thursdays
      *
-     * @return boolean|static Returns true/false when checking, or static when setting
+     * @return bool|static Returns true/false when checking, or static when setting
      */
     public function onThursday($set = null)
     {
@@ -364,9 +366,9 @@ class Alarm
     /**
      * Check or set whether this alarm is active on fridays.
      *
-     * @param boolean $set Set this alarm to be active or not on fridays
+     * @param bool $set Set this alarm to be active or not on fridays
      *
-     * @return boolean|static Returns true/false when checking, or static when setting
+     * @return bool|static Returns true/false when checking, or static when setting
      */
     public function onFriday($set = null)
     {
@@ -377,9 +379,9 @@ class Alarm
     /**
      * Check or set whether this alarm is active on saturdays.
      *
-     * @param boolean $set Set this alarm to be active or not on saturdays
+     * @param bool $set Set this alarm to be active or not on saturdays
      *
-     * @return boolean|static Returns true/false when checking, or static when setting
+     * @return bool|static Returns true/false when checking, or static when setting
      */
     public function onSaturday($set = null)
     {
@@ -390,9 +392,9 @@ class Alarm
     /**
      * Check or set whether this alarm is active on sundays.
      *
-     * @param boolean $set Set this alarm to be active or not on sundays
+     * @param bool $set Set this alarm to be active or not on sundays
      *
-     * @return boolean|static Returns true/false when checking, or static when setting
+     * @return bool|static Returns true/false when checking, or static when setting
      */
     public function onSunday($set = null)
     {
@@ -403,9 +405,9 @@ class Alarm
     /**
      * Check or set whether this alarm is a one time only alarm.
      *
-     * @param boolean $set Set this alarm to be a one time only alarm
+     * @param bool $set Set this alarm to be a one time only alarm
      *
-     * @return boolean|static Returns true/false when checking, or static when setting
+     * @return bool|static Returns true/false when checking, or static when setting
      */
     public function once($set = null)
     {
@@ -419,9 +421,9 @@ class Alarm
     /**
      * Check or set whether this alarm runs every day or not.
      *
-     * @param boolean $set Set this alarm to be active every day
+     * @param bool $set Set this alarm to be active every day
      *
-     * @return boolean|static Returns true/false when checking, or static when setting
+     * @return bool|static Returns true/false when checking, or static when setting
      */
     public function daily($set = null)
     {
@@ -503,79 +505,95 @@ class Alarm
 
 
     /**
+     * Get a particular PlayMode.
+     *
+     * @param string $type The play mode attribute to get
+     *
+     * @return bool
+     */
+    protected function getPlayMode($type)
+    {
+        $mode = Helper::getMode($this->attributes["PlayMode"]);
+        return $mode[$type];
+    }
+
+
+    /**
+     * Set a particular PlayMode.
+     *
+     * @param string $type The play mode attribute to update
+     * @param bool $value The value to set the attribute to
+     *
+     * @return static
+     */
+    protected function setPlayMode($type, $value)
+    {
+        $value = (bool) $value;
+
+        $mode = Helper::getMode($this->attributes["PlayMode"]);
+        if ($mode[$type] === $value) {
+            return $this;
+        }
+
+        $mode[$type] = $value;
+        $this->attributes["PlayMode"] = Helper::setMode($mode);
+
+        return $this->save();
+    }
+
+
+    /**
      * Check if repeat is active.
      *
-     * @return boolean
+     * @return bool
      */
     public function getRepeat()
     {
-        $mode = Helper::getMode($this->attributes["PlayMode"]);
-        return $mode["repeat"];
+        return $this->getPlayMode("repeat");
     }
 
 
     /**
      * Turn repeat mode on or off.
      *
-     * @param boolean $repeat Whether repeat should be on or not
+     * @param bool $repeat Whether repeat should be on or not
      *
      * @return static
      */
     public function setRepeat($repeat)
     {
-        $repeat = (boolean) $repeat;
-
-        $mode = Helper::getMode($this->attributes["PlayMode"]);
-        if ($mode["repeat"] === $repeat) {
-            return;
-        }
-
-        $mode["repeat"] = $repeat;
-        $this->attributes["PlayMode"] = Helper::setMode($mode);
-
-        return $this->save();
+        return $this->setPlayMode("repeat", $repeat);
     }
 
 
     /**
      * Check if shuffle is active.
      *
-     * @return boolean
+     * @return bool
      */
     public function getShuffle()
     {
-        $mode = Helper::getMode($this->attributes["PlayMode"]);
-        return $mode["shuffle"];
+        return $this->getPlayMode("shuffle");
     }
 
 
     /**
      * Turn shuffle mode on or off.
      *
-     * @param boolean $repeat Whether repeat should be on or not
+     * @param bool $shuffle Whether shuffle should be on or not
      *
      * @return static
      */
     public function setShuffle($shuffle)
     {
-        $shuffle = (boolean) $shuffle;
-
-        $mode = Helper::getMode($this->attributes["PlayMode"]);
-        if ($mode["shuffle"] === $shuffle) {
-            return;
-        }
-
-        $mode["shuffle"] = $shuffle;
-        $this->attributes["PlayMode"] = Helper::setMode($mode);
-
-        return $this->save();
+        return $this->setPlayMode("shuffle", $shuffle);
     }
 
 
     /**
      * Check if the alarm is active.
      *
-     * @return boolean
+     * @return bool
      */
     public function isActive()
     {
