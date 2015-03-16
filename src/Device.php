@@ -156,6 +156,13 @@ class Device
     {
         $model = $this->getModel();
 
-        return in_array($model, ["S1", "S3", "S5"], true);
+        $models = [
+            "S1"    =>  "PLAY:1",
+            "S3"    =>  "PLAY:3",
+            "S5"    =>  "PLAY:5",
+            "S9"    =>  "PLAYBAR",
+        ];
+
+        return in_array($model, array_keys($models), true);
     }
 }
