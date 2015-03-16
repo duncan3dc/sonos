@@ -12,9 +12,14 @@ use Psr\Log\NullLogger;
 class Device
 {
     /**
-     * @var string $ip The IP address of the speaker.
+     * @var string $ip The IP address of the device.
      */
     public $ip;
+
+    /**
+     * @var string $model The model of the device.
+     */
+    protected $model;
 
     /**
      * @var array $cache Cached data to increase performance.
@@ -30,7 +35,7 @@ class Device
     /**
      * Create an instance of the Device class.
      *
-     * @param string $ip The ip address that the speaker is listening on
+     * @param string $ip The ip address that the device is listening on
      * @param LoggerInterface $logger A logging object
      */
     public function __construct($ip, LoggerInterface $logger = null)
@@ -45,7 +50,7 @@ class Device
 
 
     /**
-     * Retrieve some xml from the speaker.
+     * Retrieve some xml from the device.
      *
      * @param string $url The url to retrieve
      *
@@ -55,7 +60,7 @@ class Device
     {
         if (!isset($this->cache[$url])) {
             $uri = "http://{$this->ip}:1400{$url}";
-            $this->logger->info("requesting xml from: {$uri}");
+            $this->logger->notice("requesting xml from: {$uri}");
             $this->cache[$url] = new XmlParser($uri);
         }
 
@@ -64,7 +69,7 @@ class Device
 
 
     /**
-     * Send a soap request to the speaker.
+     * Send a soap request to the device.
      *
      * @param string $service The service to send the request to
      * @param string $action The action to call
@@ -72,7 +77,7 @@ class Device
      *
      * @return mixed
      */
-    public function soap($service, $action, $params = [])
+    public function soap($service, $action, array $params = [])
     {
         switch ($service) {
             case "AVTransport";
@@ -95,7 +100,7 @@ class Device
         }
         $location .= "{$service}/Control";
 
-        $this->logger->info("sending soap request to: {$location}");
+        $this->logger->info("sending soap request to: {$location}", $params);
 
         $soap = new \SoapClient(null, [
             "location"  =>  $location,
@@ -118,20 +123,38 @@ class Device
 
 
     /**
+     * Get the model of this device.
+     *
+     * @return string
+     */
+    public function getModel()
+    {
+        if ($this->model === null) {
+            $parser = $this->getXml("/xml/device_description.xml");
+
+            if ($device = $parser->getTag("device")) {
+                $this->model = (string) $device->getTag("modelNumber");
+            }
+
+            if (!is_string($this->model) || strlen($this->model) === 0) {
+                $this->model = "UNKNOWN";
+            }
+
+            $this->logger->debug("{$this->ip} model: {$this->model}");
+        }
+
+        return $this->model;
+    }
+
+
+    /**
      * Check if this sonos device is a speaker.
      *
      * @return bool
      */
     public function isSpeaker()
     {
-        $parser = $this->getXml("/xml/device_description.xml");
-
-        if (!$device = $parser->getTag("device")) {
-            return false;
-        }
-        if (!$model = (string) $device->getTag("modelNumber")) {
-            return false;
-        }
+        $model = $this->getModel();
 
         return in_array($model, ["S1", "S3", "S5"], true);
     }

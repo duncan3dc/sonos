@@ -87,7 +87,7 @@ class Network implements LoggerAwareInterface
      */
     protected function getDevices()
     {
-        $this->logger->info("discovering devices");
+        $this->logger->info("discovering devices...");
 
         $ip = "239.255.255.250";
         $port = 1900;
@@ -100,6 +100,8 @@ class Network implements LoggerAwareInterface
         $data .= "MAN: ssdp:discover\r\n";
         $data .= "MX: 1\r\n";
         $data .= "ST: urn:schemas-upnp-org:device:ZonePlayer:1\r\n";
+
+        $this->logger->debug($data);
 
         socket_sendto($sock, $data, strlen($data), null, $ip, $port);
 
@@ -115,6 +117,8 @@ class Network implements LoggerAwareInterface
             socket_recvfrom($sock, $tmp, 2048, null, $name, $port);
             $response .= $tmp;
         }
+
+        $this->logger->debug($response);
 
         $devices = [];
         foreach (explode("\r\n\r\n", $response) as $reply) {
