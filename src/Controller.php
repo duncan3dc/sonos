@@ -148,6 +148,11 @@ class Controller extends Speaker
         $state->duration = $data["TrackDuration"];
         $state->position = $data["RelTime"];
 
+        # If we have a queue number, it'll be one-based, rather than zero-based, so convert it
+        if ($state->queueNumber > 0) {
+            $state->queueNumber--;
+        }
+
         return $state;
     }
 
