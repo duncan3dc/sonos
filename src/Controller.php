@@ -423,7 +423,7 @@ class Controller extends Speaker
 
         $mode = $this->getMode();
         if ($mode["repeat"] === $repeat) {
-            return;
+            return $this;
         }
 
         $mode["repeat"] = $repeat;
@@ -458,7 +458,7 @@ class Controller extends Speaker
 
         $mode = $this->getMode();
         if ($mode["shuffle"] === $shuffle) {
-            return;
+            return $this;
         }
 
         $mode["shuffle"] = $shuffle;
