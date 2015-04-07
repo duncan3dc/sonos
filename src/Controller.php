@@ -526,4 +526,64 @@ class Controller extends Speaker
     {
         return new Queue($this);
     }
+
+
+    /**
+     * Grab the current state of the Controller (including it's queue and playing attributes).
+     *
+     * @param bool $pause Whether to pause the controller or not
+     *
+     * @return ControllerState
+     */
+    public function exportState($pause = true)
+    {
+        if ($pause) {
+            $state = $this->getState();
+            if ($state === self::STATE_PLAYING) {
+                $this->pause();
+            }
+        }
+
+        $export = new ControllerState($this);
+
+        if ($pause) {
+            $export->state = $state;
+        }
+
+        return $export;
+    }
+
+
+    /**
+     * Restore the Controller to a previously exported state.
+     *
+     * @param ControllerState $state The state to be restored
+     *
+     * @return static
+     */
+    public function restoreState(ControllerState $state)
+    {
+        $this->getQueue()->clear()->addTracks($state->tracks);
+
+        $this->selectTrack($state->track);
+
+        list($hours, $minutes, $seconds) = explode(":", $state->position);
+        $time = ((($hours * 60) + $minutes) * 60) + $seconds;
+        $this->seek($time);
+
+        $this->setShuffle($state->shuffle);
+        $this->setRepeat($state->repeat);
+        $this->setCrossfade($state->crossfade);
+
+        # If the exported state was playing then start it playing now
+        if ($state->state === self::STATE_PLAYING) {
+            $this->play();
+
+        # If the exported state was stopped and we are playing then stop it now
+        } elseif ($this->getState() === self::STATE_PLAYING) {
+            $this->pause();
+        }
+
+        return $this;
+    }
 }
