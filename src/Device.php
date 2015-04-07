@@ -88,6 +88,7 @@ class Device
                 $path = "MediaServer";
                 break;
             case "AlarmClock":
+            case "DeviceProperties":
                 $path = null;
                 break;
             default:

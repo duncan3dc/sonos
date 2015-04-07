@@ -256,4 +256,49 @@ class Speaker
 
         return $this;
     }
+
+
+    /**
+     * Turn the white LED on
+     *
+     * @return static
+     */
+    public function setLedOn()
+    {
+        $this->soap("DeviceProperties", "SetLEDState", [
+            "Channel"       =>  "Master",
+            "DesiredLEDState" =>  'On',
+        ]);
+
+        return $this;
+    }
+
+
+    /**
+     * Turn the white LED off
+     *
+     * @return static
+     */
+    public function setLedOff()
+    {
+        $this->soap("DeviceProperties", "SetLEDState", [
+            "Channel"       =>  "Master",
+            "DesiredLEDState" =>  'Off',
+        ]);
+
+        return $this;
+    }
+
+
+    /**
+     * Get the LED status of this speaker
+     *
+     * @return boolean
+     */
+    public function isLedOn()
+    {
+        return $this->soap("DeviceProperties", "GetLEDState", [
+            "Channel"   =>  "Master",
+        ]) == 'On' ? true : false;
+    }
 }
