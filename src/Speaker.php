@@ -2,11 +2,10 @@
 
 namespace duncan3dc\Sonos;
 
-use duncan3dc\DomParser\XmlParser;
 use Psr\Log\LoggerInterface;
 
 /**
- * Provides an interface to individual speakers that is mostly read-only, although the volume can be set using this class.
+ * Represents an individual Sonos speaker, to allow volume, equalisation, and other settings to be managed.
  */
 class Speaker
 {
@@ -279,5 +278,114 @@ class Speaker
     public function getIndicator()
     {
         return ($this->soap("DeviceProperties", "GetLEDState") === "On");
+    }
+
+
+    /**
+     * Set the bass/treble equalisation level.
+     *
+     * @param string $type Which setting to update (bass or treble)
+     * @param int $value The value to set (between -10 and 10)
+     *
+     * @return static
+     */
+    protected function setEqLevel($type, $value)
+    {
+        if ($value < -10) {
+            $value = -10;
+        }
+        if ($value > 10) {
+            $value = 10;
+        }
+
+        $type = ucfirst(strtolower($type));
+        $this->soap("RenderingControl", "Set{$type}", [
+            "Channel"           =>  "Master",
+            "Desired{$type}"    =>  $value,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * Get the treble equalisation level.
+     *
+     * @return int
+     */
+    public function getTreble()
+    {
+        return (int) $this->soap("RenderingControl", "GetTreble", [
+            "Channel"           =>  "Master",
+        ]);
+    }
+
+
+    /**
+     * Set the treble equalisation.
+     *
+     * @param int $treble The treble level (between -10 and 10)
+     *
+     * @return static
+     */
+    public function setTreble($treble)
+    {
+        return $this->setEqLevel("treble", $treble);
+    }
+
+
+    /**
+     * Get the bass equalisation level.
+     *
+     * @return int
+     */
+    public function getBass()
+    {
+        return (int) $this->soap("RenderingControl", "GetBass", [
+            "Channel"           =>  "Master",
+        ]);
+    }
+
+
+    /**
+     * Set the bass equalisation.
+     *
+     * @param int $bass The bass level (between -10 and 10)
+     *
+     * @return static
+     */
+    public function setBass($bass)
+    {
+        return $this->setEqLevel("bass", $bass);
+    }
+
+
+    /**
+     * Check whether loudness normalisation is on or not.
+     *
+     * @return bool
+     */
+    public function getLoudness()
+    {
+        return (bool) $this->soap("RenderingControl", "GetLoudness", [
+            "Channel"       =>  "Master",
+        ]);
+    }
+
+
+    /**
+     * Set whether loudness normalisation is on or not.
+     *
+     * @param bool $on Whether loudness should be on or not
+     *
+     * @return static
+     */
+    public function setLoudness($on)
+    {
+        $this->soap("RenderingControl", "SetLoudness", [
+            "Channel"           =>  "Master",
+            "DesiredLoudness"   =>  $on ? 1 : 0,
+        ]);
+
+        return $this;
     }
 }
