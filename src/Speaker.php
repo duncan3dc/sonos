@@ -229,13 +229,15 @@ class Speaker
     /**
      * Mute this speaker.
      *
+     * @param bool $value Whether the speaker should be muted or not
+     *
      * @return static
      */
-    public function mute()
+    public function mute($mute = true)
     {
         $this->soap("RenderingControl", "SetMute", [
             "Channel"       =>  "Master",
-            "DesiredMute"   =>  1,
+            "DesiredMute"   =>  $mute ? 1 : 0,
         ]);
 
         return $this;
@@ -249,12 +251,7 @@ class Speaker
      */
     public function unmute()
     {
-        $this->soap("RenderingControl", "SetMute", [
-            "Channel"       =>  "Master",
-            "DesiredMute"   =>  0,
-        ]);
-
-        return $this;
+        return $this->mute(false);
     }
 
 
