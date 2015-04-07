@@ -259,15 +259,16 @@ class Speaker
 
 
     /**
-     * Turn the white LED on
+     * Turn the indicator light on or off.
+     *
+     * @param bool $value Whether the indicator should be on or off
      *
      * @return static
      */
-    public function setLedOn()
+    public function setIndicator($value)
     {
         $this->soap("DeviceProperties", "SetLEDState", [
-            "Channel"       =>  "Master",
-            "DesiredLEDState" =>  'On',
+            "DesiredLEDState"   =>  $value ? "On" : "Off",
         ]);
 
         return $this;
@@ -275,30 +276,12 @@ class Speaker
 
 
     /**
-     * Turn the white LED off
-     *
-     * @return static
-     */
-    public function setLedOff()
-    {
-        $this->soap("DeviceProperties", "SetLEDState", [
-            "Channel"       =>  "Master",
-            "DesiredLEDState" =>  'Off',
-        ]);
-
-        return $this;
-    }
-
-
-    /**
-     * Get the LED status of this speaker
+     * Check whether the indicator light is on or not.
      *
      * @return boolean
      */
-    public function isLedOn()
+    public function getIndicator()
     {
-        return $this->soap("DeviceProperties", "GetLEDState", [
-            "Channel"   =>  "Master",
-        ]) == 'On' ? true : false;
+        return ($this->soap("DeviceProperties", "GetLEDState") === "On");
     }
 }
