@@ -107,7 +107,7 @@ class Queue implements \Countable
     public function count()
     {
         $data = $this->browse("DirectChildren");
-        return $data["TotalMatches"];
+        return (int) $data["TotalMatches"];
     }
 
 
