@@ -650,7 +650,7 @@ class Alarm
             "StartLocalTime"        =>  $this->attributes["StartTime"],
             "Duration"              =>  $this->attributes["Duration"],
             "Recurrence"            =>  $this->attributes["Recurrence"],
-            "Enabled"               =>  $this->attributes["Enabled"],
+            "Enabled"               =>  $this->attributes["Enabled"] ? "1" : "0",
             "RoomUUID"              =>  $this->attributes["RoomUUID"],
             "ProgramURI"            =>  $this->attributes["ProgramURI"],
             "ProgramMetaData"       =>  $this->attributes["ProgramMetaData"],
