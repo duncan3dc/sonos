@@ -218,7 +218,7 @@ class Speaker
      */
     public function isMuted()
     {
-        return $this->soap("RenderingControl", "GetMute", [
+        return (bool) $this->soap("RenderingControl", "GetMute", [
             "Channel"   =>  "Master",
         ]);
     }
