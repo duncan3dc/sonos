@@ -27,6 +27,10 @@ class TextToSpeech implements UriInterface
      */
     protected $filename;
 
+    /**
+     * @var string $language The language to use in the google text-to-speech call.
+     */
+    protected $language = "en";
 
     /**
      * Create a TextToSpeech object.
@@ -50,6 +54,26 @@ class TextToSpeech implements UriInterface
 
 
     /**
+     * Set the language to use in the google text-to-speech call.
+     *
+     * @param string $language The language to use (eg 'en')
+     *
+     * @return static
+     */
+    public function setLanguage($language)
+    {
+        $language = trim($language);
+        if (strlen($language) !== 2) {
+            throw new \InvalidArgumentException("Unexpected language code ({$language}), codes should be 2 characters");
+        }
+
+        $this->language = $language;
+
+        return $this;
+    }
+
+
+    /**
      * Get the URI for this message.
      *
      * If it doesn't already exist on the filesystem then the google api will be called.
@@ -63,7 +87,7 @@ class TextToSpeech implements UriInterface
         if (!file_exists($path)) {
             $url = Helper::url("http://translate.google.com/translate_tts", [
                 "q"     =>  $this->text,
-                "tl"    =>  "en",
+                "tl"    =>  $this->language,
             ]);
             $mp3 = File::getContents($url);
             File::putContents($path, $mp3);
