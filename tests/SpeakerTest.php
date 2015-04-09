@@ -2,11 +2,21 @@
 
 namespace duncan3dc\Sonos\Test;
 
-use duncan3dc\Sonos\Speaker;
 use Mockery;
 
 class SpeakerTest extends MockTest
 {
+    protected $device;
+    protected $speaker;
+
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->device = $this->getDevice();
+        $this->speaker = $this->getSpeaker($this->device);
+    }
+
     public function tearDown()
     {
         Mockery::close();
@@ -15,110 +25,200 @@ class SpeakerTest extends MockTest
 
     public function testGetVolume()
     {
-        $device = $this->getDevice();
-        $speaker = $this->getSpeaker($device);
-
-        $device->shouldReceive("soap")->once()->with("RenderingControl", "GetVolume", [
+        $this->device->shouldReceive("soap")->once()->with("RenderingControl", "GetVolume", [
             "Channel"   =>  "Master",
         ])->andReturn("3");
-        $this->assertSame(3, $speaker->getVolume());
+
+        $this->assertSame(3, $this->speaker->getVolume());
     }
 
 
     public function testSetVolume()
     {
-        $device = $this->getDevice();
-        $speaker = $this->getSpeaker($device);
-
-        $device->shouldReceive("soap")->once()->with("RenderingControl", "SetVolume", [
+        $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetVolume", [
             "Channel"       =>  "Master",
             "DesiredVolume" =>  10,
         ]);
-        $this->assertSame($speaker, $speaker->setVolume(10));
+
+        $this->assertSame($this->speaker, $this->speaker->setVolume(10));
     }
 
 
     public function testAdjustVolume()
     {
-        $device = $this->getDevice();
-        $speaker = $this->getSpeaker($device);
-
-        $device->shouldReceive("soap")->once()->with("RenderingControl", "SetRelativeVolume", [
+        $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetRelativeVolume", [
             "Channel"       =>  "Master",
             "Adjustment"    =>  5,
         ]);
-        $this->assertSame($speaker, $speaker->adjustVolume(5));
+
+        $this->assertSame($this->speaker, $this->speaker->adjustVolume(5));
     }
 
 
     public function testisMuted()
     {
-        $device = $this->getDevice();
-        $speaker = $this->getSpeaker($device);
-
-        $device->shouldReceive("soap")->once()->with("RenderingControl", "GetMute", [
+        $this->device->shouldReceive("soap")->once()->with("RenderingControl", "GetMute", [
             "Channel"   =>  "Master",
         ])->andReturn(true);
-        $this->assertSame(true, $speaker->isMuted());
+
+        $this->assertSame(true, $this->speaker->isMuted());
     }
 
 
     public function testMute()
     {
-        $device = $this->getDevice();
-        $speaker = $this->getSpeaker($device);
-
-        $device->shouldReceive("soap")->once()->with("RenderingControl", "SetMute", [
+        $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetMute", [
             "Channel"       =>  "Master",
             "DesiredMute"   =>  1,
         ]);
-        $this->assertSame($speaker, $speaker->mute());
+
+        $this->assertSame($this->speaker, $this->speaker->mute());
     }
 
 
     public function testUnmute()
     {
-        $device = $this->getDevice();
-        $speaker = $this->getSpeaker($device);
-
-        $device->shouldReceive("soap")->once()->with("RenderingControl", "SetMute", [
+        $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetMute", [
             "Channel"       =>  "Master",
             "DesiredMute"   =>  0,
         ]);
-        $this->assertSame($speaker, $speaker->unmute());
+
+        $this->assertSame($this->speaker, $this->speaker->unmute());
     }
 
 
     public function testGetIndicator()
     {
-        $device = $this->getDevice();
-        $speaker = $this->getSpeaker($device);
+        $this->device->shouldReceive("soap")->once()->with("DeviceProperties", "GetLEDState", [])->andReturn(false);
 
-        $device->shouldReceive("soap")->once()->with("DeviceProperties", "GetLEDState", [])->andReturn(false);
-        $this->assertSame(false, $speaker->getIndicator());
+        $this->assertSame(false, $this->speaker->getIndicator());
     }
 
 
     public function testSetIndicatorOn()
     {
-        $device = $this->getDevice();
-        $speaker = $this->getSpeaker($device);
-
-        $device->shouldReceive("soap")->once()->with("DeviceProperties", "SetLEDState", [
+        $this->device->shouldReceive("soap")->once()->with("DeviceProperties", "SetLEDState", [
             "DesiredLEDState"   =>  "On",
         ]);
-        $this->assertSame($speaker, $speaker->setIndicator(true));
+
+        $this->assertSame($this->speaker, $this->speaker->setIndicator(true));
     }
 
 
     public function testSetIndicatorOff()
     {
-        $device = $this->getDevice();
-        $speaker = $this->getSpeaker($device);
-
-        $device->shouldReceive("soap")->once()->with("DeviceProperties", "SetLEDState", [
+        $this->device->shouldReceive("soap")->once()->with("DeviceProperties", "SetLEDState", [
             "DesiredLEDState"   =>  "Off",
         ]);
-        $this->assertSame($speaker, $speaker->setIndicator(false));
+
+        $this->assertSame($this->speaker, $this->speaker->setIndicator(false));
+    }
+
+
+    public function testGetTreble()
+    {
+        $this->device->shouldReceive("soap")->once()->with("RenderingControl", "GetTreble", [
+            "Channel"   =>  "Master",
+        ])->andReturn(8);
+
+        $this->assertSame(8, $this->speaker->getTreble());
+    }
+
+
+    public function testSetTreble()
+    {
+        $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetTreble", [
+            "Channel"       =>  "Master",
+            "DesiredTreble" =>  7,
+        ]);
+
+        $this->assertSame($this->speaker, $this->speaker->setTreble(7));
+    }
+
+
+    public function testSetTrebleHigh()
+    {
+        $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetTreble", [
+            "Channel"       =>  "Master",
+            "DesiredTreble" =>  10,
+        ]);
+
+        $this->assertSame($this->speaker, $this->speaker->setTreble(15));
+    }
+
+
+    public function testSetTrebleLow()
+    {
+        $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetTreble", [
+            "Channel"       =>  "Master",
+            "DesiredTreble" =>  -10,
+        ]);
+
+        $this->assertSame($this->speaker, $this->speaker->setTreble(-11));
+    }
+
+
+    public function testSetBass()
+    {
+        $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetBass", [
+            "Channel"       =>  "Master",
+            "DesiredBass"   =>  0,
+        ]);
+
+        $this->assertSame($this->speaker, $this->speaker->setBass(0));
+    }
+
+
+    public function testSetBassHigh()
+    {
+        $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetBass", [
+            "Channel"       =>  "Master",
+            "DesiredBass"   =>  10,
+        ]);
+
+        $this->assertSame($this->speaker, $this->speaker->setBass(11));
+    }
+
+
+    public function testSetBassLow()
+    {
+        $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetBass", [
+            "Channel"       =>  "Master",
+            "DesiredBass"   =>  -10,
+        ]);
+
+        $this->assertSame($this->speaker, $this->speaker->setBass(-100));
+    }
+
+
+    public function testGetLoudness()
+    {
+        $this->device->shouldReceive("soap")->once()->with("RenderingControl", "GetLoudness", [
+            "Channel"           =>  "Master",
+        ])->andReturn(false);
+
+        $this->assertSame(false, $this->speaker->getLoudness());
+    }
+
+
+    public function testSetLoudnessOn()
+    {
+        $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetLoudness", [
+            "Channel"           =>  "Master",
+            "DesiredLoudness"   =>  1,
+        ]);
+
+        $this->assertSame($this->speaker, $this->speaker->setLoudness(true));
+    }
+
+
+    public function testSetLoudnessOff()
+    {
+        $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetLoudness", [
+            "Channel"           =>  "Master",
+            "DesiredLoudness"   =>  0,
+        ]);
+
+        $this->assertSame($this->speaker, $this->speaker->setLoudness(false));
     }
 }
