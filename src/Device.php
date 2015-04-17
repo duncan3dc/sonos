@@ -162,6 +162,8 @@ class Device
             "S3"    =>  "PLAY:3",
             "S5"    =>  "PLAY:5",
             "S9"    =>  "PLAYBAR",
+            "ZP90"  =>  "CONNECT",
+            "ZP120" =>  "CONNECT:AMP",
         ];
 
         return in_array($model, array_keys($models), true);
