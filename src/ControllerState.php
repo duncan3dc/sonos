@@ -40,6 +40,11 @@ class ControllerState
     public $crossfade;
 
     /**
+     * @var array $speakers Each speaker that is managed by this controller.
+     */
+    public $speakers;
+
+    /**
      * @var Track[] $tracks An array of tracks from the queue.
      */
     public $tracks;
@@ -54,6 +59,7 @@ class ControllerState
         $this
             ->getState($controller)
             ->getMode($controller)
+            ->getVolume($controller)
             ->getTracks($controller);
     }
 
@@ -91,6 +97,24 @@ class ControllerState
         $this->shuffle = $mode["shuffle"];
 
         $this->crossfade = $controller->getCrossfade();
+
+        return $this;
+    }
+
+
+    /**
+     * Get the current volume of all the speakers in this group.
+     *
+     * @param Controller $controller The Controller to grab the state of
+     *
+     * @return static
+     */
+    protected function getVolume(Controller $controller)
+    {
+        $this->speakers = [];
+        foreach ($controller->getSpeakers() as $speaker) {
+            $this->speakers[$speaker->getUuid()] = $speaker->getVolume();
+        }
 
         return $this;
     }

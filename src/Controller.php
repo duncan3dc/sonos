@@ -575,6 +575,16 @@ class Controller extends Speaker
         $this->setRepeat($state->repeat);
         $this->setCrossfade($state->crossfade);
 
+        $speakers = [];
+        foreach ($this->getSpeakers() as $speaker) {
+            $speakers[$speaker->getUuid()] = $speaker;
+        }
+        foreach ($state->speakers as $uuid => $volume) {
+            if (array_key_exists($uuid, $speakers)) {
+                $speakers[$uuid]->setVolume($volume);
+            }
+        }
+
         # If the exported state was playing then start it playing now
         if ($state->state === self::STATE_PLAYING) {
             $this->play();
