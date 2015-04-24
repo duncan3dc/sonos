@@ -5,6 +5,7 @@ namespace duncan3dc\Sonos;
 use duncan3dc\DomParser\XmlParser;
 use duncan3dc\Sonos\Exceptions\SoapException;
 use duncan3dc\Sonos\Tracks\Stream;
+use duncan3dc\Sonos\Tracks\UriInterface;
 
 /**
  * Allows interaction with the groups of speakers.
@@ -665,6 +666,59 @@ class Controller extends Speaker
         } elseif ($this->getState() === self::STATE_PLAYING) {
             $this->pause();
         }
+
+        return $this;
+    }
+
+
+    /**
+     * Interrupt the current audio with a track.
+     *
+     * The current state of the controller is stored,
+     * the passed track is played, and then when it has finished
+     * the previous state of the controller is restored.
+     * This is useful for making announcements over the Sonos network.
+     *
+     * @param UriInterface $track The track to play
+     * @param int $volume The volume to play the track at
+     *
+     * @return static
+     */
+    public function interrupt(UriInterface $track, $volume = null)
+    {
+        /**
+         * Ensure the track has been generated.
+         * If it's a TextToSpeech then the api call is done lazily when the uri is required.
+         * So it's better to do this here, rather than after the controller has been paused.
+         */
+        $track->getUri();
+
+        $state = $this->exportState();
+
+        # Replace the current queue with the passed track
+        $this->getQueue()->clear()->addTrack($track);
+
+        # Ensure repeat is not on, or else this track would just play indefinitely
+        $this->setRepeat(false);
+
+        # If a volume was passed then use it
+        if ($volume !== null) {
+            $this->setVolume($volume);
+        }
+
+        # Play the track
+        $this->play();
+
+        # Sleep first so that the track has a chance to at least start
+        sleep(1);
+
+        # Wait for the track to finish
+        while ($this->getState() === self::STATE_PLAYING) {
+            usleep(500000);
+        }
+
+        # Restore the previous state of this controller
+        $this->restoreState($state);
 
         return $this;
     }
