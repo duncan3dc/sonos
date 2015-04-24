@@ -4,6 +4,7 @@ namespace duncan3dc\Sonos;
 
 use duncan3dc\DomParser\XmlParser;
 use duncan3dc\Sonos\Exceptions\SoapException;
+use duncan3dc\Sonos\Tracks\Stream;
 
 /**
  * Allows interaction with the groups of speakers.
@@ -138,7 +139,7 @@ class Controller extends Speaker
         $state = State::createFromXml($parser, $this);
 
         if ((string) $parser->getTag("streamContent")) {
-            $info = $this->soap("AVTransport", "GetMediaInfo");
+            $info = $this->getMediaInfo();
             if (!$state->stream = (string) (new XmlParser($info["CurrentURIMetaData"]))->getTag("title")) {
                 $state->stream = (string) $parser->getTag("title");
             }
@@ -274,6 +275,48 @@ class Controller extends Speaker
         $this->soap("AVTransport", "Seek", [
             "Unit"      =>  "REL_TIME",
             "Target"    =>  sprintf("%02s:%02s:%02s", $hours, $minutes, $seconds),
+        ]);
+
+        return $this;
+    }
+
+
+    /**
+     * Get the currently active media info.
+     *
+     * @return array
+     */
+    public function getMediaInfo()
+    {
+        return $this->soap("AVTransport", "GetMediaInfo");
+    }
+
+
+    /**
+     * Check if this controller is currently playing a stream.
+     *
+     * @return bool
+     */
+    public function isStreaming()
+    {
+        $media = $this->getMediaInfo();
+
+        return (substr($media["CurrentURI"], 0, 18) === "x-sonosapi-stream:");
+    }
+
+
+    /**
+     * Play a stream on this controller.
+     *
+     * @param Stream $stream The Stream object to play
+     *
+     * @return static
+     */
+    public function useStream(Stream $stream)
+    {
+        $this->soap("AVTransport", "SetAVTransportURI", [
+            "CurrentURI"            =>  $stream->getUri(),
+            "CurrentURIMetaData"    =>  $stream->getMetaData(),
         ]);
 
         return $this;
