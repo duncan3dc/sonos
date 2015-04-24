@@ -2,6 +2,7 @@
 
 namespace duncan3dc\Sonos;
 
+use duncan3dc\Sonos\Tracks\Stream;
 use duncan3dc\Sonos\Tracks\Track;
 
 /**
@@ -48,6 +49,11 @@ class ControllerState
      * @var Track[] $tracks An array of tracks from the queue.
      */
     public $tracks;
+
+    /**
+     * @var Stream $stream A stream object (if the controller is currently streaming).
+     */
+    public $stream;
 
     /**
      * Create a ControllerState object.
@@ -130,6 +136,11 @@ class ControllerState
     protected function getTracks(Controller $controller)
     {
         $this->tracks = $controller->getQueue()->getTracks();
+
+        if ($controller->isStreaming()) {
+            $media = $controller->getMediaInfo();
+            $this->stream = new Stream($media["CurrentURI"]);
+        }
 
         return $this;
     }

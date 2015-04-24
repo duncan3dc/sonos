@@ -648,6 +648,10 @@ class Controller extends Speaker
         $this->setRepeat($state->repeat);
         $this->setCrossfade($state->crossfade);
 
+        if ($state->stream) {
+            $this->useStream($state->stream);
+        }
+
         $speakers = [];
         foreach ($this->getSpeakers() as $speaker) {
             $speakers[$speaker->getUuid()] = $speaker;
@@ -696,7 +700,7 @@ class Controller extends Speaker
         $state = $this->exportState();
 
         # Replace the current queue with the passed track
-        $this->getQueue()->clear()->addTrack($track);
+        $this->useQueue()->getQueue()->clear()->addTrack($track);
 
         # Ensure repeat is not on, or else this track would just play indefinitely
         $this->setRepeat(false);
