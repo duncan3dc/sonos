@@ -324,6 +324,35 @@ class Controller extends Speaker
 
 
     /**
+     * Check if this controller is currently using its queue.
+     *
+     * @return bool
+     */
+    public function isUsingQueue()
+    {
+        $media = $this->getMediaInfo();
+
+        return (substr($media["CurrentURI"], 0, 15) === "x-rincon-queue:");
+    }
+
+
+    /**
+     * Set this controller to use its queue (rather than a stream).
+     *
+     * @return static
+     */
+    public function useQueue()
+    {
+        $this->soap("AVTransport", "SetAVTransportURI", [
+            "CurrentURI"            =>  "x-rincon-queue:" . $this->getUuid() . "#0",
+            "CurrentURIMetaData"    =>  "",
+        ]);
+
+        return $this;
+    }
+
+
+    /**
      * Get the speakers that are in the group of this controller.
      *
      * @return Speaker[]
