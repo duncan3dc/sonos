@@ -15,17 +15,17 @@ use Psr\Log\NullLogger;
 class Network implements LoggerAwareInterface
 {
     /**
-     * @var Speaker[] $speakers Speakers that are available on the current network.
+     * @var Speaker[]|null $speakers Speakers that are available on the current network.
      */
     protected $speakers;
 
     /**
-     * @var Playlists[] $playlists Playlists that are available on the current network.
+     * @var Playlists[]|null $playlists Playlists that are available on the current network.
      */
     protected $playlists;
 
     /**
-     * @var Alarm[] $alarms Alarms that are available on the current network.
+     * @var Alarm[]|null $alarms Alarms that are available on the current network.
      */
     protected $alarms;
 
@@ -74,7 +74,7 @@ class Network implements LoggerAwareInterface
      *
      * @return LoggerInterface $logger The logging object
      */
-    public function getLogger(LoggerInterface $logger)
+    public function getLogger()
     {
         return $this->logger;
     }
@@ -87,7 +87,7 @@ class Network implements LoggerAwareInterface
      */
     protected function getDevices()
     {
-        $this->logger->info("discovering devices");
+        $this->logger->info("discovering devices...");
 
         $ip = "239.255.255.250";
         $port = 1900;
@@ -101,6 +101,8 @@ class Network implements LoggerAwareInterface
         $data .= "MX: 1\r\n";
         $data .= "ST: urn:schemas-upnp-org:device:ZonePlayer:1\r\n";
 
+        $this->logger->debug($data);
+
         socket_sendto($sock, $data, strlen($data), null, $ip, $port);
 
         $read = [$sock];
@@ -111,10 +113,12 @@ class Network implements LoggerAwareInterface
         $tmp = "";
 
         $response = "";
-        while (socket_select($read, $write, $except, 1) && $read) {
+        while (socket_select($read, $write, $except, 1)) {
             socket_recvfrom($sock, $tmp, 2048, null, $name, $port);
             $response .= $tmp;
         }
+
+        $this->logger->debug($response);
 
         $devices = [];
         foreach (explode("\r\n\r\n", $response) as $reply) {
@@ -215,12 +219,14 @@ class Network implements LoggerAwareInterface
      *
      * Useful for managing playlists/alarms, as these need a controller but it doesn't matter which one.
      *
-     * @return Controller
+     * @return Controller|null
      */
     public function getController()
     {
         $controllers = $this->getControllers();
-        return reset($controllers);
+        if ($controller = reset($controllers)) {
+            return $controller;
+        }
     }
 
 
@@ -345,6 +351,9 @@ class Network implements LoggerAwareInterface
         }
 
         $controller = $this->getController();
+        if ($controller === null) {
+            throw new \RuntimeException("No controller found on the current network");
+        }
 
         $data = $controller->soap("ContentDirectory", "Browse", [
             "ObjectID"          =>  "SQ:",
@@ -372,7 +381,7 @@ class Network implements LoggerAwareInterface
      *
      * @param string The name of the playlist
      *
-     * @return boolean
+     * @return bool
      */
     public function hasPlaylist($name)
     {
@@ -428,7 +437,12 @@ class Network implements LoggerAwareInterface
      */
     public function getPlaylistById($id)
     {
-        return new Playlist($id, $this->getController());
+        $controller = $this->getController();
+        if ($controller === null) {
+            throw new \RuntimeException("No controller found on the current network");
+        }
+
+        return new Playlist($id, $controller);
     }
 
 
@@ -442,6 +456,9 @@ class Network implements LoggerAwareInterface
     public function createPlaylist($name)
     {
         $controller = $this->getController();
+        if ($controller === null) {
+            throw new \RuntimeException("No controller found on the current network");
+        }
 
         $data = $controller->soap("AVTransport", "CreateSavedQueue", [
             "Title"                 =>  $name,
@@ -487,7 +504,7 @@ class Network implements LoggerAwareInterface
      */
     public function getAlarmById($id)
     {
-        $id = (integer) $id;
+        $id = (int) $id;
 
         $alarms = $this->getAlarms();
         foreach ($alarms as $alarm) {

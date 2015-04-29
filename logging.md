@@ -6,7 +6,7 @@ permalink: /logging/
 
 You can trace what is happening and log any errors using a [PSR-3](http://www.php-fig.org/psr/psr-3/) compatible logger.
 
-<p class="message-info">This feature was added in v1.1.0.</p>
+<p class="message-info">This feature was added in v1.1.0</p>
 
 The logger can be passed in the constructor, or attached at any point using the `setLogger()` method:
 

@@ -10,7 +10,7 @@ permalink: /
 <br>
 [![Software License](https://img.shields.io/badge/license-Apache--2.0-brightgreen.svg?style=flat)](https://github.com/duncan3dc/sonos/blob/master/LICENSE)
 [![Build Status](https://img.shields.io/travis/duncan3dc/sonos.svg?style=flat)](https://travis-ci.org/duncan3dc/sonos)
-[![Issue Tracker](https://img.shields.io/github/issues/duncan3dc/sonos.svg?style=flat)](https://github.com/duncn3dc/sonos/issues)
+[![Issue Tracker](https://img.shields.io/github/issues/duncan3dc/sonos.svg?style=flat)](https://github.com/duncan3dc/sonos/issues)
 
 A PHP library for interacting with [Sonos](http://www.sonos.com/) speakers.
 

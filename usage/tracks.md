@@ -41,7 +41,7 @@ They can be used with the addTrack(s) methods:
 If you want to pass a custom object to addTrack(s) then your class must implement the <a href='{{ site.baseurl }}/api/classes/duncan3dc.Sonos.Tracks.UriInterface.html'>UriInterface</a>:
 
 ~~~php
- class Cifs implements \duncan3dc\Sonos\Tracks\UriInterface
+ class Smb implements \duncan3dc\Sonos\Tracks\UriInterface
  {
      public $file;
      public funcion __construct($file)
@@ -54,8 +54,8 @@ If you want to pass a custom object to addTrack(s) then your class must implemen
      }
  }
  $tracks = [];
- $tracks[] = new Cifs("blitz kids/the good youth/09-Pinnacle.mp3");
- $tracks[] = new Cifs("afi/crash love/03-End transmission.mp3");
+ $tracks[] = new Smb("blitz kids/the good youth/09-Pinnacle.mp3");
+ $tracks[] = new Smb("afi/crash love/03-End transmission.mp3");
  $playlist->addTracks($tracks);
 ~~~
 

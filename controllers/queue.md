@@ -5,11 +5,18 @@ permalink: /controllers/queue/
 api: Queue
 ---
 
-You can get the queue for a controller like so:
+When playing tracks from your library or other music services you'll be using the queue.  
+You can check if a controller is currently using a queue, make it use the queue, and then get the queue like so:
 
 ~~~php
+ if (!$controller->isUsingQueue()) {
+     $controller->useQueue();
+ }
+
  $queue = $controller->getQueue();
 ~~~
+
+<p class="message-info">The isUsingQueue() and useQueue() methods were added in v1.2.0</p>
 
 
 The Queue class implements the Countable interface which means you can get the number of tracks by simply counting it:

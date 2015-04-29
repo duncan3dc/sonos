@@ -1,19 +1,25 @@
 Getting Started:
-    Introduction: "/"
-    Installation: "/installation/"
-    Setup: "/setup/"
-    Logging: "/logging/"
+    Introduction: /
+    Installation: /installation/
+    Setup: /setup/
+    Logging: /logging/
 
 Usage:
-    Getting Started: "/usage/getting-started/"
-    Speakers: "/usage/speakers/"
-    Playlists: "/usage/playlists/"
-    Alarms: "/usage/alarms/"
-    Tracks: "/usage/tracks/"
+    Getting Started: /usage/getting-started/
+    Speakers: /usage/speakers/
+    Playlists: /usage/playlists/
+    Alarms: /usage/alarms/
+    Tracks: /usage/tracks/
 
 Controllers:
-    Play Some Music: "/controllers/play-some-music/"
-    Playing Mode: "/controllers/playing-mode/"
-    Volume: "/controllers/volume/"
-    Speakers: "/controllers/speakers/"
-    Queue: "/controllers/queue/"
+    Play Some Music: /controllers/play-some-music/
+    Playing Mode: /controllers/playing-mode/
+    Volume: /controllers/volume/
+    Speakers: /controllers/speakers/
+    Queue: /controllers/queue/
+    Streams: /controllers/streams/
+
+Fun Stuff:
+    Announcements: /fun/announcements/
+    Export/Restore: /fun/export-restore/
+    Text To Speech: /fun/text-to-speech/

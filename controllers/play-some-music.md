@@ -56,5 +56,6 @@ You can position to specific tracks, or a specific part of a track:
  $controller->seek(195);
 ~~~
 
+<p class="message-info">The above features were added in v1.1.1</p>
 
 See the <a href='../../usage/tracks/'>Tracks documentation</a> for info on adding tracks to your controller's queue.

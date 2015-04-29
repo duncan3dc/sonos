@@ -13,7 +13,7 @@ Get some information about a speaker:
  # Get the IP address of the speaker
  $speaker->ip;
 
- # Get the "Friendly" name reported by the speaker (hint: it's not that friendly)
+ # Get the "Friendly" name reported by the speaker (spoiler: it's not that friendly)
  $speaker->name;
 
  # Get the room name assigned to this speaker
@@ -42,3 +42,21 @@ Mute a speaker:
      $speaker->unmute();
  }
 ~~~
+
+
+Manage the equalisation of a speaker:
+
+~~~php
+ if ($speaker->getTreble() > -5) {
+     $speaker->setTreble(-5);
+ }
+ if ($speaker->getBass() < 5) {
+     $speaker->setBass(5);
+ }
+
+ if (!$speaker->getLoudness()) {
+     $speaker->setLoudness(true);
+ }
+~~~
+
+<p class="message-info">The equalisation methods were added in v1.2.0</p>
