@@ -31,4 +31,13 @@ class QueueTrack extends Track
 
         return $track;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getMetaData()
+    {
+        $meta=parent::getMetaData(($this->queueId ? $this->queueId : "-1"));
+        return $meta;
+    }
 }

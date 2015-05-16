@@ -67,9 +67,10 @@ class Track implements UriInterface
     /**
      * Get the metadata xml for this track.
      *
+     * @param string $queueId
      * @return string
      */
-    public function getMetaData()
+    public function getMetaData($queueId = "-1")
     {
         $xml = XmlWriter::createXml([
             "DIDL-Lite" =>  [
