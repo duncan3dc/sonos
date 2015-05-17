@@ -82,7 +82,7 @@ class Track implements UriInterface
                 ],
                 "item"  =>  [
                     "_attributes"   =>  [
-                        "id"            =>  "-1",
+                        "id"            =>  $queueId,
                         "parentID"      =>  "-1",
                         "restricted"    =>  "true",
                     ],
