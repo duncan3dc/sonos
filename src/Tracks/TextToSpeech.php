@@ -4,8 +4,10 @@ namespace duncan3dc\Sonos\Tracks;
 
 use duncan3dc\DomParser\XmlWriter;
 use duncan3dc\Helpers\File;
-use duncan3dc\Helpers\Helper;
 use duncan3dc\Sonos\Directory;
+use duncan3dc\Speaker\Providers\GoogleProvider;
+use duncan3dc\Speaker\Providers\ProviderInterface;
+use duncan3dc\Speaker\TextToSpeech as TextToSpeechHandler;
 
 /**
  * Convert a string of a text to a spoken word mp3.
@@ -28,9 +30,9 @@ class TextToSpeech implements UriInterface
     protected $filename;
 
     /**
-     * @var string $language The language to use in the google text-to-speech call.
+     * @var Provider $provider The text to speech provider.
      */
-    protected $language = "en";
+    protected $provider;
 
     /**
      * Create a TextToSpeech object.
@@ -38,7 +40,7 @@ class TextToSpeech implements UriInterface
      * @param string $text The text to convert
      * @param Directory $directory The directory to store the mp3 in.
      */
-    public function __construct($text, Directory $directory)
+    public function __construct($text, Directory $directory, ProviderInterface $provider = null)
     {
         if (!is_dir($directory->getFilesystemPath())) {
             throw new \InvalidArgumentException("Invalid directory: " . $directory->getFilesystemPath());
@@ -50,6 +52,28 @@ class TextToSpeech implements UriInterface
         $this->directory = $directory;
         $this->text = $text;
         $this->filename = md5($this->text) . ".mp3";
+
+        if ($provider !== null) {
+            $this->setProvider($provider);
+        }
+    }
+
+
+    public function setProvider(ProviderInterface $provider)
+    {
+        $this->provider = $provider;
+
+        return $this;
+    }
+
+
+    public function getProvider()
+    {
+        if ($this->provider === null) {
+            $this->provider = new GoogleProvider;
+        }
+
+        return $this->provider;
     }
 
 
@@ -62,12 +86,7 @@ class TextToSpeech implements UriInterface
      */
     public function setLanguage($language)
     {
-        $language = trim($language);
-        if (strlen($language) !== 2) {
-            throw new \InvalidArgumentException("Unexpected language code ({$language}), codes should be 2 characters");
-        }
-
-        $this->language = $language;
+        $this->getProvider()->setLanguage($language);
 
         return $this;
     }
@@ -85,11 +104,9 @@ class TextToSpeech implements UriInterface
         $path = $this->directory->getFilesystemPath() . "/{$this->filename}";
 
         if (!file_exists($path)) {
-            $url = Helper::url("http://translate.google.com/translate_tts", [
-                "q"     =>  $this->text,
-                "tl"    =>  $this->language,
-            ]);
-            $mp3 = File::getContents($url);
+            $provider = $this->getProvider();
+            $tts = new TextToSpeechHandler($this->text, $provider);
+            $mp3 = $tts->getAudioData();
             File::putContents($path, $mp3);
         }
 
