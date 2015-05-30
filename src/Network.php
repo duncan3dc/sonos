@@ -522,7 +522,7 @@ class Network implements LoggerAwareInterface
      *
      * @return Radio
      */
-    protected function getRadio()
+    public function getRadio()
     {
         $controller = $this->getController();
         return new Radio($controller);
@@ -536,7 +536,8 @@ class Network implements LoggerAwareInterface
      */
     public function getRadioStations()
     {
-        return $this->getRadio()->getStations();
+        trigger_error("The getRadioStations() method is deprecated in favour of getRadio()->getFavouriteStations()", \E_USER_DEPRECATED);
+        return $this->getRadio()->getFavouriteStations();
     }
 
 
@@ -547,6 +548,7 @@ class Network implements LoggerAwareInterface
      */
     public function getRadioShows()
     {
-        return $this->getRadio()->getShows();
+        trigger_error("The getRadioShows() method is deprecated in favour of getRadio()->getFavouriteShows()", \E_USER_DEPRECATED);
+        return $this->getRadio()->getFavouriteShows();
     }
 }

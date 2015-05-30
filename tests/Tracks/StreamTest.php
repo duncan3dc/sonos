@@ -14,17 +14,15 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    public function testGetTitle1()
+    public function testGetName1()
     {
         $stream = new Stream("uri-test");
-        $this->assertSame("", $stream->getTitle());
+        $this->assertSame("", $stream->getName());
     }
-
-
-    public function testGetTitle2()
+    public function testGetName2()
     {
         $stream = new Stream("uri-test", "super stream");
-        $this->assertSame("super stream", $stream->getTitle());
+        $this->assertSame("super stream", $stream->getName());
     }
 
 

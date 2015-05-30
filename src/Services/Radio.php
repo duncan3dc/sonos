@@ -61,9 +61,9 @@ class Radio
 
         $tagName = ($type === self::STATIONS) ? "item" : "container";
         foreach ($parser->getTags($tagName) as $tag) {
-            $title = $tag->getTag("title")->nodeValue;
+            $name = $tag->getTag("title")->nodeValue;
             $uri = $tag->getTag("res")->nodeValue;
-            $items[] = new Stream($uri, $title);
+            $items[] = new Stream($uri, $name);
         }
 
         return $items;
@@ -75,9 +75,38 @@ class Radio
      *
      * @return Stream[]
      */
-    public function getStations()
+    public function getFavouriteStations()
     {
         return $this->getFavourites(self::STATIONS);
+    }
+
+
+    /**
+     * Get the favourite radio station with the specified name.
+     *
+     * If no case-sensitive match is found it will return a case-insensitive match.
+     *
+     * @param string The name of the station
+     *
+     * @return Stream|null
+     */
+    public function getFavouriteStation($name)
+    {
+        $roughMatch = false;
+
+        $stations = $this->getFavouriteStations();
+        foreach ($stations as $station) {
+            if ($station->getName() === $name) {
+                return $station;
+            }
+            if (strtolower($station->getName()) === strtolower($name)) {
+                $roughMatch = $station;
+            }
+        }
+
+        if ($roughMatch) {
+            return $roughMatch;
+        }
     }
 
 
@@ -86,8 +115,37 @@ class Radio
      *
      * @return Stream[]
      */
-    public function getShows()
+    public function getFavouriteShows()
     {
         return $this->getFavourites(self::SHOWS);
+    }
+
+
+    /**
+     * Get the favourite radio show with the specified name.
+     *
+     * If no case-sensitive match is found it will return a case-insensitive match.
+     *
+     * @param string The name of the show
+     *
+     * @return Stream|null
+     */
+    public function getFavouriteShow($name)
+    {
+        $roughMatch = false;
+
+        $shows = $this->getFavouriteShows();
+        foreach ($shows as $show) {
+            if ($show->getName() === $name) {
+                return $show;
+            }
+            if (strtolower($show->getName()) === strtolower($name)) {
+                $roughMatch = $show;
+            }
+        }
+
+        if ($roughMatch) {
+            return $roughMatch;
+        }
     }
 }

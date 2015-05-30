@@ -15,9 +15,9 @@ class Stream implements UriInterface
     protected $uri = "";
 
     /**
-     * @var string $title The title of the stream.
+     * @var string $name The name of the stream.
      */
-    protected $title = "";
+    protected $name = "";
 
 
     /**
@@ -25,10 +25,10 @@ class Stream implements UriInterface
      *
      * @param string $uri The URI of the stream
      */
-    public function __construct($uri, $title = "")
+    public function __construct($uri, $name = "")
     {
         $this->uri = (string) $uri;
-        $this->title = (string) $title;
+        $this->name = (string) $name;
     }
 
 
@@ -44,13 +44,25 @@ class Stream implements UriInterface
 
 
     /**
-     * Get the title for this stream.
+     * Get the name for this stream.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+
+    /**
+     * Get the name for this stream.
      *
      * @return string
      */
     public function getTitle()
     {
-        return $this->title;
+        trigger_error("The getTitle() method is deprecated in favour of getName()", \E_USER_DEPRECATED);
+        return $this->getName();
     }
 
 
@@ -75,7 +87,7 @@ class Stream implements UriInterface
                         "parentID"      =>  "-1",
                         "restricted"    =>  "true",
                     ],
-                    "dc:title"          =>  $this->getTitle() ?: "Stream",
+                    "dc:title"          =>  $this->getName() ?: "Stream",
                     "upnp:class"        =>  "object.item.audioItem.audioBroadcast",
                     "desc"              =>  [
                         "_attributes"       =>  [
