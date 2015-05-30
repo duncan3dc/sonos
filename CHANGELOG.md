@@ -5,6 +5,23 @@ Changelog
 
 --------
 
+## 1.3.0 - 2015-05-30
+
+### Added
+
+* [Tracks] Created a Radio class.
+
+### Changed
+
+* [Tracks] Use duncan3dc/speaker for text-to-speech handling
+
+### Fixed
+
+* [Tracks] Correct the handling of queueid to avoid metadata loss.
+* [Controllers] Only seek if we have some tracks in the queue.
+
+--------
+
 ## 1.2.0 - 2015-04-29
 
 ### Added
