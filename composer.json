@@ -15,6 +15,7 @@
         "doctrine/cache": "^1.4",
         "duncan3dc/domparser": "^1.3.2",
         "duncan3dc/speaker": "^0.2",
+        "guzzlehttp/guzzle": "^5.2",
         "psr/log": "*",
         "ext-soap": "*",
         "ext-sockets": "*",

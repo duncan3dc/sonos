@@ -2,7 +2,9 @@
 
 namespace duncan3dc\Sonos;
 
+use Doctrine\Common\Cache\Cache as CacheInterface;
 use duncan3dc\DomParser\XmlParser;
+use GuzzleHttp\Client;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
@@ -22,12 +24,12 @@ class Device
     protected $model;
 
     /**
-     * @var array $cache Cached data to increase performance.
+     * @var CacheInterface $cache The cache object to use for the expensive multicast discover to find Sonos devices on the network.
      */
-    protected $cache = [];
+    protected $cache;
 
     /**
-     * @var LoggerInterface $logger The logging object
+     * @var LoggerInterface $logger The logging object.
      */
     protected $logger;
 
@@ -36,11 +38,17 @@ class Device
      * Create an instance of the Device class.
      *
      * @param string $ip The ip address that the device is listening on
+     * @param CacheInterface $cache The cache object to use for the expensive multicast discover to find Sonos devices on the network
      * @param LoggerInterface $logger A logging object
      */
-    public function __construct($ip, LoggerInterface $logger = null)
+    public function __construct($ip, CacheInterface $cache = null, LoggerInterface $logger = null)
     {
         $this->ip = $ip;
+
+        if ($cache === null) {
+            $cache = new Cache;
+        }
+        $this->cache = $cache;
 
         if ($logger === null) {
             $logger = new NullLogger;
@@ -58,13 +66,18 @@ class Device
      */
     public function getXml($url)
     {
-        if (!isset($this->cache[$url])) {
-            $uri = "http://{$this->ip}:1400{$url}";
+        $uri = "http://{$this->ip}:1400{$url}";
+
+        if ($this->cache->contains($uri)) {
+            $this->logger->info("getting xml from cache: {$uri}");
+            $xml = $this->cache->fetch($uri);
+        } else {
             $this->logger->notice("requesting xml from: {$uri}");
-            $this->cache[$url] = new XmlParser($uri);
+            $xml = (string) (new Client)->get($uri)->getBody();
+            $this->cache->save($uri, $xml, Cache::DAY);
         }
 
-        return $this->cache[$url];
+        return new XmlParser($xml);
     }
 
 

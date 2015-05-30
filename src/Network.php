@@ -2,8 +2,7 @@
 
 namespace duncan3dc\Sonos;
 
-use Doctrine\Common\Cache\Cache;
-use Doctrine\Common\Cache\FilesystemCache;
+use Doctrine\Common\Cache\Cache as CacheInterface;
 use duncan3dc\DomParser\XmlParser;
 use duncan3dc\Sonos\Services\Radio;
 use duncan3dc\Sonos\Tracks\Stream;
@@ -32,20 +31,26 @@ class Network implements LoggerAwareInterface
     protected $alarms;
 
     /**
-     * @var Cache $cache The cache object to use for the expensive multicast discover to find Sonos devices on the network
+     * @var CacheInterface $cache The cache object to use for the expensive multicast discover to find Sonos devices on the network.
      */
     protected $cache;
 
     /**
-     * @var LoggerInterface $logger The logging object
+     * @var LoggerInterface $logger The logging object.
      */
     protected $logger;
 
 
-    public function __construct(Cache $cache = null, LoggerInterface $logger = null)
+    /**
+     * Create a new instance.
+     *
+     * @param CacheInterface $cache The cache object to use for the expensive multicast discover to find Sonos devices on the network
+     * @param LoggerInterface $logger The logging object
+     */
+    public function __construct(CacheInterface $cache = null, LoggerInterface $logger = null)
     {
         if ($cache === null) {
-            $cache = new FilesystemCache(sys_get_temp_dir() . DIRECTORY_SEPARATOR . "sonos");
+            $cache = new Cache;
         }
         $this->cache = $cache;
 
@@ -193,9 +198,9 @@ class Network implements LoggerAwareInterface
 
         $speakers = [];
         foreach ($devices as $ip) {
-            $device = new Device($ip, $this->logger);
+            $device = new Device($ip, $this->cache, $this->logger);
             if ($device->isSpeaker()) {
-                $speakers[$ip] = new Speaker($device, $this->logger);
+                $speakers[$ip] = new Speaker($device);
             }
         }
 
