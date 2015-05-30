@@ -65,6 +65,17 @@ class Track implements UriInterface
 
 
     /**
+     * Get the ID of this track.
+     *
+     * @return int
+     */
+    protected function getId()
+    {
+        return -1;
+    }
+
+
+    /**
      * Get the metadata xml for this track.
      *
      * @return string
@@ -81,7 +92,7 @@ class Track implements UriInterface
                 ],
                 "item"  =>  [
                     "_attributes"   =>  [
-                        "id"            =>  "-1",
+                        "id"            =>  $this->getId(),
                         "parentID"      =>  "-1",
                         "restricted"    =>  "true",
                     ],
