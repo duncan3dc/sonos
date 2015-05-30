@@ -19,6 +19,9 @@ Controllers:
     Queue: /controllers/queue/
     Streams: /controllers/streams/
 
+Services:
+    Radio: /services/radio/
+
 Fun Stuff:
     Announcements: /fun/announcements/
     Export/Restore: /fun/export-restore/

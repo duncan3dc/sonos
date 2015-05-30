@@ -5,6 +5,8 @@ namespace duncan3dc\Sonos;
 use Doctrine\Common\Cache\Cache;
 use Doctrine\Common\Cache\FilesystemCache;
 use duncan3dc\DomParser\XmlParser;
+use duncan3dc\Sonos\Services\Radio;
+use duncan3dc\Sonos\Tracks\Stream;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -512,6 +514,40 @@ class Network implements LoggerAwareInterface
                 return $alarm;
             }
         }
+    }
+
+
+    /**
+     * Get a Radio instance for the network.
+     *
+     * @return Radio
+     */
+    protected function getRadio()
+    {
+        $controller = $this->getController();
+        return new Radio($controller);
+    }
+
+
+    /**
+     * Get the favourite radio stations.
+     *
+     * @return Stream[]
+     */
+    public function getRadioStations()
+    {
+        return $this->getRadio()->getStations();
+    }
+
+
+    /**
+     * Get the favourite radio shows.
+     *
+     * @return Stream[]
+     */
+    public function getRadioShows()
+    {
+        return $this->getRadio()->getShows();
     }
 }
 

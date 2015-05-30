@@ -6,7 +6,7 @@ permalink: /fun/announcements/
 
 <p class="message-info">This feature was added in v1.2.0</p>
 
-The Sonos library supports making announcements utilising the Google [text to speech](../text-to-speech/) api.
+The Sonos library supports making announcements via [text to speech](../text-to-speech/) functionality.
 
 First you need to have a [SMB](https://en.wikipedia.org/wiki/Server_Message_Block) share available:
 

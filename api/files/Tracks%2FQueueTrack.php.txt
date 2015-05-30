@@ -11,9 +11,9 @@ use duncan3dc\Sonos\Controller;
 class QueueTrack extends Track
 {
     /**
-     * @var string $queueId The id of the track in the queue.
+     * @var int $queueId The id of the track in the queue.
      */
-    public $queueId = "";
+    public $queueId = -1;
 
     /**
      * Update the track properties using an xml element.
@@ -27,9 +27,20 @@ class QueueTrack extends Track
     {
         $track = parent::createFromXml($xml, $controller);
 
-        $track->queueId = $xml->getAttribute("id");
+        $track->queueId = (int) $xml->getAttribute("id");
 
         return $track;
+    }
+
+
+    /**
+     * Get the ID of this track.
+     *
+     * @return int
+     */
+    protected function getId()
+    {
+        return $this->queueId;
     }
 }
 

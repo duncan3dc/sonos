@@ -638,11 +638,13 @@ class Controller extends Speaker
     {
         $this->getQueue()->clear()->addTracks($state->tracks);
 
-        $this->selectTrack($state->track);
+        if (count($state->tracks) > 0) {
+            $this->selectTrack($state->track);
 
-        list($hours, $minutes, $seconds) = explode(":", $state->position);
-        $time = ((($hours * 60) + $minutes) * 60) + $seconds;
-        $this->seek($time);
+            list($hours, $minutes, $seconds) = explode(":", $state->position);
+            $time = ((($hours * 60) + $minutes) * 60) + $seconds;
+            $this->seek($time);
+        }
 
         $this->setShuffle($state->shuffle);
         $this->setRepeat($state->repeat);
