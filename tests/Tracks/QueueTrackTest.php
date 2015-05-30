@@ -9,7 +9,7 @@ use Mockery;
 class QueueTrackTest extends \PHPUnit_Framework_TestCase
 {
     protected $xml = <<<XML
-            <track id="345">
+            <track id="O:345">
                 <title>TITLE</title>
                 <creator>ARTIST</creator>
                 <album>ALBUM</album>
@@ -64,13 +64,13 @@ XML;
 
     public function testGetId()
     {
-        $this->assertSame(345, $this->track->queueId);
+        $this->assertSame("O:345", $this->track->queueId);
 
         $reflected = new \ReflectionClass($this->track);
         $method = $reflected->getMethod("getId");
         $method->setAccessible(true);
 
-        $this->assertSame(345, $method->invoke($this->track));
+        $this->assertSame("O:345", $method->invoke($this->track));
     }
 
 
@@ -81,7 +81,7 @@ XML;
             $xml .= 'xmlns:dc="http://purl.org/dc/elements/1.1/" ';
             $xml .= 'xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" ';
             $xml .= 'xmlns:r="urn:schemas-rinconnetworks-com:metadata-1-0/">';
-            $xml .= '<item id="345" parentID="-1" restricted="true">';
+            $xml .= '<item id="O:345" parentID="-1" restricted="true">';
                 $xml .= '<res></res>';
                 $xml .= '<upnp:albumArtURI></upnp:albumArtURI>';
                 $xml .= '<dc:title>TITLE</dc:title>';
