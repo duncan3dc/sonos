@@ -29,8 +29,4 @@ foreach ($shows as $show) {
 }
 ~~~
 
-If you want to deal with the `Radio` class directly you must inject a `Controller` instance:
-
-~~~php
-$radio = new Radio($sonos->getController());
-~~~
+Each of the above methods returns an array of [Stream](../../controllers/streams/) instances.

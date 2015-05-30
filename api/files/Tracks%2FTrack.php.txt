@@ -67,11 +67,11 @@ class Track implements UriInterface
     /**
      * Get the ID of this track.
      *
-     * @return int
+     * @return string
      */
     protected function getId()
     {
-        return -1;
+        return "-1";
     }
 
 

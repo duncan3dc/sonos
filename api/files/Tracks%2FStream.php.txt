@@ -14,15 +14,21 @@ class Stream implements UriInterface
      */
     protected $uri = "";
 
+    /**
+     * @var string $title The title of the stream.
+     */
+    protected $title = "";
+
 
     /**
      * Create a Stream object.
      *
      * @param string $uri The URI of the stream
      */
-    public function __construct($uri)
+    public function __construct($uri, $title = "")
     {
         $this->uri = (string) $uri;
+        $this->title = (string) $title;
     }
 
 
@@ -34,6 +40,17 @@ class Stream implements UriInterface
     public function getUri()
     {
         return $this->uri;
+    }
+
+
+    /**
+     * Get the title for this stream.
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 
 
@@ -58,7 +75,7 @@ class Stream implements UriInterface
                         "parentID"      =>  "-1",
                         "restricted"    =>  "true",
                     ],
-                    "dc:title"          =>  "Stream",
+                    "dc:title"          =>  $this->getTitle() ?: "Stream",
                     "upnp:class"        =>  "object.item.audioItem.audioBroadcast",
                     "desc"              =>  [
                         "_attributes"       =>  [
