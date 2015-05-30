@@ -2,8 +2,6 @@
 
 namespace duncan3dc\Sonos;
 
-use Psr\Log\LoggerInterface;
-
 /**
  * Represents an individual Sonos speaker, to allow volume, equalisation, and other settings to be managed.
  */
@@ -54,16 +52,15 @@ class Speaker
      * Create an instance of the Speaker class.
      *
      * @param Device|string $param An Device instance or the ip address that the speaker is listening on
-     * @param LoggerInterface $logger A logging object
      */
-    public function __construct($param, LoggerInterface $logger = null)
+    public function __construct($param)
     {
         if ($param instanceof Device) {
             $this->device = $param;
             $this->ip = $this->device->ip;
         } else {
             $this->ip = $param;
-            $this->device = new Device($this->ip, $logger);
+            $this->device = new Device($this->ip);
         }
 
         $parser = $this->device->getXml("/xml/device_description.xml");
