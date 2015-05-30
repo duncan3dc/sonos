@@ -26,12 +26,12 @@ $controller->useStream($stream)->play();
 ~~~
 
 
-`Stream` instances can also have a title, which can be retrieved using the `getTitle()` method:
+`Stream` instances can also have a name, which can be retrieved using the `getName()` method:
 
 ~~~php
 foreach ($sonos->getRadioStations() as $station) {
-    echo $station->getTitle() . "\n";
+    echo $station->getName() . "\n";
 }
 ~~~
 
-<p class="message-info">The getTitle() method was added in v1.3.0</p>
+<p class="message-info">The getName() method was added in v1.3.0</p>

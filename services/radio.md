@@ -7,26 +7,37 @@ api: Services.Radio
 
 <p class="message-info">This feature was added in v1.3.0</p>
 
-Radio streaming (provided by TuneIn) is supported using the `Radio` class, the funcionality is available on the `Network` class using the following methods...
+Radio streaming (provided by TuneIn) is supported using the `Radio` class, which can be created like so:
+
+~~~php
+$radio = $sonos->getRadio();
+~~~
+
+From the `Radio` class you can get [Stream](../../controllers/streams/) instances for a variety of entities.
 
 You can get your favourite stations:
 
 ~~~php
-$stations = $sonos->getRadioStations();
+$stations = $radio->getFavouriteStations();
 foreach ($stations as $station) {
-    $controller->useStream($station)->play();
-    break;
+    echo $station->getName() . "\n";
 }
 ~~~
 
 Or you favourite shows:
 
 ~~~php
-$shows = $sonos->getRadioShows();
+$shows = $radio->getFavouriteShows();
 foreach ($shows as $show) {
-    $controller->useStream($show)->play();
-    break;
+    echo $show->getName() . "\n";
 }
 ~~~
 
-Each of the above methods returns an array of [Stream](../../controllers/streams/) instances.
+You can get specific shows/stations by using their names:
+
+~~~php
+if ($show = $radio->getFavouriteShow("Rock Show with Daniel P Carter")) {
+    $controller->useStream($show)->play();
+}
+$station = $radio->getFavouriteStation("Radio 1");
+~~~
