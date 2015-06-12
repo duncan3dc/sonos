@@ -16,7 +16,7 @@
         "duncan3dc/domparser": "^1.3.2",
         "duncan3dc/speaker": "^0.2",
         "guzzlehttp/guzzle": "^5.2",
-        "psr/log": "*",
+        "psr/log": "1.0.0",
         "ext-soap": "*",
         "ext-sockets": "*",
         "php": ">=5.4.0"
