@@ -2,7 +2,10 @@
 
 namespace duncan3dc\Sonos\Test;
 
-use duncan3dc\Sonos\Network;
+use duncan3dc\Sonos\Alarm;
+use duncan3dc\Sonos\Controller;
+use duncan3dc\Sonos\Playlist;
+use duncan3dc\Sonos\Speaker;
 
 class NetworkLiveTest extends LiveTest
 {
@@ -10,21 +13,21 @@ class NetworkLiveTest extends LiveTest
     public function testGetSpeakers()
     {
         $result = $this->network->getSpeakers();
-        $this->assertContainsOnlyInstancesOf("duncan3dc\\Sonos\\Speaker", $result);
+        $this->assertContainsOnlyInstancesOf(Speaker::class, $result);
     }
 
 
     public function testGetController()
     {
         $result = $this->network->getController();
-        $this->assertInstanceOf("duncan3dc\\Sonos\\Controller", $result);
+        $this->assertInstanceOf(Controller::class, $result);
     }
 
 
     public function testGetSpeakerByRoom1()
     {
         $result = $this->network->getSpeakerByRoom("Kitchen");
-        $this->assertInstanceOf("duncan3dc\\Sonos\\Speaker", $result);
+        $this->assertInstanceOf(Speaker::class, $result);
     }
 
 
@@ -38,7 +41,7 @@ class NetworkLiveTest extends LiveTest
     public function testGetSpeakersByRoom1()
     {
         $result = $this->network->getSpeakersByRoom("Kitchen");
-        $this->assertContainsOnlyInstancesOf("duncan3dc\\Sonos\\Speaker", $result);
+        $this->assertContainsOnlyInstancesOf(Speaker::class, $result);
     }
 
 
@@ -52,14 +55,14 @@ class NetworkLiveTest extends LiveTest
     public function testGetControllers()
     {
         $result = $this->network->getControllers();
-        $this->assertContainsOnlyInstancesOf("duncan3dc\\Sonos\\Controller", $result);
+        $this->assertContainsOnlyInstancesOf(Controller::class, $result);
     }
 
 
     public function testGetControllerByRoom1()
     {
         $result = $this->network->getControllerByRoom("Kitchen");
-        $this->assertInstanceOf("duncan3dc\\Sonos\\Controller", $result);
+        $this->assertInstanceOf(Controller::class, $result);
     }
 
 
@@ -73,7 +76,7 @@ class NetworkLiveTest extends LiveTest
     public function testGetPlaylists()
     {
         $result = $this->network->getPlaylists();
-        $this->assertContainsOnlyInstancesOf("duncan3dc\\Sonos\\Playlist", $result);
+        $this->assertContainsOnlyInstancesOf(Playlist::class, $result);
     }
 
 
@@ -87,6 +90,6 @@ class NetworkLiveTest extends LiveTest
     public function testGetAlarms()
     {
         $result = $this->network->getAlarms();
-        $this->assertContainsOnlyInstancesOf("duncan3dc\\Sonos\\Alarm", $result);
+        $this->assertContainsOnlyInstancesOf(Alarm::class, $result);
     }
 }

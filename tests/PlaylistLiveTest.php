@@ -2,7 +2,7 @@
 
 namespace duncan3dc\Sonos\Test;
 
-use duncan3dc\Sonos\Network;
+use duncan3dc\Sonos\Tracks\QueueTrack;
 
 class PlaylistLiveTest extends LiveTest
 {
@@ -45,7 +45,7 @@ class PlaylistLiveTest extends LiveTest
         $this->assertSame(1, count($tracks));
 
         $track = $tracks[0];
-        $this->assertInstanceOf("duncan3dc\\Sonos\\Tracks\\QueueTrack", $track);
+        $this->assertInstanceOf(QueueTrack::class, $track);
         $this->assertSame($uri, $track->uri);
     }
 
@@ -62,7 +62,7 @@ class PlaylistLiveTest extends LiveTest
 
         $this->assertSame(2, count($tracks));
 
-        $this->assertContainsOnlyInstancesOf("duncan3dc\\Sonos\\Tracks\\QueueTrack", $tracks);
+        $this->assertContainsOnlyInstancesOf(QueueTrack::class, $tracks);
         foreach ($tracks as $key => $track) {
             $this->assertSame($uris[$key], $track->uri);
         }
@@ -83,7 +83,7 @@ class PlaylistLiveTest extends LiveTest
         $this->assertSame(1, count($tracks));
 
         $track = $tracks[0];
-        $this->assertInstanceOf("duncan3dc\\Sonos\\Tracks\\QueueTrack", $track);
+        $this->assertInstanceOf(QueueTrack::class, $track);
         $this->assertSame($uris[1], $track->uri);
     }
 
@@ -103,7 +103,7 @@ class PlaylistLiveTest extends LiveTest
 
         $this->assertSame(2, count($tracks));
 
-        $this->assertContainsOnlyInstancesOf("duncan3dc\\Sonos\\Tracks\\QueueTrack", $tracks);
+        $this->assertContainsOnlyInstancesOf(QueueTrack::class, $tracks);
         foreach ($tracks as $key => $track) {
             $this->assertSame($uris[$key], $track->uri);
         }
