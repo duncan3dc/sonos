@@ -5,6 +5,23 @@ Changelog
 
 --------
 
+## 1.4.0 - 2015-06-15
+
+### Added
+
+* [Streams] Allow the name/title of a stream to be retrieved.
+
+### Fixed
+
+* [Spotify] Enable metadata (artist, album, etc) to display correctly in some cases.
+
+### Changed
+
+* [Network] Cache the device descriptions and topology (these rarely change so the performance improvement is preferable).
+* [Support] Drop support for PHP 5.4, as it nears end-of-life and Guzzle 6 requires 5.5
+
+--------
+
 ## 1.3.1 - 2015-05-30
 
 ### Added
