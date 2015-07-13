@@ -52,7 +52,7 @@ class Network implements LoggerAwareInterface
      * @param LoggerInterface $logger The logging object
      * @param string $broadcastIp ip being used to send the broadcast to
      */
-    public function __construct(CacheInterface $cache = null, LoggerInterface $logger = null, $broadcastIp = null)
+    public function __construct(CacheInterface $cache = null, LoggerInterface $logger = null)
     {
         if ($cache === null) {
             $cache = new Cache;
@@ -63,11 +63,22 @@ class Network implements LoggerAwareInterface
             $logger = new NullLogger;
         }
         $this->logger = $logger;
-        if ($broadcastIp != null) {
-            $this->broadcastIp = $broadcastIp;
-        }
     }
 
+
+    /**
+     * Set the IP address being used for broadcasting
+     *
+     * @var string $broadcastIp ip of broadcast
+     *
+     * @return static
+     */
+    public function setBroadcastIp($broadcastIp)
+    {
+        $this->broadcastIp = $broadcastIp;
+
+        return $this;
+    }
 
     /**
      * Set the logger object to use.
