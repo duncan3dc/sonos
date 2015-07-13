@@ -40,12 +40,17 @@ class Network implements LoggerAwareInterface
      */
     protected $logger;
 
+    /**
+     * @var string $broadcastIp ip being used to send the broadcast to
+     */
+    protected $broadcastIp = '239.255.255.250';
 
     /**
      * Create a new instance.
      *
      * @param CacheInterface $cache The cache object to use for the expensive multicast discover to find Sonos devices on the network
      * @param LoggerInterface $logger The logging object
+     * @param string $broadcastIp ip being used to send the broadcast to
      */
     public function __construct(CacheInterface $cache = null, LoggerInterface $logger = null)
     {
@@ -60,6 +65,20 @@ class Network implements LoggerAwareInterface
         $this->logger = $logger;
     }
 
+
+    /**
+     * Set the IP address being used for broadcasting
+     *
+     * @var string $broadcastIp ip of broadcast
+     *
+     * @return static
+     */
+    public function setBroadcastIp($broadcastIp)
+    {
+        $this->broadcastIp = $broadcastIp;
+
+        return $this;
+    }
 
     /**
      * Set the logger object to use.
@@ -96,7 +115,7 @@ class Network implements LoggerAwareInterface
     {
         $this->logger->info("discovering devices...");
 
-        $ip = "239.255.255.250";
+        $ip = $this->broadcastIp;
         $port = 1900;
 
         $sock = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
