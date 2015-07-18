@@ -67,7 +67,7 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">128</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">129</span>
                                 </a>
                             </li>
                             <li>
@@ -105,6 +105,7 @@
                                                                                                     <li><a href="#Network.php"><i class="icon-file"></i> Network.php</a></li>
                                                                                                     <li><a href="#Tracks/TextToSpeech.php"><i class="icon-file"></i> Tracks/TextToSpeech.php</a></li>
                                                                                                     <li><a href="#Alarm.php"><i class="icon-file"></i> Alarm.php</a></li>
+                                                                                                    <li><a href="#Cache.php"><i class="icon-file"></i> Cache.php</a></li>
                                                                                                     <li><a href="#Services/Radio.php"><i class="icon-file"></i> Services/Radio.php</a></li>
                                                                                                     <li><a href="#Directory.php"><i class="icon-file"></i> Directory.php</a></li>
                                                                                                     <li><a href="#Speaker.php"><i class="icon-file"></i> Speaker.php</a></li>
@@ -115,7 +116,6 @@
                                                                                                     <li><a href="#Device.php"><i class="icon-file"></i> Device.php</a></li>
                                                                                                     <li><a href="#Helper.php"><i class="icon-file"></i> Helper.php</a></li>
                                                                                                     <li><a href="#State.php"><i class="icon-file"></i> State.php</a></li>
-                                                                                                    <li><a href="#Cache.php"><i class="icon-file"></i> Cache.php</a></li>
                                                                     </ul>
         </div>
 
@@ -351,7 +351,7 @@
                         <h3>
                             <i class="icon-file"></i>
                             Network.php
-                            <small style="float: right;padding-right: 10px;">12</small>
+                            <small style="float: right;padding-right: 10px;">13</small>
                         </h3>
                         <div>
                             <table class="table markers table-bordered">
@@ -370,57 +370,62 @@
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>50</td>
+                                        <td>54</td>
                                         <td>Argument $cache is missing from the Docblock of __construct</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>71</td>
+                                        <td>75</td>
                                         <td>Argument $logger is missing from the Docblock of setLogger</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>247</td>
-                                        <td>Argument $room is missing from the Docblock of getSpeakerByRoom</td>
+                                        <td>101</td>
+                                        <td>Argument $multicastAddress is missing from the Docblock of setMulticastAddress</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
                                         <td>265</td>
+                                        <td>Argument $room is missing from the Docblock of getSpeakerByRoom</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>283</td>
                                         <td>Argument $room is missing from the Docblock of getSpeakersByRoom</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>308</td>
+                                        <td>326</td>
                                         <td>Argument $room is missing from the Docblock of getControllerByRoom</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>332</td>
+                                        <td>350</td>
                                         <td>Argument $ip is missing from the Docblock of getControllerByIp</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>393</td>
+                                        <td>411</td>
                                         <td>Argument $name is missing from the Docblock of hasPlaylist</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>418</td>
+                                        <td>436</td>
                                         <td>Argument $name is missing from the Docblock of getPlaylistByName</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>445</td>
+                                        <td>463</td>
                                         <td>Argument $id is missing from the Docblock of getPlaylistById</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>463</td>
+                                        <td>481</td>
                                         <td>Argument $name is missing from the Docblock of createPlaylist</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>512</td>
+                                        <td>530</td>
                                         <td>Argument $id is missing from the Docblock of getAlarmById</td>
                                     </tr>
                                                             </tbody>
@@ -619,6 +624,37 @@
                                         <td>error</td>
                                         <td>587</td>
                                         <td>Argument $shuffle is missing from the Docblock of setShuffle</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Cache.php" id="Cache.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Cache.php
+                            <small style="float: right;padding-right: 10px;">2</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>16</td>
+                                        <td>No summary for method &quot;&quot;</td>
                                     </tr>
                                                             </tbody>
                             </table>
@@ -1134,37 +1170,6 @@
                             </table>
                         </div>
                                     </div>
-                            <div class="package-contents">
-                                            <a name="Cache.php" id="Cache.php"></a>
-                        <h3>
-                            <i class="icon-file"></i>
-                            Cache.php
-                            <small style="float: right;padding-right: 10px;">2</small>
-                        </h3>
-                        <div>
-                            <table class="table markers table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th>Line</th>
-                                    <th>Description</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>0</td>
-                                        <td>No summary was found for this file</td>
-                                    </tr>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>16</td>
-                                        <td>No summary for method &quot;&quot;</td>
-                                    </tr>
-                                                            </tbody>
-                            </table>
-                        </div>
-                                    </div>
                     </div>
     </section>
 
@@ -1205,7 +1210,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on May 30th, 2015 at 18:06.
+                    on July 18th, 2015 at 11:57.
                 </section>
             </section>
         </section>
