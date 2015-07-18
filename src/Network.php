@@ -41,16 +41,15 @@ class Network implements LoggerAwareInterface
     protected $logger;
 
     /**
-     * @var string $broadcastIp ip being used to send the broadcast to
+     * @var string $multicastAddress The multicast address to use for SSDP discovery.
      */
-    protected $broadcastIp = '239.255.255.250';
+    protected $multicastAddress = "239.255.255.250";
 
     /**
      * Create a new instance.
      *
      * @param CacheInterface $cache The cache object to use for the expensive multicast discover to find Sonos devices on the network
      * @param LoggerInterface $logger The logging object
-     * @param string $broadcastIp ip being used to send the broadcast to
      */
     public function __construct(CacheInterface $cache = null, LoggerInterface $logger = null)
     {
@@ -65,20 +64,6 @@ class Network implements LoggerAwareInterface
         $this->logger = $logger;
     }
 
-
-    /**
-     * Set the IP address being used for broadcasting
-     *
-     * @var string $broadcastIp ip of broadcast
-     *
-     * @return static
-     */
-    public function setBroadcastIp($broadcastIp)
-    {
-        $this->broadcastIp = $broadcastIp;
-
-        return $this;
-    }
 
     /**
      * Set the logger object to use.
@@ -107,6 +92,21 @@ class Network implements LoggerAwareInterface
 
 
     /**
+     * Set the multicast address to use for SSDP discovery.
+     *
+     * @var string $multicastAddress The address to use
+     *
+     * @return static
+     */
+    public function setMulticastAddress($multicastAddress)
+    {
+        $this->multicastAddress = $multicastAddress;
+
+        return $this;
+    }
+
+
+    /**
      * Get all the devices on the current network.
      *
      * @return string[] An array of ip addresses
@@ -115,21 +115,20 @@ class Network implements LoggerAwareInterface
     {
         $this->logger->info("discovering devices...");
 
-        $ip = $this->broadcastIp;
         $port = 1900;
 
         $sock = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
         socket_set_option($sock, getprotobyname("ip"), IP_MULTICAST_TTL, 2);
 
         $data = "M-SEARCH * HTTP/1.1\r\n";
-        $data .= "HOST: " . $ip . ":reservedSSDPport\r\n";
+        $data .= "HOST: {$this->multicastAddress}:reservedSSDPport\r\n";
         $data .= "MAN: ssdp:discover\r\n";
         $data .= "MX: 1\r\n";
         $data .= "ST: urn:schemas-upnp-org:device:ZonePlayer:1\r\n";
 
         $this->logger->debug($data);
 
-        socket_sendto($sock, $data, strlen($data), null, $ip, $port);
+        socket_sendto($sock, $data, strlen($data), null, $this->multicastAddress, $port);
 
         $read = [$sock];
         $write = [];
