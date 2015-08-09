@@ -6,8 +6,6 @@ php:
   - 7.0
   - hhvm
 
-sudo: false
-
 env:
   - COMPOSER_OPTS=""
   - COMPOSER_OPTS="--prefer-lowest"
@@ -17,7 +15,7 @@ install:
   - composer update $COMPOSER_OPTS
 
 script:
-  - phpunit
+  - ./vendor/bin/phpunit
   - ./tests/lint.sh
 
 git:
