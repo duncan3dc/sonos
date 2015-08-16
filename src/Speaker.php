@@ -90,6 +90,25 @@ class Speaker
 
 
     /**
+     * Set the topology of this speaker.
+     *
+     * @param array $topology The topology attributes as key/value pairs
+     *
+     * @return static
+     */
+    public function setTopology(array $topology)
+    {
+        $this->topology = true;
+
+        $this->group = $topology["group"];
+        $this->coordinator = ($topology["coordinator"] === "true");
+        $this->uuid = $topology["uuid"];
+
+        return $this;
+    }
+
+
+    /**
      * Get the attributes needed for the classes instance variables.
      *
      * _This method is intended for internal use only_.
@@ -109,10 +128,7 @@ class Speaker
             $ip = parse_url($attributes["location"])["host"];
 
             if ($ip === $this->ip) {
-                $this->topology = true;
-                $this->group = $attributes["group"];
-                $this->coordinator = ($attributes["coordinator"] === "true");
-                $this->uuid = $attributes["uuid"];
+                $this->setTopology($attributes);
                 return;
             }
         }

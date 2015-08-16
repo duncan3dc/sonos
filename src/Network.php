@@ -6,6 +6,7 @@ use Doctrine\Common\Cache\Cache as CacheInterface;
 use duncan3dc\DomParser\XmlParser;
 use duncan3dc\Sonos\Services\Radio;
 use duncan3dc\Sonos\Tracks\Stream;
+use GuzzleHttp\Client;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -214,15 +215,39 @@ class Network implements LoggerAwareInterface
             throw new \Exception("No devices found on the current network");
         }
 
-        $speakers = [];
-        foreach ($devices as $ip) {
-            $device = new Device($ip, $this->cache, $this->logger);
-            if ($device->isSpeaker()) {
-                $speakers[$ip] = new Speaker($device);
-            }
+        # Get the topology information from 1 speaker
+        $topology = [];
+        $ip = reset($devices);
+        $uri = "http://{$ip}:1400/status/topology";
+        $this->logger->notice("Getting topology info from: {$uri}");
+        $xml = (string) (new Client)->get($uri)->getBody();
+        $players = (new XmlParser($xml))->getTag("ZonePlayers")->getTags("ZonePlayer");
+        foreach ($players as $player) {
+            $attributes = $player->getAttributes();
+            $ip = parse_url($attributes["location"])["host"];
+            $topology[$ip] = $attributes;
         }
 
-        return $this->speakers = $speakers;
+        $this->speakers = [];
+        foreach ($devices as $ip) {
+            $device = new Device($ip, $this->cache, $this->logger);
+
+            if (!$device->isSpeaker()) {
+                continue;
+            }
+
+            $speaker = new Speaker($device);
+
+            if (!isset($topology[$ip])) {
+                throw new \RuntimeException("Failed to lookup the topology info for this speaker");
+            }
+
+            $speaker->setTopology($topology[$ip]);
+
+            $this->speakers[$ip] = $speaker;
+        }
+
+        return $this->speakers;
     }
 
 
