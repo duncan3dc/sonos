@@ -212,7 +212,7 @@ class Network implements LoggerAwareInterface
         }
 
         if (count($devices) < 1) {
-            throw new \Exception("No devices found on the current network");
+            throw new \RuntimeException("No devices found on the current network");
         }
 
         # Get the topology information from 1 speaker
@@ -376,7 +376,7 @@ class Network implements LoggerAwareInterface
     {
         $speakers = $this->getSpeakers();
         if (!array_key_exists($ip, $speakers)) {
-            throw new \InvalidArgumentException("No speaker found for the IP address '" . $ip . "'");
+            throw new \InvalidArgumentException("No speaker found for the IP address '{$ip}'");
         }
 
         $group = $speakers[$ip]->getGroup();

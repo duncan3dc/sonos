@@ -28,6 +28,11 @@ class Speaker
     public $room;
 
     /**
+     * @var string $uuid The unique id of this speaker.
+     */
+    protected $uuid;
+
+    /**
      * @var string $group The group id this speaker is a part of.
      */
     protected $group;
@@ -36,11 +41,6 @@ class Speaker
      * @var bool $coordinator Whether this speaker is the coordinator of it's current group.
      */
     protected $coordinator;
-
-    /**
-     * @var string $uuid The unique id of this speaker.
-     */
-    protected $uuid;
 
     /**
      * @var bool $topology A flag to indicate whether we have gathered the topology for this speaker or not.
@@ -133,7 +133,7 @@ class Speaker
             }
         }
 
-        throw new \Exception("Failed to lookup the topology info for this speaker");
+        throw new \RuntimeException("Failed to lookup the topology info for this speaker");
     }
 
 

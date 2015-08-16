@@ -75,7 +75,7 @@ class Queue implements \Countable
     protected function browse($type, $start = 0, $limit = 1)
     {
         return $this->soap("ContentDirectory", "Browse", [
-            "BrowseFlag"        =>  "Browse" . $type,
+            "BrowseFlag"        =>  "Browse{$type}",
             "StartingIndex"     =>  $start,
             "RequestedCount"    =>  $limit,
             "Filter"            =>  "",

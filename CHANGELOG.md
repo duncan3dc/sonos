@@ -5,6 +5,14 @@ Changelog
 
 --------
 
+## 1.4.2 - 2015-08-16
+
+### Changed
+
+* [Network] Imrpove the topology caching as these change fairly frequently.
+
+--------
+
 ## 1.4.0 - 2015-06-15
 
 ### Added

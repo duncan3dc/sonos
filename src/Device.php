@@ -24,7 +24,7 @@ class Device
     protected $model;
 
     /**
-     * @var CacheInterface $cache The cache object to use for the expensive multicast discover to find Sonos devices on the network.
+     * @var CacheInterface $cache The long-lived cache object from the Network instance.
      */
     protected $cache;
 

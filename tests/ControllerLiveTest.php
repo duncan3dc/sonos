@@ -3,7 +3,8 @@
 namespace duncan3dc\Sonos\Test;
 
 use duncan3dc\Sonos\Controller;
-use duncan3dc\Sonos\Network;
+use duncan3dc\Sonos\Queue;
+use duncan3dc\Sonos\Speaker;
 
 class ControllerLiveTest extends LiveTest
 {
