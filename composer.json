@@ -28,7 +28,7 @@
     "autoload": {
         "psr-4": {
             "duncan3dc\\Sonos\\": "src/",
-            "duncan3dc\\Sonos\\Test\\": "tests/"
+            "duncan3dc\\SonosTests\\": "tests/"
         }
     }
 }

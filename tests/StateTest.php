@@ -1,10 +1,10 @@
 <?php
 
-namespace duncan3dc\Sonos\Test;
+namespace duncan3dc\SonosTests;
 
 use duncan3dc\DomParser\XmlParser;
 use duncan3dc\Sonos\State;
-use duncan3dc\Sonos\Test\Tracks\TrackTest;
+use duncan3dc\SonosTests\Tracks\TrackTest;
 use Mockery;
 
 class StateTest extends TrackTest

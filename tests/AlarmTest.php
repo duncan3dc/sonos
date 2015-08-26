@@ -1,6 +1,6 @@
 <?php
 
-namespace duncan3dc\Sonos\Test;
+namespace duncan3dc\SonosTests;
 
 use duncan3dc\DomParser\XmlElement;
 use duncan3dc\Sonos\Alarm;

@@ -1,6 +1,6 @@
 <?php
 
-namespace duncan3dc\Sonos\Test\Tracks;
+namespace duncan3dc\SonosTests\Tracks;
 
 use duncan3dc\DomParser\XmlParser;
 use duncan3dc\Sonos\Tracks\QueueTrack;

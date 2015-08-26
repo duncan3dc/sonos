@@ -1,6 +1,6 @@
 <?php
 
-namespace duncan3dc\Sonos\Test;
+namespace duncan3dc\SonosTests;
 
 use Mockery;
 
