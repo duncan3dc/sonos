@@ -42,9 +42,6 @@ class TextToSpeech implements UriInterface
      */
     public function __construct($text, Directory $directory, ProviderInterface $provider = null)
     {
-        if (!is_dir($directory->getFilesystemPath())) {
-            throw new \InvalidArgumentException("Invalid directory: " . $directory->getFilesystemPath());
-        }
         if (strlen($text) > 100) {
             throw new \InvalidArgumentException("Only messages under 100 characters are supported");
         }
@@ -95,19 +92,17 @@ class TextToSpeech implements UriInterface
     /**
      * Get the URI for this message.
      *
-     * If it doesn't already exist on the filesystem then the google api will be called.
+     * If it doesn't already exist on the filesystem then the text-to-speech handler will be called.
      *
      * @return string
      */
     public function getUri()
     {
-        $path = $this->directory->getFilesystemPath() . "/{$this->filename}";
-
-        if (!file_exists($path)) {
+        if (!$this->directory->has($this->filename)) {
             $provider = $this->getProvider();
             $tts = new TextToSpeechHandler($this->text, $provider);
             $mp3 = $tts->getAudioData();
-            File::putContents($path, $mp3);
+            $this->directory->write($this->filename, $mp3);
         }
 
         return "x-file-cifs://" . $this->directory->getSharePath() . "/{$this->filename}";
