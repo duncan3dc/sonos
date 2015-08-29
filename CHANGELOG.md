@@ -5,11 +5,18 @@ Changelog
 
 --------
 
+### Changed
+
+* [Tracks] Use league/flysystem to allow access to SMB shares from other machines.
+* [Queues] Improve efficiency of adding tracks by adding up to 16 tracks at once.
+
+--------
+
 ## 1.4.2 - 2015-08-16
 
 ### Changed
 
-* [Network] Imrpove the topology caching as these change fairly frequently.
+* [Network] Improve the topology caching as these change fairly frequently.
 
 --------
 
