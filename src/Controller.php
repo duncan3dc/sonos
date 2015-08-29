@@ -636,7 +636,11 @@ class Controller extends Speaker
      */
     public function restoreState(ControllerState $state)
     {
-        $this->getQueue()->clear()->addTracks($state->tracks);
+        $queue = $this->getQueue();
+        $queue->clear();
+        if (count($state->tracks) > 0) {
+            $queue()->addTracks($state->tracks);
+        }
 
         if (count($state->tracks) > 0) {
             $this->selectTrack($state->track);
