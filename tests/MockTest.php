@@ -20,7 +20,9 @@ abstract class MockTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->network = new Network;
+        $this->network = Mockery::mock(Network::class);
+
+        $this->network->shouldReceive("getSpeakers")->andReturn([]);
     }
 
     protected function getDevice()
