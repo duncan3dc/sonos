@@ -2,6 +2,7 @@
 
 namespace duncan3dc\SonosTests;
 
+use duncan3dc\Sonos\ControllerState;
 use Mockery;
 
 class ControllerTest extends MockTest
@@ -115,5 +116,64 @@ class ControllerTest extends MockTest
         ]);
 
         $this->assertSame($controller, $controller->seek(0));
+    }
+
+
+    public function testRestoreState()
+    {
+        $device = $this->getDevice();
+        $controller = $this->getController($device);
+
+        $state = Mockery::mock(ControllerState::class);
+        $state->speakers = [];
+        $state->tracks = [];
+
+        $device->shouldReceive("soap")->once()->with("AVTransport", "RemoveAllTracksFromQueue", ["ObjectID" => "Q:0"]);
+        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", []);
+        $device->shouldReceive("soap")->once()->with("AVTransport", "SetCrossfadeMode", ["CrossfadeMode" => false]);
+
+        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportInfo", []);
+        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", []);
+
+        $controller->restoreState($state);
+    }
+
+
+    public function testRestoreStateWithTracks()
+    {
+        $device = $this->getDevice();
+        $controller = $this->getController($device);
+
+        $state = Mockery::mock(ControllerState::class);
+        $state->speakers = [];
+        $state->tracks = ["track"];
+        $state->position = "05:03:01";
+
+        $device->shouldReceive("soap")->once()->with("AVTransport", "RemoveAllTracksFromQueue", ["ObjectID" => "Q:0"]);
+        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", []);
+        $device->shouldReceive("soap")->once()->with("AVTransport", "SetCrossfadeMode", ["CrossfadeMode" => false]);
+
+        $device->shouldReceive("soap")->once()->with("ContentDirectory", "Browse", [
+            "BrowseFlag"        =>  "BrowseDirectChildren",
+            "StartingIndex"     =>  0,
+            "RequestedCount"    =>  1,
+            "Filter"            =>  "",
+            "SortCriteria"      =>  "",
+            "ObjectID"          =>  "Q:0",
+        ]);
+        $device->shouldReceive("soap")->once()->with("AVTransport", "AddMultipleURIsToQueue", Mockery::any());
+        $device->shouldReceive("soap")->once()->with("AVTransport", "Seek", [
+            "Unit"      =>  "TRACK_NR",
+            "Target"    =>  1,
+        ]);
+        $device->shouldReceive("soap")->once()->with("AVTransport", "Seek", [
+            "Unit"      =>  "REL_TIME",
+            "Target"    =>  "05:03:01",
+        ]);
+
+        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportInfo", []);
+        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", []);
+
+        $controller->restoreState($state);
     }
 }
