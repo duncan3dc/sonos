@@ -639,7 +639,7 @@ class Controller extends Speaker
         $queue = $this->getQueue();
         $queue->clear();
         if (count($state->tracks) > 0) {
-            $queue()->addTracks($state->tracks);
+            $queue->addTracks($state->tracks);
         }
 
         if (count($state->tracks) > 0) {
