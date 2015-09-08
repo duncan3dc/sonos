@@ -2,6 +2,8 @@
 
 namespace duncan3dc\Sonos;
 
+use duncan3dc\DomParser\XmlWriter;
+
 /**
  * Provides helper functions for the classes.
  */
@@ -54,5 +56,41 @@ class Helper
         }
 
         return "NORMAL";
+    }
+
+
+    /**
+     * Create the xml metadata required by Sonos.
+     *
+     * @param string $id The ID of the track
+     * @param string $parent The ID of the parent
+     * @param array $extra An xml array of extra attributes for this item
+     *
+     * @return string
+     */
+    public static function createMetaDataXml($id, $parent = "-1", array $extra = [])
+    {
+        $xml = XmlWriter::createXml([
+            "DIDL-Lite" =>  [
+                "_attributes"   =>  [
+                    "xmlns:dc"      =>  "http://purl.org/dc/elements/1.1/",
+                    "xmlns:upnp"    =>  "urn:schemas-upnp-org:metadata-1-0/upnp/",
+                    "xmlns:r"       =>  "urn:schemas-rinconnetworks-com:metadata-1-0/",
+                    "xmlns"         =>  "urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/",
+                ],
+                "item"  =>  array_merge([
+                    "_attributes"   =>  [
+                        "id"            =>  $id,
+                        "parentID"      =>  $parent,
+                        "restricted"    =>  "true",
+                    ],
+                ], $extra),
+            ],
+        ]);
+
+        # Get rid of the xml header as only the DIDL-Lite element is required
+        $metadata = explode("\n", $xml)[1];
+
+        return $metadata;
     }
 }

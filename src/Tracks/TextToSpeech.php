@@ -2,9 +2,8 @@
 
 namespace duncan3dc\Sonos\Tracks;
 
-use duncan3dc\DomParser\XmlWriter;
-use duncan3dc\Helpers\File;
 use duncan3dc\Sonos\Directory;
+use duncan3dc\Sonos\Helper;
 use duncan3dc\Speaker\Providers\GoogleProvider;
 use duncan3dc\Speaker\Providers\ProviderInterface;
 use duncan3dc\Speaker\TextToSpeech as TextToSpeechHandler;
@@ -116,33 +115,13 @@ class TextToSpeech implements UriInterface
      */
     public function getMetaData()
     {
-        $xml = XmlWriter::createXml([
-            "DIDL-Lite" =>  [
-                "_attributes"   =>  [
-                    "xmlns:dc"      =>  "http://purl.org/dc/elements/1.1/",
-                    "xmlns:upnp"    =>  "urn:schemas-upnp-org:metadata-1-0/upnp/",
-                    "xmlns:r"       =>  "urn:schemas-rinconnetworks-com:metadata-1-0/",
-                    "xmlns"         =>  "urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/",
-                ],
-                "item"  =>  [
-                    "_attributes"   =>  [
-                        "id"            =>  "-1",
-                        "parentID"      =>  "-1",
-                        "restricted"    =>  "true",
-                    ],
-                    "res"               =>  $this->getUri(),
-                    "upnp:albumArtURI"  =>  "",
-                    "dc:title"          =>  $this->text,
-                    "upnp:class"        =>  "object.item.audioItem.musicTrack",
-                    "dc:creator"        =>  "Google",
-                    "upnp:album"        =>  "Text To Speech",
-                ],
-            ]
+        return Helper::createMetaDataXml("-1", "-1", [
+            "res"               =>  $this->getUri(),
+            "upnp:albumArtURI"  =>  "",
+            "dc:title"          =>  $this->text,
+            "upnp:class"        =>  "object.item.audioItem.musicTrack",
+            "dc:creator"        =>  "Google",
+            "upnp:album"        =>  "Text To Speech",
         ]);
-
-        # Get rid of the xml header as only the DIDL-Lite element is required
-        $meta = explode("\n", $xml)[1];
-
-        return $meta;
     }
 }
