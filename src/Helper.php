@@ -9,6 +9,8 @@ use duncan3dc\DomParser\XmlWriter;
  */
 class Helper
 {
+    const TRACK_HASH = "00032020";
+    const ALBUM_HASH = "0004206c";
 
     /**
      * Create a mode array from the mode text value.
