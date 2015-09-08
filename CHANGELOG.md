@@ -5,6 +5,16 @@ Changelog
 
 --------
 
+## 1.5.1 - 2015-09-08
+
+### Added
+
+* [Network] Add support for the ZP80 ZonePlayer device.
+
+--------
+
+## 1.5.0 - 2015-08-29
+
 ### Changed
 
 * [Tracks] Use league/flysystem to allow access to SMB shares from other machines.
