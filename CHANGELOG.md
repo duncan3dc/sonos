@@ -5,6 +5,22 @@ Changelog
 
 --------
 
+## 1.6.0 - 2015-09-09
+
+### Added
+
+* [Tracks] Created Spotify/Deezer tracks to handle their specific metadata.
+
+### Fixed
+
+* [Tracks] The album art now only prepends a host if it is missing one
+
+### Removed
+
+* [Tracks] The QueueTrack has been merged with the Track class.
+
+--------
+
 ## 1.5.1 - 2015-09-08
 
 ### Added
