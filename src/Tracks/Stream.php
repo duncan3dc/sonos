@@ -2,6 +2,8 @@
 
 namespace duncan3dc\Sonos\Tracks;
 
+use duncan3dc\DomParser\XmlElement;
+use duncan3dc\Sonos\Controller;
 use duncan3dc\Sonos\Helper;
 
 /**
@@ -84,5 +86,19 @@ class Stream implements UriInterface
                 "_value"            =>  "SA_RINCON65031_",
             ],
         ]);
+    }
+
+
+    /**
+     * Create a stream from an xml element.
+     *
+     * @param XmlElement $xml The xml element representing the track meta data
+     * @param Controller $controller A controller instance to communicate with
+     *
+     * @return static
+     */
+    public static function createFromXml(XmlElement $xml, Controller $controller)
+    {
+        return new static($xml->getTag("res"));
     }
 }

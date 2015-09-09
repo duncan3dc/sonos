@@ -137,7 +137,7 @@ class Controller extends Speaker
         }
 
         $parser = new XmlParser($data["TrackMetaData"]);
-        $state = State::createFromXml($parser, $this);
+        $state = State::createFromXml($parser->getTag("item"), $this);
 
         if ((string) $parser->getTag("streamContent")) {
             $info = $this->getMediaInfo();

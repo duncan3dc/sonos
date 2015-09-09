@@ -4,6 +4,7 @@ namespace duncan3dc\Sonos;
 
 use duncan3dc\DomParser\XmlParser;
 use duncan3dc\Sonos\Tracks\Track;
+use duncan3dc\Sonos\Tracks\Factory as TrackFactory;
 use duncan3dc\Sonos\Tracks\UriInterface;
 
 /**
@@ -26,6 +27,11 @@ class Queue implements \Countable
      */
     protected $controller;
 
+    /**
+     * @var TrackFactory $trackFactory A factory to create tracks from.
+     */
+    protected $trackFactory;
+
 
     /**
      * Create an instance of the Queue class.
@@ -37,6 +43,7 @@ class Queue implements \Countable
         $this->id = "Q:0";
         $this->updateId = 0;
         $this->controller = $controller;
+        $this->trackFactory = new TrackFactory($this->controller);
     }
 
 
@@ -132,7 +139,7 @@ class Queue implements \Countable
             $data = $this->browse("DirectChildren", $start, $limit);
             $parser = new XmlParser($data["Result"]);
             foreach ($parser->getTags("item") as $item) {
-                $tracks[] = Track::createFromXml($item, $this->controller);
+                $tracks[] = $this->trackFactory->createFromXml($item);
                 if ($total > 0 && count($tracks) >= $total) {
                     return $tracks;
                 }
@@ -245,7 +252,7 @@ class Queue implements \Countable
         foreach ($tracks as &$track) {
             # If a simple uri has been passed then convert it to a Track instance
             if (is_string($track)) {
-                $track = new Track($track);
+                $track = $this->trackFactory->createFromUri($track);
             }
 
             if (!$track instanceof UriInterface) {
