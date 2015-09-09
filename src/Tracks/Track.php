@@ -129,7 +129,11 @@ class Track implements UriInterface
         $track->number = (int) $number;
 
         if ($art = (string) $xml->getTag("albumArtURI")) {
-            $track->albumArt = sprintf("http://%s:1400%s", $controller->ip, $art);
+            if (substr($art, 0, 4) !== "http") {
+                $art = ltrim($art, "/");
+                $art = sprintf("http://%s:1400/%s", $controller->ip, $art);
+            }
+            $track->albumArt = $art;
         }
 
         if ($xml->hasAttribute("id")) {
