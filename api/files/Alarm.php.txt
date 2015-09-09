@@ -221,7 +221,7 @@ class Alarm
             $data = "ON_56";
         }
         if (!preg_match("/^ON_([0-9]+)$/", $data, $matches)) {
-            throw new \RuntimeException("Unrecognised frequency for alarm (" . $data . "), please report this issue at github.com/duncan3dc/sonos/issues");
+            throw new \RuntimeException("Unrecognised frequency for alarm ({$data}), please report this issue at github.com/duncan3dc/sonos/issues");
         }
 
         $data = $matches[1];

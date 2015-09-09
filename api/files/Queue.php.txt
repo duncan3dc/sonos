@@ -3,8 +3,8 @@
 namespace duncan3dc\Sonos;
 
 use duncan3dc\DomParser\XmlParser;
-use duncan3dc\Sonos\Tracks\QueueTrack;
 use duncan3dc\Sonos\Tracks\Track;
+use duncan3dc\Sonos\Tracks\Factory as TrackFactory;
 use duncan3dc\Sonos\Tracks\UriInterface;
 
 /**
@@ -27,6 +27,11 @@ class Queue implements \Countable
      */
     protected $controller;
 
+    /**
+     * @var TrackFactory $trackFactory A factory to create tracks from.
+     */
+    protected $trackFactory;
+
 
     /**
      * Create an instance of the Queue class.
@@ -38,6 +43,7 @@ class Queue implements \Countable
         $this->id = "Q:0";
         $this->updateId = 0;
         $this->controller = $controller;
+        $this->trackFactory = new TrackFactory($this->controller);
     }
 
 
@@ -75,7 +81,7 @@ class Queue implements \Countable
     protected function browse($type, $start = 0, $limit = 1)
     {
         return $this->soap("ContentDirectory", "Browse", [
-            "BrowseFlag"        =>  "Browse" . $type,
+            "BrowseFlag"        =>  "Browse{$type}",
             "StartingIndex"     =>  $start,
             "RequestedCount"    =>  $limit,
             "Filter"            =>  "",
@@ -117,7 +123,7 @@ class Queue implements \Countable
      * @param int $start The zero-based position in the queue to start from
      * @param int $total The maximum number of tracks to return
      *
-     * @return QueueTrack[]
+     * @return Track[]
      */
     public function getTracks($start = 0, $total = 0)
     {
@@ -133,7 +139,7 @@ class Queue implements \Countable
             $data = $this->browse("DirectChildren", $start, $limit);
             $parser = new XmlParser($data["Result"]);
             foreach ($parser->getTags("item") as $item) {
-                $tracks[] = QueueTrack::createFromXml($item, $this->controller);
+                $tracks[] = $this->trackFactory->createFromXml($item);
                 if ($total > 0 && count($tracks) >= $total) {
                     return $tracks;
                 }
@@ -162,29 +168,60 @@ class Queue implements \Countable
 
 
     /**
-     * Add a uri to the queue.
+     * Add multiple uris to the queue.
      *
-     * @param UriInterface $track The track to add
+     * @param UriInterface[] $tracks The track to add
      * @param int $position The position to insert the track in the queue (zero-based), by default the track will be added to the end of the queue
      *
      * @return bool
      */
-    protected function addUri(UriInterface $track, $position = null)
+    protected function addUris(array $tracks, $position = null)
     {
         if ($position === null) {
             $position = $this->getNextPosition();
         }
 
-        $data = $this->soap("AVTransport", "AddURIToQueue", [
-            "UpdateID"                          =>  $this->updateId,
-            "EnqueuedURI"                       =>  $track->getUri(),
-            "EnqueuedURIMetaData"               =>  $track->getMetaData(),
-            "DesiredFirstTrackNumberEnqueued"   =>  $position,
-            "EnqueueAsNext"                     =>  0,
-        ]);
-        $this->updateId++;
+        /**
+         * It seems like adding over 16 tracks at once causes the request to fail with error 402.
+         * I guess at this point Sonos decides it's more efficient to lookup the contents
+         * by their container, and the call fails because we don't have a container for these tracks.
+         */
+        $chunks = array_chunk($tracks, 16);
 
-        return ($data["NumTracksAdded"] == 1);
+        foreach ($chunks as $chunk) {
+            $uris = "";
+            $metaData = "";
+            $first = true;
+            foreach ($chunk as $track) {
+                if ($first) {
+                    $first = false;
+                } else {
+                    $uris .= " ";
+                    $metaData .= " ";
+                }
+
+                $uris .= $track->getUri();
+                $metaData .= $track->getMetaData();
+            }
+
+            $numberOfTracks = count($chunk);
+
+            $data = $this->soap("AVTransport", "AddMultipleURIsToQueue", [
+                "UpdateID"                          =>  0,
+                "NumberOfURIs"                      =>  $numberOfTracks,
+                "EnqueuedURIs"                      =>  $uris,
+                "EnqueuedURIsMetaData"              =>  $metaData,
+                "DesiredFirstTrackNumberEnqueued"   =>  $position,
+                "EnqueueAsNext"                     =>  0,
+            ]);
+            $position += $numberOfTracks;
+
+            if ($data["NumTracksAdded"] != $numberOfTracks) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
 
@@ -212,29 +249,19 @@ class Queue implements \Countable
      */
     public function addTracks(array $tracks, $position = null)
     {
-        if ($position === null) {
-            $position = $this->getNextPosition();
-        }
-
-        # Ensure the update id is set to begin with
-        $this->getUpdateID();
-
-        foreach ($tracks as $track) {
-
+        foreach ($tracks as &$track) {
             # If a simple uri has been passed then convert it to a Track instance
             if (is_string($track)) {
-                $track = new Track($track);
+                $track = $this->trackFactory->createFromUri($track);
             }
 
             if (!$track instanceof UriInterface) {
                 throw new \InvalidArgumentException("The addTracks() array must contain either string URIs or objects that implement \duncan3dc\Sonos\Tracks\UriInterface");
             }
-
-            if (!$this->addUri($track, $position++)) {
-                return false;
-            }
         }
-        return true;
+        unset($track);
+
+        return $this->addUris($tracks, $position);
     }
 
 

@@ -6,6 +6,7 @@ use Doctrine\Common\Cache\Cache as CacheInterface;
 use duncan3dc\DomParser\XmlParser;
 use duncan3dc\Sonos\Services\Radio;
 use duncan3dc\Sonos\Tracks\Stream;
+use GuzzleHttp\Client;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -211,18 +212,42 @@ class Network implements LoggerAwareInterface
         }
 
         if (count($devices) < 1) {
-            throw new \Exception("No devices found on the current network");
+            throw new \RuntimeException("No devices found on the current network");
         }
 
-        $speakers = [];
+        # Get the topology information from 1 speaker
+        $topology = [];
+        $ip = reset($devices);
+        $uri = "http://{$ip}:1400/status/topology";
+        $this->logger->notice("Getting topology info from: {$uri}");
+        $xml = (string) (new Client)->get($uri)->getBody();
+        $players = (new XmlParser($xml))->getTag("ZonePlayers")->getTags("ZonePlayer");
+        foreach ($players as $player) {
+            $attributes = $player->getAttributes();
+            $ip = parse_url($attributes["location"])["host"];
+            $topology[$ip] = $attributes;
+        }
+
+        $this->speakers = [];
         foreach ($devices as $ip) {
             $device = new Device($ip, $this->cache, $this->logger);
-            if ($device->isSpeaker()) {
-                $speakers[$ip] = new Speaker($device);
+
+            if (!$device->isSpeaker()) {
+                continue;
             }
+
+            $speaker = new Speaker($device);
+
+            if (!isset($topology[$ip])) {
+                throw new \RuntimeException("Failed to lookup the topology info for this speaker");
+            }
+
+            $speaker->setTopology($topology[$ip]);
+
+            $this->speakers[$ip] = $speaker;
         }
 
-        return $this->speakers = $speakers;
+        return $this->speakers;
     }
 
 
@@ -351,7 +376,7 @@ class Network implements LoggerAwareInterface
     {
         $speakers = $this->getSpeakers();
         if (!array_key_exists($ip, $speakers)) {
-            throw new \InvalidArgumentException("No speaker found for the IP address '" . $ip . "'");
+            throw new \InvalidArgumentException("No speaker found for the IP address '{$ip}'");
         }
 
         $group = $speakers[$ip]->getGroup();
@@ -525,7 +550,7 @@ class Network implements LoggerAwareInterface
     /**
      * Get alarms for the specified id.
      *
-     * @return Alarm
+     * @return Alarm|null
      */
     public function getAlarmById($id)
     {

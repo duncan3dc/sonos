@@ -21,6 +21,8 @@ Controllers:
 
 Services:
     Radio: /services/radio/
+    Spotify: /services/spotify/
+    Deezer: /services/deezer/
 
 Fun Stuff:
     Announcements: /fun/announcements/

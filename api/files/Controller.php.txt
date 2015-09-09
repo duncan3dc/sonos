@@ -137,7 +137,7 @@ class Controller extends Speaker
         }
 
         $parser = new XmlParser($data["TrackMetaData"]);
-        $state = State::createFromXml($parser, $this);
+        $state = State::createFromXml($parser->getTag("item"), $this);
 
         if ((string) $parser->getTag("streamContent")) {
             $info = $this->getMediaInfo();
@@ -636,7 +636,11 @@ class Controller extends Speaker
      */
     public function restoreState(ControllerState $state)
     {
-        $this->getQueue()->clear()->addTracks($state->tracks);
+        $queue = $this->getQueue();
+        $queue->clear();
+        if (count($state->tracks) > 0) {
+            $queue->addTracks($state->tracks);
+        }
 
         if (count($state->tracks) > 0) {
             $this->selectTrack($state->track);
