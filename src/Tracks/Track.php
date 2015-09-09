@@ -41,6 +41,11 @@ class Track implements UriInterface
      */
     public $albumArt = "";
 
+    /**
+     * @var string $queueId The id of the track in the queue.
+     */
+    protected $queueId = "-1";
+
 
     /**
      * Create a Track object.
@@ -69,9 +74,9 @@ class Track implements UriInterface
      *
      * @return string
      */
-    protected function getId()
+    public function getId()
     {
-        return "-1";
+        return $this->queueId;
     }
 
 
@@ -125,6 +130,10 @@ class Track implements UriInterface
 
         if ($art = (string) $xml->getTag("albumArtURI")) {
             $track->albumArt = sprintf("http://%s:1400%s", $controller->ip, $art);
+        }
+
+        if ($xml->hasAttribute("id")) {
+            $track->queueId = $xml->getAttribute("id");
         }
 
         return $track;

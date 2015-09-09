@@ -18,7 +18,7 @@ class TrackTest extends \PHPUnit_Framework_TestCase
 XML;
 
     protected $xml2 = <<<XML
-            <track>
+            <track id="O:345">
                 <title>TITLE</title>
                 <creator>ARTIST</creator>
                 <album>ALBUM</album>
@@ -34,9 +34,13 @@ XML;
     public function setUp()
     {
         $controller = Mockery::mock("duncan3dc\Sonos\Controller");
+        $controller->ip = "192.168.0.66";
 
-        $this->track1 = Track::createFromXml(new XmlParser($this->xml1), $controller);
-        $this->track2 = Track::createFromXml(new XmlParser($this->xml2), $controller);
+        $xml = new XmlParser($this->xml1);
+        $this->track1 = Track::createFromXml($xml->getTag("track"), $controller);
+
+        $xml = new XmlParser($this->xml2);
+        $this->track2 = Track::createFromXml($xml->getTag("track"), $controller);
     }
 
 
@@ -102,6 +106,16 @@ XML;
     }
 
 
+    public function testGetId1()
+    {
+        $this->assertSame("-1", $this->track1->getId());
+    }
+    public function testGetId2()
+    {
+        $this->assertSame("O:345", $this->track2->getId());
+    }
+
+
     public function testGetUri()
     {
         $track = new Track("URI");
@@ -109,7 +123,7 @@ XML;
     }
 
 
-    public function testGetMetaData()
+    public function testGetMetaData1()
     {
         $xml = '<DIDL-Lite ';
             $xml .= 'xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/" ';
@@ -126,5 +140,23 @@ XML;
             $xml .= '</item>';
         $xml .= '</DIDL-Lite>';
         $this->assertSame($xml, $this->track1->getMetadata());
+    }
+    public function testGetMetaData2()
+    {
+        $xml = '<DIDL-Lite ';
+            $xml .= 'xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/" ';
+            $xml .= 'xmlns:dc="http://purl.org/dc/elements/1.1/" ';
+            $xml .= 'xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" ';
+            $xml .= 'xmlns:r="urn:schemas-rinconnetworks-com:metadata-1-0/">';
+            $xml .= '<item id="O:345" parentID="-1" restricted="true">';
+                $xml .= '<res></res>';
+                $xml .= '<upnp:albumArtURI>http://192.168.0.66:1400/cover.jpg</upnp:albumArtURI>';
+                $xml .= '<dc:title>Of Matter - Proxy</dc:title>';
+                $xml .= '<upnp:class>object.item.audioItem.musicTrack</upnp:class>';
+                $xml .= '<dc:creator>Tesseract</dc:creator>';
+                $xml .= '<upnp:album></upnp:album>';
+            $xml .= '</item>';
+        $xml .= '</DIDL-Lite>';
+        $this->assertSame($xml, $this->track2->getMetadata());
     }
 }

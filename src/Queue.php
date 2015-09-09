@@ -3,7 +3,6 @@
 namespace duncan3dc\Sonos;
 
 use duncan3dc\DomParser\XmlParser;
-use duncan3dc\Sonos\Tracks\QueueTrack;
 use duncan3dc\Sonos\Tracks\Track;
 use duncan3dc\Sonos\Tracks\UriInterface;
 
@@ -117,7 +116,7 @@ class Queue implements \Countable
      * @param int $start The zero-based position in the queue to start from
      * @param int $total The maximum number of tracks to return
      *
-     * @return QueueTrack[]
+     * @return Track[]
      */
     public function getTracks($start = 0, $total = 0)
     {
@@ -133,7 +132,7 @@ class Queue implements \Countable
             $data = $this->browse("DirectChildren", $start, $limit);
             $parser = new XmlParser($data["Result"]);
             foreach ($parser->getTags("item") as $item) {
-                $tracks[] = QueueTrack::createFromXml($item, $this->controller);
+                $tracks[] = Track::createFromXml($item, $this->controller);
                 if ($total > 0 && count($tracks) >= $total) {
                     return $tracks;
                 }
