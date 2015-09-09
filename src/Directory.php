@@ -86,6 +86,7 @@ class Directory
      */
     public function write($file, $contents)
     {
-        return $this->filesystem->write("{$this->directory}/{$file}", $contents);
+        $this->filesystem->write("{$this->directory}/{$file}", $contents);
+        return $this;
     }
 }

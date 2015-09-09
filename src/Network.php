@@ -550,7 +550,7 @@ class Network implements LoggerAwareInterface
     /**
      * Get alarms for the specified id.
      *
-     * @return Alarm
+     * @return Alarm|null
      */
     public function getAlarmById($id)
     {
