@@ -5,6 +5,14 @@ Changelog
 
 --------
 
+## 1.6.1 - 2015-09-16
+
+### Fixed
+
+* [Playlist] Ensure the TrackFactory is available when working with playlists.
+
+--------
+
 ## 1.6.0 - 2015-09-09
 
 ### Added

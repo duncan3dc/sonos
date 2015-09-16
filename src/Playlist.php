@@ -25,14 +25,14 @@ class Playlist extends Queue
      */
     public function __construct($param, Controller $controller)
     {
+        parent::__construct($controller);
+
         if (is_string($param)) {
             $this->id = $param;
         } else {
             $this->id = $param->getAttribute("id");
             $this->name = $param->getTag("title")->nodeValue;
         }
-
-        $this->controller = $controller;
     }
 
 
