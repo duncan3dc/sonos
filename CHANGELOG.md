@@ -5,6 +5,23 @@ Changelog
 
 --------
 
+## 1.7.0 - 2015-09-19
+
+### Added
+
+* [Tracks] Created a Google track to handle their specific metadata.
+* [Tracks] Allow the Spotify region to be overridden.
+
+### Fixed
+
+* [Tracks] Prevent other services being incorrectly treated as Deezer tracks.
+
+### Changed
+
+* [Support] Drop support for PHP 5.5, as it nears end-of-life and constant expressions require 5.6
+
+--------
+
 ## 1.6.1 - 2015-09-16
 
 ### Fixed
