@@ -43,13 +43,6 @@ class Google extends Track
         return Helper::createMetaDataXml(Helper::TRACK_HASH . self::UNIQUE . "{$uri}", "-1", [
             "dc:title"      =>  "",
             "upnp:class"    =>  "object.item.audioItem.musicTrack",
-            "desc"          =>  [
-                "_attributes"   =>  [
-                    "id"        =>  "cdudn",
-                    "nameSpace" =>  "urn:schemas-rinconnetworks-com:metadata-1-0/",
-                ],
-                "_value"        =>  "SA_RINCON38663_X_#Svc38663-0-Token",
-            ],
-        ]);
+        ], "38663");
     }
 }

@@ -47,13 +47,6 @@ class Spotify extends Track
         return Helper::createMetaDataXml(Helper::TRACK_HASH . "{$uri}", "-1", [
             "dc:title"      =>  "",
             "upnp:class"    =>  "object.item.audioItem.musicTrack",
-            "desc"          =>  [
-                "_attributes"   =>  [
-                    "id"        =>  "cdudn",
-                    "nameSpace" =>  "urn:schemas-rinconnetworks-com:metadata-1-0/",
-                ],
-                "_value"        =>  "SA_RINCON" . static::$region . "_X_#Svc" . static::$region . "-0-Token",
-            ],
-        ]);
+        ], static::$region);
     }
 }
