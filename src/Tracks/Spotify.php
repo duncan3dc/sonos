@@ -10,6 +10,14 @@ use duncan3dc\Sonos\Helper;
 class Spotify extends Track
 {
     const PREFIX = "x-sonos-spotify:";
+    const REGION_EU = "2311";
+    const REGION_US = "3079";
+
+    /**
+     * @var string $region The region code for the Spotify service (the default is EU).
+     */
+    public static $region = self::REGION_EU;
+
 
     /**
      * Create a Spotify track object.
@@ -44,7 +52,7 @@ class Spotify extends Track
                     "id"        =>  "cdudn",
                     "nameSpace" =>  "urn:schemas-rinconnetworks-com:metadata-1-0/",
                 ],
-                "_value"        =>  "SA_RINCON2311_X_#Svc2311-0-Token",
+                "_value"        =>  "SA_RINCON" . static::$region . "_X_#Svc" . static::$region . "-0-Token",
             ],
         ]);
     }
