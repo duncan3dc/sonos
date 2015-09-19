@@ -70,8 +70,18 @@ class Helper
      *
      * @return string
      */
-    public static function createMetaDataXml($id, $parent = "-1", array $extra = [])
+    public static function createMetaDataXml($id, $parent = "-1", array $extra = [], $service = null)
     {
+        if ($service !== null) {
+            $extra["desc"] = [
+                "_attributes"   =>  [
+                    "id"        =>  "cdudn",
+                    "nameSpace" =>  "urn:schemas-rinconnetworks-com:metadata-1-0/",
+                ],
+                "_value"        =>  "SA_RINCON{$service}_X_#Svc{$service}-0-Token",
+            ];
+        }
+
         $xml = XmlWriter::createXml([
             "DIDL-Lite" =>  [
                 "_attributes"   =>  [

@@ -9,40 +9,38 @@ When playing tracks from your library or other music services you'll be using th
 You can check if a controller is currently using a queue, make it use the queue, and then get the queue like so:
 
 ~~~php
- if (!$controller->isUsingQueue()) {
-     $controller->useQueue();
- }
+if (!$controller->isUsingQueue()) {
+    $controller->useQueue();
+}
 
- $queue = $controller->getQueue();
+$queue = $controller->getQueue();
 ~~~
-
-<p class="message-info">The isUsingQueue() and useQueue() methods were added in v1.2.0</p>
 
 
 The Queue class implements the Countable interface which means you can get the number of tracks by simply counting it:
 
 ~~~php
- $numberOfTracks = count($queue);
+$numberOfTracks = count($queue);
 
- # Or call the actual count method
- $numberOfTracks = $queue->count();
+# Or call the actual count method
+$numberOfTracks = $queue->count();
 ~~~
 
 
 You can empty a queue using the clear method:
 
 ~~~php
- $queue->clear();
+$queue->clear();
 ~~~
 
 
 Add all the tracks from a playlist to the queue:
 
 ~~~php
- $playlist = $sonos->getPlaylistByName("protest the hero");
+$playlist = $sonos->getPlaylistByName("protest the hero");
 
- $tracks = $playlist->getTracks();
- $queue->addTracks($tracks);
+$tracks = $playlist->getTracks();
+$queue->addTracks($tracks);
 ~~~
 <p class="message-info">The getTracks() method returns an array of <a href='../tracks/'>Tracks</a>.</p>
 
@@ -50,14 +48,14 @@ Add all the tracks from a playlist to the queue:
 Remove tracks from the queue:
 
 ~~~php
- $remove = [];
- foreach ($queue->getTracks() as $position => $track) {
-     if ($track->artist === "pomegranate tiger") {
-         $remove[] = $position;
-     }
- }
- if (count($remove) > 0) {
-     $queue->removeTracks($remove);
- }
+$remove = [];
+foreach ($queue->getTracks() as $position => $track) {
+    if ($track->artist === "pomegranate tiger") {
+        $remove[] = $position;
+    }
+}
+if (count($remove) > 0) {
+    $queue->removeTracks($remove);
+}
 ~~~
 <p class="message-info">This is done using a single call to removeTracks() because all the positions will be recalculated once a track has been removed, so the other positions would now be invalid. It's also more efficient as we only send one request to the Sonos network instead of many.</p>

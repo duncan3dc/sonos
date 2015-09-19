@@ -15,7 +15,7 @@ Controllers:
     Play Some Music: /controllers/play-some-music/
     Playing Mode: /controllers/playing-mode/
     Volume: /controllers/volume/
-    Speakers: /controllers/speakers/
+    Grouping Speakers: /controllers/speakers/
     Queue: /controllers/queue/
     Streams: /controllers/streams/
 

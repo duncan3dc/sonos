@@ -5,8 +5,6 @@ permalink: /services/radio/
 api: Services.Radio
 ---
 
-<p class="message-info">This feature was added in v1.3.0</p>
-
 Radio streaming (provided by TuneIn) is supported using the `Radio` class, which can be created like so:
 
 ~~~php

@@ -10,8 +10,8 @@ use Doctrine\Common\Cache\FilesystemCache;
 class Cache extends FilesystemCache
 {
     const MINUTE = 60;
-    const HOUR = 3600;
-    const DAY = 86400;
+    const HOUR = self::MINUTE * 60;
+    const DAY = self::HOUR * 60;
 
     public function __construct()
     {

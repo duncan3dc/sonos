@@ -21,3 +21,9 @@ From there it works like any regular track and can be added to the queue like so
 $track = new Spotify("2c9TM5qY2Kx330wuh4O72y");
 $controller->getQueue()->addTrack($track);
 ~~~
+
+By default the class is setup for the european Spotify service, if you are in the US you can set the region like so:
+
+~~~php
+Spotify::$region = Spotify::REGION_US;
+~~~

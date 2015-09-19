@@ -38,6 +38,7 @@ class Factory
     {
         $classes = [
             Spotify::class,
+            Google::class,
             Deezer::class,
         ];
         foreach ($classes as $class) {
