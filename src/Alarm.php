@@ -9,15 +9,15 @@ use duncan3dc\DomParser\XmlElement;
  */
 class Alarm
 {
-    const ONCE = 0;
-    const MONDAY = 1;
-    const TUESDAY = 2;
-    const WEDNESDAY = 4;
-    const THURSDAY = 8;
-    const FRIDAY = 16;
-    const SATURDAY = 32;
-    const SUNDAY = 64;
-    const DAILY = 127;
+    const ONCE      =   0;
+    const MONDAY    =   1;
+    const TUESDAY   =   self::MONDAY    * 2;
+    const WEDNESDAY =   self::TUESDAY   * 2;
+    const THURSDAY  =   self::WEDNESDAY * 2;
+    const FRIDAY    =   self::THURSDAY  * 2;
+    const SATURDAY  =   self::FRIDAY    * 2;
+    const SUNDAY    =   self::SATURDAY  * 2;
+    const DAILY     =   (self::SUNDAY   * 2) - 1;
 
     /**
      * @var string $id The unique id of the alarm

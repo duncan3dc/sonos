@@ -14,12 +14,12 @@ class Radio
     /**
      * @var int The key for station types.
      */
-    const STATIONS = 0;
+    const STATIONS = 301;
 
     /**
      * @var int The key for show types.
      */
-    const SHOWS = 1;
+    const SHOWS = 302;
 
     /**
      * @var Controller $controller The Controller instance to send commands to.
