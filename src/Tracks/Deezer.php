@@ -9,7 +9,8 @@ use duncan3dc\Sonos\Helper;
  */
 class Deezer extends Track
 {
-    const PREFIX = "x-sonos-http:";
+    const UNIQUE = "tr";
+    const PREFIX = "x-sonos-http:" . self::UNIQUE;
 
     /**
      * Create a Deezer track object.
@@ -20,7 +21,7 @@ class Deezer extends Track
     {
         # If this is a Deezer track ID and not a URI then convert it to a URI now
         if (substr($uri, 0, strlen(self::PREFIX)) !== self::PREFIX) {
-            $uri = self::PREFIX . urlencode("tr:{$uri}.mp3");
+            $uri = self::PREFIX . urlencode(":{$uri}.mp3");
         }
 
         parent::__construct($uri);
@@ -36,7 +37,7 @@ class Deezer extends Track
     {
         $uri = substr($this->uri, strlen(self::PREFIX), -4);
 
-        return Helper::createMetaDataXml(Helper::TRACK_HASH . "{$uri}", "-1", [
+        return Helper::createMetaDataXml(Helper::TRACK_HASH . self::UNIQUE . "{$uri}", "-1", [
             "dc:title"      =>  "",
             "upnp:class"    =>  "object.item.audioItem.musicTrack",
             "desc"          =>  [
