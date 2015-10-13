@@ -12,14 +12,15 @@ abstract class LiveTest extends \PHPUnit_Framework_TestCase
     {
         $this->network = new Network;
 
-        if (in_array("--live-tests", $_SERVER["argv"])) {
-            try {
-                $this->network->getSpeakers();
-            } catch (\Exception $e) {
-                $this->markTestSkipped("No speakers found on the current network");
-            }
-        } else {
-            $this->markTestSkipped("Ignoring live tests (these can be run using the --live-tests option)");
+        if (empty($_ENV["SONOS_LIVE_TESTS"])) {
+            $this->markTestSkipped("Ignoring live tests (these can be run setting the SONOS_LIVE_TESTS environment variable)");
+            return;
+        }
+
+        try {
+            $this->network->getSpeakers();
+        } catch (\Exception $e) {
+            $this->markTestSkipped("No speakers found on the current network");
         }
     }
 }
