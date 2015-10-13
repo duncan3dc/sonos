@@ -76,7 +76,7 @@ class PlaylistLiveTest extends LiveTest
             "x-file-cifs://TEST/music/artist/album/02-Song.mp3",
         ];
         $this->playlist->addTracks($uris);
-        $this->playlist->removeTracks([0]);
+        $this->playlist->removeTrack(0);
 
         $tracks = $this->playlist->getTracks();
 
