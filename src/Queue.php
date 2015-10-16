@@ -214,6 +214,8 @@ class Queue implements \Countable
                 "DesiredFirstTrackNumberEnqueued"   =>  $position,
                 "EnqueueAsNext"                     =>  0,
             ]);
+            $this->updateId = $data["NewUpdateID"];
+
             $position += $numberOfTracks;
 
             if ($data["NumTracksAdded"] != $numberOfTracks) {
