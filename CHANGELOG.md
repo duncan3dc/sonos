@@ -5,6 +5,14 @@ Changelog
 
 --------
 
+## 1.7.1 - 2015-10-16
+
+### Fixed
+
+* [Playlists] Correct the adding of tracks that was broken in 1.5.0.
+
+--------
+
 ## 1.7.0 - 2015-09-19
 
 ### Added
