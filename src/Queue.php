@@ -3,6 +3,7 @@
 namespace duncan3dc\Sonos;
 
 use duncan3dc\DomParser\XmlParser;
+use duncan3dc\Sonos\Exceptions\SonosException;
 use duncan3dc\Sonos\Tracks\Track;
 use duncan3dc\Sonos\Tracks\Factory as TrackFactory;
 use duncan3dc\Sonos\Tracks\UriInterface;
@@ -173,9 +174,9 @@ class Queue implements \Countable
      * @param UriInterface[] $tracks The track to add
      * @param int $position The position to insert the track in the queue (zero-based), by default the track will be added to the end of the queue
      *
-     * @return bool
+     * @return void
      */
-    protected function addUris(array $tracks, int $position = null): bool
+    protected function addUris(array $tracks, int $position = null)
     {
         if ($position === null) {
             $position = $this->getNextPosition();
@@ -219,11 +220,9 @@ class Queue implements \Countable
             $position += $numberOfTracks;
 
             if ($data["NumTracksAdded"] != $numberOfTracks) {
-                return false;
+                throw new SonosException("Failed to add all the tracks");
             }
         }
-
-        return true;
     }
 
 
@@ -247,9 +246,9 @@ class Queue implements \Countable
      * @param string[]|UriInterface[] $tracks An array where each element is either the URI of the tracks to add, or an object that implements the UriInterface
      * @param int $position The position to insert the tracks in the queue (zero-based), by default the tracks will be added to the end of the queue
      *
-     * @return bool
+     * @return $this
      */
-    public function addTracks(array $tracks, int $position = null): bool
+    public function addTracks(array $tracks, int $position = null)
     {
         foreach ($tracks as &$track) {
             # If a simple uri has been passed then convert it to a Track instance
@@ -263,7 +262,9 @@ class Queue implements \Countable
         }
         unset($track);
 
-        return $this->addUris($tracks, $position);
+        $this->addUris($tracks, $position);
+
+        return $this;
     }
 
 

@@ -171,7 +171,7 @@ class ControllerTest extends MockTest
             "SortCriteria"      =>  "",
             "ObjectID"          =>  "Q:0",
         ]);
-        $device->shouldReceive("soap")->once()->with("AVTransport", "AddMultipleURIsToQueue", Mockery::any());
+        $device->shouldReceive("soap")->once()->with("AVTransport", "AddMultipleURIsToQueue", Mockery::any())->andReturn(["NumTracksAdded" => 1, "NewUpdateID" => 86]);
         $device->shouldReceive("soap")->once()->with("AVTransport", "Seek", [
             "Unit"      =>  "TRACK_NR",
             "Target"    =>  1,

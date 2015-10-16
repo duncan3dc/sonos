@@ -5,6 +5,7 @@ namespace duncan3dc\Sonos;
 use duncan3dc\DomParser\XmlElement;
 use duncan3dc\DomParser\XmlParser;
 use duncan3dc\Sonos\Tracks\UriInterface;
+use duncan3dc\Sonos\Exceptions\SonosException;
 
 /**
  * Provides an interface for managing Sonos playlists on the current network.
@@ -80,9 +81,9 @@ class Playlist extends Queue
      * @param UriInterface[] $tracks The tracks to add
      * @param int $position The position to insert the track in the playlist (zero-based), by default the track will be added to the end of the playlist
      *
-     * @return bool
+     * @return void
      */
-    protected function addUris(array $tracks, int $position = null): bool
+    protected function addUris(array $tracks, int $position = null)
     {
         if ($position === null) {
             $position = $this->getNextPosition();
@@ -100,11 +101,9 @@ class Playlist extends Queue
             $position++;
 
             if ($data["NumTracksAdded"] != 1) {
-                return false;
+                throw new SonosException("Failed to add all the tracks to the playlist");
             }
         }
-
-        return true;
     }
 
 
