@@ -52,8 +52,8 @@ class AlarmTest extends MockTest
     public function testFrequencyConstants1()
     {
         $alarm = $this->getMockRecurrence("ON_1");
-        $this->assertSame(Alarm::TUESDAY, $alarm->getFrequency() & Alarm::TUESDAY);
-        $this->assertSame(0, $alarm->getFrequency() & Alarm::MONDAY);
+        $this->assertSame(Alarm::MONDAY, $alarm->getFrequency() & Alarm::MONDAY);
+        $this->assertSame(0, $alarm->getFrequency() & Alarm::TUESDAY);
         $this->assertSame(0, $alarm->getFrequency() & Alarm::WEDNESDAY);
         $this->assertSame(0, $alarm->getFrequency() & Alarm::THURSDAY);
         $this->assertSame(0, $alarm->getFrequency() & Alarm::FRIDAY);
@@ -68,12 +68,12 @@ class AlarmTest extends MockTest
     {
         $alarm = $this->getMockRecurrence("ON_01");
         $this->assertSame(Alarm::MONDAY, $alarm->getFrequency() & Alarm::MONDAY);
-        $this->assertSame(Alarm::TUESDAY, $alarm->getFrequency() & Alarm::TUESDAY);
+        $this->assertSame(0, $alarm->getFrequency() & Alarm::TUESDAY);
         $this->assertSame(0, $alarm->getFrequency() & Alarm::WEDNESDAY);
         $this->assertSame(0, $alarm->getFrequency() & Alarm::THURSDAY);
         $this->assertSame(0, $alarm->getFrequency() & Alarm::FRIDAY);
         $this->assertSame(0, $alarm->getFrequency() & Alarm::SATURDAY);
-        $this->assertSame(0, $alarm->getFrequency() & Alarm::SUNDAY);
+        $this->assertSame(Alarm::SUNDAY, $alarm->getFrequency() & Alarm::SUNDAY);
         $this->assertFalse($alarm->getFrequency() === Alarm::ONCE);
         $this->assertFalse($alarm->getFrequency() === Alarm::DAILY);
     }
@@ -83,12 +83,12 @@ class AlarmTest extends MockTest
     {
         $alarm = $this->getMockRecurrence("ON_246");
         $this->assertSame(0, $alarm->getFrequency() & Alarm::MONDAY);
-        $this->assertSame(0, $alarm->getFrequency() & Alarm::TUESDAY);
-        $this->assertSame(Alarm::WEDNESDAY, $alarm->getFrequency() & Alarm::WEDNESDAY);
-        $this->assertSame(0, $alarm->getFrequency() & Alarm::THURSDAY);
-        $this->assertSame(Alarm::FRIDAY, $alarm->getFrequency() & Alarm::FRIDAY);
-        $this->assertSame(0, $alarm->getFrequency() & Alarm::SATURDAY);
-        $this->assertSame(Alarm::SUNDAY, $alarm->getFrequency() & Alarm::SUNDAY);
+        $this->assertSame(Alarm::TUESDAY, $alarm->getFrequency() & Alarm::TUESDAY);
+        $this->assertSame(0, $alarm->getFrequency() & Alarm::WEDNESDAY);
+        $this->assertSame(Alarm::THURSDAY, $alarm->getFrequency() & Alarm::THURSDAY);
+        $this->assertSame(0, $alarm->getFrequency() & Alarm::FRIDAY);
+        $this->assertSame(Alarm::SATURDAY, $alarm->getFrequency() & Alarm::SATURDAY);
+        $this->assertSame(0, $alarm->getFrequency() & Alarm::SUNDAY);
         $this->assertFalse($alarm->getFrequency() === Alarm::ONCE);
         $this->assertFalse($alarm->getFrequency() === Alarm::DAILY);
     }
@@ -96,7 +96,7 @@ class AlarmTest extends MockTest
 
     public function testFrequencyConstants4()
     {
-        foreach (["ON_56", "WEEKENDS"] as $recurrence) {
+        foreach (["ON_06", "WEEKENDS"] as $recurrence) {
             $alarm = $this->getMockRecurrence($recurrence);
             $this->assertSame(0, $alarm->getFrequency() & Alarm::MONDAY);
             $this->assertSame(0, $alarm->getFrequency() & Alarm::TUESDAY);
@@ -113,7 +113,7 @@ class AlarmTest extends MockTest
 
     public function testFrequencyConstants5()
     {
-        foreach (["ON_01234", "WEEKDAYS"] as $recurrence) {
+        foreach (["ON_12345", "WEEKDAYS"] as $recurrence) {
             $alarm = $this->getMockRecurrence($recurrence);
             $this->assertSame(Alarm::MONDAY, $alarm->getFrequency() & Alarm::MONDAY);
             $this->assertSame(Alarm::TUESDAY, $alarm->getFrequency() & Alarm::TUESDAY);
@@ -165,8 +165,8 @@ class AlarmTest extends MockTest
         $alarm = $this->getMockRecurrence("ON_3");
         $this->assertFalse($alarm->onMonday());
         $this->assertFalse($alarm->onTuesday());
-        $this->assertFalse($alarm->onWednesday());
-        $this->assertTrue($alarm->onThursday());
+        $this->assertTrue($alarm->onWednesday());
+        $this->assertFalse($alarm->onThursday());
         $this->assertFalse($alarm->onFriday());
         $this->assertFalse($alarm->onSaturday());
         $this->assertFalse($alarm->onSunday());
@@ -177,7 +177,7 @@ class AlarmTest extends MockTest
 
     public function testFrequencyMethods2()
     {
-        $alarm = $this->getMockRecurrence("ON_01");
+        $alarm = $this->getMockRecurrence("ON_12");
         $this->assertTrue($alarm->onMonday());
         $this->assertTrue($alarm->onTuesday());
         $this->assertFalse($alarm->onWednesday());
@@ -192,7 +192,7 @@ class AlarmTest extends MockTest
 
     public function testFrequencyMethods3()
     {
-        $alarm = $this->getMockRecurrence("ON_246");
+        $alarm = $this->getMockRecurrence("ON_035");
         $this->assertFalse($alarm->onMonday());
         $this->assertFalse($alarm->onTuesday());
         $this->assertTrue($alarm->onWednesday());
@@ -207,7 +207,7 @@ class AlarmTest extends MockTest
 
     public function testFrequencyMethods4()
     {
-        foreach (["ON_56", "WEEKENDS"] as $recurrence) {
+        foreach (["ON_06", "WEEKENDS"] as $recurrence) {
             $alarm = $this->getMockRecurrence($recurrence);
             $this->assertFalse($alarm->onMonday());
             $this->assertFalse($alarm->onTuesday());
@@ -218,13 +218,13 @@ class AlarmTest extends MockTest
             $this->assertTrue($alarm->onSunday());
             $this->assertFalse($alarm->once());
             $this->assertFalse($alarm->daily());
-    }
+        }
     }
 
 
     public function testFrequencyMethods5()
     {
-        foreach (["ON_01234", "WEEKDAYS"] as $recurrence) {
+        foreach (["ON_12345", "WEEKDAYS"] as $recurrence) {
             $alarm = $this->getMockRecurrence($recurrence);
             $this->assertTrue($alarm->onMonday());
             $this->assertTrue($alarm->onTuesday());

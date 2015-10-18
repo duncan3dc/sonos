@@ -5,6 +5,14 @@ Changelog
 
 --------
 
+## 1.7.2 - 2015-10-18
+
+### Fixed
+
+* [Alarms] Correct the handling of days (Sunday is zero and the rest were off by one).
+
+--------
+
 ## 1.7.1 - 2015-10-16
 
 ### Fixed
