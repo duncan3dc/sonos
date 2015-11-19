@@ -5,6 +5,15 @@ Changelog
 
 --------
 
+## 1.7.3 - 2015-11-19
+
+### Fixed
+
+* [Radio] Correct the constants used for retrieving favourites.
+* [Alarms] Fix HHVM handling of days (array constants not valid).
+
+--------
+
 ## 1.7.2 - 2015-10-18
 
 ### Fixed

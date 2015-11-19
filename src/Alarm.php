@@ -19,7 +19,10 @@ class Alarm
     const SUNDAY    =   self::SATURDAY  * 2;
     const DAILY     =   (self::SUNDAY   * 2) - 1;
 
-    const DAYS = [
+    /**
+     * @var array $days An mapping of php day values to our day constants.
+     */
+    protected $days = [
         "0" =>  self::SUNDAY,
         "1" =>  self::MONDAY,
         "2" =>  self::TUESDAY,
@@ -236,7 +239,7 @@ class Alarm
 
         $data = $matches[1];
         $days = 0;
-        foreach (self::DAYS as $key => $val) {
+        foreach ($this->days as $key => $val) {
             if (strpos($data, (string) $key) !== false) {
                 $days = $days | $val;
             }
@@ -256,7 +259,7 @@ class Alarm
     public function setFrequency($frequency)
     {
         $recurrence = "ON_";
-        foreach (self::DAYS as $key => $val) {
+        foreach ($this->days as $key => $val) {
             if ($frequency & $val) {
                 $recurrence .= $key;
             }
