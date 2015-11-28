@@ -132,6 +132,14 @@ class Controller extends Speaker
     {
         $data = $this->soap("AVTransport", "GetPositionInfo");
 
+        # Check for line in mode
+        if ($data["TrackMetaData"] === "NOT_IMPLEMENTED") {
+            $state = new State($data["TrackURI"]);
+            $state->stream = "Line-In";
+            return $state;
+        }
+
+        # Check for an empty queue
         if (!$data["TrackMetaData"]) {
             return new State;
         }

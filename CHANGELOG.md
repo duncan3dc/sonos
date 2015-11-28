@@ -5,6 +5,14 @@ Changelog
 
 --------
 
+## 1.7.4 - 2015-12-03
+
+### Fixed
+
+* [Controllers] The getStateDetails() method can now handle Line-In streams and return a valid State instance.
+
+--------
+
 ## 1.7.3 - 2015-11-19
 
 ### Fixed
