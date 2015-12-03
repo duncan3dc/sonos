@@ -35,7 +35,7 @@ class SoapException extends \Exception
      *
      * @return string
      */
-    public function getRequest()
+    public function getRequest(): string
     {
         return $this->client->__getLastRequest();
     }
@@ -46,7 +46,7 @@ class SoapException extends \Exception
      *
      * @return string
      */
-    public function getResponse()
+    public function getResponse(): string
     {
         return $this->client->__getLastResponse();
     }

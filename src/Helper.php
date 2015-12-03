@@ -19,7 +19,7 @@ class Helper
      *
      * @return array Mode data containing the following boolean elements (shuffle, repeat)
      */
-    public static function getMode(string $mode)
+    public static function getMode(string $mode): array
     {
         $options = [
             "shuffle"   =>  false,
@@ -44,7 +44,7 @@ class Helper
      *
      * @return string
      */
-    public static function setMode(array $options)
+    public static function setMode(array $options): string
     {
         if ($options["shuffle"]) {
             if (!$options["repeat"]) {
@@ -71,7 +71,7 @@ class Helper
      *
      * @return string
      */
-    public static function createMetaDataXml(string $id, string $parent = "-1", array $extra = [], string $service = null)
+    public static function createMetaDataXml(string $id, string $parent = "-1", array $extra = [], string $service = null): string
     {
         if ($service !== null) {
             $extra["desc"] = [

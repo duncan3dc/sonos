@@ -95,7 +95,7 @@ class Queue implements \Countable
      *
      * @return int
      */
-    protected function getUpdateId()
+    protected function getUpdateId(): int
     {
         if (!$this->updateId) {
             $data = $this->browse("DirectChildren");
@@ -110,7 +110,7 @@ class Queue implements \Countable
      *
      * @return int
      */
-    public function count()
+    public function count(): int
     {
         $data = $this->browse("DirectChildren");
         return (int) $data["TotalMatches"];
@@ -125,7 +125,7 @@ class Queue implements \Countable
      *
      * @return Track[]
      */
-    public function getTracks(int $start = 0, int $total = 0)
+    public function getTracks(int $start = 0, int $total = 0): array
     {
         $tracks = [];
 
@@ -157,7 +157,7 @@ class Queue implements \Countable
      *
      * @return int
      */
-    protected function getNextPosition()
+    protected function getNextPosition(): int
     {
         $data = $this->browse("DirectChildren");
 
@@ -175,7 +175,7 @@ class Queue implements \Countable
      *
      * @return bool
      */
-    protected function addUris(array $tracks, int $position = null)
+    protected function addUris(array $tracks, int $position = null): bool
     {
         if ($position === null) {
             $position = $this->getNextPosition();
@@ -235,7 +235,7 @@ class Queue implements \Countable
      *
      * @return bool
      */
-    public function addTrack($track, int $position = null)
+    public function addTrack($track, int $position = null): bool
     {
         return $this->addTracks([$track], $position);
     }
@@ -249,7 +249,7 @@ class Queue implements \Countable
      *
      * @return bool
      */
-    public function addTracks(array $tracks, int $position = null)
+    public function addTracks(array $tracks, int $position = null): bool
     {
         foreach ($tracks as &$track) {
             # If a simple uri has been passed then convert it to a Track instance
@@ -274,7 +274,7 @@ class Queue implements \Countable
      *
      * @return bool
      */
-    public function removeTrack(int $position)
+    public function removeTrack(int $position): bool
     {
         return $this->removeTracks([$position]);
     }
@@ -287,7 +287,7 @@ class Queue implements \Countable
      *
      * @return bool
      */
-    public function removeTracks(array $positions)
+    public function removeTracks(array $positions): bool
     {
         $ranges = [];
         $key = 0;
@@ -325,9 +325,9 @@ class Queue implements \Countable
     /**
      * Remove all tracks from the queue.
      *
-     * @return static
+     * @return $this
      */
-    public function clear()
+    public function clear(): self
     {
         $this->soap("AVTransport", "RemoveAllTracksFromQueue");
 

@@ -34,7 +34,7 @@ class Factory
      *
      * @return string
      */
-    protected function guessTrackClass(string $uri)
+    protected function guessTrackClass(string $uri): string
     {
         $classes = [
             Spotify::class,
@@ -60,7 +60,7 @@ class Factory
      *
      * @return Track
      */
-    public function createFromUri(string $uri)
+    public function createFromUri(string $uri): UriInterface
     {
         $class = $this->guessTrackClass($uri);
 
@@ -75,7 +75,7 @@ class Factory
      *
      * @return Track
      */
-    public function createFromXml(XmlElement $xml)
+    public function createFromXml(XmlElement $xml): UriInterface
     {
         $uri = (string) $xml->getTag("res");
         $class = $this->guessTrackClass($uri);

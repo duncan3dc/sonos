@@ -136,7 +136,7 @@ class ControllerTest extends MockTest
         $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", [])->andReturn(["PlayMode" => "TEST"]);
         $device->shouldReceive("soap")->once()->with("AVTransport", "SetCrossfadeMode", ["CrossfadeMode" => false]);
 
-        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportInfo", []);
+        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportInfo", [])->andReturn(["CurrentTransportState" => "TEST"]);
         $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", [])->andReturn(["PlayMode" => "TEST"]);
 
         $result = $controller->restoreState($state);
@@ -181,7 +181,7 @@ class ControllerTest extends MockTest
             "Target"    =>  "05:03:01",
         ]);
 
-        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportInfo", []);
+        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportInfo", [])->andReturn(["CurrentTransportState" => "TEST"]);
         $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", [])->andReturn(["PlayMode" => "TEST"]);
 
         $result = $controller->restoreState($state);

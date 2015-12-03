@@ -75,9 +75,9 @@ class ControllerState
      *
      * @param Controller $controller The Controller to grab the state of
      *
-     * @return static
+     * @return $this
      */
-    protected function getState(Controller $controller)
+    protected function getState(Controller $controller): self
     {
         $this->state = $controller->getState();
 
@@ -94,9 +94,9 @@ class ControllerState
      *
      * @param Controller $controller The Controller to grab the state of
      *
-     * @return static
+     * @return $this
      */
-    protected function getMode(Controller $controller)
+    protected function getMode(Controller $controller): self
     {
         $mode = $controller->getMode();
         $this->repeat = $mode["repeat"];
@@ -113,9 +113,9 @@ class ControllerState
      *
      * @param Controller $controller The Controller to grab the state of
      *
-     * @return static
+     * @return $this
      */
-    protected function getVolume(Controller $controller)
+    protected function getVolume(Controller $controller): self
     {
         $this->speakers = [];
         foreach ($controller->getSpeakers() as $speaker) {
@@ -131,9 +131,9 @@ class ControllerState
      *
      * @param Controller $controller The Controller to grab the state of
      *
-     * @return static
+     * @return $this
      */
-    protected function getTracks(Controller $controller)
+    protected function getTracks(Controller $controller): self
     {
         $this->tracks = $controller->getQueue()->getTracks();
 

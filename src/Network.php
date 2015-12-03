@@ -75,7 +75,7 @@ class Network implements LoggerAwareInterface
      *
      * @var LoggerInterface $logger The logging object
      *
-     * @return static
+     * @return $this
      */
     public function setLogger(LoggerInterface $logger)
     {
@@ -243,7 +243,7 @@ class Network implements LoggerAwareInterface
      *
      * @return Speaker[]
      */
-    public function getSpeakers()
+    public function getSpeakers(): array
     {
         if (is_array($this->speakers)) {
             return $this->speakers;
@@ -308,9 +308,9 @@ class Network implements LoggerAwareInterface
     /**
      * Reset any previously gathered speaker information.
      *
-     * @return static
+     * @return $this
      */
-    public function clearTopology()
+    public function clearTopology(): self
     {
         $this->speakers = null;
 
@@ -325,7 +325,7 @@ class Network implements LoggerAwareInterface
      *
      * @return Controller|null
      */
-    public function getController()
+    public function getController(): Controller
     {
         $controllers = $this->getControllers();
         if ($controller = reset($controllers)) {
@@ -341,7 +341,7 @@ class Network implements LoggerAwareInterface
      *
      * @return Speaker|null
      */
-    public function getSpeakerByRoom(string $room)
+    public function getSpeakerByRoom(string $room): Speaker
     {
         $speakers = $this->getSpeakers();
         foreach ($speakers as $speaker) {
@@ -359,7 +359,7 @@ class Network implements LoggerAwareInterface
      *
      * @return Speaker[]
      */
-    public function getSpeakersByRoom(string $room)
+    public function getSpeakersByRoom(string $room): array
     {
         $return = [];
 
@@ -379,7 +379,7 @@ class Network implements LoggerAwareInterface
      *
      * @return Controller[]
      */
-    public function getControllers()
+    public function getControllers(): array
     {
         $controllers = [];
 
@@ -426,7 +426,7 @@ class Network implements LoggerAwareInterface
      *
      * @return Controller|null
      */
-    public function getControllerByIp(string $ip)
+    public function getControllerByIp(string $ip): Controller
     {
         $speakers = $this->getSpeakers();
         if (!array_key_exists($ip, $speakers)) {
@@ -448,7 +448,7 @@ class Network implements LoggerAwareInterface
      *
      * @return Playlist[]
      */
-    public function getPlaylists()
+    public function getPlaylists(): array
     {
         if (is_array($this->playlists)) {
             return $this->playlists;
@@ -487,7 +487,7 @@ class Network implements LoggerAwareInterface
      *
      * @return bool
      */
-    public function hasPlaylist(string $name)
+    public function hasPlaylist(string $name): bool
     {
         $playlists = $this->getPlaylists();
         foreach ($playlists as $playlist) {
@@ -512,7 +512,7 @@ class Network implements LoggerAwareInterface
      *
      * @return Playlist|null
      */
-    public function getPlaylistByName(string $name)
+    public function getPlaylistByName(string $name): Playlist
     {
         $roughMatch = false;
 
@@ -539,7 +539,7 @@ class Network implements LoggerAwareInterface
      *
      * @return Playlist
      */
-    public function getPlaylistById(int $id)
+    public function getPlaylistById(int $id): Playlist
     {
         $controller = $this->getController();
         if ($controller === null) {
@@ -557,7 +557,7 @@ class Network implements LoggerAwareInterface
      *
      * @return Playlist
      */
-    public function createPlaylist(string $name)
+    public function createPlaylist(string $name): Playlist
     {
         $controller = $this->getController();
         if ($controller === null) {
@@ -583,7 +583,7 @@ class Network implements LoggerAwareInterface
      *
      * @return Alarm[]
      */
-    public function getAlarms()
+    public function getAlarms(): array
     {
         if (is_array($this->alarms)) {
             return $this->alarms;
@@ -608,7 +608,7 @@ class Network implements LoggerAwareInterface
      *
      * @return Alarm|null
      */
-    public function getAlarmById(int $id)
+    public function getAlarmById(int $id): Alarm
     {
         $alarms = $this->getAlarms();
         foreach ($alarms as $alarm) {
@@ -624,7 +624,7 @@ class Network implements LoggerAwareInterface
      *
      * @return Radio
      */
-    public function getRadio()
+    public function getRadio(): Radio
     {
         $controller = $this->getController();
         return new Radio($controller);

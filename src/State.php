@@ -5,6 +5,7 @@ namespace duncan3dc\Sonos;
 use duncan3dc\DomParser\XmlElement;
 use duncan3dc\Sonos\Controller;
 use duncan3dc\Sonos\Tracks\Track;
+use duncan3dc\Sonos\Tracks\UriInterface;
 
 /**
  * Representation of the current state of a controller.
@@ -53,9 +54,9 @@ class State extends Track
      * @param XmlElement $xml The xml element representing the track meta data.
      * @param Controller $controller A controller instance on the playlist's network
      *
-     * @return static
+     * @return self
      */
-    public static function createFromXml(XmlElement $xml, Controller $controller)
+    public static function createFromXml(XmlElement $xml, Controller $controller): UriInterface
     {
         $track = parent::createFromXml($xml, $controller);
 

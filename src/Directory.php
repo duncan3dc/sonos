@@ -57,7 +57,7 @@ class Directory
      *
      * @return string
      */
-    public function getSharePath()
+    public function getSharePath(): string
     {
         return "{$this->share}/{$this->directory}";
     }
@@ -70,7 +70,7 @@ class Directory
      *
      * @return bool
      */
-    public function has(string $file)
+    public function has(string $file): bool
     {
         return $this->filesystem->has("{$this->directory}/{$file}");
     }
@@ -82,11 +82,12 @@ class Directory
      * @param string $file The path to the file
      * @param string $contents The contents to write to the file
      *
-     * @return static
+     * @return $this
      */
-    public function write(string $file, string $contents)
+    public function write(string $file, string $contents): self
     {
         $this->filesystem->write("{$this->directory}/{$file}", $contents);
+
         return $this;
     }
 }

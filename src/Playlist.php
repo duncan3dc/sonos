@@ -41,7 +41,7 @@ class Playlist extends Queue
      *
      * @return string
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -52,7 +52,7 @@ class Playlist extends Queue
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         if ($this->name === null) {
             $data = $this->browse("Metadata");
@@ -68,7 +68,7 @@ class Playlist extends Queue
      *
      * @return int
      */
-    protected function getNextPosition()
+    protected function getNextPosition(): int
     {
         return parent::getNextPosition() - 1;
     }
@@ -82,7 +82,7 @@ class Playlist extends Queue
      *
      * @return bool
      */
-    protected function addUris(array $tracks, int $position = null)
+    protected function addUris(array $tracks, int $position = null): bool
     {
         if ($position === null) {
             $position = $this->getNextPosition();
@@ -115,7 +115,7 @@ class Playlist extends Queue
      *
      * @return bool
      */
-    public function removeTracks(array $positions)
+    public function removeTracks(array $positions): bool
     {
         $data = $this->soap("AVTransport", "ReorderTracksInSavedQueue", [
             "UpdateID"              =>  $this->getUpdateID(),
@@ -134,9 +134,9 @@ class Playlist extends Queue
      * @param int $from The current position of the track in the playlist (zero-based)
      * @param int $to The desired position in the playlist (zero-based)
      *
-     * @return static
+     * @return $this
      */
-    public function moveTrack(int $from, int $to)
+    public function moveTrack(int $from, int $to): self
     {
         $data = $this->soap("AVTransport", "ReorderTracksInSavedQueue", [
             "UpdateID"              =>  $this->getUpdateID(),
@@ -152,9 +152,9 @@ class Playlist extends Queue
     /**
      * Remove all tracks from the queue.
      *
-     * @return static
+     * @return $this
      */
-    public function clear()
+    public function clear(): Queue
     {
         $positions = [];
         $max = $this->count();

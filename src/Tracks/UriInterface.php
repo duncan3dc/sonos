@@ -13,12 +13,12 @@ interface UriInterface
      *
      * @return string
      */
-    public function getUri();
+    public function getUri(): string;
 
     /**
      * Get the metadata xml for this object.
      *
      * @return string
      */
-    public function getMetaData();
+    public function getMetaData(): string;
 }

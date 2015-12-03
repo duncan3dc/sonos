@@ -40,7 +40,7 @@ class Spotify extends Track
      *
      * @return string
      */
-    public function getMetaData()
+    public function getMetaData(): string
     {
         $uri = substr($this->uri, strlen(self::PREFIX));
 
