@@ -2,6 +2,9 @@
 
 namespace duncan3dc\Sonos;
 
+use duncan3dc\Sonos\Devices\Device;
+use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
+
 /**
  * Represents an individual Sonos speaker, to allow volume, equalisation, and other settings to be managed.
  */
@@ -13,7 +16,7 @@ class Speaker
     public $ip;
 
     /**
-     * @var Device $device The instance of the Device class to send requests to.
+     * @var DeviceInterface $device The instance of the Device class to send requests to.
      */
     protected $device;
 
@@ -51,11 +54,11 @@ class Speaker
     /**
      * Create an instance of the Speaker class.
      *
-     * @param Device|string $param An Device instance or the ip address that the speaker is listening on
+     * @param DeviceInterface|string $param An Device instance or the ip address that the speaker is listening on
      */
     public function __construct($param)
     {
-        if ($param instanceof Device) {
+        if ($param instanceof DeviceInterface) {
             $this->device = $param;
             $this->ip = $this->device->ip;
         } else {

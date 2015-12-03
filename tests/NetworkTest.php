@@ -2,69 +2,71 @@
 
 namespace duncan3dc\SonosTests;
 
+use duncan3dc\ObjectIntruder\Intruder;
+use duncan3dc\Sonos\Interfaces\Devices\CollectionInterface;
+use duncan3dc\Sonos\Interfaces\SpeakerInterface;
 use duncan3dc\Sonos\Network;
+use Mockery;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 
 class NetworkTest extends TestCase
 {
-    protected $network;
+    private $network;
+    private $collection;
+
 
     public function setUp()
     {
-        $this->network = new Network;
+        $this->collection = Mockery::mock(CollectionInterface::class);
+        $this->network = new Network($this->collection);
     }
 
 
-    protected function getCacheKey()
+    public function tearDown()
     {
-        $class = new \ReflectionClass($this->network);
-
-        $method = $class->getMethod("getCacheKey");
-        $method->setAccessible(true);
-
-        return $method->invoke($this->network);
+        Mockery::close();
     }
 
 
-    public function testDefaultValues()
+    public function testSetLogger()
     {
-        $this->assertSame("devices_NULL__239.255.255.250", $this->getCacheKey());
+        $logger = Mockery::mock(LoggerInterface::class);
+        $this->collection->shouldReceive("setLogger")->with($logger)->once();
+        $this->assertSame($this->network, $this->network->setLogger($logger));
     }
 
 
-    public function testSetMulticastAddress()
+    public function testGetLogger()
     {
-        $this->network->setMulticastAddress("127.0.0.1");
-        $this->assertSame("devices_NULL__127.0.0.1", $this->getCacheKey());
+        $logger = Mockery::mock(LoggerInterface::class);
+        $this->collection->shouldReceive("getLogger")->with()->once()->andReturn($logger);
+        $this->assertSame($logger, $this->network->getLogger());
     }
 
 
-    public function testGetNetworkInterface()
+    private function mockSpeakers()
     {
-        $this->assertNull($this->network->getNetworkInterface());
+        $speakers = [];
+        foreach (range(1, 3) as $id) {
+            $speaker = Mockery::mock(SpeakerInterface::class);
+            $speaker->shouldReceive("getIp")->andReturn("127.0.0.{$id}");
+            $speakers[] = $speaker;
+        }
+
+        $network = new Intruder($this->network);
+        $network->speakers = $speakers;
+
+        return $speakers;
     }
 
 
-    public function testSetNetworkInterfaceString()
+    public function testGetSpeakers()
     {
-        $this->network->setNetworkInterface("eth0");
-        $this->assertSame("eth0", $this->network->getNetworkInterface());
-        $this->assertSame("devices_string_eth0_239.255.255.250", $this->getCacheKey());
-    }
+        $this->mockSpeakers();
+        $speakers = $this->network->getSpeakers();
 
-
-    public function testSetNetworkInterfaceInteger()
-    {
-        $this->network->setNetworkInterface(0);
-        $this->assertSame(0, $this->network->getNetworkInterface());
-        $this->assertSame("devices_integer_0_239.255.255.250", $this->getCacheKey());
-    }
-
-
-    public function testSetNetworkInterfaceEmptyString()
-    {
-        $this->network->setNetworkInterface("");
-        $this->assertSame("", $this->network->getNetworkInterface());
-        $this->assertSame("devices_string__239.255.255.250", $this->getCacheKey());
+        $this->assertSame(3, count($speakers));
+        $this->assertContainsOnlyInstancesOf(SpeakerInterface::class, $speakers);
     }
 }

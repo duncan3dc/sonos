@@ -4,7 +4,7 @@ namespace duncan3dc\SonosTests;
 
 use duncan3dc\DomParser\XmlParser;
 use duncan3dc\Sonos\Controller;
-use duncan3dc\Sonos\Device;
+use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
 use duncan3dc\Sonos\Network;
 use duncan3dc\Sonos\Speaker;
 use Mockery;
@@ -28,7 +28,7 @@ abstract class MockTest extends TestCase
 
     protected function getDevice()
     {
-        $device = Mockery::mock(Device::class);
+        $device = Mockery::mock(DeviceInterface::class);
         $device->ip = "192.168.0.66";
 
         $parser = Mockery::mock(XmlParser::class);
@@ -41,14 +41,14 @@ abstract class MockTest extends TestCase
         return $device;
     }
 
-    protected function getSpeaker(Device $device)
+    protected function getSpeaker(DeviceInterface $device)
     {
         $device->shouldReceive("isSpeaker")->once()->andReturn(true);
 
         return new Speaker($device);
     }
 
-    protected function getController(Device $device)
+    protected function getController(DeviceInterface $device)
     {
         $speaker = $this->getSpeaker($device);
 

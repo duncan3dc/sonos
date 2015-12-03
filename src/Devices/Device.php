@@ -1,37 +1,40 @@
 <?php
 
-namespace duncan3dc\Sonos;
+namespace duncan3dc\Sonos\Devices;
 
-use Doctrine\Common\Cache\Cache as CacheInterface;
+use duncan3dc\Cache\ArrayPool;
 use duncan3dc\DomParser\XmlParser;
+use duncan3dc\Sonos\Exceptions\SoapException;
+use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
 use GuzzleHttp\Client;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use Psr\SimpleCache\CacheInterface;
 
 /**
  * Make http requests to a Sonos device.
  */
-class Device
+final class Device implements DeviceInterface
 {
     /**
      * @var string $ip The IP address of the device.
      */
-    public $ip;
+    private $ip;
 
     /**
      * @var string $model The model of the device.
      */
-    protected $model;
+    private $model;
 
     /**
-     * @var CacheInterface $cache The long-lived cache object from the Network instance.
+     * @var CacheInterface $cache The long-lived cache object from the Collection instance.
      */
-    protected $cache;
+    private $cache;
 
     /**
      * @var LoggerInterface $logger The logging object.
      */
-    protected $logger;
+    private $logger;
 
 
     /**
@@ -46,7 +49,7 @@ class Device
         $this->ip = $ip;
 
         if ($cache === null) {
-            $cache = new Cache;
+            $cache = new ArrayPool;
         }
         $this->cache = $cache;
 
@@ -54,6 +57,15 @@ class Device
             $logger = new NullLogger;
         }
         $this->logger = $logger;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getIp()
+    {
+        return $this->ip;
     }
 
 
@@ -67,14 +79,15 @@ class Device
     public function getXml(string $url): XmlParser
     {
         $uri = "http://{$this->ip}:1400{$url}";
+        $key = str_replace("/", "_", $this->ip . $url);
 
-        if ($this->cache->contains($uri)) {
+        if ($this->cache->has($key)) {
             $this->logger->info("getting xml from cache: {$uri}");
-            $xml = $this->cache->fetch($uri);
+            $xml = $this->cache->get($key);
         } else {
             $this->logger->notice("requesting xml from: {$uri}");
             $xml = (string) (new Client)->get($uri)->getBody();
-            $this->cache->save($uri, $xml, Cache::DAY);
+            $this->cache->set($key, $xml, new \DateInterval("P1D"));
         }
 
         return new XmlParser($xml);
@@ -135,7 +148,7 @@ class Device
         } catch (\SoapFault $e) {
             $this->logger->debug("REQUEST: " . $soap->__getLastRequest());
             $this->logger->debug("RESPONSE: " . $soap->__getLastResponse());
-            throw new Exceptions\SoapException($e, $soap);
+            throw new SoapException($e, $soap);
         }
 
         return $result;

@@ -1,0 +1,59 @@
+HTTP/1.1 200 OK
+CACHE-CONTROL: max-age = 1800
+EXT:
+LOCATION: http://192.168.11.5:1400/xml/device_description.xml
+SERVER: Linux UPnP/1.0 Sonos/39.4-48021 (ZPS1)
+ST: urn:schemas-upnp-org:device:ZonePlayer:1
+USN: uuid:RINCON_5CAAFD4E6CC401400::urn:schemas-upnp-org:device:ZonePlayer:1
+X-RINCON-HOUSEHOLD: Sonos_fw1Z6kcBa9ygugIWniiG8lF7Sy
+X-RINCON-BOOTSEQ: 31
+X-RINCON-WIFIMODE: 0
+X-RINCON-VARIANT: 0
+HOUSEHOLD.SMARTSPEAKER.AUDIO: Sonos_fw1Z6kcBa9ygugIWniiG8lF7Sy
+
+HTTP/1.1 200 OK
+CACHE-CONTROL: max-age=86400
+DATE: 2016-10-29
+EXT:
+LOCATION: http://192.168.11.42:9500/db111907-d568-49d8-8218-7e26ecfbe2b5/setup.xml
+OPT: "http://schemas.upnp.org/upnp/1/0/"; ns=01
+01-NLS: 6764
+SERVER: Unspecified, UPnP/1.0, Unspecified
+ST: urn:Belkin:device:**
+USN: uuid:Socket-1_0-db111907-d568-49d8-8218-7e26ecfbe2b5::urn:Belkin:device:**
+
+HTTP/1.1 200 OK
+CACHE-CONTROL: max-age=86400
+DATE: 2016-10-29
+EXT:
+LOCATION: http://192.168.11.42:9501/ca62d5e0-3f52-4ceb-8f72-4d70d4fcd8b1/setup.xml
+OPT: "http://schemas.upnp.org/upnp/1/0/"; ns=01
+01-NLS: 6764
+SERVER: Unspecified, UPnP/1.0, Unspecified
+ST: urn:Belkin:device:**
+USN: uuid:Socket-1_0-ca62d5e0-3f52-4ceb-8f72-4d70d4fcd8b1::urn:Belkin:device:**
+
+HTTP/1.1 200 OK
+CACHE-CONTROL: max-age=86400
+DATE: 2016-10-29
+EXT:
+LOCATION: http://192.168.11.42:9502/e8c06259-a10e-4060-89a1-653c617b0d8e/setup.xml
+OPT: "http://schemas.upnp.org/upnp/1/0/"; ns=01
+01-NLS: 6764
+SERVER: Unspecified, UPnP/1.0, Unspecified
+ST: urn:Belkin:device:**
+USN: uuid:Socket-1_0-e8c06259-a10e-4060-89a1-653c617b0d8e::urn:Belkin:device:**
+
+HTTP/1.1 200 OK
+CACHE-CONTROL: max-age = 1800
+EXT:
+LOCATION: http://192.168.11.77:1400/xml/device_description.xml
+SERVER: Linux UPnP/1.0 Sonos/39.4-48021 (ZPS6)
+ST: urn:schemas-upnp-org:device:ZonePlayer:1
+USN: uuid:RINCON_5CAAFD0371D801400::urn:schemas-upnp-org:device:ZonePlayer:1
+X-RINCON-HOUSEHOLD: Sonos_fw1Z6kcBa9ygugIWniiG8lF7Sy
+X-RINCON-BOOTSEQ: 45
+X-RINCON-WIFIMODE: 0
+X-RINCON-VARIANT: 1
+HOUSEHOLD.SMARTSPEAKER.AUDIO: Sonos_fw1Z6kcBa9ygugIWniiG8lF7Sy
+

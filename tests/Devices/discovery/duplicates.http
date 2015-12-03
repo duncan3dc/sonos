@@ -1,0 +1,38 @@
+HTTP/1.1 200 OK
+CACHE-CONTROL: max-age = 1800
+EXT: urn:schemas-upnp-org:device:ZonePlayer:1
+LOCATION: http://192.168.7.105:1400/xml/device_description.xml
+SERVER: Linux UPnP/1.0 Sonos/40.5-48230 (ZPS1)
+ST:
+USN: uuid:RINCON_B8E93759B3D601400::urn:schemas-upnp-org:device:ZonePlayer:1
+X-RINCON-HOUSEHOLD: Sonos_P9Ufbz0f2mKYnHAVXZdaVyKLm5
+X-RINCON-BOOTSEQ: 12
+X-RINCON-WIFIMODE: 0
+X-RINCON-VARIANT: 0
+HOUSEHOLD.SMARTSPEAKER.AUDIO: Sonos_P9Ufbz0f2mKYnHAVXZdaVyKLm5.hGpwxvlyS5Nn7axGyatZ
+
+HTTP/1.1 200 OK
+CACHE-CONTROL: max-age = 1800
+EXT:
+LOCATION: http://192.168.7.103:1400/xml/device_description.xml
+SERVER: Linux UPnP/1.0 Sonos/40.5-48230 (ZPS1)
+ST: urn:schemas-upnp-org:device:ZonePlayer:1
+USN: uuid:RINCON_B8E937586CEC01400::urn:schemas-upnp-org:device:ZonePlayer:1
+X-RINCON-HOUSEHOLD: Sonos_P9Ufbz0f2mKYnHAVXZdaVyKLm5
+X-RINCON-BOOTSEQ: 112
+X-RINCON-WIFIMODE: 0
+X-RINCON-VARIANT: 0
+HOUSEHOLD.SMARTSPEAKER.AUDIO: Sonos_P9Ufbz0f2mKYnHAVXZdaVyKLm5.hGpwxvlyS5Nn7axGyatZ
+
+HTTP/1.1 200 OK
+CACHE-CONTROL: max-age = 1800
+EXT:
+LOCATION: http://192.168.7.104:1400/xml/device_description.xml
+SERVER: Linux UPnP/1.0 Sonos/40.5-48230 (ZPS1)
+ST: urn:schemas-upnp-org:device:ZonePlayer:1
+USN: uuid:RINCON_B8E937586CEC01400::urn:schemas-upnp-org:device:ZonePlayer:1
+X-RINCON-HOUSEHOLD: Sonos_P9Ufbz0f2mKYnHAVXZdaVyKLm5
+X-RINCON-BOOTSEQ: 112
+X-RINCON-WIFIMODE: 0
+X-RINCON-VARIANT: 0
+HOUSEHOLD.SMARTSPEAKER.AUDIO: Sonos_P9Ufbz0f2mKYnHAVXZdaVyKLm5.hGpwxvlyS5Nn7axGyatZ

@@ -2,20 +2,27 @@
 
 namespace duncan3dc\Sonos;
 
-use Doctrine\Common\Cache\Cache as CacheInterface;
 use duncan3dc\DomParser\XmlParser;
+use duncan3dc\Sonos\Devices\Collection;
+use duncan3dc\Sonos\Devices\Discovery;
+use duncan3dc\Sonos\Devices\Factory;
 use duncan3dc\Sonos\Exceptions\NotFoundException;
+use duncan3dc\Sonos\Interfaces\Devices\CollectionInterface;
 use duncan3dc\Sonos\Services\Radio;
 use GuzzleHttp\Client;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
 
 /**
  * Provides methods to locate speakers/controllers/playlists on the current network.
  */
 class Network implements LoggerAwareInterface
 {
+    /**
+     * @var CollectionInterface $collection The collection of devices on the network.
+     */
+    private $collection;
+
     /**
      * @var Speaker[]|null $speakers Speakers that are available on the current network.
      */
@@ -31,43 +38,18 @@ class Network implements LoggerAwareInterface
      */
     protected $alarms;
 
-    /**
-     * @var CacheInterface $cache The cache object to use for the expensive multicast discover to find Sonos devices on the network.
-     */
-    protected $cache;
-
-    /**
-     * @var LoggerInterface $logger The logging object.
-     */
-    protected $logger;
-
-    /**
-     * @var string $multicastAddress The multicast address to use for SSDP discovery.
-     */
-    protected $multicastAddress = "239.255.255.250";
-
-    /**
-     * @var string|int|null $networkInterface The network interface to use for SSDP discovery.
-     */
-    protected $networkInterface;
 
     /**
      * Create a new instance.
      *
-     * @param CacheInterface $cache The cache object to use for the expensive multicast discover to find Sonos devices on the network
-     * @param LoggerInterface $logger The logging object
+     * @param CollectionInterface $collection The collection of devices on this network
      */
-    public function __construct(CacheInterface $cache = null, LoggerInterface $logger = null)
+    public function __construct(CollectionInterface $collection = null)
     {
-        if ($cache === null) {
-            $cache = new Cache;
+        if ($collection === null) {
+            $collection = new Discovery(new Collection(new Factory));
         }
-        $this->cache = $cache;
-
-        if ($logger === null) {
-            $logger = new NullLogger;
-        }
-        $this->logger = $logger;
+        $this->collection = $collection;
     }
 
 
@@ -80,7 +62,7 @@ class Network implements LoggerAwareInterface
      */
     public function setLogger(LoggerInterface $logger)
     {
-        $this->logger = $logger;
+        $this->collection->setLogger($logger);
 
         return $this;
     }
@@ -93,149 +75,7 @@ class Network implements LoggerAwareInterface
      */
     public function getLogger()
     {
-        return $this->logger;
-    }
-
-
-    /**
-     * Set the multicast address to use for SSDP discovery.
-     *
-     * @var string $multicastAddress The address to use
-     *
-     * @return static
-     */
-    public function setMulticastAddress(string $multicastAddress)
-    {
-        $this->multicastAddress = $multicastAddress;
-
-        return $this;
-    }
-
-
-    /**
-     * Set the network interface to use for SSDP discovery.
-     *
-     * See the documentation on IP_MULTICAST_IF at http://php.net/manual/en/function.socket-get-option.php
-     *
-     * @var string|int $networkInterface The interface to use
-     *
-     * @return static
-     */
-    public function setNetworkInterface($networkInterface)
-    {
-        $this->networkInterface = $networkInterface;
-
-        return $this;
-    }
-
-
-    /**
-     * Get the network interface currently in use
-     *
-     * @return string|int|null The network interface name
-     */
-    public function getNetworkInterface()
-    {
-        return $this->networkInterface;
-    }
-
-
-    protected function getCacheKey()
-    {
-        $cacheKey = "devices";
-
-        $cacheKey .= "_" . gettype($this->networkInterface);
-        $cacheKey .= "_" . $this->networkInterface;
-
-        $cacheKey .= "_" . $this->multicastAddress;
-
-        return $cacheKey;
-    }
-
-
-    /**
-     * Get all the devices on the current network.
-     *
-     * @return string[] An array of ip addresses
-     */
-    protected function getDevices()
-    {
-        $this->logger->info("discovering devices...");
-
-        $port = 1900;
-
-        $sock = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
-
-        $level = getprotobyname("ip");
-
-        socket_set_option($sock, $level, IP_MULTICAST_TTL,  2);
-
-        if ($this->networkInterface !== null) {
-            socket_set_option($sock, $level, IP_MULTICAST_IF, $this->networkInterface);
-        }
-
-        $data = "M-SEARCH * HTTP/1.1\r\n";
-        $data .= "HOST: {$this->multicastAddress}:reservedSSDPport\r\n";
-        $data .= "MAN: ssdp:discover\r\n";
-        $data .= "MX: 1\r\n";
-        $data .= "ST: urn:schemas-upnp-org:device:ZonePlayer:1\r\n";
-
-        $this->logger->debug($data);
-
-        socket_sendto($sock, $data, strlen($data), null, $this->multicastAddress, $port);
-
-        $read = [$sock];
-        $write = [];
-        $except = [];
-        $name = null;
-        $port = null;
-        $tmp = "";
-
-        $response = "";
-        while (socket_select($read, $write, $except, 1)) {
-            socket_recvfrom($sock, $tmp, 2048, null, $name, $port);
-            $response .= $tmp;
-        }
-
-        $this->logger->debug($response);
-
-        $devices = [];
-        foreach (explode("\r\n\r\n", $response) as $reply) {
-            if (!$reply) {
-                continue;
-            }
-
-            $data = [];
-            foreach (explode("\r\n", $reply) as $line) {
-                if (!$pos = strpos($line, ":")) {
-                    continue;
-                }
-                $key = strtolower(substr($line, 0, $pos));
-                $val = trim(substr($line, $pos + 1));
-                $data[$key] = $val;
-            }
-            $devices[] = $data;
-        }
-
-        $return = [];
-        $unique = [];
-        foreach ($devices as $device) {
-            if ($device["st"] !== "urn:schemas-upnp-org:device:ZonePlayer:1") {
-                continue;
-            }
-            if (in_array($device["usn"], $unique)) {
-                continue;
-            }
-            $this->logger->info("found device: {usn}", $device);
-
-            $url = parse_url($device["location"]);
-            $ip = $url["host"];
-
-            $return[] = $ip;
-            $unique[] = $device["usn"];
-        }
-
-        return $return;
+        return $this->collection->getLogger();
     }
 
 
@@ -250,31 +90,18 @@ class Network implements LoggerAwareInterface
             return $this->speakers;
         }
 
-        $this->logger->info("creating speaker instances");
-
-        $cacheKey = $this->getCacheKey();
-
-        if ($this->cache->contains($cacheKey)) {
-            $this->logger->info("getting device info from cache");
-            $devices = $this->cache->fetch($cacheKey);
-        } else {
-            $devices = $this->getDevices();
-
-            # Only cache the devices if we actually found some
-            if (count($devices) > 0) {
-                $this->cache->save($cacheKey, $devices);
-            }
-        }
-
+        $devices = $this->collection->getDevices();
         if (count($devices) < 1) {
-            throw new \RuntimeException("No devices found on the current network");
+            throw new \RuntimeException("No devices in this collection");
         }
+
+        $this->getLogger()->info("creating speaker instances");
 
         # Get the topology information from 1 speaker
         $topology = [];
-        $ip = reset($devices);
+        $ip = reset($devices)->ip;
         $uri = "http://{$ip}:1400/status/topology";
-        $this->logger->notice("Getting topology info from: {$uri}");
+        $this->getLogger()->notice("Getting topology info from: {$uri}");
         $xml = (string) (new Client)->get($uri)->getBody();
         $players = (new XmlParser($xml))->getTag("ZonePlayers")->getTags("ZonePlayer");
         foreach ($players as $player) {
@@ -284,22 +111,20 @@ class Network implements LoggerAwareInterface
         }
 
         $this->speakers = [];
-        foreach ($devices as $ip) {
-            $device = new Device($ip, $this->cache, $this->logger);
-
+        foreach ($devices as $device) {
             if (!$device->isSpeaker()) {
                 continue;
             }
 
             $speaker = new Speaker($device);
 
-            if (!isset($topology[$ip])) {
+            if (!isset($topology[$device->ip])) {
                 throw new \RuntimeException("Failed to lookup the topology info for this speaker");
             }
 
-            $speaker->setTopology($topology[$ip]);
+            $speaker->setTopology($topology[$device->ip]);
 
-            $this->speakers[$ip] = $speaker;
+            $this->speakers[$device->ip] = $speaker;
         }
 
         return $this->speakers;
@@ -313,7 +138,7 @@ class Network implements LoggerAwareInterface
      */
     public function clearTopology(): self
     {
-        $this->speakers = null;
+        $this->collection->clearTopology();
 
         return $this;
     }
