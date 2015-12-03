@@ -59,18 +59,6 @@ class Stream implements UriInterface
 
 
     /**
-     * Get the name for this stream.
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        trigger_error("The getTitle() method is deprecated in favour of getName()", \E_USER_DEPRECATED);
-        return $this->getName();
-    }
-
-
-    /**
      * Get the metadata xml for this stream.
      *
      * @return string

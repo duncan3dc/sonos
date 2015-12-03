@@ -5,7 +5,6 @@ namespace duncan3dc\Sonos;
 use Doctrine\Common\Cache\Cache as CacheInterface;
 use duncan3dc\DomParser\XmlParser;
 use duncan3dc\Sonos\Services\Radio;
-use duncan3dc\Sonos\Tracks\Stream;
 use GuzzleHttp\Client;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
@@ -629,29 +628,5 @@ class Network implements LoggerAwareInterface
     {
         $controller = $this->getController();
         return new Radio($controller);
-    }
-
-
-    /**
-     * Get the favourite radio stations.
-     *
-     * @return Stream[]
-     */
-    public function getRadioStations()
-    {
-        trigger_error("The getRadioStations() method is deprecated in favour of getRadio()->getFavouriteStations()", \E_USER_DEPRECATED);
-        return $this->getRadio()->getFavouriteStations();
-    }
-
-
-    /**
-     * Get the favourite radio shows.
-     *
-     * @return Stream[]
-     */
-    public function getRadioShows()
-    {
-        trigger_error("The getRadioShows() method is deprecated in favour of getRadio()->getFavouriteShows()", \E_USER_DEPRECATED);
-        return $this->getRadio()->getFavouriteShows();
     }
 }
