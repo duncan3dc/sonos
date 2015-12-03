@@ -75,14 +75,14 @@ class Playlist extends Queue
 
 
     /**
-     * Add a uri to the playlist.
+     * Add tracks to the playlist.
      *
-     * @param UriInterface $track The track to add
+     * @param UriInterface[] $tracks The tracks to add
      * @param int $position The position to insert the track in the playlist (zero-based), by default the track will be added to the end of the playlist
      *
      * @return bool
      */
-    protected function addUris(array $tracks, $position = null)
+    protected function addUris(array $tracks, int $position = null)
     {
         if ($position === null) {
             $position = $this->getNextPosition();
@@ -136,7 +136,7 @@ class Playlist extends Queue
      *
      * @return static
      */
-    public function moveTrack($from, $to)
+    public function moveTrack(int $from, int $to)
     {
         $data = $this->soap("AVTransport", "ReorderTracksInSavedQueue", [
             "UpdateID"              =>  $this->getUpdateID(),

@@ -45,7 +45,7 @@ class Radio
      *
      * @return Stream[]
      */
-    protected function getFavourites($type)
+    protected function getFavourites(int $type)
     {
         $items = [];
 
@@ -90,7 +90,7 @@ class Radio
      *
      * @return Stream|null
      */
-    public function getFavouriteStation($name)
+    public function getFavouriteStation(string $name)
     {
         $roughMatch = false;
 
@@ -130,7 +130,7 @@ class Radio
      *
      * @return Stream|null
      */
-    public function getFavouriteShow($name)
+    public function getFavouriteShow(string $name)
     {
         $roughMatch = false;
 

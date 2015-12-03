@@ -2,6 +2,7 @@
 
 namespace duncan3dc\SonosTests;
 
+use duncan3dc\Sonos\Controller;
 use duncan3dc\Sonos\ControllerState;
 use duncan3dc\Sonos\Exceptions\SoapException;
 use Mockery;
@@ -122,15 +123,21 @@ class ControllerTest extends MockTest
         $controller = $this->getController($device);
 
         $state = Mockery::mock(ControllerState::class);
+        $state->state = Controller::STATE_STOPPED;
+        $state->track = 0;
+        $state->position = "00:00:00";
+        $state->repeat = false;
+        $state->shuffle = false;
+        $state->crossfade = false;
         $state->speakers = [];
         $state->tracks = [];
 
         $device->shouldReceive("soap")->once()->with("AVTransport", "RemoveAllTracksFromQueue", ["ObjectID" => "Q:0"]);
-        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", []);
+        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", [])->andReturn(["PlayMode" => "TEST"]);
         $device->shouldReceive("soap")->once()->with("AVTransport", "SetCrossfadeMode", ["CrossfadeMode" => false]);
 
         $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportInfo", []);
-        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", []);
+        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", [])->andReturn(["PlayMode" => "TEST"]);
 
         $result = $controller->restoreState($state);
         $this->assertSame($controller, $result);
@@ -143,12 +150,17 @@ class ControllerTest extends MockTest
         $controller = $this->getController($device);
 
         $state = Mockery::mock(ControllerState::class);
+        $state->state = Controller::STATE_STOPPED;
+        $state->track = 0;
+        $state->position = "05:03:01";
+        $state->repeat = false;
+        $state->shuffle = false;
+        $state->crossfade = false;
         $state->speakers = [];
         $state->tracks = ["track"];
-        $state->position = "05:03:01";
 
         $device->shouldReceive("soap")->once()->with("AVTransport", "RemoveAllTracksFromQueue", ["ObjectID" => "Q:0"]);
-        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", []);
+        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", [])->andReturn(["PlayMode" => "TEST"]);
         $device->shouldReceive("soap")->once()->with("AVTransport", "SetCrossfadeMode", ["CrossfadeMode" => false]);
 
         $device->shouldReceive("soap")->once()->with("ContentDirectory", "Browse", [
@@ -170,7 +182,7 @@ class ControllerTest extends MockTest
         ]);
 
         $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportInfo", []);
-        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", []);
+        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", [])->andReturn(["PlayMode" => "TEST"]);
 
         $result = $controller->restoreState($state);
         $this->assertSame($controller, $result);

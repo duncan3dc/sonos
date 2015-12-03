@@ -41,7 +41,7 @@ class AlarmTest extends MockTest
     }
 
 
-    protected function getMockRecurrence($recurrence)
+    protected function getMockRecurrence(string $recurrence)
     {
         return $this->getMockAlarm([
             "Recurrence"    =>  $recurrence,

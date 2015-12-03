@@ -83,7 +83,7 @@ class Speaker
      *
      * @return mixed
      */
-    public function soap($service, $action, array $params = [])
+    public function soap(string $service, string $action, array $params = [])
     {
         return $this->device->soap($service, $action, $params);
     }
@@ -195,7 +195,7 @@ class Speaker
      *
      * @return static
      */
-    public function setVolume($volume)
+    public function setVolume(int $volume)
     {
         $this->soap("RenderingControl", "SetVolume", [
             "Channel"       =>  "Master",
@@ -213,7 +213,7 @@ class Speaker
      *
      * @return static
      */
-    public function adjustVolume($adjust)
+    public function adjustVolume(int $adjust)
     {
         $this->soap("RenderingControl", "SetRelativeVolume", [
             "Channel"       =>  "Master",
@@ -244,7 +244,7 @@ class Speaker
      *
      * @return static
      */
-    public function mute($mute = true)
+    public function mute(bool $mute = true)
     {
         $this->soap("RenderingControl", "SetMute", [
             "Channel"       =>  "Master",
@@ -273,7 +273,7 @@ class Speaker
      *
      * @return static
      */
-    public function setIndicator($on)
+    public function setIndicator(bool $on)
     {
         $this->soap("DeviceProperties", "SetLEDState", [
             "DesiredLEDState"   =>  $on ? "On" : "Off",
@@ -302,7 +302,7 @@ class Speaker
      *
      * @return static
      */
-    protected function setEqLevel($type, $value)
+    protected function setEqLevel(string $type, int $value)
     {
         if ($value < -10) {
             $value = -10;
@@ -340,7 +340,7 @@ class Speaker
      *
      * @return static
      */
-    public function setTreble($treble)
+    public function setTreble(int $treble)
     {
         return $this->setEqLevel("treble", $treble);
     }
@@ -366,7 +366,7 @@ class Speaker
      *
      * @return static
      */
-    public function setBass($bass)
+    public function setBass(int $bass)
     {
         return $this->setEqLevel("bass", $bass);
     }
@@ -392,7 +392,7 @@ class Speaker
      *
      * @return static
      */
-    public function setLoudness($on)
+    public function setLoudness(bool $on)
     {
         $this->soap("RenderingControl", "SetLoudness", [
             "Channel"           =>  "Master",

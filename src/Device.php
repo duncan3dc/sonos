@@ -41,7 +41,7 @@ class Device
      * @param CacheInterface $cache The cache object to use for the expensive multicast discover to find Sonos devices on the network
      * @param LoggerInterface $logger A logging object
      */
-    public function __construct($ip, CacheInterface $cache = null, LoggerInterface $logger = null)
+    public function __construct(string $ip, CacheInterface $cache = null, LoggerInterface $logger = null)
     {
         $this->ip = $ip;
 
@@ -64,7 +64,7 @@ class Device
      *
      * @return XmlParser
      */
-    public function getXml($url)
+    public function getXml(string $url)
     {
         $uri = "http://{$this->ip}:1400{$url}";
 
@@ -90,7 +90,7 @@ class Device
      *
      * @return mixed
      */
-    public function soap($service, $action, array $params = [])
+    public function soap(string $service, string $action, array $params = [])
     {
         switch ($service) {
             case "AVTransport";

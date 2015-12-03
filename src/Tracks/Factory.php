@@ -34,7 +34,7 @@ class Factory
      *
      * @return string
      */
-    protected function guessTrackClass($uri)
+    protected function guessTrackClass(string $uri)
     {
         $classes = [
             Spotify::class,
@@ -60,7 +60,7 @@ class Factory
      *
      * @return Track
      */
-    public function createFromUri($uri)
+    public function createFromUri(string $uri)
     {
         $class = $this->guessTrackClass($uri);
 

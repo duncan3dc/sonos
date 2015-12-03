@@ -70,7 +70,7 @@ class Alarm
      *
      * @return mixed
      */
-    protected function soap($service, $action, $params = [])
+    protected function soap(string $service, string $action, array $params = [])
     {
         $params["ID"] = $this->id;
 
@@ -107,7 +107,7 @@ class Alarm
      *
      * @return static
      */
-    public function setRoom($uuid)
+    public function setRoom(string $uuid)
     {
         $this->attributes["RoomUUID"] = $uuid;
         return $this->save();
@@ -163,7 +163,7 @@ class Alarm
      *
      * @return static
      */
-    public function setTime($time)
+    public function setTime(string $time)
     {
         $exception = new \InvalidArgumentException("Invalid time specified, time must be in the format hh:mm");
         if (!preg_match("/^([0-9]{1,2}):([0-9]{1,2})$/", $time, $matches)) {
@@ -201,7 +201,7 @@ class Alarm
      *
      * @return static
      */
-    public function setDuration($duration)
+    public function setDuration(int $duration)
     {
         $hours = floor($duration / 60);
         $minutes = $duration % 60;
@@ -256,7 +256,7 @@ class Alarm
      *
      * @return static
      */
-    public function setFrequency($frequency)
+    public function setFrequency(int $frequency)
     {
         $recurrence = "ON_";
         foreach ($this->days as $key => $val) {
@@ -289,7 +289,7 @@ class Alarm
      *
      * @return bool|static Returns true/false when checking, or static when setting
      */
-    protected function onHandler($day, $set = null)
+    protected function onHandler(int $day, bool $set = null)
     {
         $frequency = $this->getFrequency();
         if ($set === null) {
@@ -313,7 +313,7 @@ class Alarm
      *
      * @return bool|static Returns true/false when checking, or static when setting
      */
-    public function onMonday($set = null)
+    public function onMonday(bool $set = null)
     {
         return $this->onHandler(self::MONDAY, $set);
     }
@@ -326,7 +326,7 @@ class Alarm
      *
      * @return bool|static Returns true/false when checking, or static when setting
      */
-    public function onTuesday($set = null)
+    public function onTuesday(bool $set = null)
     {
         return $this->onHandler(self::TUESDAY, $set);
     }
@@ -339,7 +339,7 @@ class Alarm
      *
      * @return bool|static Returns true/false when checking, or static when setting
      */
-    public function onWednesday($set = null)
+    public function onWednesday(bool $set = null)
     {
         return $this->onHandler(self::WEDNESDAY, $set);
     }
@@ -352,7 +352,7 @@ class Alarm
      *
      * @return bool|static Returns true/false when checking, or static when setting
      */
-    public function onThursday($set = null)
+    public function onThursday(bool $set = null)
     {
         return $this->onHandler(self::THURSDAY, $set);
     }
@@ -365,7 +365,7 @@ class Alarm
      *
      * @return bool|static Returns true/false when checking, or static when setting
      */
-    public function onFriday($set = null)
+    public function onFriday(bool $set = null)
     {
         return $this->onHandler(self::FRIDAY, $set);
     }
@@ -378,7 +378,7 @@ class Alarm
      *
      * @return bool|static Returns true/false when checking, or static when setting
      */
-    public function onSaturday($set = null)
+    public function onSaturday(bool $set = null)
     {
         return $this->onHandler(self::SATURDAY, $set);
     }
@@ -391,7 +391,7 @@ class Alarm
      *
      * @return bool|static Returns true/false when checking, or static when setting
      */
-    public function onSunday($set = null)
+    public function onSunday(bool $set = null)
     {
         return $this->onHandler(self::SUNDAY, $set);
     }
@@ -404,7 +404,7 @@ class Alarm
      *
      * @return bool|static Returns true/false when checking, or static when setting
      */
-    public function once($set = null)
+    public function once(bool $set = null)
     {
         if ($set) {
             return $this->setFrequency(self::ONCE);
@@ -420,7 +420,7 @@ class Alarm
      *
      * @return bool|static Returns true/false when checking, or static when setting
      */
-    public function daily($set = null)
+    public function daily(bool $set = null)
     {
         if ($set) {
             return $this->setFrequency(self::DAILY);
@@ -491,7 +491,7 @@ class Alarm
      *
      * @return static
      */
-    public function setVolume($volume)
+    public function setVolume(int $volume)
     {
         $this->attributes["Volume"] = $volume;
 
@@ -506,7 +506,7 @@ class Alarm
      *
      * @return bool
      */
-    protected function getPlayMode($type)
+    protected function getPlayMode(string $type)
     {
         $mode = Helper::getMode($this->attributes["PlayMode"]);
         return $mode[$type];
@@ -521,10 +521,8 @@ class Alarm
      *
      * @return static
      */
-    protected function setPlayMode($type, $value)
+    protected function setPlayMode(string $type, bool $value)
     {
-        $value = (bool) $value;
-
         $mode = Helper::getMode($this->attributes["PlayMode"]);
         if ($mode[$type] === $value) {
             return $this;
@@ -555,7 +553,7 @@ class Alarm
      *
      * @return static
      */
-    public function setRepeat($repeat)
+    public function setRepeat(bool $repeat)
     {
         return $this->setPlayMode("repeat", $repeat);
     }
@@ -579,7 +577,7 @@ class Alarm
      *
      * @return static
      */
-    public function setShuffle($shuffle)
+    public function setShuffle(bool $shuffle)
     {
         return $this->setPlayMode("shuffle", $shuffle);
     }

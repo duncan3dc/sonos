@@ -24,7 +24,7 @@ class Spotify extends Track
      *
      * @param string $uri The URI of the track or the Spotify ID of the track
      */
-    public function __construct($uri)
+    public function __construct(string $uri)
     {
         # If this is a spotify track ID and not a URI then convert it to a URI now
         if (substr($uri, 0, strlen(self::PREFIX)) !== self::PREFIX) {

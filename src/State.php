@@ -36,10 +36,13 @@ class State extends Track
      */
     public $position = "";
 
+
     /**
-     * Create a Track object.
+     * Create a State object.
+     *
+     * @param string $uri The URI used by the state
      */
-    public function __construct($uri = null)
+    public function __construct(string $uri = "")
     {
         parent::__construct($uri);
     }

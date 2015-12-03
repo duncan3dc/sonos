@@ -69,7 +69,7 @@ class FactoryTest extends MockTest
     }
 
 
-    private function getXml($uri, $title = "")
+    private function getXml(string $uri, string $title = "")
     {
         $xml = XmlWriter::createXml([
             "track" =>  [

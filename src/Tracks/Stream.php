@@ -28,8 +28,9 @@ class Stream implements UriInterface
      * Create a Stream object.
      *
      * @param string $uri The URI of the stream
+     * @param string $name The name of the stream
      */
-    public function __construct($uri, $name = "")
+    public function __construct(string $uri, string $name = "")
     {
         $this->uri = (string) $uri;
         $this->name = (string) $name;

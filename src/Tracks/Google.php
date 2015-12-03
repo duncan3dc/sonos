@@ -17,7 +17,7 @@ class Google extends Track
      *
      * @param string $uri The URI of the track or the Google ID of the track
      */
-    public function __construct($uri)
+    public function __construct(string $uri)
     {
         # If this is a Google track ID and not a URI then convert it to a URI now
         if (substr($uri, 0, strlen(static::PREFIX)) !== static::PREFIX) {

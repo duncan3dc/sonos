@@ -56,7 +56,7 @@ class Queue implements \Countable
      *
      * @return mixed
      */
-    protected function soap($service, $action, $params = [])
+    protected function soap(string $service, string $action, array $params = [])
     {
         $params["ObjectID"] = $this->id;
 
@@ -78,7 +78,7 @@ class Queue implements \Countable
      *
      * @return mixed
      */
-    protected function browse($type, $start = 0, $limit = 1)
+    protected function browse(string $type, int $start = 0, int $limit = 1)
     {
         return $this->soap("ContentDirectory", "Browse", [
             "BrowseFlag"        =>  "Browse{$type}",
@@ -125,7 +125,7 @@ class Queue implements \Countable
      *
      * @return Track[]
      */
-    public function getTracks($start = 0, $total = 0)
+    public function getTracks(int $start = 0, int $total = 0)
     {
         $tracks = [];
 
@@ -175,7 +175,7 @@ class Queue implements \Countable
      *
      * @return bool
      */
-    protected function addUris(array $tracks, $position = null)
+    protected function addUris(array $tracks, int $position = null)
     {
         if ($position === null) {
             $position = $this->getNextPosition();
@@ -235,7 +235,7 @@ class Queue implements \Countable
      *
      * @return bool
      */
-    public function addTrack($track, $position = null)
+    public function addTrack($track, int $position = null)
     {
         return $this->addTracks([$track], $position);
     }
@@ -249,7 +249,7 @@ class Queue implements \Countable
      *
      * @return bool
      */
-    public function addTracks(array $tracks, $position = null)
+    public function addTracks(array $tracks, int $position = null)
     {
         foreach ($tracks as &$track) {
             # If a simple uri has been passed then convert it to a Track instance
@@ -274,7 +274,7 @@ class Queue implements \Countable
      *
      * @return bool
      */
-    public function removeTrack($position)
+    public function removeTrack(int $position)
     {
         return $this->removeTracks([$position]);
     }
