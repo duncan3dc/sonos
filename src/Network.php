@@ -47,6 +47,11 @@ class Network implements LoggerAwareInterface
     protected $multicastAddress = "239.255.255.250";
 
     /**
+     * @var string $networkInterface The network interface to use for SSDP discovery.
+     */
+    protected $networkInterface;
+
+    /**
      * Create a new instance.
      *
      * @param CacheInterface $cache The cache object to use for the expensive multicast discover to find Sonos devices on the network
@@ -108,6 +113,24 @@ class Network implements LoggerAwareInterface
 
 
     /**
+     * Set the network interface to use for SSDP discovery.
+     *
+     * See the documentation on IP_MULTICAST_IF at http://php.net/manual/en/function.socket-get-option.php
+     *
+     * @var string $networkInterface The interface to use
+     *
+     * @return static
+     */
+    public function setNetworkInterface($networkInterface)
+    {
+        $this->networkInterface = $networkInterface;
+
+        return $this;
+    }
+
+
+
+    /**
      * Get all the devices on the current network.
      *
      * @return string[] An array of ip addresses
@@ -119,7 +142,14 @@ class Network implements LoggerAwareInterface
         $port = 1900;
 
         $sock = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
-        socket_set_option($sock, getprotobyname("ip"), IP_MULTICAST_TTL, 2);
+
+        $level = getprotobyname("ip");
+
+        socket_set_option($sock, $level, IP_MULTICAST_TTL,  2);
+
+        if ($this->networkInterface !== null) {
+            socket_set_option($sock, $level, IP_MULTICAST_IF, $this->networkInterface);
+        }
 
         $data = "M-SEARCH * HTTP/1.1\r\n";
         $data .= "HOST: {$this->multicastAddress}:reservedSSDPport\r\n";

@@ -5,6 +5,14 @@ Changelog
 
 --------
 
+## 1.8.0 - 2016-01-10
+
+### Added
+
+* [Network] Allow the network interface to be specified using Network::setNetworkInterface().
+
+--------
+
 ## 1.7.4 - 2015-12-03
 
 ### Fixed
