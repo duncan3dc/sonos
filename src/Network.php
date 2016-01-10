@@ -129,6 +129,18 @@ class Network implements LoggerAwareInterface
     }
 
 
+    protected function getCacheKey()
+    {
+        $cacheKey = "devices";
+
+        $cacheKey .= "_" . gettype($this->networkInterface);
+        $cacheKey .= "_" . $this->networkInterface;
+
+        $cacheKey .= "_" . $this->multicastAddress;
+
+        return $cacheKey;
+    }
+
 
     /**
      * Get all the devices on the current network.
@@ -229,15 +241,17 @@ class Network implements LoggerAwareInterface
 
         $this->logger->info("creating speaker instances");
 
-        if ($this->cache->contains("devices")) {
+        $cacheKey = $this->getCacheKey();
+
+        if ($this->cache->contains($cacheKey)) {
             $this->logger->info("getting device info from cache");
-            $devices = $this->cache->fetch("devices");
+            $devices = $this->cache->fetch($cacheKey);
         } else {
             $devices = $this->getDevices();
 
             # Only cache the devices if we actually found some
             if (count($devices) > 0) {
-                $this->cache->save("devices", $devices);
+                $this->cache->save($cacheKey, $devices);
             }
         }
 
