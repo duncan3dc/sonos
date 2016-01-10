@@ -67,7 +67,7 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">43</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">46</span>
                                 </a>
                             </li>
                             <li>
@@ -101,6 +101,7 @@
                                                                                                     <li><a href="#Tracks/Track.php"><i class="icon-file"></i> Tracks/Track.php</a></li>
                                                                                                     <li><a href="#Queue.php"><i class="icon-file"></i> Queue.php</a></li>
                                                                                                     <li><a href="#Tracks/Deezer.php"><i class="icon-file"></i> Tracks/Deezer.php</a></li>
+                                                                                                    <li><a href="#Tracks/Google.php"><i class="icon-file"></i> Tracks/Google.php</a></li>
                                                                                                     <li><a href="#Tracks/Stream.php"><i class="icon-file"></i> Tracks/Stream.php</a></li>
                                                                                                     <li><a href="#Network.php"><i class="icon-file"></i> Network.php</a></li>
                                                                                                     <li><a href="#Tracks/TextToSpeech.php"><i class="icon-file"></i> Tracks/TextToSpeech.php</a></li>
@@ -118,7 +119,6 @@
                                                                                                     <li><a href="#Device.php"><i class="icon-file"></i> Device.php</a></li>
                                                                                                     <li><a href="#Helper.php"><i class="icon-file"></i> Helper.php</a></li>
                                                                                                     <li><a href="#State.php"><i class="icon-file"></i> State.php</a></li>
-                                                                                                    <li><a href="#Tracks/Google.php"><i class="icon-file"></i> Tracks/Google.php</a></li>
                                                                     </ul>
         </div>
 
@@ -134,7 +134,7 @@
                         <h3>
                             <i class="icon-file"></i>
                             Playlist.php
-                            <small style="float: right;padding-right: 10px;">1</small>
+                            <small style="float: right;padding-right: 10px;">2</small>
                         </h3>
                         <div>
                             <table class="table markers table-bordered">
@@ -150,6 +150,11 @@
                                         <td>error</td>
                                         <td>0</td>
                                         <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>85</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $tracks in addUris()</td>
                                     </tr>
                                                             </tbody>
                             </table>
@@ -234,6 +239,32 @@
                         </div>
                                     </div>
                             <div class="package-contents">
+                                            <a name="Tracks/Google.php" id="Tracks/Google.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Tracks/Google.php
+                            <small style="float: right;padding-right: 10px;">1</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
                                             <a name="Tracks/Stream.php" id="Tracks/Stream.php"></a>
                         <h3>
                             <i class="icon-file"></i>
@@ -269,7 +300,7 @@
                         <h3>
                             <i class="icon-file"></i>
                             Network.php
-                            <small style="float: right;padding-right: 10px;">4</small>
+                            <small style="float: right;padding-right: 10px;">6</small>
                         </h3>
                         <div>
                             <table class="table markers table-bordered">
@@ -288,17 +319,27 @@
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>76</td>
+                                        <td>81</td>
                                         <td>Argument $logger is missing from the Docblock of setLogger</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>102</td>
+                                        <td>107</td>
                                         <td>Argument $multicastAddress is missing from the Docblock of setMulticastAddress</td>
                                     </tr>
                                                                     <tr>
                                         <td>error</td>
-                                        <td>555</td>
+                                        <td>124</td>
+                                        <td>Argument $networkInterface is missing from the Docblock of setNetworkInterface</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>132</td>
+                                        <td>No summary for method getCacheKey()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>599</td>
                                         <td>Argument $id is missing from the Docblock of getAlarmById</td>
                                     </tr>
                                                             </tbody>
@@ -780,32 +821,6 @@
                             </table>
                         </div>
                                     </div>
-                            <div class="package-contents">
-                                            <a name="Tracks/Google.php" id="Tracks/Google.php"></a>
-                        <h3>
-                            <i class="icon-file"></i>
-                            Tracks/Google.php
-                            <small style="float: right;padding-right: 10px;">1</small>
-                        </h3>
-                        <div>
-                            <table class="table markers table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th>Line</th>
-                                    <th>Description</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                                                    <tr>
-                                        <td>error</td>
-                                        <td>0</td>
-                                        <td>No summary was found for this file</td>
-                                    </tr>
-                                                            </tbody>
-                            </table>
-                        </div>
-                                    </div>
                     </div>
     </section>
 
@@ -846,7 +861,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on September 19th, 2015 at 19:31.
+                    on January 10th, 2016 at 14:41.
                 </section>
             </section>
         </section>

@@ -82,21 +82,29 @@ class Playlist extends Queue
      *
      * @return bool
      */
-    protected function addUri(UriInterface $track, $position = null)
+    protected function addUris(array $tracks, $position = null)
     {
         if ($position === null) {
             $position = $this->getNextPosition();
         }
 
-        $data = $this->soap("AVTransport", "AddURIToSavedQueue", [
-            "UpdateID"              =>  $this->updateId,
-            "EnqueuedURI"           =>  $track->getUri(),
-            "EnqueuedURIMetaData"   =>  $track->getMetaData(),
-            "AddAtIndex"            =>  $position,
-        ]);
-        $this->updateId = $data["NewUpdateID"];
+        foreach ($tracks as $track) {
+            $data = $this->soap("AVTransport", "AddURIToSavedQueue", [
+                "UpdateID"              =>  $this->updateId,
+                "EnqueuedURI"           =>  $track->getUri(),
+                "EnqueuedURIMetaData"   =>  $track->getMetaData(),
+                "AddAtIndex"            =>  $position,
+            ]);
+            $this->updateId = $data["NewUpdateID"];
 
-        return ($data["NumTracksAdded"] == 1);
+            $position++;
+
+            if ($data["NumTracksAdded"] != 1) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
 

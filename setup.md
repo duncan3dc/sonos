@@ -2,6 +2,7 @@
 layout: default
 title: Setup
 permalink: /setup/
+api: Network
 ---
 
 All classes are in the `duncan3dc\Sonos` namespace.
@@ -47,3 +48,11 @@ If you need to use an alternative multicast address for [SSDP](//en.wikipedia.or
 ~~~php
 $sonos->setMulticastAddress("239.255.255.250");
 ~~~
+
+Or if you have multiple network interfaces you can force which one to use:
+
+~~~php
+$sonos->setNetworkInterface("eth0");
+~~~
+
+_To see what interface arguments are available check the PHP documentation on [IP_MULTICAST_IF](http://php.net/manual/en/function.socket-get-option.php)_
