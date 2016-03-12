@@ -272,4 +272,43 @@ class ControllerTest extends MockTest
         $this->assertSame("", $state->getUri());
         $this->assertNull($state->stream);
     }
+
+
+    public function testIsStreamingQueue()
+    {
+        $device = $this->getDevice();
+        $controller = $this->getController($device);
+
+        $device->shouldReceive("soap")->once()->with("AVTransport", "GetMediaInfo", [])->andReturn([
+            "CurrentURI"    =>  "x-rincon-queue:RINCON_B8E93759B3D601400#0",
+        ]);
+
+        $this->assertFalse($controller->isStreaming());
+    }
+
+
+    public function testIsStreamingStream()
+    {
+        $device = $this->getDevice();
+        $controller = $this->getController($device);
+
+        $device->shouldReceive("soap")->once()->with("AVTransport", "GetMediaInfo", [])->andReturn([
+            "CurrentURI"    =>  "x-sonosapi-stream:s200662?sid=254&flags=8224&sn=0",
+        ]);
+
+        $this->assertTrue($controller->isStreaming());
+    }
+
+
+    public function testIsStreamingLineIn()
+    {
+        $device = $this->getDevice();
+        $controller = $this->getController($device);
+
+        $device->shouldReceive("soap")->once()->with("AVTransport", "GetMediaInfo", [])->andReturn([
+            "CurrentURI"    =>  "x-rincon-stream:RINCON_5CAAFD0A251401400",
+        ]);
+
+        $this->assertTrue($controller->isStreaming());
+    }
 }
