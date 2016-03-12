@@ -178,6 +178,7 @@ class Device
             "S9"    =>  "PLAYBAR",
             "ZP80"  =>  "ZONEPLAYER",
             "ZP90"  =>  "CONNECT",
+            "ZP100" =>  "CONNECT:AMP",
             "ZP120" =>  "CONNECT:AMP",
         ];
 
