@@ -345,6 +345,28 @@ class Controller extends Speaker
 
 
     /**
+     * Play a line-in from a speaker.
+     *
+     * If no speaker is passed then the current controller's is used.
+     *
+     * @param Speaker|null $speaker The speaker to get the line-in from
+     *
+     * @return static
+     */
+    public function useLineIn(Speaker $speaker = null)
+    {
+        if ($speaker === null) {
+            $speaker = $this;
+        }
+
+        $uri = "x-rincon-stream:" . $speaker->getUuid();
+        $stream = new Stream($uri, "Line-In");
+
+        return $this->useStream($stream);
+    }
+
+
+    /**
      * Check if this controller is currently using its queue.
      *
      * @return bool

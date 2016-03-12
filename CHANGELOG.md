@@ -5,6 +5,18 @@ Changelog
 
 --------
 
+## 1.9.0 - 2016-03-12
+
+### Added
+
+* [Controller] Allow the Line-In to be controlled.
+
+### Changed
+
+* [Controller] The isStreaming() method now returns true when streaming from Line-In.
+
+--------
+
 ## 1.8.0 - 2016-01-10
 
 ### Added
