@@ -310,7 +310,19 @@ class Controller extends Speaker
     {
         $media = $this->getMediaInfo();
 
-        return (substr($media["CurrentURI"], 0, 18) === "x-sonosapi-stream:");
+        $uri = $media["CurrentURI"];
+
+        # Standard streams
+        if (substr($uri, 0, 18) === "x-sonosapi-stream:") {
+            return true;
+        }
+
+        # Line in
+        if (substr($uri, 0, 16) === "x-rincon-stream:") {
+            return true;
+        }
+
+        return false;
     }
 
 
@@ -329,6 +341,28 @@ class Controller extends Speaker
         ]);
 
         return $this;
+    }
+
+
+    /**
+     * Play a line-in from a speaker.
+     *
+     * If no speaker is passed then the current controller's is used.
+     *
+     * @param Speaker|null $speaker The speaker to get the line-in from
+     *
+     * @return static
+     */
+    public function useLineIn(Speaker $speaker = null)
+    {
+        if ($speaker === null) {
+            $speaker = $this;
+        }
+
+        $uri = "x-rincon-stream:" . $speaker->getUuid();
+        $stream = new Stream($uri, "Line-In");
+
+        return $this->useStream($stream);
     }
 
 

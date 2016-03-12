@@ -18,6 +18,7 @@ Controllers:
     Grouping Speakers: /controllers/speakers/
     Queue: /controllers/queue/
     Streams: /controllers/streams/
+    Line-In: /controllers/line-in/
 
 Services:
     Radio: /services/radio/
