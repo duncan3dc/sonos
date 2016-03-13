@@ -5,6 +5,14 @@ Changelog
 
 --------
 
+## 1.9.1 - 2016-03-13
+
+### Added
+
+* [Network] Add support for the ZP100 devoce.
+
+--------
+
 ## 1.9.0 - 2016-03-12
 
 ### Added
