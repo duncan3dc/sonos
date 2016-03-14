@@ -9,7 +9,7 @@ Most actions related to speakers take place on [Controllers](../../controllers/p
 
 Get some information about a speaker:
 
-~~~php
+```php
 # Get the IP address of the speaker
 $speaker->ip;
 
@@ -18,35 +18,35 @@ $speaker->name;
 
 # Get the room name assigned to this speaker
 $speaker->room;
-~~~
+```
 
 
 Manage the volume of a speaker:
 
-~~~php
+```php
 if ($speaker->getVolume() > 50) {
     $speaker->setVolume(50);
 }
 
 $speaker->adjustVolume(10);
 $speaker->adjustVolume(-10);
-~~~
+```
 
 
 Mute a speaker:
 
-~~~php
+```php
 $speaker->mute();
 
 if ($speaker->isMuted()) {
     $speaker->unmute();
 }
-~~~
+```
 
 
 Manage the equalisation of a speaker:
 
-~~~php
+```php
 if ($speaker->getTreble() > -5) {
     $speaker->setTreble(-5);
 }
@@ -57,4 +57,4 @@ if ($speaker->getBass() < 5) {
 if (!$speaker->getLoudness()) {
     $speaker->setLoudness(true);
 }
-~~~
+```

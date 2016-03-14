@@ -9,15 +9,15 @@ api: Tracks.Deezer
 
 Deezer tracks are handled by the `Deezer` class, which can be created like so:
 
-~~~php
+```php
 use duncan3dc\Sonos\Tracks\Deezer;
 
 $track = new Deezer("62898679");
-~~~
+```
 
 From there it works like any regular track and can be added to the queue like so:
 
-~~~php
+```php
 $track = new Deezer("62898679");
 $controller->getQueue()->addTrack($track);
-~~~
+```

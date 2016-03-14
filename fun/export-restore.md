@@ -11,22 +11,22 @@ _It is serializable via the standard php function to allow it to be stashed some
 
 An instance should be created from the `Controller` object:
 
-~~~php
+```php
 $state = $controller->exportState();
-~~~
+```
 
 
 If you intend to export the state and stop playback,
 then to avoid a gap between when the state is captured and playback is stopped you can have the `exportState()` method stop playback:
 
-~~~php
+```php
 # Export state and pause the controller
 $state = $controller->exportState(true);
-~~~
+```
 
 
 After exporting the state, you can apply it to any `Controller` instance like so:
 
-~~~php
+```php
 $controller->restoreState($state);
-~~~
+```

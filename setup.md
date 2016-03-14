@@ -9,14 +9,14 @@ All classes are in the `duncan3dc\Sonos` namespace.
 
 By default the speakers found on your network are cached, if you frequently add/remove sonos devices from your network then you'll want to use a shorter lived cache, or you can clear the cache manually.
 
-~~~php
+```php
 require_once __DIR__ . "vendor/autoload.php";
 
 use duncan3dc\Sonos\Network;
 
 # Get a new instance of the Network class using a long lived cache
 $sonos = new Network;
-~~~
+```
 
 <p class="message-info">If no speakers are found then this result is not cached, and the discovery will be tried again on the next request.</p>
 
@@ -26,7 +26,7 @@ Cache
 
 We use [doctrine/cache](//doctrine-common.readthedocs.org/en/latest/reference/caching.html) to handle caching, which means a variety of cache backends are available.
 
-~~~php
+```php
 # Get a new instance of the Network class using array cache
 $sonos = new Network(new \Doctrine\Common\Cache\ArrayCache);
 
@@ -34,7 +34,7 @@ $sonos = new Network(new \Doctrine\Common\Cache\ArrayCache);
 $cache = new \Doctrine\Common\Cache\FilesystemCache("/tmp/sonos-cache");
 $cache->deleteAll();
 $sonos = new Network($cache);
-~~~
+```
 
 
 Additionally, any class that implements the [doctrine cache interface](//github.com/doctrine/cache/blob/master/lib/Doctrine/Common/Cache/Cache.php) can be used.
@@ -45,14 +45,14 @@ SSDP Discovery
 
 If you need to use an alternative multicast address for [SSDP](//en.wikipedia.org/wiki/Simple_Service_Discovery_Protocol) you can do so using the following method:
 
-~~~php
+```php
 $sonos->setMulticastAddress("239.255.255.250");
-~~~
+```
 
 Or if you have multiple network interfaces you can force which one to use:
 
-~~~php
+```php
 $sonos->setNetworkInterface("eth0");
-~~~
+```
 
 _To see what interface arguments are available check the PHP documentation on [IP_MULTICAST_IF](http://php.net/manual/en/function.socket-get-option.php)_

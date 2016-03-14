@@ -7,26 +7,26 @@ api: Alarm
 
 You can get existing alarms from the [Network class](../getting-started/#alarms) and delete one like so:
 
-~~~php
+```php
 $alarm->delete();
-~~~
+```
 
 
 Get the details of the alarm:
 
-~~~php
+```php
 echo "Alarm ID: {$alarm->getId()}\n";
 echo "Time: {$alarm->getTime()}\n";
 echo "Duration: {$alarm->getDuration()}\n";
 echo "Room: {$alarm->getSpeaker()->room}";
 echo "Volume: {$alarm->getVolume()}\n";
 echo "Frequency: {$alarm->getFrequencyDescription()}\n";
-~~~
+```
 
 
 Update the details of the alarm:
 
-~~~php
+```php
 $alarm
     ->setTime("15:45");
     ->setDuration(15);
@@ -34,12 +34,12 @@ $alarm
     ->setRepeat(false)
     ->setShuffle(true)
     ->setSpeaker($sonos->getSpeakerByRoom("Living Room"));
-~~~
+```
 
 
 Check if an alarm is active on a particular day:
 
-~~~php
+```php
 if ($alarm->onMonday()) {
     echo "Alarm active on Mondays\n";
 }
@@ -47,55 +47,55 @@ if ($alarm->onMonday()) {
 if ($alarm->daily()) {
     echo "Alarm active every day\n";
 }
-~~~
+```
 
 
 Update an alarm to be active or not on a particular day:
 
-~~~php
+```php
 $alarm->onMonday(true);
 $alarm->onTuesday(false);
 $alarm->onWednesday(false);
-~~~
+```
 
 
 Some alarms are configured to only go off once and never again:
 
-~~~php
+```php
 if (!$alarm->once()) {
     $alarm->once(true);
 }
 echo "This alarm runs once only\n";
-~~~
+```
 
 
 Some alarms are configured to go off every day:
 
-~~~php
+```php
 if (!$alarm->daily()) {
     $alarm->daily(true);
 }
 echo "This alarm runs every day\n";
-~~~
+```
 
 
 Check whether the alarm is active or not:
 
-~~~php
+```php
 if ($alarm->isActive()) {
     $alarm->deactivate();
 } else {
     $alarm->activate();
 }
-~~~
+```
 
 
 Instead of the day methods available above you can also use bitwise operators:
 
-~~~php
+```php
 if ($alarm->getFrequency() & Alarm::MONDAY) {
     echo "Alarm active on Mondays\n";
 }
 
 $alarm->setFrequency(Alarm::MONDAY | Alarm::TUESDAY);
-~~~
+```

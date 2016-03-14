@@ -7,15 +7,15 @@ permalink: /controllers/speakers/
 
 You can add speakers to this Controllers group
 
-~~~php
+```php
 $kitchen = $sonos->getSpeakerByRoom("Kitchen");
 $controller->addSpeaker($kitchen);
-~~~
+```
 
 
 I'm trying to sleep...
 
-~~~php
+```php
 $bedroom = $sonos->getSpeakerByRoom("Bedroom");
 $controller->removeSpeaker($bedroom);
-~~~
+```

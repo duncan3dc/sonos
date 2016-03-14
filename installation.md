@@ -8,17 +8,17 @@ The recommended method of installing this library is via [Composer](//getcompose
 
 Run the following command from your project root:
 
-~~~
+```bash
 $ composer require duncan3dc/sonos
-~~~
+```
 
 
 Or you can manually add it to your composer.json:
 
-~~~javascript
+```javascript
 {
     "require": {
         "duncan3dc/sonos": "^1.7"
     }
 }
-~~~
+```
