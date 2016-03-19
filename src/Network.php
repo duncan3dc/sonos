@@ -128,6 +128,16 @@ class Network implements LoggerAwareInterface
         return $this;
     }
 
+    /**
+     * Get the network interface currently in use
+     *
+     * @return string The network interface name
+     */
+    public function getNetworkInterface()
+    {
+        return $this->networkInterface;
+    }
+
 
     protected function getCacheKey()
     {
