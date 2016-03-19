@@ -38,9 +38,16 @@ class NetworkTest extends \PHPUnit_Framework_TestCase
     }
 
 
+    public function testGetNetworkInterface()
+    {
+        $this->assertNull($this->network->getNetworkInterface());
+    }
+
+
     public function testSetNetworkInterfaceString()
     {
         $this->network->setNetworkInterface("eth0");
+        $this->assertSame("eth0", $this->network->getNetworkInterface());
         $this->assertSame("devices_string_eth0_239.255.255.250", $this->getCacheKey());
     }
 
@@ -48,6 +55,7 @@ class NetworkTest extends \PHPUnit_Framework_TestCase
     public function testSetNetworkInterfaceInteger()
     {
         $this->network->setNetworkInterface(0);
+        $this->assertSame(0, $this->network->getNetworkInterface());
         $this->assertSame("devices_integer_0_239.255.255.250", $this->getCacheKey());
     }
 
@@ -55,6 +63,7 @@ class NetworkTest extends \PHPUnit_Framework_TestCase
     public function testSetNetworkInterfaceEmptyString()
     {
         $this->network->setNetworkInterface("");
+        $this->assertSame("", $this->network->getNetworkInterface());
         $this->assertSame("devices_string__239.255.255.250", $this->getCacheKey());
     }
 }

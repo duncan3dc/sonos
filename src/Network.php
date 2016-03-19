@@ -117,7 +117,7 @@ class Network implements LoggerAwareInterface
      *
      * See the documentation on IP_MULTICAST_IF at http://php.net/manual/en/function.socket-get-option.php
      *
-     * @var string $networkInterface The interface to use
+     * @var string|int $networkInterface The interface to use
      *
      * @return static
      */
@@ -128,10 +128,11 @@ class Network implements LoggerAwareInterface
         return $this;
     }
 
+
     /**
      * Get the network interface currently in use
      *
-     * @return string The network interface name
+     * @return string|int|null The network interface name
      */
     public function getNetworkInterface()
     {
