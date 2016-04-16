@@ -5,6 +5,7 @@ namespace duncan3dc\SonosTests;
 use duncan3dc\Sonos\Controller;
 use duncan3dc\Sonos\ControllerState;
 use duncan3dc\Sonos\Exceptions\SoapException;
+use duncan3dc\Sonos\Utils\Time;
 use Mockery;
 
 class ControllerTest extends MockTest
@@ -71,7 +72,7 @@ class ControllerTest extends MockTest
             "Target"    =>  "00:00:55",
         ]);
 
-        $this->assertSame($controller, $controller->seek(55));
+        $this->assertSame($controller, $controller->seek(Time::inSeconds(55)));
     }
 
 
@@ -85,7 +86,7 @@ class ControllerTest extends MockTest
             "Target"    =>  "00:02:02",
         ]);
 
-        $this->assertSame($controller, $controller->seek(122));
+        $this->assertSame($controller, $controller->seek(Time::inSeconds(122)));
     }
 
 
@@ -99,7 +100,7 @@ class ControllerTest extends MockTest
             "Target"    =>  "01:05:00",
         ]);
 
-        $this->assertSame($controller, $controller->seek(3900));
+        $this->assertSame($controller, $controller->seek(Time::parse("1:5:0")));
     }
 
 
@@ -113,7 +114,7 @@ class ControllerTest extends MockTest
             "Target"    =>  "00:00:00",
         ]);
 
-        $this->assertSame($controller, $controller->seek(0));
+        $this->assertSame($controller, $controller->seek(Time::start()));
     }
 
 
@@ -210,8 +211,8 @@ class ControllerTest extends MockTest
         $this->assertSame("imaginary enemy", $state->album);
         $this->assertSame(1, $state->trackNumber);
         $this->assertSame(0, $state->queueNumber);
-        $this->assertSame("0:04:04", $state->duration);
-        $this->assertSame("0:00:15", $state->position);
+        $this->assertSame("00:04:04", $state->duration->asString());
+        $this->assertSame("00:00:15", $state->position->asString());
         $this->assertNull($state->stream);
     }
 
@@ -239,8 +240,8 @@ class ControllerTest extends MockTest
         $this->assertSame("x-rincon-mp3radio://tx.sharp-stream.com/http_live.php?i=teamrock.mp3", $state->getUri());
         $this->assertSame("Hit Or Miss", $state->title);
         $this->assertSame("New Found Glory", $state->artist);
-        $this->assertSame("0:00:00", $state->duration);
-        $this->assertSame("0:00:02", $state->position);
+        $this->assertSame("00:00:00", $state->duration->asString());
+        $this->assertSame("00:00:02", $state->position->asString());
         $this->assertSame("TeamRock Radio", $state->stream);
     }
 

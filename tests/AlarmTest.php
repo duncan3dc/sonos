@@ -290,18 +290,18 @@ class AlarmTest extends MockTest
     public function testGetTime()
     {
         $alarm = $this->getMockAlarm([
-            "StartTime" =>  "1:2",
+            "StartTime" =>  "01:02:03",
         ]);
-        $this->assertSame("01:02", $alarm->getTime());
+        $this->assertSame("01:02:03", $alarm->getTime()->asString());
     }
 
 
     public function testGetDuration()
     {
         $alarm = $this->getMockAlarm([
-            "Duration"  =>  "1:2",
+            "Duration"  =>  "00:01:02",
         ]);
-        $this->assertSame(62, $alarm->getDuration());
+        $this->assertSame(62, $alarm->getDuration()->asInt());
     }
 
 

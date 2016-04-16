@@ -4,6 +4,7 @@ namespace duncan3dc\Sonos;
 
 use duncan3dc\DomParser\XmlElement;
 use duncan3dc\Sonos\Controller;
+use duncan3dc\Sonos\Interfaces\Utils\TimeInterface;
 use duncan3dc\Sonos\Tracks\Track;
 use duncan3dc\Sonos\Tracks\UriInterface;
 
@@ -28,12 +29,12 @@ class State extends Track
     public $queueNumber = 0;
 
     /**
-     * @var string $duration The duration of the currently active track (hh:mm:ss).
+     * @var TimeInterface $duration The duration of the currently active track.
      */
     public $duration = "";
 
     /**
-     * @var string $position The position of the currently active track (hh:mm:ss).
+     * @var TimeInterface $position The position of the currently active track.
      */
     public $position = "";
 
