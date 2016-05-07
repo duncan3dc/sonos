@@ -3,13 +3,17 @@ Changelog
 
 ## x.y.z - UNRELEASED
 
+### Added
+
+* [Controller] Allow the Network instance in use to be retrieved using getNetwork().
+
 --------
 
 ## 1.9.1 - 2016-03-13
 
 ### Added
 
-* [Network] Add support for the ZP100 devoce.
+* [Network] Add support for the ZP100 device.
 
 --------
 
