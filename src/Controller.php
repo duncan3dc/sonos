@@ -774,4 +774,12 @@ class Controller extends Speaker
 
         return $this;
     }
+
+    /**
+     * @return Network
+     */
+    public function getNetwork()
+    {
+        return $this->network;
+    }
 }
