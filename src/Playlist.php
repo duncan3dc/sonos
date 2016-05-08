@@ -14,7 +14,7 @@ use function substr;
 /**
  * Provides an interface for managing Sonos playlists on the current network.
  */
-final class Playlist extends Queue implements PlaylistInterface
+final class Playlist extends Queue implements PlaylistInterface, UriInterface
 {
     /**
      * @var string|null $name The name of the playlist.
@@ -151,7 +151,7 @@ final class Playlist extends Queue implements PlaylistInterface
 
 
     /**
-     * Remove all tracks from the queue.
+     * Remove all tracks from the playlist.
      *
      * @return $this
      */

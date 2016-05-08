@@ -6,6 +6,8 @@ use duncan3dc\DomParser\XmlElement;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Interfaces\TrackInterface;
 use duncan3dc\Sonos\Interfaces\Tracks\FactoryInterface;
+use duncan3dc\Sonos\Interfaces\UriInterface;
+use duncan3dc\Sonos\Playlist;
 
 /**
  * Factory for creating Track instances.
@@ -34,7 +36,7 @@ final class Factory implements FactoryInterface
      *
      * @param string $uri The URI of the track
      *
-     * @return string
+     * @return string|UriInterface
      */
     private function guessTrackClass(string $uri): string
     {
@@ -51,6 +53,13 @@ final class Factory implements FactoryInterface
             }
         }
 
+        if (substr($uri, 0, 38) === "file:///jffs/settings/savedqueues.rsq#") {
+            $id = (int) substr($uri, 38);
+            if ($id > 0) {
+                return new Playlist("SQ:{$id}", $this->controller);
+            }
+        }
+
         return Track::class;
     }
 
@@ -60,11 +69,15 @@ final class Factory implements FactoryInterface
      *
      * @param string $uri The URI of the track
      *
-     * @return TrackInterface
+     * @return UriInterface
      */
     public function createFromUri(string $uri): TrackInterface
     {
         $class = $this->guessTrackClass($uri);
+
+        if (is_object($class)) {
+            return $class;
+        }
 
         return new $class($uri);
     }
@@ -75,12 +88,16 @@ final class Factory implements FactoryInterface
      *
      * @param XmlElement $xml The xml element representing the track meta data.
      *
-     * @return TrackInterface
+     * @return UriInterface
      */
     public function createFromXml(XmlElement $xml): TrackInterface
     {
         $uri = (string) $xml->getTag("res");
         $class = $this->guessTrackClass($uri);
+
+        if (is_object($class)) {
+            return $class;
+        }
 
         return $class::createFromXml($xml, $this->controller);
     }
