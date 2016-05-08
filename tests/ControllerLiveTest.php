@@ -227,4 +227,11 @@ class ControllerLiveTest extends LiveTest
     {
         $this->assertInstanceOf(Queue::class, $this->network->getController()->getQueue());
     }
+
+
+    public function testGetNetwork()
+    {
+        $controller = $this->network->getController();
+        $this->assertSame($this->network, $controller->getNetwork());
+    }
 }
