@@ -7,6 +7,7 @@ use duncan3dc\Sonos\Devices\Collection;
 use duncan3dc\Sonos\Devices\Discovery;
 use duncan3dc\Sonos\Devices\Factory;
 use duncan3dc\Sonos\Exceptions\NotFoundException;
+use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Interfaces\Devices\CollectionInterface;
 use duncan3dc\Sonos\Interfaces\SpeakerInterface;
 use duncan3dc\Sonos\Services\Radio;
@@ -150,9 +151,9 @@ class Network implements LoggerAwareInterface
      *
      * Useful for managing playlists/alarms, as these need a controller but it doesn't matter which one.
      *
-     * @return Controller
+     * @return ControllerInterface
      */
-    public function getController(): Controller
+    public function getController(): ControllerInterface
     {
         $controllers = $this->getControllers();
         if ($controller = reset($controllers)) {
@@ -208,7 +209,7 @@ class Network implements LoggerAwareInterface
     /**
      * Get all the coordinators on the network.
      *
-     * @return Controller[]
+     * @return ControllerInterface[]
      */
     public function getControllers(): array
     {
@@ -232,9 +233,9 @@ class Network implements LoggerAwareInterface
      *
      * @param string $room The name of the room to look for
      *
-     * @return Controller
+     * @return ControllerInterface
      */
-    public function getControllerByRoom(string $room)
+    public function getControllerByRoom(string $room): ControllerInterface
     {
         $group = $this->getSpeakerByRoom($room)->getGroup();
 
@@ -254,9 +255,9 @@ class Network implements LoggerAwareInterface
      *
      * @param string $ip The ip address of the speaker
      *
-     * @return Controller
+     * @return ControllerInterface
      */
-    public function getControllerByIp(string $ip): Controller
+    public function getControllerByIp(string $ip): ControllerInterface
     {
         $speakers = $this->getSpeakers();
         if (!array_key_exists($ip, $speakers)) {

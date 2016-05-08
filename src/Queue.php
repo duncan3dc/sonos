@@ -4,6 +4,7 @@ namespace duncan3dc\Sonos;
 
 use duncan3dc\DomParser\XmlParser;
 use duncan3dc\Sonos\Exceptions\SonosException;
+use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Interfaces\UriInterface;
 use duncan3dc\Sonos\Tracks\Factory as TrackFactory;
 use duncan3dc\Sonos\Tracks\Track;
@@ -24,7 +25,7 @@ class Queue implements \Countable
     protected $updateId = 0;
 
     /**
-     * @var Controller $controller The Controller instance this queue is for.
+     * @var ControllerInterface $controller The Controller instance this queue is for.
      */
     protected $controller;
 
@@ -37,9 +38,9 @@ class Queue implements \Countable
     /**
      * Create an instance of the Queue class.
      *
-     * @param Controller $controller The Controller instance that this queue is for
+     * @param ControllerInterface $controller The Controller instance that this queue is for
      */
-    public function __construct(Controller $controller)
+    public function __construct(ControllerInterface $controller)
     {
         $this->id = "Q:0";
         $this->updateId = 0;

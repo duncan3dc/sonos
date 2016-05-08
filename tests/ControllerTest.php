@@ -323,13 +323,4 @@ class ControllerTest extends MockTest
 
         $this->assertTrue($controller->isStreaming());
     }
-
-
-    public function testGetNetwork()
-    {
-        $device = $this->getDevice();
-        $controller = $this->getController($device);
-
-        $this->assertSame($this->network, $controller->getNetwork());
-    }
 }

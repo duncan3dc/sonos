@@ -3,8 +3,8 @@
 namespace duncan3dc\Sonos\Services;
 
 use duncan3dc\DomParser\XmlParser;
-use duncan3dc\Sonos\Controller;
 use duncan3dc\Sonos\Exceptions\NotFoundException;
+use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Tracks\Stream;
 
 /**
@@ -23,7 +23,7 @@ class Radio
     const SHOWS = 1;
 
     /**
-     * @var Controller $controller The Controller instance to send commands to.
+     * @var ControllerInterface $controller The Controller instance to send commands to.
      */
     protected $controller;
 
@@ -31,9 +31,9 @@ class Radio
     /**
      * Create a new instance.
      *
-     * @param Controller $controller A Controller instance to send commands to
+     * @param ControllerInterface $controller A Controller instance to send commands to
      */
-    public function __construct(Controller $controller)
+    public function __construct(ControllerInterface $controller)
     {
         $this->controller = $controller;
     }
