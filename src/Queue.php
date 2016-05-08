@@ -4,9 +4,9 @@ namespace duncan3dc\Sonos;
 
 use duncan3dc\DomParser\XmlParser;
 use duncan3dc\Sonos\Exceptions\SonosException;
-use duncan3dc\Sonos\Tracks\Track;
+use duncan3dc\Sonos\Interfaces\UriInterface;
 use duncan3dc\Sonos\Tracks\Factory as TrackFactory;
-use duncan3dc\Sonos\Tracks\UriInterface;
+use duncan3dc\Sonos\Tracks\Track;
 
 /**
  * Provides an interface for managing the queue of a controller.

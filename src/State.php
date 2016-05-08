@@ -4,9 +4,9 @@ namespace duncan3dc\Sonos;
 
 use duncan3dc\DomParser\XmlElement;
 use duncan3dc\Sonos\Controller;
+use duncan3dc\Sonos\Interfaces\UriInterface;
 use duncan3dc\Sonos\Interfaces\Utils\TimeInterface;
 use duncan3dc\Sonos\Tracks\Track;
-use duncan3dc\Sonos\Tracks\UriInterface;
 
 /**
  * Representation of the current state of a controller.

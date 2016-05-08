@@ -1,6 +1,6 @@
 <?php
 
-namespace duncan3dc\Sonos\Tracks;
+namespace duncan3dc\Sonos\Interfaces;
 
 /**
  * An interface for objects that repsent some type of Uri.

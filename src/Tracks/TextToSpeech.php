@@ -4,6 +4,7 @@ namespace duncan3dc\Sonos\Tracks;
 
 use duncan3dc\Sonos\Directory;
 use duncan3dc\Sonos\Helper;
+use duncan3dc\Sonos\Interfaces\UriInterface;
 use duncan3dc\Speaker\Providers\GoogleProvider;
 use duncan3dc\Speaker\Providers\ProviderInterface;
 use duncan3dc\Speaker\TextToSpeech as TextToSpeechHandler;

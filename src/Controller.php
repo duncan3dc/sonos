@@ -4,9 +4,9 @@ namespace duncan3dc\Sonos;
 
 use duncan3dc\DomParser\XmlParser;
 use duncan3dc\Sonos\Exceptions\SoapException;
+use duncan3dc\Sonos\Interfaces\UriInterface;
 use duncan3dc\Sonos\Interfaces\Utils\TimeInterface;
 use duncan3dc\Sonos\Tracks\Stream;
-use duncan3dc\Sonos\Tracks\UriInterface;
 use duncan3dc\Sonos\Utils\Time;
 
 /**

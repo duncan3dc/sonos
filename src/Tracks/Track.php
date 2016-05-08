@@ -5,6 +5,7 @@ namespace duncan3dc\Sonos\Tracks;
 use duncan3dc\DomParser\XmlElement;
 use duncan3dc\Sonos\Controller;
 use duncan3dc\Sonos\Helper;
+use duncan3dc\Sonos\Interfaces\UriInterface;
 
 /**
  * Representation of a track.
