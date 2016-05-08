@@ -11,6 +11,8 @@ use duncan3dc\Sonos\Helper;
  */
 class Stream implements UriInterface
 {
+    const PREFIX = "x-sonosapi-stream";
+
     /**
      * @var string $uri The uri of the stream.
      */

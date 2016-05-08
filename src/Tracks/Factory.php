@@ -40,15 +40,12 @@ class Factory
             Spotify::class,
             Google::class,
             Deezer::class,
+            Stream::class,
         ];
         foreach ($classes as $class) {
             if (substr($uri, 0, strlen($class::PREFIX)) === $class::PREFIX) {
                 return $class;
             }
-        }
-
-        if (substr($uri, 0, 17) === "x-sonosapi-stream") {
-            return Stream::class;
         }
 
         return Track::class;
