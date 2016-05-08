@@ -4,16 +4,17 @@ namespace duncan3dc\Sonos;
 
 use duncan3dc\Sonos\Devices\Device;
 use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
+use duncan3dc\Sonos\Interfaces\SpeakerInterface;
 
 /**
  * Represents an individual Sonos speaker, to allow volume, equalisation, and other settings to be managed.
  */
-class Speaker
+class Speaker implements SpeakerInterface
 {
     /**
      * @var string $ip The IP address of the speaker.
      */
-    public $ip;
+    protected $ip;
 
     /**
      * @var DeviceInterface $device The instance of the Device class to send requests to.
@@ -23,12 +24,12 @@ class Speaker
     /**
      * @var string $name The "Friendly" name reported by the speaker.
      */
-    public $name;
+    protected $name;
 
     /**
      * @var string $room The room name assigned to this speaker.
      */
-    public $room;
+    protected $room;
 
     /**
      * @var string $uuid The unique id of this speaker.
@@ -60,7 +61,7 @@ class Speaker
     {
         if ($param instanceof DeviceInterface) {
             $this->device = $param;
-            $this->ip = $this->device->ip;
+            $this->ip = $this->device->getIp();
         } else {
             $this->ip = $param;
             $this->device = new Device($this->ip);
@@ -78,13 +79,7 @@ class Speaker
 
 
     /**
-     * Send a soap request to the speaker.
-     *
-     * @param string $service The service to send the request to
-     * @param string $action The action to call
-     * @param array $params The parameters to pass
-     *
-     * @return mixed
+     * @inheritDoc
      */
     public function soap(string $service, string $action, array $params = [])
     {
@@ -99,7 +94,7 @@ class Speaker
      *
      * @return $this
      */
-    public function setTopology(array $topology): self
+    public function setTopology(array $topology): SpeakerInterface
     {
         $this->topology = true;
 
@@ -137,6 +132,39 @@ class Speaker
         }
 
         throw new \RuntimeException("Failed to lookup the topology info for this speaker");
+    }
+
+
+    /**
+     * Get the IP address of this speaker.
+     *
+     * @return string
+     */
+    public function getIp(): string
+    {
+        return $this->ip;
+    }
+
+
+    /**
+     * Get the "Friendly" name of this speaker.
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+
+    /**
+     * Get the room name of this speaker.
+     *
+     * @return string
+     */
+    public function getRoom(): string
+    {
+        return $this->room;
     }
 
 
@@ -179,9 +207,7 @@ class Speaker
     /**
      * Get the current volume of this speaker.
      *
-     * @param int The current volume between 0 and 100
-     *
-     * @return int
+     * @return int The current volume between 0 and 100
      */
     public function getVolume(): int
     {
@@ -198,7 +224,7 @@ class Speaker
      *
      * @return $this
      */
-    public function setVolume(int $volume): self
+    public function setVolume(int $volume): SpeakerInterface
     {
         $this->soap("RenderingControl", "SetVolume", [
             "Channel"       =>  "Master",
@@ -216,7 +242,7 @@ class Speaker
      *
      * @return $this
      */
-    public function adjustVolume(int $adjust): self
+    public function adjustVolume(int $adjust): SpeakerInterface
     {
         $this->soap("RenderingControl", "SetRelativeVolume", [
             "Channel"       =>  "Master",
@@ -247,7 +273,7 @@ class Speaker
      *
      * @return $this
      */
-    public function mute(bool $mute = true): self
+    public function mute(bool $mute = true): SpeakerInterface
     {
         $this->soap("RenderingControl", "SetMute", [
             "Channel"       =>  "Master",
@@ -263,7 +289,7 @@ class Speaker
      *
      * @return $this
      */
-    public function unmute(): self
+    public function unmute(): SpeakerInterface
     {
         return $this->mute(false);
     }
@@ -276,7 +302,7 @@ class Speaker
      *
      * @return $this
      */
-    public function setIndicator(bool $on): self
+    public function setIndicator(bool $on): SpeakerInterface
     {
         $this->soap("DeviceProperties", "SetLEDState", [
             "DesiredLEDState"   =>  $on ? "On" : "Off",
@@ -305,7 +331,7 @@ class Speaker
      *
      * @return $this
      */
-    protected function setEqLevel(string $type, int $value): self
+    protected function setEqLevel(string $type, int $value): SpeakerInterface
     {
         if ($value < -10) {
             $value = -10;
@@ -343,7 +369,7 @@ class Speaker
      *
      * @return $this
      */
-    public function setTreble(int $treble): self
+    public function setTreble(int $treble): SpeakerInterface
     {
         return $this->setEqLevel("treble", $treble);
     }
@@ -369,7 +395,7 @@ class Speaker
      *
      * @return $this
      */
-    public function setBass(int $bass): self
+    public function setBass(int $bass): SpeakerInterface
     {
         return $this->setEqLevel("bass", $bass);
     }
@@ -395,7 +421,7 @@ class Speaker
      *
      * @return $this
      */
-    public function setLoudness(bool $on): self
+    public function setLoudness(bool $on): SpeakerInterface
     {
         $this->soap("RenderingControl", "SetLoudness", [
             "Channel"           =>  "Master",

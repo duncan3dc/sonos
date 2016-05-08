@@ -36,7 +36,7 @@ XML;
     public function setUp()
     {
         $controller = Mockery::mock(Controller::class);
-        $controller->ip = "192.168.0.66";
+        $controller->shouldReceive("getIp")->with()->andReturn("192.168.0.66");
 
         $xml = new XmlParser($this->xml1);
         $this->track1 = Track::createFromXml($xml->getTag("track"), $controller);

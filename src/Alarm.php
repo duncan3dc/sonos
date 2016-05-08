@@ -3,6 +3,7 @@
 namespace duncan3dc\Sonos;
 
 use duncan3dc\DomParser\XmlElement;
+use duncan3dc\Sonos\Interfaces\SpeakerInterface;
 use duncan3dc\Sonos\Interfaces\Utils\TimeInterface;
 use duncan3dc\Sonos\Utils\Time;
 
@@ -120,9 +121,9 @@ class Alarm
     /**
      * Get the speaker of the alarm.
      *
-     * @return Speaker
+     * @return SpeakerInterface
      */
-    public function getSpeaker(): Speaker
+    public function getSpeaker(): SpeakerInterface
     {
         foreach ($this->network->getSpeakers() as $speaker) {
             if ($speaker->getUuid() === $this->getRoom()) {
@@ -137,11 +138,11 @@ class Alarm
     /**
      * Set the speaker of the alarm.
      *
-     * @param Speaker $speaker The speaker to attach this alarm to
+     * @param SpeakerInterface $speaker The speaker to attach this alarm to
      *
      * @return $this
      */
-    public function setSpeaker(Speaker $speaker): self
+    public function setSpeaker(SpeakerInterface $speaker): self
     {
         return $this->setRoom($speaker->getUuid());
     }

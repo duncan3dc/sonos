@@ -4,6 +4,7 @@ namespace duncan3dc\Sonos;
 
 use duncan3dc\DomParser\XmlParser;
 use duncan3dc\Sonos\Exceptions\SoapException;
+use duncan3dc\Sonos\Interfaces\SpeakerInterface;
 use duncan3dc\Sonos\Interfaces\UriInterface;
 use duncan3dc\Sonos\Interfaces\Utils\TimeInterface;
 use duncan3dc\Sonos\Tracks\Stream;
@@ -59,14 +60,14 @@ class Controller extends Speaker
      *
      * The speaker must be a coordinator.
      *
-     * @param Speaker $speaker
+     * @param SpeakerInterface $speaker
      */
-    public function __construct(Speaker $speaker, Network $network)
+    public function __construct(SpeakerInterface $speaker, Network $network)
     {
         if (!$speaker->isCoordinator()) {
             throw new \InvalidArgumentException("You cannot create a Controller instance from a Speaker that is not the coordinator of it's group");
         }
-        $this->ip = $speaker->ip;
+        $this->ip = $speaker->getIp();
         $this->device = $speaker->device;
 
         $this->network = $network;
@@ -80,7 +81,7 @@ class Controller extends Speaker
     /**
      * Check if this speaker is the coordinator of it's current group.
      *
-     * This method is only here to override the method from the Speaker class.
+     * This method is only here to override the method from the SpeakerInterface class.
      * A Controller instance is always the coordinator of it's group.
      *
      * @return bool
@@ -351,11 +352,11 @@ class Controller extends Speaker
      *
      * If no speaker is passed then the current controller's is used.
      *
-     * @param Speaker|null $speaker The speaker to get the line-in from
+     * @param SpeakerInterface|null $speaker The speaker to get the line-in from
      *
      * @return static
      */
-    public function useLineIn(Speaker $speaker = null)
+    public function useLineIn(SpeakerInterface $speaker = null)
     {
         if ($speaker === null) {
             $speaker = $this;
@@ -400,7 +401,7 @@ class Controller extends Speaker
     /**
      * Get the speakers that are in the group of this controller.
      *
-     * @return Speaker[]
+     * @return SpeakerInterface[]
      */
     public function getSpeakers(): array
     {
@@ -418,11 +419,11 @@ class Controller extends Speaker
     /**
      * Adds the specified speaker to the group of this Controller.
      *
-     * @param Speaker $speaker The speaker to add to the group
+     * @param SpeakerInterface $speaker The speaker to add to the group
      *
      * @return $this
      */
-    public function addSpeaker(Speaker $speaker): self
+    public function addSpeaker(SpeakerInterface $speaker): self
     {
         if ($speaker->getUuid() === $this->getUuid()) {
             return $this;
@@ -441,11 +442,11 @@ class Controller extends Speaker
     /**
      * Removes the specified speaker from the group of this Controller.
      *
-     * @param Speaker $speaker The speaker to remove from the group
+     * @param SpeakerInterface $speaker The speaker to remove from the group
      *
      * @return $this
      */
-    public function removeSpeaker(Speaker $speaker): self
+    public function removeSpeaker(SpeakerInterface $speaker): self
     {
         $speaker->soap("AVTransport", "BecomeCoordinatorOfStandaloneGroup");
 
@@ -462,7 +463,7 @@ class Controller extends Speaker
      *
      * @return $this
      */
-    public function setVolume(int $volume): Speaker
+    public function setVolume(int $volume): SpeakerInterface
     {
         $speakers = $this->getSpeakers();
         foreach ($speakers as $speaker) {
@@ -480,7 +481,7 @@ class Controller extends Speaker
      *
      * @return $this
      */
-    public function adjustVolume(int $adjust): Speaker
+    public function adjustVolume(int $adjust): SpeakerInterface
     {
         $speakers = $this->getSpeakers();
         foreach ($speakers as $speaker) {

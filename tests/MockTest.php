@@ -29,7 +29,7 @@ abstract class MockTest extends TestCase
     protected function getDevice()
     {
         $device = Mockery::mock(DeviceInterface::class);
-        $device->ip = "192.168.0.66";
+        $device->shouldReceive("getIp")->andReturn("192.168.0.66");
 
         $parser = Mockery::mock(XmlParser::class);
         $tag = Mockery::mock(XmlParser::class);

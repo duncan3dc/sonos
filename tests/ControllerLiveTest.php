@@ -14,7 +14,7 @@ class ControllerLiveTest extends LiveTest
         foreach ($this->network->getSpeakers() as $speaker) {
             if ($speaker->isCoordinator()) {
                 $controller = new Controller($speaker, $this->network);
-                $this->assertSame($speaker->ip, $controller->ip);
+                $this->assertSame($speaker->getIp(), $controller->getIp());
                 return;
             }
         }

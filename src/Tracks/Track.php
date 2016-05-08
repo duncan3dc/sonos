@@ -132,7 +132,7 @@ class Track implements UriInterface
         if ($art = (string) $xml->getTag("albumArtURI")) {
             if (substr($art, 0, 4) !== "http") {
                 $art = ltrim($art, "/");
-                $art = sprintf("http://%s:1400/%s", $controller->ip, $art);
+                $art = sprintf("http://%s:1400/%s", $controller->getIp(), $art);
             }
             $track->albumArt = $art;
         }
