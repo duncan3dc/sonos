@@ -424,6 +424,18 @@ final class Network implements NetworkInterface, LoggerAwareInterface
 
 
     /**
+     * Get the Sonos favourites.
+     *
+     * @return Favourites
+     */
+    public function getFavourites()
+    {
+        $controller = $this->getController();
+        return new Favourites($controller);
+    }
+
+
+    /**
      * Get a Radio instance for the network.
      *
      * @return RadioInterface
