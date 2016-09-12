@@ -101,6 +101,6 @@ class Stream implements UriInterface
      */
     public static function createFromXml(XmlElement $xml, Controller $controller)
     {
-        return new static($xml->getTag("res"));
+        return new static($xml->getTag("res")->nodeValue, $xml->getTag("title")->nodeValue);
     }
 }
