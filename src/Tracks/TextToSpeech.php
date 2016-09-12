@@ -9,12 +9,12 @@ use duncan3dc\Speaker\Providers\ProviderInterface;
 use duncan3dc\Speaker\TextToSpeech as TextToSpeechHandler;
 
 /**
- * Convert a string of a text to a spoken word mp3.
+ * Convert a string of a text to spoken word audio.
  */
 class TextToSpeech implements UriInterface
 {
     /**
-     * @var Directory $directory The directory to store the mp3 in.
+     * @var Directory $directory The directory to store the audio file in.
      */
     protected $directory;
 
@@ -22,11 +22,6 @@ class TextToSpeech implements UriInterface
      * @var string $text The text to convert.
      */
     protected $text;
-
-    /**
-     * @var string $filename The filename of the of the track.
-     */
-    protected $filename;
 
     /**
      * @var Provider $provider The text to speech provider.
@@ -37,7 +32,7 @@ class TextToSpeech implements UriInterface
      * Create a TextToSpeech object.
      *
      * @param string $text The text to convert
-     * @param Directory $directory The directory to store the mp3 in.
+     * @param Directory $directory The directory to store the audio file in
      */
     public function __construct($text, Directory $directory, ProviderInterface $provider = null)
     {
@@ -47,7 +42,6 @@ class TextToSpeech implements UriInterface
 
         $this->directory = $directory;
         $this->text = $text;
-        $this->filename = md5($this->text) . ".mp3";
 
         if ($provider !== null) {
             $this->setProvider($provider);
@@ -97,14 +91,17 @@ class TextToSpeech implements UriInterface
      */
     public function getUri()
     {
-        if (!$this->directory->has($this->filename)) {
-            $provider = $this->getProvider();
-            $tts = new TextToSpeechHandler($this->text, $provider);
-            $mp3 = $tts->getAudioData();
-            $this->directory->write($this->filename, $mp3);
+        $provider = $this->getProvider();
+        $tts = new TextToSpeechHandler($this->text, $provider);
+
+        $filename = $tts->generateFilename();
+
+        if (!$this->directory->has($filename)) {
+            $data = $tts->getAudioData();
+            $this->directory->write($filename, $data);
         }
 
-        return "x-file-cifs://" . $this->directory->getSharePath() . "/{$this->filename}";
+        return "x-file-cifs://" . $this->directory->getSharePath() . "/{$filename}";
     }
 
 

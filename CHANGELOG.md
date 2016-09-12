@@ -3,9 +3,17 @@ Changelog
 
 ## x.y.z - UNRELEASED
 
+--------
+
+## 1.9.2 - 2016-09-12
+
 ### Added
 
 * [Controller] Allow the Network instance in use to be retrieved using getNetwork().
+
+### Fixed
+
+* [Tracks] Fix the caching of text-to-speech files.
 
 --------
 
