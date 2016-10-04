@@ -66,11 +66,32 @@ class QueueTest extends MockTest
             "ObjectID"          =>  "Q:0",
         ])->andReturn([
             "Result"            =>  "<items><item></item><item></item><item></item><item></item><item></item></items>",
+            "NumberReturned"    =>  2,
             "TotalMatches"      =>  10,
         ]);
 
         $tracks = $this->queue->getTracks(0, 2);
         $this->assertSame(2, count($tracks));
+    }
+
+
+    public function testGetTracksInvalidStart()
+    {
+        $this->device->shouldReceive("soap")->once()->with("ContentDirectory", "Browse", [
+            "BrowseFlag"        =>  "BrowseDirectChildren",
+            "StartingIndex"     =>  5,
+            "RequestedCount"    =>  2,
+            "Filter"            =>  "",
+            "SortCriteria"      =>  "",
+            "ObjectID"          =>  "Q:0",
+        ])->andReturn([
+            "Result"            =>  "<items></items>",
+            "NumberReturned"    =>  0,
+            "TotalMatches"      =>  10,
+        ]);
+
+        $tracks = $this->queue->getTracks(5, 2);
+        $this->assertSame(0, count($tracks));
     }
 
 

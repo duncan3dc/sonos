@@ -5,6 +5,15 @@ Changelog
 
 --------
 
+## 1.9.3 - 2016-10-04
+
+### Fixed
+
+* [Streams] Ensure the title is picked up when available.
+* [Queues] Prevent inifite loop when the start position is invalid.
+
+--------
+
 ## 1.9.2 - 2016-09-12
 
 ### Added

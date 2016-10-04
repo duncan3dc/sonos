@@ -146,7 +146,7 @@ class Queue implements \Countable
             }
 
             $start += $limit;
-        } while ($data["TotalMatches"] && count($tracks) < $data["TotalMatches"]);
+        } while ($data["NumberReturned"] && $data["TotalMatches"] && count($tracks) < $data["TotalMatches"]);
 
         return $tracks;
     }
