@@ -176,6 +176,7 @@ class Device
             "S5"    =>  "PLAY:5",
             "S6"    =>  "PLAY:5",
             "S9"    =>  "PLAYBAR",
+            "S12"   =>  "PLAY:1",
             "ZP80"  =>  "ZONEPLAYER",
             "ZP90"  =>  "CONNECT",
             "ZP100" =>  "CONNECT:AMP",
