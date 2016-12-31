@@ -172,17 +172,17 @@ class Device
 
         $models = [
             "S1"    =>  "PLAY:1",
+            "S12"   =>  "PLAY:1",
             "S3"    =>  "PLAY:3",
             "S5"    =>  "PLAY:5",
             "S6"    =>  "PLAY:5",
             "S9"    =>  "PLAYBAR",
-            "S12"   =>  "PLAY:1",
             "ZP80"  =>  "ZONEPLAYER",
             "ZP90"  =>  "CONNECT",
             "ZP100" =>  "CONNECT:AMP",
             "ZP120" =>  "CONNECT:AMP",
         ];
 
-        return in_array($model, array_keys($models), true);
+        return array_key_exists($model, $models);
     }
 }

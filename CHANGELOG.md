@@ -5,6 +5,14 @@ Changelog
 
 --------
 
+## 1.9.4 - 2016-12-31
+
+### Fixed
+
+* [Network] Added support for the new version of the PLAY:1.
+
+--------
+
 ## 1.9.3 - 2016-10-04
 
 ### Fixed
