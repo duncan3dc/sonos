@@ -129,10 +129,16 @@ class Device
         }
 
         try {
-            return $soap->__soapCall($action, $soapParams);
+            $result = $soap->__soapCall($action, $soapParams);
+            $this->logger->debug("REQUEST: " . $soap->__getLastRequest());
+            $this->logger->debug("RESPONSE: " . $soap->__getLastResponse());
         } catch (\SoapFault $e) {
+            $this->logger->debug("REQUEST: " . $soap->__getLastRequest());
+            $this->logger->debug("RESPONSE: " . $soap->__getLastResponse());
             throw new Exceptions\SoapException($e, $soap);
         }
+
+        return $result;
     }
 
 
