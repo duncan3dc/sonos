@@ -5,6 +5,15 @@ Changelog
 
 --------
 
+## 1.9.5 - 2017-01-19
+
+### Added
+
+* [Logging] Soap request and responses are now logged under the Debug level.
+* [Support] Added support for PHP 7.1
+
+--------
+
 ## 1.9.4 - 2016-12-31
 
 ### Fixed
