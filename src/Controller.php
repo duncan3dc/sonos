@@ -5,6 +5,7 @@ namespace duncan3dc\Sonos;
 use duncan3dc\DomParser\XmlParser;
 use duncan3dc\Sonos\Exceptions\SoapException;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
+use duncan3dc\Sonos\Interfaces\QueueInterface;
 use duncan3dc\Sonos\Interfaces\SpeakerInterface;
 use duncan3dc\Sonos\Interfaces\UriInterface;
 use duncan3dc\Sonos\Interfaces\Utils\TimeInterface;
@@ -607,7 +608,7 @@ class Controller extends Speaker implements ControllerInterface
      *
      * @return Queue
      */
-    public function getQueue(): Queue
+    public function getQueue(): QueueInterface
     {
         return new Queue($this);
     }

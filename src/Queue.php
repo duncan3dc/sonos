@@ -5,6 +5,7 @@ namespace duncan3dc\Sonos;
 use duncan3dc\DomParser\XmlParser;
 use duncan3dc\Sonos\Exceptions\SonosException;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
+use duncan3dc\Sonos\Interfaces\QueueInterface;
 use duncan3dc\Sonos\Interfaces\UriInterface;
 use duncan3dc\Sonos\Tracks\Factory as TrackFactory;
 use duncan3dc\Sonos\Tracks\Track;
@@ -12,7 +13,7 @@ use duncan3dc\Sonos\Tracks\Track;
 /**
  * Provides an interface for managing the queue of a controller.
  */
-class Queue implements \Countable
+class Queue implements QueueInterface
 {
     /**
      * @var string $id The unique id of the queue.
@@ -233,9 +234,9 @@ class Queue implements \Countable
      * @param string|UriInterface $track The URI of the track to add, or an object that implements the UriInterface
      * @param int $position The position to insert the track in the queue (zero-based), by default the track will be added to the end of the queue
      *
-     * @return bool
+     * @return $this
      */
-    public function addTrack($track, int $position = null): bool
+    public function addTrack($track, int $position = null): QueueInterface
     {
         return $this->addTracks([$track], $position);
     }
@@ -249,7 +250,7 @@ class Queue implements \Countable
      *
      * @return $this
      */
-    public function addTracks(array $tracks, int $position = null)
+    public function addTracks(array $tracks, int $position = null): QueueInterface
     {
         foreach ($tracks as &$track) {
             # If a simple uri has been passed then convert it to a Track instance
@@ -329,7 +330,7 @@ class Queue implements \Countable
      *
      * @return $this
      */
-    public function clear(): self
+    public function clear(): QueueInterface
     {
         $this->soap("AVTransport", "RemoveAllTracksFromQueue");
 

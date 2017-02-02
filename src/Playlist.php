@@ -6,6 +6,7 @@ use duncan3dc\DomParser\XmlElement;
 use duncan3dc\DomParser\XmlParser;
 use duncan3dc\Sonos\Exceptions\SonosException;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
+use duncan3dc\Sonos\Interfaces\QueueInterface;
 use duncan3dc\Sonos\Interfaces\UriInterface;
 
 /**
@@ -136,7 +137,7 @@ class Playlist extends Queue
      *
      * @return $this
      */
-    public function moveTrack(int $from, int $to): self
+    public function moveTrack(int $from, int $to): QueueInterface
     {
         $data = $this->soap("AVTransport", "ReorderTracksInSavedQueue", [
             "UpdateID"              =>  $this->getUpdateID(),
@@ -154,7 +155,7 @@ class Playlist extends Queue
      *
      * @return $this
      */
-    public function clear(): Queue
+    public function clear(): QueueInterface
     {
         $positions = [];
         $max = $this->count();
