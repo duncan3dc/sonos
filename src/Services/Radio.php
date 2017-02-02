@@ -4,6 +4,7 @@ namespace duncan3dc\Sonos\Services;
 
 use duncan3dc\DomParser\XmlParser;
 use duncan3dc\Sonos\Controller;
+use duncan3dc\Sonos\Exceptions\NotFoundException;
 use duncan3dc\Sonos\Tracks\Stream;
 
 /**
@@ -88,7 +89,7 @@ class Radio
      *
      * @param string The name of the station
      *
-     * @return Stream|null
+     * @return Stream
      */
     public function getFavouriteStation(string $name)
     {
@@ -107,6 +108,8 @@ class Radio
         if ($roughMatch) {
             return $roughMatch;
         }
+
+        throw new NotFoundException("Unable to find a radio station by the name '{$name}'");
     }
 
 
@@ -128,7 +131,7 @@ class Radio
      *
      * @param string The name of the show
      *
-     * @return Stream|null
+     * @return Stream
      */
     public function getFavouriteShow(string $name)
     {
@@ -147,5 +150,7 @@ class Radio
         if ($roughMatch) {
             return $roughMatch;
         }
+
+        throw new NotFoundException("Unable to find a radio show by the name '{$name}'");
     }
 }
