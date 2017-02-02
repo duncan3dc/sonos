@@ -6,18 +6,19 @@ use duncan3dc\DomParser\XmlElement;
 use duncan3dc\DomParser\XmlParser;
 use duncan3dc\Sonos\Exceptions\SonosException;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
+use duncan3dc\Sonos\Interfaces\PlaylistInterface;
 use duncan3dc\Sonos\Interfaces\QueueInterface;
 use duncan3dc\Sonos\Interfaces\UriInterface;
 
 /**
  * Provides an interface for managing Sonos playlists on the current network.
  */
-class Playlist extends Queue
+final class Playlist extends Queue implements PlaylistInterface
 {
     /**
      * @var string|null $name The name of the playlist.
      */
-    protected $name;
+    private $name;
 
 
     /**
@@ -44,7 +45,7 @@ class Playlist extends Queue
      *
      * @return string
      */
-    public function getId(): int
+    public function getId(): string
     {
         return $this->id;
     }
@@ -137,7 +138,7 @@ class Playlist extends Queue
      *
      * @return $this
      */
-    public function moveTrack(int $from, int $to): QueueInterface
+    public function moveTrack(int $from, int $to): PlaylistInterface
     {
         $data = $this->soap("AVTransport", "ReorderTracksInSavedQueue", [
             "UpdateID"              =>  $this->getUpdateID(),

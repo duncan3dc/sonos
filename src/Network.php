@@ -9,6 +9,7 @@ use duncan3dc\Sonos\Devices\Factory;
 use duncan3dc\Sonos\Exceptions\NotFoundException;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Interfaces\Devices\CollectionInterface;
+use duncan3dc\Sonos\Interfaces\PlaylistInterface;
 use duncan3dc\Sonos\Interfaces\SpeakerInterface;
 use duncan3dc\Sonos\Services\Radio;
 use GuzzleHttp\Client;
@@ -31,7 +32,7 @@ class Network implements LoggerAwareInterface
     protected $speakers;
 
     /**
-     * @var Playlists[]|null $playlists Playlists that are available on the current network.
+     * @var PlaylistInterface[]|null $playlists Playlists that are available on the current network.
      */
     protected $playlists;
 
@@ -277,7 +278,7 @@ class Network implements LoggerAwareInterface
     /**
      * Get all the playlists available on the network.
      *
-     * @return Playlist[]
+     * @return PlaylistInterface[]
      */
     public function getPlaylists(): array
     {
@@ -310,7 +311,7 @@ class Network implements LoggerAwareInterface
      *
      * If no case-sensitive match is found it will return a case-insensitive match.
      *
-     * @param string The name of the playlist
+     * @param string $name The name of the playlist
      *
      * @return bool
      */
@@ -335,11 +336,11 @@ class Network implements LoggerAwareInterface
      *
      * If no case-sensitive match is found it will return a case-insensitive match.
      *
-     * @param string The name of the playlist
+     * @param string $name The name of the playlist
      *
-     * @return Playlist
+     * @return PlaylistInterface
      */
-    public function getPlaylistByName(string $name): Playlist
+    public function getPlaylistByName(string $name): PlaylistInterface
     {
         $roughMatch = false;
 
@@ -364,11 +365,11 @@ class Network implements LoggerAwareInterface
     /**
      * Get the playlist with the specified id.
      *
-     * @param int The ID of the playlist
+     * @param string $id The ID of the playlist (eg SQ:123)
      *
-     * @return Playlist
+     * @return PlaylistInterface
      */
-    public function getPlaylistById(int $id): Playlist
+    public function getPlaylistById(string $id): PlaylistInterface
     {
         $controller = $this->getController();
 
@@ -379,11 +380,11 @@ class Network implements LoggerAwareInterface
     /**
      * Create a new playlist.
      *
-     * @param string The name to give to the playlist
+     * @param string $name The name to give to the playlist
      *
-     * @return Playlist
+     * @return PlaylistInterface
      */
-    public function createPlaylist(string $name): Playlist
+    public function createPlaylist(string $name): PlaylistInterface
     {
         $controller = $this->getController();
 
