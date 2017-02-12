@@ -46,7 +46,7 @@ class QueueLiveTest extends LiveTest
 
         $track = $tracks[0];
         $this->assertInstanceOf(Track::class, $track);
-        $this->assertSame($uri, $track->uri);
+        $this->assertSame($uri, $track->getUri());
     }
 
 
@@ -64,7 +64,7 @@ class QueueLiveTest extends LiveTest
 
         $this->assertContainsOnlyInstancesOf(Track::class, $tracks);
         foreach ($tracks as $key => $track) {
-            $this->assertSame($uris[$key], $track->uri);
+            $this->assertSame($uris[$key], $track->getUri());
         }
     }
 
@@ -85,7 +85,7 @@ class QueueLiveTest extends LiveTest
 
         $track = $tracks[0];
         $this->assertInstanceOf(Track::class, $track);
-        $this->assertSame($uris[1], $track->uri);
+        $this->assertSame($uris[1], $track->getUri());
     }
 
 

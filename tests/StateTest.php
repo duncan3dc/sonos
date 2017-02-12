@@ -23,8 +23,15 @@ class StateTest extends TrackTest
     }
 
 
-    public function testTrackNumber()
+    /**
+     * Ignore these inherited tests as they are Track specific.
+     */
+    public function testItemId1()
     {
-        $this->assertSame(3, $this->track1->trackNumber);
+        $this->assertTrue(true);
+    }
+    public function testGetId2()
+    {
+        $this->assertTrue(true);
     }
 }

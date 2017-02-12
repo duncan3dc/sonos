@@ -42,7 +42,7 @@ class Spotify extends Track
      */
     public function getMetaData(): string
     {
-        $uri = substr($this->uri, strlen(self::PREFIX));
+        $uri = substr($this->getUri(), strlen(self::PREFIX));
 
         return Helper::createMetaDataXml(Helper::TRACK_HASH . "{$uri}", "-1", [
             "dc:title"      =>  "",

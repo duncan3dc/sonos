@@ -97,10 +97,10 @@ class Radio
 
         $stations = $this->getFavouriteStations();
         foreach ($stations as $station) {
-            if ($station->getName() === $name) {
+            if ($station->getTitle() === $name) {
                 return $station;
             }
-            if (strtolower($station->getName()) === strtolower($name)) {
+            if (strtolower($station->getTitle()) === strtolower($name)) {
                 $roughMatch = $station;
             }
         }
@@ -139,10 +139,10 @@ class Radio
 
         $shows = $this->getFavouriteShows();
         foreach ($shows as $show) {
-            if ($show->getName() === $name) {
+            if ($show->getTitle() === $name) {
                 return $show;
             }
-            if (strtolower($show->getName()) === strtolower($name)) {
+            if (strtolower($show->getTitle()) === strtolower($name)) {
                 $roughMatch = $show;
             }
         }

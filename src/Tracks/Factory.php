@@ -4,7 +4,7 @@ namespace duncan3dc\Sonos\Tracks;
 
 use duncan3dc\DomParser\XmlElement;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
-use duncan3dc\Sonos\Interfaces\UriInterface;
+use duncan3dc\Sonos\Interfaces\TrackInterface;
 
 /**
  * Factory for creating Track instances.
@@ -59,9 +59,9 @@ class Factory
      *
      * @param string $uri The URI of the track
      *
-     * @return Track
+     * @return TrackInterface
      */
-    public function createFromUri(string $uri): UriInterface
+    public function createFromUri(string $uri): TrackInterface
     {
         $class = $this->guessTrackClass($uri);
 
@@ -74,9 +74,9 @@ class Factory
      *
      * @param XmlElement $xml The xml element representing the track meta data.
      *
-     * @return Track
+     * @return TrackInterface
      */
-    public function createFromXml(XmlElement $xml): UriInterface
+    public function createFromXml(XmlElement $xml): TrackInterface
     {
         $uri = (string) $xml->getTag("res");
         $class = $this->guessTrackClass($uri);

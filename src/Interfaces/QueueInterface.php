@@ -2,8 +2,8 @@
 
 namespace duncan3dc\Sonos\Interfaces;
 
+use duncan3dc\Sonos\Interfaces\TrackInterface;
 use duncan3dc\Sonos\Interfaces\UriInterface;
-use duncan3dc\Sonos\Tracks\Track;
 
 /**
  * Provides an interface for managing the queue of a controller.
@@ -16,7 +16,7 @@ interface QueueInterface extends \Countable
      * @param int $start The zero-based position in the queue to start from
      * @param int $total The maximum number of tracks to return
      *
-     * @return Track[]
+     * @return TrackInterface[]
      */
     public function getTracks(int $start = 0, int $total = 0): array;
 

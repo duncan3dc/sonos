@@ -35,7 +35,7 @@ class Deezer extends Track
      */
     public function getMetaData(): string
     {
-        $uri = substr($this->uri, strlen(self::PREFIX));
+        $uri = substr($this->getUri(), strlen(self::PREFIX));
         if ($pos = strpos($uri, ".mp3")) {
             $uri = substr($uri, 0, $pos);
         }

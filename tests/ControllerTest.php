@@ -206,14 +206,13 @@ class ControllerTest extends MockTest
         $state = $controller->getStateDetails();
 
         $this->assertSame("x-file-cifs://LEMIEUX/sonos/the%20used/imaginary%20enemy/01-Revolution.mp3", $state->getUri());
-        $this->assertSame("revolution", $state->title);
-        $this->assertSame("the used", $state->artist);
-        $this->assertSame("imaginary enemy", $state->album);
-        $this->assertSame(1, $state->trackNumber);
-        $this->assertSame(0, $state->queueNumber);
-        $this->assertSame("00:04:04", $state->duration->asString());
-        $this->assertSame("00:00:15", $state->position->asString());
-        $this->assertNull($state->stream);
+        $this->assertSame("revolution", $state->getTitle());
+        $this->assertSame("the used", $state->getArtist());
+        $this->assertSame("imaginary enemy", $state->getAlbum());
+        $this->assertSame(0, $state->getNumber());
+        $this->assertSame("00:04:04", $state->getDuration()->asString());
+        $this->assertSame("00:00:15", $state->getPosition()->asString());
+        $this->assertNull($state->getStream());
     }
 
 
@@ -238,11 +237,11 @@ class ControllerTest extends MockTest
         $state = $controller->getStateDetails();
 
         $this->assertSame("x-rincon-mp3radio://tx.sharp-stream.com/http_live.php?i=teamrock.mp3", $state->getUri());
-        $this->assertSame("Hit Or Miss", $state->title);
-        $this->assertSame("New Found Glory", $state->artist);
-        $this->assertSame("00:00:00", $state->duration->asString());
-        $this->assertSame("00:00:02", $state->position->asString());
-        $this->assertSame("TeamRock Radio", $state->stream);
+        $this->assertSame("Hit Or Miss", $state->getTitle());
+        $this->assertSame("New Found Glory", $state->getArtist());
+        $this->assertSame("00:00:00", $state->getDuration()->asString());
+        $this->assertSame("00:00:02", $state->getPosition()->asString());
+        $this->assertSame("TeamRock Radio", $state->getStream()->getTitle());
     }
 
 
@@ -262,7 +261,7 @@ class ControllerTest extends MockTest
         $state = $controller->getStateDetails();
 
         $this->assertSame("x-rincon-stream:RINCON_B8E9372C898401400", $state->getUri());
-        $this->assertSame("Line-In", $state->stream);
+        $this->assertSame("Line-In", $state->getStream()->getTitle());
     }
 
 
@@ -282,7 +281,7 @@ class ControllerTest extends MockTest
         $state = $controller->getStateDetails();
 
         $this->assertSame("", $state->getUri());
-        $this->assertNull($state->stream);
+        $this->assertNull($state->getStream());
     }
 
 

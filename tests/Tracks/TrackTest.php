@@ -3,6 +3,7 @@
 namespace duncan3dc\SonosTests\Tracks;
 
 use duncan3dc\DomParser\XmlParser;
+use duncan3dc\ObjectIntruder\Intruder;
 use duncan3dc\Sonos\Controller;
 use duncan3dc\Sonos\Tracks\Track;
 use Mockery;
@@ -55,66 +56,68 @@ XML;
     public function testGetTrackMetaDataTitle()
     {
         $value = "TITLE";
-        $this->assertSame($value, $this->track1->title);
+        $this->assertSame($value, $this->track1->getTitle());
     }
 
 
     public function testGetTrackMetaDataArtist()
     {
         $value = "ARTIST";
-        $this->assertSame($value, $this->track1->artist);
+        $this->assertSame($value, $this->track1->getArtist());
     }
 
 
     public function testGetTrackMetaDataAlbum()
     {
         $value = "ALBUM";
-        $this->assertSame($value, $this->track1->album);
+        $this->assertSame($value, $this->track1->getAlbum());
     }
 
 
     public function testGetTrackMetaDataNumber()
     {
         $value = 3;
-        $this->assertSame($value, $this->track1->number);
+        $this->assertSame($value, $this->track1->getNumber());
     }
 
 
     public function testGetTrackMetaDataStreamTitle()
     {
         $value = "Of Matter - Proxy";
-        $this->assertSame($value, $this->track2->title);
+        $this->assertSame($value, $this->track2->getTitle());
     }
 
 
     public function testGetTrackMetaDataStreamArtist()
     {
         $value = "Tesseract";
-        $this->assertSame($value, $this->track2->artist);
+        $this->assertSame($value, $this->track2->getArtist());
     }
 
 
     public function testGetTrackMetaDataStreamAlbum()
     {
         $value = "";
-        $this->assertSame($value, $this->track2->album);
+        $this->assertSame($value, $this->track2->getAlbum());
     }
 
 
     public function testGetTrackMetaDataStreamNumber()
     {
         $value = 0;
-        $this->assertSame($value, $this->track2->number);
+        $this->assertSame($value, $this->track2->getNumber());
     }
 
 
-    public function testGetId1()
+    public function testItemId1()
     {
-        $this->assertSame("-1", $this->track1->getId());
+        $track = new Intruder($this->track1);
+        $this->assertSame("-1", $track->itemId);
     }
     public function testGetId2()
     {
-        $this->assertSame("O:345", $this->track2->getId());
+        $track = new Intruder($this->track2);
+        $this->assertSame("O:345", $track->itemId);
     }
 
 

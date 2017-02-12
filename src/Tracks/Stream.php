@@ -5,58 +5,26 @@ namespace duncan3dc\Sonos\Tracks;
 use duncan3dc\DomParser\XmlElement;
 use duncan3dc\Sonos\Helper;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
-use duncan3dc\Sonos\Interfaces\UriInterface;
+use duncan3dc\Sonos\Interfaces\TrackInterface;
 
 /**
  * Representation of a stream.
  */
-class Stream implements UriInterface
+class Stream extends Track
 {
     const PREFIX = "x-sonosapi-stream";
-
-    /**
-     * @var string $uri The uri of the stream.
-     */
-    protected $uri = "";
-
-    /**
-     * @var string $name The name of the stream.
-     */
-    protected $name = "";
-
 
     /**
      * Create a Stream object.
      *
      * @param string $uri The URI of the stream
-     * @param string $name The name of the stream
+     * @param string $title The title of the stream
      */
-    public function __construct(string $uri, string $name = "")
+    public function __construct(string $uri, string $title = "")
     {
-        $this->uri = (string) $uri;
-        $this->name = (string) $name;
-    }
+        parent::__construct($uri);
 
-
-    /**
-     * Get the URI for this stream.
-     *
-     * @return string
-     */
-    public function getUri(): string
-    {
-        return $this->uri;
-    }
-
-
-    /**
-     * Get the name for this stream.
-     *
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
+        $this->setTitle($title);
     }
 
 
@@ -68,7 +36,7 @@ class Stream implements UriInterface
     public function getMetaData(): string
     {
         return Helper::createMetaDataXml("-1", "-1", [
-            "dc:title"          =>  $this->getName() ?: "Stream",
+            "dc:title"          =>  $this->getTitle() ?: "Stream",
             "upnp:class"        =>  "object.item.audioItem.audioBroadcast",
             "desc"              =>  [
                 "_attributes"       =>  [
@@ -89,7 +57,7 @@ class Stream implements UriInterface
      *
      * @return self
      */
-    public static function createFromXml(XmlElement $xml, ControllerInterface $controller): UriInterface
+    public static function createFromXml(XmlElement $xml, ControllerInterface $controller): TrackInterface
     {
         return new static($xml->getTag("res")->nodeValue, $xml->getTag("title")->nodeValue);
     }

@@ -35,7 +35,7 @@ class Google extends Track
      */
     public function getMetaData(): string
     {
-        $uri = substr($this->uri, strlen(static::PREFIX));
+        $uri = substr($this->getUri(), strlen(static::PREFIX));
         if ($pos = strpos($uri, ".mp3")) {
             $uri = substr($uri, 0, $pos);
         }

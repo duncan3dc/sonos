@@ -7,6 +7,7 @@ use duncan3dc\Sonos\Exceptions\SoapException;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Interfaces\QueueInterface;
 use duncan3dc\Sonos\Interfaces\SpeakerInterface;
+use duncan3dc\Sonos\Interfaces\StateInterface;
 use duncan3dc\Sonos\Interfaces\UriInterface;
 use duncan3dc\Sonos\Interfaces\Utils\TimeInterface;
 use duncan3dc\Sonos\Tracks\Stream;
@@ -99,16 +100,16 @@ class Controller extends Speaker implements ControllerInterface
     /**
      * Get attributes about the currently active track in the queue.
      *
-     * @return State
+     * @return StateInterface
      */
-    public function getStateDetails(): State
+    public function getStateDetails(): StateInterface
     {
         $data = $this->soap("AVTransport", "GetPositionInfo");
 
         # Check for line in mode
         if ($data["TrackMetaData"] === "NOT_IMPLEMENTED") {
             $state = new State($data["TrackURI"]);
-            $state->stream = "Line-In";
+            $state->setStream(new Stream("x-rincon-stream:" . $this->getUuid(), "Line-In"));
             return $state;
         }
 
@@ -122,18 +123,21 @@ class Controller extends Speaker implements ControllerInterface
 
         if ((string) $parser->getTag("streamContent")) {
             $info = $this->getMediaInfo();
-            if (!$state->stream = (string) (new XmlParser($info["CurrentURIMetaData"]))->getTag("title")) {
-                $state->stream = (string) $parser->getTag("title");
+            $meta = new XmlParser($info["CurrentURIMetaData"]);
+            if ($title = (string) $meta->getTag("title")) {
+                $state->setStream(new Stream("", $title));
+            } else {
+                $state->setStream(new Stream("", $parser->getTag("title")));
             }
         }
 
-        $state->queueNumber = (int) $data["Track"];
-        $state->duration = Time::parse($data["TrackDuration"]);
-        $state->position = Time::parse($data["RelTime"]);
+        $state->setNumber($data["Track"]);
+        $state->setDuration(Time::parse($data["TrackDuration"]));
+        $state->setPosition(Time::parse($data["RelTime"]));
 
         # If we have a queue number, it'll be one-based, rather than zero-based, so convert it
-        if ($state->queueNumber > 0) {
-            $state->queueNumber--;
+        if ($state->getNumber() > 0) {
+            $state->setNumber($state->getNumber() - 1);
         }
 
         return $state;
