@@ -36,10 +36,6 @@ class TextToSpeech implements UriInterface
      */
     public function __construct($text, Directory $directory, ProviderInterface $provider = null)
     {
-        if (strlen($text) > 100) {
-            throw new \InvalidArgumentException("Only messages under 100 characters are supported");
-        }
-
         $this->directory = $directory;
         $this->text = $text;
 
