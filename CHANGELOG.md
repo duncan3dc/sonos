@@ -5,6 +5,14 @@ Changelog
 
 --------
 
+## 1.9.6 - 2017-02-12
+
+### Fixed
+
+* [Tracks] Allow text-to-speech messages longer than 100 characters.
+
+--------
+
 ## 1.9.5 - 2017-01-19
 
 ### Added
