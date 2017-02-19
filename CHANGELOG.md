@@ -5,6 +5,14 @@ Changelog
 
 --------
 
+## 1.9.7 - 2017-02-19
+
+### Fixed
+
+* [Controllers] Ensure PlayBar streaming continues after using interrupt().
+
+--------
+
 ## 1.9.6 - 2017-02-12
 
 ### Fixed

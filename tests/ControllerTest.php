@@ -300,13 +300,13 @@ class ControllerTest extends MockTest
     }
 
 
-    public function testIsStreamingLineIn()
+    public function testIsStreamingPlaybar()
     {
         $device = $this->getDevice();
         $controller = $this->getController($device);
 
         $device->shouldReceive("soap")->once()->with("AVTransport", "GetMediaInfo", [])->andReturn([
-            "CurrentURI"    =>  "x-rincon-stream:RINCON_5CAAFD0A251401400",
+            "CurrentURI"    =>  "x-sonos-htastream:RINCON_5CAAFD0A251401400:spdif",
         ]);
 
         $this->assertTrue($controller->isStreaming());

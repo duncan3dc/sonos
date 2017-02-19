@@ -322,6 +322,11 @@ class Controller extends Speaker
             return true;
         }
 
+        # Line in (playbar)
+        if (substr($uri, 0, 18) === "x-sonos-htastream:") {
+            return true;
+        }
+
         return false;
     }
 
@@ -687,9 +692,11 @@ class Controller extends Speaker
         if (count($state->tracks) > 0) {
             $this->selectTrack($state->track);
 
-            list($hours, $minutes, $seconds) = explode(":", $state->position);
-            $time = ((($hours * 60) + $minutes) * 60) + $seconds;
-            $this->seek($time);
+            if ($state->position) {
+                list($hours, $minutes, $seconds) = explode(":", $state->position);
+                $time = ((($hours * 60) + $minutes) * 60) + $seconds;
+                $this->seek($time);
+            }
         }
 
         $this->setShuffle($state->shuffle);
