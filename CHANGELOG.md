@@ -5,6 +5,14 @@ Changelog
 
 --------
 
+## 1.9.8 - 2017-02-22
+
+### Fixed
+
+* [Tracks] Added a GoogleUnlimited track to support Google unlimited tracks.
+
+--------
+
 ## 1.9.7 - 2017-02-19
 
 ### Fixed

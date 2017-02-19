@@ -5,7 +5,7 @@ namespace duncan3dc\Sonos\Tracks;
 use duncan3dc\Sonos\Helper;
 
 /**
- * Representation of a Google track.
+ * Representation of a Google track that was uploaded to the service.
  */
 class Google extends Track
 {
@@ -20,8 +20,8 @@ class Google extends Track
     public function __construct($uri)
     {
         # If this is a Google track ID and not a URI then convert it to a URI now
-        if (substr($uri, 0, strlen(self::PREFIX)) !== self::PREFIX) {
-            $uri = self::PREFIX . urlencode(":{$uri}.mp3");
+        if (substr($uri, 0, strlen(static::PREFIX)) !== static::PREFIX) {
+            $uri = static::PREFIX . urlencode("{$uri}.mp3");
         }
 
         parent::__construct($uri);
@@ -35,12 +35,12 @@ class Google extends Track
      */
     public function getMetaData()
     {
-        $uri = substr($this->uri, strlen(self::PREFIX));
+        $uri = substr($this->uri, strlen(static::PREFIX));
         if ($pos = strpos($uri, ".mp3")) {
             $uri = substr($uri, 0, $pos);
         }
 
-        return Helper::createMetaDataXml(Helper::TRACK_HASH . self::UNIQUE . "{$uri}", "-1", [
+        return Helper::createMetaDataXml(Helper::TRACK_HASH . static::UNIQUE . "{$uri}", "-1", [
             "dc:title"      =>  "",
             "upnp:class"    =>  "object.item.audioItem.musicTrack",
         ], "38663");

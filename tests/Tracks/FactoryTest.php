@@ -6,6 +6,8 @@ use duncan3dc\DomParser\XmlParser;
 use duncan3dc\DomParser\XmlWriter;
 use duncan3dc\Sonos\Tracks\Deezer;
 use duncan3dc\Sonos\Tracks\Factory;
+use duncan3dc\Sonos\Tracks\Google;
+use duncan3dc\Sonos\Tracks\GoogleUnlimited;
 use duncan3dc\Sonos\Tracks\Spotify;
 use duncan3dc\Sonos\Tracks\Stream;
 use duncan3dc\Sonos\Tracks\Track;
@@ -43,6 +45,20 @@ class FactoryTest extends MockTest
     {
         $track = $this->factory->createFromUri("x-sonos-http:tr:123sdfd6");
         $this->assertInstanceOf(Deezer::class, $track);
+    }
+
+
+    public function testGoogleTrackUri()
+    {
+        $track = $this->factory->createFromUri("x-sonos-http:_dklxfo-EJN34xu9HkcfzBMGUd86HezVdklbzxKIUjyXkqC23MIzxiZu8-PtSkgc.mp3");
+        $this->assertInstanceOf(Google::class, $track);
+    }
+
+
+    public function testGoogleUnlimitedTrackUri()
+    {
+        $track = $this->factory->createFromUri("x-sonos-http:A0DvPDnowsEJN34xu9HkcfzBMGUd86HezVdklbzxKIUjyXkqC23MIzxiZu8-PtSkgc.mp3");
+        $this->assertInstanceOf(GoogleUnlimited::class, $track);
     }
 
 
