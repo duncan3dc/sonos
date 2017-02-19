@@ -8,8 +8,9 @@ use duncan3dc\Sonos\Device;
 use duncan3dc\Sonos\Network;
 use duncan3dc\Sonos\Speaker;
 use Mockery;
+use PHPUnit\Framework\TestCase;
 
-abstract class MockTest extends \PHPUnit_Framework_TestCase
+abstract class MockTest extends TestCase
 {
     protected $network;
 

@@ -25,7 +25,7 @@ class ControllerLiveTest extends LiveTest
 
     public function testConstructor2()
     {
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         foreach ($this->network->getSpeakers() as $speaker) {
             if (!$speaker->isCoordinator()) {

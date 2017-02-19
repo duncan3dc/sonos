@@ -23,7 +23,7 @@ script:
   - tests/lint.sh
 
 after_success:
-  - vendor/bin/coveralls
+  - vendor/bin/php-coveralls
 
 git:
   depth: 5

@@ -40,7 +40,7 @@ class ControllerTest extends MockTest
             "ObjectID"          =>  "Q:0",
         ]);
 
-        $this->setExpectedException(\BadMethodCallException::class);
+        $this->expectException(\BadMethodCallException::class);
         $controller->play();
     }
 
@@ -132,7 +132,8 @@ class ControllerTest extends MockTest
         $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportInfo", []);
         $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", []);
 
-        $controller->restoreState($state);
+        $result = $controller->restoreState($state);
+        $this->assertSame($controller, $result);
     }
 
 
@@ -171,7 +172,8 @@ class ControllerTest extends MockTest
         $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportInfo", []);
         $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", []);
 
-        $controller->restoreState($state);
+        $result = $controller->restoreState($state);
+        $this->assertSame($controller, $result);
     }
 
 

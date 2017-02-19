@@ -3,8 +3,9 @@
 namespace duncan3dc\SonosTests\Tracks;
 
 use duncan3dc\Sonos\Tracks\Stream;
+use PHPUnit\Framework\TestCase;
 
-class StreamTest extends \PHPUnit_Framework_TestCase
+class StreamTest extends TestCase
 {
 
     public function testGetUri()
