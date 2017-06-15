@@ -27,11 +27,11 @@ abstract class MockTest extends \PHPUnit_Framework_TestCase
 
     protected function getDevice()
     {
-        $device = Mockery::mock("duncan3dc\Sonos\Device");
+        $device = Mockery::mock(Device::class);
         $device->ip = "192.168.0.66";
 
-        $parser = Mockery::mock("duncan3dc\DomParser\XmlParser");
-        $tag = Mockery::mock("duncan3dc\DomParser\XmlParser");
+        $parser = Mockery::mock(XmlParser::class);
+        $tag = Mockery::mock(XmlParser::class);
         $parser->shouldReceive("getTag")->with("device")->once()->andReturn($tag);
         $tag->shouldReceive("getTag")->with("friendlyName")->once()->andReturn("Test Name");
         $tag->shouldReceive("getTag")->with("roomName")->once()->andReturn("Test Room");
@@ -51,9 +51,9 @@ abstract class MockTest extends \PHPUnit_Framework_TestCase
     {
         $speaker = $this->getSpeaker($device);
 
-        $parser = Mockery::mock("duncan3dc\DomParser\XmlParser");
-        $players = Mockery::mock("duncan3dc\DomParser\XmlParser");
-        $player = Mockery::mock("duncan3dc\DomParser\XmlParser");
+        $parser = Mockery::mock(XmlParser::class);
+        $players = Mockery::mock(XmlParser::class);
+        $player = Mockery::mock(XmlParser::class);
         $parser->shouldReceive("getTag")->with("ZonePlayers")->once()->andReturn($players);
         $players->shouldReceive("getTags")->with("ZonePlayer")->once()->andReturn([$player]);
         $player->shouldReceive("getAttributes")->once()->andReturn([

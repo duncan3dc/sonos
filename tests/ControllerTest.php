@@ -3,6 +3,7 @@
 namespace duncan3dc\SonosTests;
 
 use duncan3dc\Sonos\ControllerState;
+use duncan3dc\Sonos\Exceptions\SoapException;
 use Mockery;
 
 class ControllerTest extends MockTest
@@ -25,7 +26,7 @@ class ControllerTest extends MockTest
     {
         $device = $this->getDevice();
         $controller = $this->getController($device);
-        $exception = Mockery::mock("duncan3dc\Sonos\Exceptions\SoapException");
+        $exception = Mockery::mock(SoapException::class);
 
         $device->shouldReceive("soap")->once()->with("AVTransport", "Play", [
             "Speed" =>  1,
@@ -39,7 +40,7 @@ class ControllerTest extends MockTest
             "ObjectID"          =>  "Q:0",
         ]);
 
-        $this->setExpectedException("\BadMethodCallException");
+        $this->setExpectedException(\BadMethodCallException::class);
         $controller->play();
     }
 

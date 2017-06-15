@@ -3,6 +3,7 @@
 namespace duncan3dc\SonosTests\Tracks;
 
 use duncan3dc\DomParser\XmlParser;
+use duncan3dc\Sonos\Controller;
 use duncan3dc\Sonos\Tracks\Track;
 use Mockery;
 
@@ -33,7 +34,7 @@ XML;
 
     public function setUp()
     {
-        $controller = Mockery::mock("duncan3dc\Sonos\Controller");
+        $controller = Mockery::mock(Controller::class);
         $controller->ip = "192.168.0.66";
 
         $xml = new XmlParser($this->xml1);

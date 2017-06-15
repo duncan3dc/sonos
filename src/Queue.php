@@ -258,7 +258,7 @@ class Queue implements \Countable
             }
 
             if (!$track instanceof UriInterface) {
-                throw new \InvalidArgumentException("The addTracks() array must contain either string URIs or objects that implement \duncan3dc\Sonos\Tracks\UriInterface");
+                throw new \InvalidArgumentException("The addTracks() array must contain either string URIs or objects that implement " . UriInterface::class);
             }
         }
         unset($track);
