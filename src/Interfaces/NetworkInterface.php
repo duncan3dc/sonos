@@ -4,8 +4,8 @@ namespace duncan3dc\Sonos\Interfaces;
 
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Interfaces\PlaylistInterface;
+use duncan3dc\Sonos\Interfaces\Services\RadioInterface;
 use duncan3dc\Sonos\Interfaces\SpeakerInterface;
-use duncan3dc\Sonos\Services\Radio;
 
 /**
  * Provides methods to locate speakers/controllers/playlists on the current network.
@@ -151,7 +151,7 @@ interface NetworkInterface
     /**
      * Get a Radio instance for the network.
      *
-     * @return Radio
+     * @return RadioInterface
      */
-    public function getRadio(): Radio;
+    public function getRadio(): RadioInterface;
 }

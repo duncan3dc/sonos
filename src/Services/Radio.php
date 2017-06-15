@@ -5,12 +5,13 @@ namespace duncan3dc\Sonos\Services;
 use duncan3dc\DomParser\XmlParser;
 use duncan3dc\Sonos\Exceptions\NotFoundException;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
+use duncan3dc\Sonos\Interfaces\Services\RadioInterface;
 use duncan3dc\Sonos\Tracks\Stream;
 
 /**
  * Handle radio streams using TuneIn.
  */
-class Radio
+final class Radio implements RadioInterface
 {
     /**
      * @var int The key for station types.
@@ -87,11 +88,11 @@ class Radio
      *
      * If no case-sensitive match is found it will return a case-insensitive match.
      *
-     * @param string The name of the station
+     * @param string $name The name of the station
      *
      * @return Stream
      */
-    public function getFavouriteStation(string $name)
+    public function getFavouriteStation(string $name): Stream
     {
         $roughMatch = false;
 
@@ -129,11 +130,11 @@ class Radio
      *
      * If no case-sensitive match is found it will return a case-insensitive match.
      *
-     * @param string The name of the show
+     * @param string $name The name of the show
      *
      * @return Stream
      */
-    public function getFavouriteShow(string $name)
+    public function getFavouriteShow(string $name): Stream
     {
         $roughMatch = false;
 
