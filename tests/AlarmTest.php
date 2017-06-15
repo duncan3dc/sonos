@@ -4,7 +4,7 @@ namespace duncan3dc\SonosTests;
 
 use duncan3dc\DomParser\XmlElement;
 use duncan3dc\Sonos\Alarm;
-use duncan3dc\Sonos\Network;
+use duncan3dc\Sonos\Interfaces\NetworkInterface;
 use duncan3dc\Sonos\Speaker;
 use Mockery;
 
@@ -34,7 +34,7 @@ class AlarmTest extends MockTest
         $this->speaker = Mockery::mock(Speaker::class);
         $this->speaker->shouldReceive("getUuid")->andReturn($attributes["RoomUUID"]);
 
-        $network = Mockery::mock(Network::class);
+        $network = Mockery::mock(NetworkInterface::class);
         $network->shouldReceive("getSpeakers")->andReturn([$this->speaker]);
 
         return new Alarm($xml, $network);

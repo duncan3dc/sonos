@@ -2,8 +2,6 @@
 
 namespace duncan3dc\SonosTests;
 
-use duncan3dc\Sonos\Network;
-
 class SpeakerLiveTest extends LiveTest
 {
     protected $speaker;

@@ -4,6 +4,7 @@ namespace duncan3dc\Sonos;
 
 use duncan3dc\DomParser\XmlElement;
 use duncan3dc\Sonos\Interfaces\AlarmInterface;
+use duncan3dc\Sonos\Interfaces\NetworkInterface;
 use duncan3dc\Sonos\Interfaces\SpeakerInterface;
 use duncan3dc\Sonos\Interfaces\Utils\TimeInterface;
 use duncan3dc\Sonos\Utils\Time;
@@ -37,7 +38,7 @@ final class Alarm implements AlarmInterface
     protected $attributes;
 
     /**
-     * @var Network $network A Network instance this alarm is from.
+     * @var NetworkInterface $network A Network instance this alarm is from.
      */
     protected $network;
 
@@ -45,9 +46,9 @@ final class Alarm implements AlarmInterface
      * Create an instance of the Alarm class.
      *
      * @param XmlElement $xml The xml element with the relevant attributes
-     * @param Network $network A Network instance this alarm is from
+     * @param NetworkInterface $network A Network instance this alarm is from
      */
-    public function __construct(XmlElement $xml, Network $network)
+    public function __construct(XmlElement $xml, NetworkInterface $network)
     {
         $this->id = $xml->getAttribute("ID");
         $this->attributes = $xml->getAttributes();

@@ -5,7 +5,7 @@ namespace duncan3dc\SonosTests;
 use duncan3dc\DomParser\XmlParser;
 use duncan3dc\Sonos\Controller;
 use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
-use duncan3dc\Sonos\Network;
+use duncan3dc\Sonos\Interfaces\NetworkInterface;
 use duncan3dc\Sonos\Speaker;
 use Mockery;
 use PHPUnit\Framework\TestCase;
@@ -21,7 +21,7 @@ abstract class MockTest extends TestCase
 
     public function setUp()
     {
-        $this->network = Mockery::mock(Network::class);
+        $this->network = Mockery::mock(NetworkInterface::class);
 
         $this->network->shouldReceive("getSpeakers")->andReturn([]);
     }
