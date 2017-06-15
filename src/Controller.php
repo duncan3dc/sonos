@@ -391,12 +391,17 @@ final class Controller implements ControllerInterface
         if ($speaker->getUuid() === $this->getUuid()) {
             return $this;
         }
+
         $speaker->soap("AVTransport", "SetAVTransportURI", [
             "CurrentURI"            =>  "x-rincon:" . $this->getUuid(),
             "CurrentURIMetaData"    =>  "",
         ]);
 
-        $this->network->clearTopology();
+        $speaker->setTopology([
+            "uuid"          =>  $speaker->getUuid(),
+            "group"         =>  $this->getGroup(),
+            "coordinator"   =>  "false",
+        ]);
 
         return $this;
     }
@@ -413,7 +418,7 @@ final class Controller implements ControllerInterface
     {
         $speaker->soap("AVTransport", "BecomeCoordinatorOfStandaloneGroup");
 
-        $this->network->clearTopology();
+        $speaker->clearTopology();
 
         return $this;
     }

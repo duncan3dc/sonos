@@ -88,6 +88,19 @@ final class Speaker implements SpeakerInterface
 
 
     /**
+     * Remove any previously gathered topology for this speaker.
+     *
+     * @return $this
+     */
+    public function clearTopology(): SpeakerInterface
+    {
+        $this->topology = false;
+
+        return $this;
+    }
+
+
+    /**
      * Set the topology of this speaker.
      *
      * @param array $topology The topology attributes as key/value pairs

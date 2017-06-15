@@ -138,19 +138,6 @@ final class Network implements NetworkInterface, LoggerAwareInterface
 
 
     /**
-     * Reset any previously gathered speaker information.
-     *
-     * @return $this
-     */
-    public function clearTopology(): NetworkInterface
-    {
-        $this->collection->clearTopology();
-
-        return $this;
-    }
-
-
-    /**
      * Get a Controller instance from the network.
      *
      * Useful for managing playlists/alarms, as these need a controller but it doesn't matter which one.
