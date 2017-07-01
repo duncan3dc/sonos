@@ -2,10 +2,6 @@
 
 namespace duncan3dc\Sonos\Interfaces;
 
-use duncan3dc\Sonos\ControllerState;
-use duncan3dc\Sonos\Interfaces\QueueInterface;
-use duncan3dc\Sonos\Interfaces\StateInterface;
-use duncan3dc\Sonos\Interfaces\UriInterface;
 use duncan3dc\Sonos\Interfaces\Utils\TimeInterface;
 use duncan3dc\Sonos\Tracks\Stream;
 
@@ -67,7 +63,7 @@ interface ControllerInterface extends SpeakerInterface
     /**
      * Get attributes about the currently active track in the queue.
      *
-     * @return State
+     * @return StateInterface
      */
     public function getStateDetails(): StateInterface;
 
@@ -301,19 +297,19 @@ interface ControllerInterface extends SpeakerInterface
      *
      * @param bool $pause Whether to pause the controller or not
      *
-     * @return ControllerState
+     * @return ControllerStateInterface
      */
-    public function exportState(bool $pause = true): ControllerState;
+    public function exportState(bool $pause = true): ControllerStateInterface;
 
 
     /**
      * Restore the Controller to a previously exported state.
      *
-     * @param ControllerState $state The state to be restored
+     * @param ControllerStateInterface $state The state to be restored
      *
      * @return self
      */
-    public function restoreState(ControllerState $state): ControllerInterface;
+    public function restoreState(ControllerStateInterface $state): ControllerInterface;
 
 
     /**

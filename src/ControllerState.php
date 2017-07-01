@@ -3,58 +3,61 @@
 namespace duncan3dc\Sonos;
 
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
+use duncan3dc\Sonos\Interfaces\ControllerStateInterface;
+use duncan3dc\Sonos\Interfaces\SpeakerInterface;
 use duncan3dc\Sonos\Interfaces\TrackInterface;
 use duncan3dc\Sonos\Tracks\Stream;
+use duncan3dc\Sonos\Utils\Time;
 
 /**
  * Representation of the current state of a controller.
  */
-class ControllerState
+final class ControllerState implements ControllerStateInterface
 {
     /**
      * @var int One of the ControllerInterface::STATE_ constants
      */
-    public $state;
+    private $state;
 
     /**
      * @var int $track The zero-based number of the track in the queue.
      */
-    public $track;
+    private $track;
 
     /**
      * @var string $position The position of the currently active track (hh:mm:ss).
      */
-    public $position;
+    private $position;
 
     /**
      * @var bool $repeat Whether repeat mode is currently active.
      */
-    public $repeat;
+    private $repeat;
 
     /**
      * @var bool $shuffle Whether shuffle is currently active.
      */
-    public $shuffle;
+    private $shuffle;
 
     /**
      * @var bool $crossfade Whether crossfade is currently active.
      */
-    public $crossfade;
+    private $crossfade;
 
     /**
-     * @var array $speakers Each speaker that is managed by this controller.
+     * @var SpeakerInterface[] $speakers Each speaker that is managed by this controller.
      */
-    public $speakers;
+    private $speakers;
 
     /**
      * @var TrackInterface[] $tracks An array of tracks from the queue.
      */
-    public $tracks;
+    private $tracks;
 
     /**
      * @var Stream $stream A stream object (if the controller is currently streaming).
      */
-    public $stream;
+    private $stream;
 
     /**
      * Create a ControllerState object.
@@ -64,10 +67,10 @@ class ControllerState
     public function __construct(ControllerInterface $controller)
     {
         $this
-            ->getState($controller)
-            ->getMode($controller)
-            ->getVolume($controller)
-            ->getTracks($controller);
+            ->applyState($controller)
+            ->applyMode($controller)
+            ->applyVolume($controller)
+            ->applyTracks($controller);
     }
 
 
@@ -78,7 +81,7 @@ class ControllerState
      *
      * @return $this
      */
-    protected function getState(ControllerInterface $controller): self
+    private function applyState(ControllerInterface $controller): ControllerStateInterface
     {
         $this->state = $controller->getState();
 
@@ -97,7 +100,7 @@ class ControllerState
      *
      * @return $this
      */
-    protected function getMode(ControllerInterface $controller): self
+    private function applyMode(ControllerInterface $controller): ControllerStateInterface
     {
         $mode = $controller->getMode();
         $this->repeat = $mode["repeat"];
@@ -116,7 +119,7 @@ class ControllerState
      *
      * @return $this
      */
-    protected function getVolume(ControllerInterface $controller): self
+    private function applyVolume(ControllerInterface $controller): ControllerStateInterface
     {
         $this->speakers = [];
         foreach ($controller->getSpeakers() as $speaker) {
@@ -134,7 +137,7 @@ class ControllerState
      *
      * @return $this
      */
-    protected function getTracks(ControllerInterface $controller): self
+    private function applyTracks(ControllerInterface $controller): ControllerStateInterface
     {
         $this->tracks = $controller->getQueue()->getTracks();
 
@@ -144,5 +147,118 @@ class ControllerState
         }
 
         return $this;
+    }
+
+
+    /**
+     * Set the playing mode of the controller.
+     *
+     * $param int $state One of the ControllerInterface::STATE_ constants
+     *
+     * @return $this
+     */
+    public function setState($state): ControllerStateInterface
+    {
+        $this->state = $state;
+        return $this;
+    }
+
+
+    /**
+     * Get the playing mode of the controller.
+     *
+     * @return int One of the ControllerInterface::STATE_ constants
+     */
+    public function getState(): int
+    {
+        return $this->state;
+    }
+
+
+    /**
+     * Get the number of the active track in the queue
+     *
+     * @return int The zero-based number of the track in the queue
+     */
+    public function getTrack(): int
+    {
+        return $this->track;
+    }
+
+
+    /**
+     * Get the position of the currently active track.
+     *
+     * @return Time
+     */
+    public function getPosition(): Time
+    {
+        return $this->position;
+    }
+
+
+    /**
+     * Check if repeat is currently active.
+     *
+     * @return bool
+     */
+    public function getRepeat(): bool
+    {
+        return $this->repeat;
+    }
+
+
+    /**
+     * Check if shuffle is currently active.
+     *
+     * @return bool
+     */
+    public function getShuffle(): bool
+    {
+        return $this->shuffle;
+    }
+
+
+    /**
+     * Check if crossfade is currently active.
+     *
+     * @return bool
+     */
+    public function getCrossfade(): bool
+    {
+        return $this->crossfade;
+    }
+
+
+    /**
+     * Get the speakers that are in the group of this controller.
+     *
+     * @return SpeakerInterface[]
+     */
+    public function getSpeakers(): array
+    {
+        return $this->speakers;
+    }
+
+
+    /**
+     * Get the tracks that are in the queue.
+     *
+     * @return TrackInterface[]
+     */
+    public function getTracks(): array
+    {
+        return $this->tracks;
+    }
+
+
+    /**
+     * Get the stream this controller is using.
+     *
+     * @var Stream|null
+     */
+    public function getStream()
+    {
+        return $this->stream;
     }
 }

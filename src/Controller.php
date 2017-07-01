@@ -5,6 +5,7 @@ namespace duncan3dc\Sonos;
 use duncan3dc\DomParser\XmlParser;
 use duncan3dc\Sonos\Exceptions\SoapException;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
+use duncan3dc\Sonos\Interfaces\ControllerStateInterface;
 use duncan3dc\Sonos\Interfaces\NetworkInterface;
 use duncan3dc\Sonos\Interfaces\QueueInterface;
 use duncan3dc\Sonos\Interfaces\SpeakerInterface;
@@ -575,9 +576,9 @@ final class Controller implements ControllerInterface
      *
      * @param bool $pause Whether to pause the controller or not
      *
-     * @return ControllerState
+     * @return ControllerStateInterface
      */
-    public function exportState(bool $pause = true): ControllerState
+    public function exportState(bool $pause = true): ControllerStateInterface
     {
         if ($pause) {
             $state = $this->getState();
@@ -588,8 +589,8 @@ final class Controller implements ControllerInterface
 
         $export = new ControllerState($this);
 
-        if ($pause) {
-            $export->state = $state;
+        if ($pause && isset($state)) {
+            $export->setState($state);
         }
 
         return $export;
@@ -599,47 +600,44 @@ final class Controller implements ControllerInterface
     /**
      * Restore the Controller to a previously exported state.
      *
-     * @param ControllerState $state The state to be restored
+     * @param ControllerStateInterface $state The state to be restored
      *
      * @return $this
      */
-    public function restoreState(ControllerState $state): ControllerInterface
+    public function restoreState(ControllerStateInterface $state): ControllerInterface
     {
         $queue = $this->getQueue();
         $queue->clear();
-        if (count($state->tracks) > 0) {
-            $queue->addTracks($state->tracks);
+        $tracks = $state->getTracks();
+        if (count($tracks) > 0) {
+            $queue->addTracks($tracks);
         }
 
-        if (count($state->tracks) > 0) {
-            $this->selectTrack($state->track);
-
-            if ($state->position) {
-                $time = Time::parse($state->position);
-                $this->seek($time);
-            }
+        if (count($tracks) > 0) {
+            $this->selectTrack($state->getTrack());
+            $this->seek($state->getPosition());
         }
 
-        $this->setShuffle($state->shuffle);
-        $this->setRepeat($state->repeat);
-        $this->setCrossfade($state->crossfade);
+        $this->setShuffle($state->getShuffle());
+        $this->setRepeat($state->getRepeat());
+        $this->setCrossfade($state->getCrossfade());
 
-        if ($state->stream) {
-            $this->useStream($state->stream);
+        if ($stream = $state->getStream()) {
+            $this->useStream($stream);
         }
 
         $speakers = [];
         foreach ($this->getSpeakers() as $speaker) {
             $speakers[$speaker->getUuid()] = $speaker;
         }
-        foreach ($state->speakers as $uuid => $volume) {
+        foreach ($state->getSpeakers() as $uuid => $volume) {
             if (array_key_exists($uuid, $speakers)) {
                 $speakers[$uuid]->setVolume($volume);
             }
         }
 
         # If the exported state was playing then start it playing now
-        if ($state->state === self::STATE_PLAYING) {
+        if ($state->getState() === self::STATE_PLAYING) {
             $this->play();
 
         # If the exported state was stopped and we are playing then stop it now
