@@ -19,12 +19,18 @@ use duncan3dc\Sonos\Utils\Time;
  *
  * Although sometimes a Controller is synonymous with a Speaker, when speakers are grouped together only the coordinator can receive events (play/pause/etc)
  */
-class Controller extends Speaker implements ControllerInterface
+final class Controller implements ControllerInterface
 {
     /**
      * @var NetworkInterface $network The network instance this Controller is part of.
      */
     private $network;
+
+
+    /**
+     * @var SpeakerInterface $speaker The underlying speaker instance for this controller.
+     */
+    private $speaker;
 
 
     /**
@@ -39,28 +45,9 @@ class Controller extends Speaker implements ControllerInterface
         if (!$speaker->isCoordinator()) {
             throw new \InvalidArgumentException("You cannot create a Controller instance from a Speaker that is not the coordinator of it's group");
         }
-        $this->ip = $speaker->getIp();
-        $this->device = $speaker->device;
 
         $this->network = $network;
-        $this->name = $speaker->name;
-        $this->room = $speaker->room;
-        $this->group = $speaker->getGroup();
-        $this->uuid = $speaker->getUuid();
-    }
-
-
-    /**
-     * Check if this speaker is the coordinator of it's current group.
-     *
-     * This method is only here to override the method from the SpeakerInterface class.
-     * A Controller instance is always the coordinator of it's group.
-     *
-     * @return bool
-     */
-    public function isCoordinator(): bool
-    {
-        return true;
+        $this->speaker = $speaker;
     }
 
 
@@ -432,42 +419,6 @@ class Controller extends Speaker implements ControllerInterface
 
 
     /**
-     * Set the current volume of all the speakers controlled by this Controller.
-     *
-     * @param int $volume An amount between 0 and 100
-     *
-     * @return $this
-     */
-    public function setVolume(int $volume): SpeakerInterface
-    {
-        $speakers = $this->getSpeakers();
-        foreach ($speakers as $speaker) {
-            $speaker->setVolume($volume);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * Adjust the volume of all the speakers controlled by this Controller.
-     *
-     * @param int $adjust A relative amount between -100 and 100
-     *
-     * @return $this
-     */
-    public function adjustVolume(int $adjust): SpeakerInterface
-    {
-        $speakers = $this->getSpeakers();
-        foreach ($speakers as $speaker) {
-            $speaker->adjustVolume($adjust);
-        }
-
-        return $this;
-    }
-
-
-    /**
      * Get the current play mode settings.
      *
      * @return array An array with 2 boolean elements (shuffle and repeat)
@@ -503,7 +454,7 @@ class Controller extends Speaker implements ControllerInterface
      *
      * @return bool
      */
-    protected function getPlayMode(string $type): bool
+    private function getPlayMode(string $type): bool
     {
         $mode = $this->getMode();
         return $mode[$type];
@@ -518,7 +469,7 @@ class Controller extends Speaker implements ControllerInterface
      *
      * @return $this
      */
-    protected function setPlayMode(string $type, bool $value): ControllerInterface
+    private function setPlayMode(string $type, bool $value): ControllerInterface
     {
         $mode = $this->getMode();
         if ($mode[$type] === $value) {
@@ -749,6 +700,274 @@ class Controller extends Speaker implements ControllerInterface
         # Restore the previous state of this controller
         $this->restoreState($state);
 
+        return $this;
+    }
+
+
+    /**
+     * Send a soap request to the speaker.
+     *
+     * @param string $service The service to send the request to
+     * @param string $action The action to call
+     * @param array $params The parameters to pass
+     *
+     * @return mixed
+     */
+    public function soap(string $service, string $action, array $params = [])
+    {
+        return $this->speaker->soap($service, $action, $params);
+    }
+
+
+    /**
+     * Get the IP address of this speaker.
+     *
+     * @return string
+     */
+    public function getIp(): string
+    {
+        return $this->speaker->getIp();
+    }
+
+
+    /**
+     * Get the "Friendly" name of this speaker.
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->speaker->getName();
+    }
+
+
+    /**
+     * Get the room name of this speaker.
+     *
+     * @return string
+     */
+    public function getRoom(): string
+    {
+        return $this->speaker->getRoom();
+    }
+
+
+    /**
+     * Get the uuid of the group this speaker is a member of.
+     *
+     * @return string
+     */
+    public function getGroup(): string
+    {
+        return $this->speaker->getGroup();
+    }
+
+
+    /**
+     * Check if this speaker is the coordinator of it's current group.
+     *
+     * This method is only here for SpeakerInterface compatibility.
+     * A Controller instance is always the coordinator of it's group.
+     *
+     * @return bool
+     */
+    public function isCoordinator(): bool
+    {
+        return true;
+    }
+
+
+    /**
+     * Get the uuid of this speaker.
+     *
+     * @return string The uuid of this speaker
+     */
+    public function getUuid(): string
+    {
+        return $this->speaker->getUuid();
+    }
+
+
+    /**
+     * Get the current volume of this speaker.
+     *
+     * @return int The current volume between 0 and 100
+     */
+    public function getVolume(): int
+    {
+        return $this->speaker->getVolume();
+    }
+
+
+    /**
+     * Set the volume of all the speakers this controller manages.
+     *
+     * @param int $volume The amount to set the volume to between 0 and 100
+     *
+     * @return $this
+     */
+    public function setVolume(int $volume): SpeakerInterface
+    {
+        $speakers = $this->getSpeakers();
+        foreach ($speakers as $speaker) {
+            $speaker->setVolume($volume);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * Adjust the volume of all the speakers this controller manages.
+     *
+     * @param int $adjust The amount to adjust by between -100 and 100
+     *
+     * @return $this
+     */
+    public function adjustVolume(int $adjust): SpeakerInterface
+    {
+        $speakers = $this->getSpeakers();
+        foreach ($speakers as $speaker) {
+            $speaker->adjustVolume($adjust);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * Check if this speaker is currently muted.
+     *
+     * @return bool
+     */
+    public function isMuted(): bool
+    {
+        return $this->speaker->isMuted();
+    }
+
+
+    /**
+     * Mute this speaker.
+     *
+     * @param bool $mute Whether the speaker should be muted or not
+     *
+     * @return $this
+     */
+    public function mute(bool $mute = true): SpeakerInterface
+    {
+        $this->speaker->mute($mute);
+        return $this;
+    }
+
+
+    /**
+     * Unmute this speaker.
+     *
+     * @return $this
+     */
+    public function unmute(): SpeakerInterface
+    {
+        $this->speaker->unmute();
+        return $this;
+    }
+
+
+    /**
+     * Check whether the indicator light is on or not.
+     *
+     * @return bool
+     */
+    public function getIndicator(): bool
+    {
+        return $this->speaker->getIndicator();
+    }
+
+
+    /**
+     * Turn the indicator light on or off.
+     *
+     * @param bool $on Whether the indicator should be on or off
+     *
+     * @return $this
+     */
+    public function setIndicator(bool $on): SpeakerInterface
+    {
+        $this->speaker->setIndicator($on);
+        return $this;
+    }
+
+
+    /**
+     * Get the treble equalisation level.
+     *
+     * @return int
+     */
+    public function getTreble(): int
+    {
+        return $this->speaker->getTreble();
+    }
+
+
+    /**
+     * Set the treble equalisation.
+     *
+     * @param int $treble The treble level (between -10 and 10)
+     *
+     * @return $this
+     */
+    public function setTreble(int $treble): SpeakerInterface
+    {
+        $this->speaker->setTreble($treble);
+        return $this;
+    }
+
+
+    /**
+     * Get the bass equalisation level.
+     *
+     * @return int
+     */
+    public function getBass(): int
+    {
+        return $this->speaker->getBass();
+    }
+
+
+    /**
+     * Set the bass equalisation.
+     *
+     * @param int $bass The bass level (between -10 and 10)
+     *
+     * @return $this
+     */
+    public function setBass(int $bass): SpeakerInterface
+    {
+        $this->speaker->setBass($bass);
+        return $this;
+    }
+
+
+    /**
+     * Check whether loudness normalisation is on or not.
+     *
+     * @return bool
+     */
+    public function getLoudness(): bool
+    {
+        return $this->speaker->getLoudness();
+    }
+
+
+    /**
+     * Set whether loudness normalisation is on or not.
+     *
+     * @param bool $on Whether loudness should be on or not
+     *
+     * @return $this
+     */
+    public function setLoudness(bool $on): SpeakerInterface
+    {
+        $this->speaker->setLoudness($on);
         return $this;
     }
 }

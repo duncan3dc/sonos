@@ -3,7 +3,7 @@
 namespace duncan3dc\SonosTests;
 
 use duncan3dc\DomParser\XmlParser;
-use duncan3dc\Sonos\Controller;
+use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\State;
 use duncan3dc\SonosTests\Tracks\TrackTest;
 use Mockery;
@@ -12,7 +12,7 @@ class StateTest extends TrackTest
 {
     public function setUp()
     {
-        $controller = Mockery::mock(Controller::class);
+        $controller = Mockery::mock(ControllerInterface::class);
         $controller->shouldReceive("getIp")->andReturn("192.168.0.66");
 
         $xml = new XmlParser($this->xml1);

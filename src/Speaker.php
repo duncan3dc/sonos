@@ -9,47 +9,47 @@ use duncan3dc\Sonos\Interfaces\SpeakerInterface;
 /**
  * Represents an individual Sonos speaker, to allow volume, equalisation, and other settings to be managed.
  */
-class Speaker implements SpeakerInterface
+final class Speaker implements SpeakerInterface
 {
     /**
      * @var string $ip The IP address of the speaker.
      */
-    protected $ip;
+    private $ip;
 
     /**
      * @var DeviceInterface $device The instance of the Device class to send requests to.
      */
-    protected $device;
+    private $device;
 
     /**
      * @var string $name The "Friendly" name reported by the speaker.
      */
-    protected $name;
+    private $name;
 
     /**
      * @var string $room The room name assigned to this speaker.
      */
-    protected $room;
+    private $room;
 
     /**
      * @var string $uuid The unique id of this speaker.
      */
-    protected $uuid;
+    private $uuid;
 
     /**
      * @var string $group The group id this speaker is a part of.
      */
-    protected $group;
+    private $group;
 
     /**
      * @var bool $coordinator Whether this speaker is the coordinator of it's current group.
      */
-    protected $coordinator;
+    private $coordinator;
 
     /**
      * @var bool $topology A flag to indicate whether we have gathered the topology for this speaker or not.
      */
-    protected $topology;
+    private $topology;
 
 
     /**
@@ -109,11 +109,9 @@ class Speaker implements SpeakerInterface
     /**
      * Get the attributes needed for the classes instance variables.
      *
-     * _This method is intended for internal use only_.
-     *
      * @return void
      */
-    protected function getTopology()
+    private function getTopology()
     {
         if ($this->topology) {
             return;
@@ -331,7 +329,7 @@ class Speaker implements SpeakerInterface
      *
      * @return $this
      */
-    protected function setEqLevel(string $type, int $value): SpeakerInterface
+    private function setEqLevel(string $type, int $value): SpeakerInterface
     {
         if ($value < -10) {
             $value = -10;

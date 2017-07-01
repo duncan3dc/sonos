@@ -2,8 +2,8 @@
 
 namespace duncan3dc\SonosTests\Services;
 
-use duncan3dc\Sonos\Controller;
 use duncan3dc\Sonos\Exceptions\NotFoundException;
+use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Services\Radio;
 use duncan3dc\Sonos\Tracks\Stream;
 use duncan3dc\SonosTests\MockTest;
@@ -16,7 +16,7 @@ class QueueTest extends MockTest
     {
         parent::setUp();
 
-        $this->controller = Mockery::mock(Controller::class);
+        $this->controller = Mockery::mock(ControllerInterface::class);
         $this->radio = new Radio($this->controller);
     }
 
