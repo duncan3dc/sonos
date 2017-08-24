@@ -5,6 +5,14 @@ Changelog
 
 --------
 
+## 1.9.11 - 2017-11-25
+
+### Added
+
+* [Support] Loosen the requirement on psr/log.
+
+--------
+
 ## 1.9.10 - 2017-11-03
 
 ### Added
