@@ -5,6 +5,19 @@ Changelog
 
 --------
 
+## 1.9.9 - 2017-09-29
+
+### Added
+
+* [Network] Added support for the PLAYBASE devices.
+* [Support] Added support for PHP 7.1
+
+### Removed
+
+* [Support] Dropped support for HHVM
+
+--------
+
 ## 1.9.8 - 2017-02-22
 
 ### Fixed
