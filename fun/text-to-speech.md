@@ -16,7 +16,7 @@ $track = new TextToSpeech("Testing, testing, 123", $directory, new GoogleProvide
 To retain backwards compatibility, the provider parameter is optional, and will use `GoogleProvider` by default. It can also be overridden like so:
 
 ```php
-use duncan3dc\Speaker\Providers\VoxygenProvider;
+use duncan3dc\Speaker\Providers\PicottsProvider;
 
-$track->setProvider(new VoxygenProvider);
+$track->setProvider(new PicottsProvider);
 ```
