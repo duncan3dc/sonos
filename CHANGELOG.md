@@ -5,6 +5,14 @@ Changelog
 
 --------
 
+## 1.9.10 - 2017-11-03
+
+### Added
+
+* [Network] Added support for the new ONE devices.
+
+--------
+
 ## 1.9.9 - 2017-09-29
 
 ### Added

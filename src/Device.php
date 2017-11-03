@@ -184,6 +184,7 @@ class Device
             "S6"    =>  "PLAY:5",
             "S9"    =>  "PLAYBAR",
             "S11"   =>  "PLAYBASE",
+            "S13"   =>  "ONE",
             "ZP80"  =>  "ZONEPLAYER",
             "ZP90"  =>  "CONNECT",
             "ZP100" =>  "CONNECT:AMP",
