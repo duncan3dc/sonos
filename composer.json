@@ -29,9 +29,9 @@
         "satooshi/php-coveralls": "^1.0"
     },
     "autoload": {
-        "psr-4": {
-            "duncan3dc\\Sonos\\": "src/",
-            "duncan3dc\\SonosTests\\": "tests/"
-        }
+        "psr-4": {"duncan3dc\\Sonos\\": "src/"}
+    },
+    "autoload-dev": {
+        "psr-4": {"duncan3dc\\SonosTests\\": "tests/"}
     }
 }
