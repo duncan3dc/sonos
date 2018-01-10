@@ -200,13 +200,18 @@ class Network implements LoggerAwareInterface
         $this->logger->debug($response);
 
         $devices = [];
-        foreach (explode("\r\n\r\n", $response) as $reply) {
+        $replies = explode("\r\n\r\n", $response);
+        foreach ($replies  as $reply) {
             if (!$reply) {
                 continue;
             }
 
             $data = [];
-            foreach (explode("\r\n", $reply) as $line) {
+            $lines = explode("\r\n", $reply);
+            if (count($lines) == 1) {
+                $lines = explode("\n", $reply);
+            }
+            foreach ($lines as $line) {
                 if (!$pos = strpos($line, ":")) {
                     continue;
                 }
