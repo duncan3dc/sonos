@@ -2,9 +2,9 @@
 
 namespace duncan3dc\Sonos\Tracks;
 
-use duncan3dc\Sonos\Directory;
 use duncan3dc\Sonos\Helper;
 use duncan3dc\Sonos\Interfaces\UriInterface;
+use duncan3dc\Sonos\Interfaces\Utils\DirectoryInterface;
 use duncan3dc\Speaker\Providers\GoogleProvider;
 use duncan3dc\Speaker\Providers\ProviderInterface;
 use duncan3dc\Speaker\TextToSpeech as TextToSpeechHandler;
@@ -15,7 +15,7 @@ use duncan3dc\Speaker\TextToSpeech as TextToSpeechHandler;
 class TextToSpeech implements UriInterface
 {
     /**
-     * @var Directory $directory The directory to store the audio file in.
+     * @var DirectoryInterface $directory The directory to store the audio file in.
      */
     protected $directory;
 
@@ -33,10 +33,10 @@ class TextToSpeech implements UriInterface
      * Create a TextToSpeech object.
      *
      * @param string $text The text to convert
-     * @param Directory $directory The directory to store the audio file in
+     * @param DirectoryInterface $directory The directory to store the audio file in
      * @param ProviderInterface $provider The tts provider to use
      */
-    public function __construct(string $text, Directory $directory, ProviderInterface $provider = null)
+    public function __construct(string $text, DirectoryInterface $directory, ProviderInterface $provider = null)
     {
         $this->directory = $directory;
         $this->text = $text;

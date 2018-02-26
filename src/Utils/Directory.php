@@ -1,35 +1,37 @@
 <?php
 
-namespace duncan3dc\Sonos;
+namespace duncan3dc\Sonos\Utils;
 
-use League\Flysystem\Filesystem;
+use duncan3dc\Sonos\Interfaces\Utils\DirectoryInterface;
 use League\Flysystem\Adapter\Local;
+use League\Flysystem\Filesystem;
+use League\Flysystem\FilesystemInterface;
 
 /**
  * Represents a shared directory.
  */
-class Directory
+final class Directory implements DirectoryInterface
 {
     /**
-     * @var Filesystem $filesystem The full path to the share on the local filesystem.
+     * @var FilesystemInterface $filesystem The full path to the share on the local filesystem.
      */
-    protected $filesystem;
+    private $filesystem;
 
     /**
      * @var string $share The full path to the share (including the hostname).
      */
-    protected $share;
+    private $share;
 
     /**
      * @var string $directory The name of the directory (to be appended to both $filesystem and $share).
      */
-    protected $directory;
+    private $directory;
 
 
     /**
      * Create a Directory instance to represent a file share.
      *
-     * @param Filesystem|string $filesystem A Filesystem instance or the full path to the share on the local filesystem.
+     * @param FilesystemInterface|string $filesystem A Filesystem instance or the full path to the share on the local filesystem.
      * @param string $share The full path to the share (including the hostname).
      * @param string $directory The name of the directory (to be appended to both $filesystem and $share).
      */
@@ -42,8 +44,8 @@ class Directory
         }
 
         # Ensure we got a Filesystem instance
-        if (!$filesystem instanceof Filesystem) {
-            throw new \InvalidArgumentException("Invalid filesystem, must be an instance of " . Filesystem::class . " or a string containing a local path");
+        if (!$filesystem instanceof FilesystemInterface) {
+            throw new \InvalidArgumentException("Invalid filesystem, must be an instance of " . FilesystemInterface::class . " or a string containing a local path");
         }
 
         $this->filesystem = $filesystem;
@@ -84,7 +86,7 @@ class Directory
      *
      * @return $this
      */
-    public function write(string $file, string $contents): self
+    public function write(string $file, string $contents): DirectoryInterface
     {
         $this->filesystem->write("{$this->directory}/{$file}", $contents);
 
