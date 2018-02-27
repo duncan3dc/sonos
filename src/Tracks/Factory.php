@@ -5,16 +5,17 @@ namespace duncan3dc\Sonos\Tracks;
 use duncan3dc\DomParser\XmlElement;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Interfaces\TrackInterface;
+use duncan3dc\Sonos\Interfaces\Tracks\FactoryInterface;
 
 /**
  * Factory for creating Track instances.
  */
-class Factory
+final class Factory implements FactoryInterface
 {
     /**
      * @var ControllerInterface $controller A Controller instance to communicate with.
      */
-    protected $controller;
+    private $controller;
 
 
     /**
@@ -35,7 +36,7 @@ class Factory
      *
      * @return string
      */
-    protected function guessTrackClass(string $uri): string
+    private function guessTrackClass(string $uri): string
     {
         $classes = [
             Spotify::class,
