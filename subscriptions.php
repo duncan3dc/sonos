@@ -2,7 +2,6 @@
 <?php
 
 use duncan3dc\Sonos\Network;
-use GuzzleHttp\Client;
 use Psr\Http\Message\ServerRequestInterface;
 use React\Http\Response;
 
@@ -21,34 +20,24 @@ if (count($collection->getDevices()) < 1) {
 }
 $sonos = new Network($collection);
 
-$port = rand(9000, 9999);
-$timeout = 3600;
-
-$ip = $sonos->getControllerByRoom("Office")->getIp();
-
-$url = "/MediaServer/ContentDirectory/Event";
-$uri = "http://{$ip}:1400{$url}";
-
-$client = new Client;
-$response = $client->request("SUBSCRIBE", $uri, [
-    "headers"   =>  [
-        "CALLBACK"  =>  "<http://" . "192.168.7.6" . ":{$port}>",
-        "NT"        =>  "upnp:event",
-        "TIMEOUT"   =>  "Second-3600",
-    ],
-]);
-
-print_r($response->getHeaders());
-
 $loop = \React\EventLoop\Factory::create();
 
 $server = new \React\Http\Server(function (ServerRequestInterface $request) {
-    echo $request->getBody() . "\n";
-    return new Response(200, ["Content-Type" => "text/plain"], "Hello World!\n");
+    $xml = new \duncan3dc\DomParser\XmlParser((string) $request->getBody());
+    echo $xml->format(true) . "\n";
+    return new Response;
 });
 
-$socket = new \React\Socket\Server($port, $loop);
+$port = rand(9000, 9999);
+$host = "192.168.7.6:{$port}";
+
+$socket = new \React\Socket\Server($host, $loop);
 $server->listen($socket);
+# check the timeout and ensure we re-subscribe before the end of it
+
+$loop->addTimer(2, function () use ($sonos, $host) {
+    $speaker = $sonos->getSpeakerByRoom("Office");
+    $speaker->subscribe($host);
+});
 
 $loop->run();
-# check the timeout and ensure we re-subscribe before the end of it

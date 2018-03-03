@@ -2,6 +2,10 @@
 
 namespace duncan3dc\Sonos;
 
+use duncan3dc\Sonos\Network;
+use GuzzleHttp\Client;
+use Psr\Http\Message\ServerRequestInterface;
+use React\Http\Response;
 use duncan3dc\Sonos\Devices\Device;
 use duncan3dc\Sonos\Exceptions\UnknownGroupException;
 use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
@@ -435,5 +439,33 @@ final class Speaker implements SpeakerInterface
         ]);
 
         return $this;
+    }
+
+
+    public function subscribe(string $host)
+    {
+        $timeout = 3600;
+
+        $events = [
+            "AlarmClock",
+            "MediaRenderer/AVTransport",
+            "MediaRenderer/RenderingControl",
+            "MediaServer/ContentDirectory",
+            "MusicServices",
+            "ZoneGroupTopology",
+        ];
+
+        $client = new Client;
+        foreach ($events as $event) {
+echo $event . "\n";
+            $response = $client->request("SUBSCRIBE", "http://{$this->ip}:1400/{$event}/Event", [
+                "headers"   =>  [
+                    "CALLBACK"  =>  "<http://{$host}>",
+                    "NT"        =>  "upnp:event",
+                    "TIMEOUT"   =>  "Second-3600",
+                ],
+            ]);
+#print_r($response->getHeaders());
+        }
     }
 }

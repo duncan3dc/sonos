@@ -3,8 +3,9 @@
 
 namespace duncan3dc\Sonos;
 
-use duncan3dc\Helpers\Helper;
 use duncan3dc\DomParser\XmlParser;
+use duncan3dc\Helpers\Helper;
+use Psr\Http\Message\ServerRequestInterface;
 
 require __DIR__ . "/vendor/autoload.php";
 
@@ -20,7 +21,7 @@ foreach ($sonos->getControllers() as $controller) {
         "url"       =>  "http://" . $controller->getIp() . ":1400/MediaRenderer/AVTransport/Event",
         "custom"    =>  "SUBSCRIBE",
         "headers"   =>  [
-            "CALLBACK"  =>  "<http://{$ip}:{$port}/>",
+            "CALLBACK"  =>  "<http://{$ip}:{$port}>",
             "NT"        =>  "upnp:event",
             "TIMEOUT"   =>  "Second-600",
         ],
@@ -32,9 +33,9 @@ foreach ($sonos->getControllers() as $controller) {
 
 $loop = \React\EventLoop\Factory::create();
 
-$socket = new \React\Socket\Server($loop);
+$socket = new \React\Socket\Server("{$ip}:{$port}", $loop);
 $http = new \React\Http\Server($socket);
-$http->on("request", function($request, $response) use ($controllers) {
+$http->on("request", function(ServerRequestInterface $request) use ($controllers) {
     if ($request->getMethod() !== "NOTIFY") {
         $response->writeHead(403);
         $response->end();
@@ -65,7 +66,7 @@ $http->on("request", function($request, $response) use ($controllers) {
         $response->end();
     });
 });
-$socket->listen($port, $ip);
+$http->listen($socket);
 
 $stdin = new \React\Stream\Stream(fopen("php://stdin", "r"), $loop);
 $stdin->on("data", function($data) {
