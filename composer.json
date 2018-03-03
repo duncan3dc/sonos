@@ -21,6 +21,7 @@
         "league/flysystem": "^1.0",
         "psr/log": "^1.0",
         "psr/simple-cache": "^1.0",
+        "react/http": "^0.8.1",
         "ext-soap": "*",
         "ext-sockets": "*",
         "php": "^7.1"

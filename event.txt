@@ -1,0 +1,47 @@
+<?php
+
+file_put_contents("/tmp/sonos.log", file_get_contents("php://input"));
+
+#use duncan3dc\DomParser\XmlWriter;
+
+#$xml = new XmlWriter(file_get_contents("php://input"));
+
+#$data = $xml->getTag("LastChange")->getTag("InstanceID");
+
+/*
+<e:propertyset xmlns:e="urn:schemas-upnp-org:event-1-0">
+    <e:property>
+        <LastChange>
+            <Event xmlns="urn:schemas-upnp-org:metadata-1-0/AVT/" xmlns:r="urn:schemas-rinconnetworks-com:metadata-1-0/">
+            <InstanceID val="0">
+                <TransportState val="PAUSED_PLAYBACK"/>
+                <CurrentPlayMode val="REPEAT_ALL"/>
+                <CurrentCrossfadeMode val="0"/>
+                <NumberOfTracks val="11"/>
+                <CurrentTrack val="6"/>
+                <CurrentSection val="0"/>
+                <CurrentTrackURI val="x-sonos-spotify:spotify%3atrack%3a4MrD6nB9JrKCZWDCzO48l4?sid=9&amp;flags=32&amp;sn=3"/>
+                <CurrentTrackDuration val="0:06:37"/>
+                <CurrentTrackMetaData val="&lt;DIDL-Lite xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot; xmlns:upnp=&quot;urn:schemas-upnp-org:metadata-1-0/upnp/&quot; xmlns:r=&quot;urn:schemas-rinconnetworks-com:metadata-1-0/&quot; xmlns=&quot;urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/&quot;&gt;&lt;item id=&quot;-1&quot; parentID=&quot;-1&quot; restricted=&quot;true&quot;&gt;&lt;res protocolInfo=&quot;sonos.com-spotify:*:audio/x-spotify:*&quot; duration=&quot;0:06:37&quot;&gt;x-sonos-spotify:spotify%3atrack%3a4MrD6nB9JrKCZWDCzO48l4?sid=9&amp;amp;flags=32&amp;amp;sn=3&lt;/res&gt;&lt;r:streamContent&gt;&lt;/r:streamContent&gt;&lt;r:radioShowMd&gt;&lt;/r:radioShowMd&gt;&lt;upnp:albumArtURI&gt;/getaa?s=1&amp;amp;u=x-sonos-spotify%3aspotify%253atrack%253a4MrD6nB9JrKCZWDCzO48l4%3fsid%3d9%26flags%3d32%26sn%3d3&lt;/upnp:albumArtURI&gt;&lt;dc:title&gt;Anasthesia Throne&lt;/dc:title&gt;&lt;upnp:class&gt;object.item.audioItem.musicTrack&lt;/upnp:class&gt;&lt;dc:creator&gt;Raunchy&lt;/dc:creator&gt;&lt;upnp:album&gt;Vices.Virtues.Visions.&lt;/upnp:album&gt;&lt;/item&gt;&lt;/DIDL-Lite&gt;"/>
+                <r:NextTrackURI val="x-sonos-spotify:spotify%3atrack%3a0AJUBjMysobncgtin2z1ms?sid=9&amp;flags=32&amp;sn=3"/>
+                <r:NextTrackMetaData val="&lt;DIDL-Lite xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot; xmlns:upnp=&quot;urn:schemas-upnp-org:metadata-1-0/upnp/&quot; xmlns:r=&quot;urn:schemas-rinconnetworks-com:metadata-1-0/&quot; xmlns=&quot;urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/&quot;&gt;&lt;item id=&quot;-1&quot; parentID=&quot;-1&quot; restricted=&quot;true&quot;&gt;&lt;res protocolInfo=&quot;sonos.com-spotify:*:audio/x-spotify:*&quot; duration=&quot;0:04:25&quot;&gt;x-sonos-spotify:spotify%3atrack%3a0AJUBjMysobncgtin2z1ms?sid=9&amp;amp;flags=32&amp;amp;sn=3&lt;/res&gt;&lt;upnp:albumArtURI&gt;/getaa?s=1&amp;amp;u=x-sonos-spotify%3aspotify%253atrack%253a0AJUBjMysobncgtin2z1ms%3fsid%3d9%26flags%3d32%26sn%3d3&lt;/upnp:albumArtURI&gt;&lt;dc:title&gt;Luxuria&lt;/dc:title&gt;&lt;upnp:class&gt;object.item.audioItem.musicTrack&lt;/upnp:class&gt;&lt;dc:creator&gt;Raunchy&lt;/dc:creator&gt;&lt;upnp:album&gt;Vices.Virtues.Visions.&lt;/upnp:album&gt;&lt;/item&gt;&lt;/DIDL-Lite&gt;"/>
+                <r:EnqueuedTransportURI val="x-rincon-cpcontainer:0004006cspotify%3aalbum%3a35GaJj7FFbfjlVejD73XTV"/>
+                <r:EnqueuedTransportURIMetaData val="&lt;DIDL-Lite xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot; xmlns:upnp=&quot;urn:schemas-upnp-org:metadata-1-0/upnp/&quot; xmlns:r=&quot;urn:schemas-rinconnetworks-com:metadata-1-0/&quot; xmlns=&quot;urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/&quot;&gt;&lt;item id=&quot;0004006cspotify%3aalbum%3a35GaJj7FFbfjlVejD73XTV&quot; parentID=&quot;00050064spotify%3aartist%3a4IE8lT02HoEygu1flFQB7m&quot; restricted=&quot;true&quot;&gt;&lt;dc:title&gt;Vices.Virtues.Visions.&lt;/dc:title&gt;&lt;upnp:class&gt;object.container.album.musicAlbum&lt;/upnp:class&gt;&lt;desc id=&quot;cdudn&quot; nameSpace=&quot;urn:schemas-rinconnetworks-com:metadata-1-0/&quot;&gt;SA_RINCON2311_X_#Svc2311-0-Token&lt;/desc&gt;&lt;/item&gt;&lt;/DIDL-Lite&gt;"/>
+                <PlaybackStorageMedium val="NETWORK"/>
+                <AVTransportURI val="x-rincon-queue:RINCON_B8E93758723601400#0"/>
+                <AVTransportURIMetaData val=""/>
+                <NextAVTransportURI val=""/>
+                <NextAVTransportURIMetaData val=""/>
+                   <CurrentTransportActions val="Set, Play, Stop, Pause, Seek, Next, Previous"/>
+                   <r:CurrentValidPlayModes val="SHUFFLE, REPEAT, CROSSFADE"/>
+                   <TransportStatus val="OK"/>
+                   <r:SleepTimerGeneration val="0"/>
+                   <r:AlarmRunning val="0"/>
+                   <r:SnoozeRunning val="0"/>
+                   <r:RestartPending val="0"/>
+                </InstanceID>
+            </Event>
+        </LastChange>
+    </e:property>
+</e:propertyset>
+*/
