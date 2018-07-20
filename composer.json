@@ -20,7 +20,7 @@
         "psr/log": "^1.0",
         "ext-soap": "*",
         "ext-sockets": "*",
-        "php": "^7.0"
+        "php": "^7.1"
     },
     "require-dev": {
         "duncan3dc/object-intruder": "^0.3.0",
