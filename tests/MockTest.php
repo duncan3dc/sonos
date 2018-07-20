@@ -9,6 +9,7 @@ use duncan3dc\Sonos\Interfaces\NetworkInterface;
 use duncan3dc\Sonos\Speaker;
 use Mockery;
 use PHPUnit\Framework\TestCase;
+use Mockery\MockInterface;
 
 abstract class MockTest extends TestCase
 {
@@ -42,7 +43,11 @@ abstract class MockTest extends TestCase
         return $device;
     }
 
-    protected function getSpeaker(DeviceInterface $device)
+    /**
+     * @param DeviceInterface|MockInterface $device
+     * @return Speaker
+     */
+    protected function getSpeaker($device)
     {
         $device->shouldReceive("isSpeaker")->once()->andReturn(true);
 

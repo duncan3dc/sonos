@@ -219,7 +219,7 @@ class Track implements TrackInterface
      * @param XmlElement $xml The xml element representing the track meta data
      * @param ControllerInterface $controller A controller instance to communicate with
      *
-     * @return self
+     * @return static
      */
     public static function createFromXml(XmlElement $xml, ControllerInterface $controller): TrackInterface
     {
@@ -229,7 +229,7 @@ class Track implements TrackInterface
 
         if ($stream = (string) $xml->getTag("streamContent")) {
             $bits = explode(" - ", $stream);
-            $track->artist = array_shift($bits);
+            $track->artist = (string) array_shift($bits);
             $track->title = implode(" - ", $bits);
             $track->album = "";
         } else {

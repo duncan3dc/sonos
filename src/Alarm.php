@@ -608,7 +608,7 @@ final class Alarm implements AlarmInterface
     public function delete()
     {
         $this->soap("AlarmClock", "DestroyAlarm");
-        $this->id = null;
+        unset($this->id);
     }
 
 

@@ -21,8 +21,10 @@ class SoapException extends SonosException
         $code = $fault->getCode();
 
         if ($message === "UPnPError") {
-            $code = $fault->detail->UPnPError->errorCode;
-            $message .= ": {$code}";
+            $code = $fault->detail->UPnPError->errorCode ?? "";
+            if ($code) {
+                $message .= ": {$code}";
+            }
         }
 
         parent::__construct($message, $code);

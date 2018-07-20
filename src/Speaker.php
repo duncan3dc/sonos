@@ -131,7 +131,7 @@ final class Speaker implements SpeakerInterface
             $this->setGroup($attributes["CurrentZoneGroupID"]);
         }
 
-        return $this->group;
+        return (string) $this->group;
     }
 
 

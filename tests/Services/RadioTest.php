@@ -8,9 +8,16 @@ use duncan3dc\Sonos\Services\Radio;
 use duncan3dc\Sonos\Tracks\Stream;
 use duncan3dc\SonosTests\MockTest;
 use Mockery;
+use Mockery\MockInterface;
 
-class QueueTest extends MockTest
+class RadioTest extends MockTest
 {
+    /** @var ControllerInterface|MockInterface */
+    private $controller;
+
+    /** @var Radio */
+    private $radio;
+
 
     public function setUp()
     {

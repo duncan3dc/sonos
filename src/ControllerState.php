@@ -6,6 +6,7 @@ use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Interfaces\ControllerStateInterface;
 use duncan3dc\Sonos\Interfaces\SpeakerInterface;
 use duncan3dc\Sonos\Interfaces\TrackInterface;
+use duncan3dc\Sonos\Interfaces\Utils\TimeInterface;
 use duncan3dc\Sonos\Tracks\Stream;
 use duncan3dc\Sonos\Utils\Time;
 
@@ -25,7 +26,7 @@ final class ControllerState implements ControllerStateInterface
     private $track;
 
     /**
-     * @var string $position The position of the currently active track (hh:mm:ss).
+     * @var TimeInterface $position The position of the currently active track.
      */
     private $position;
 
@@ -45,7 +46,7 @@ final class ControllerState implements ControllerStateInterface
     private $crossfade;
 
     /**
-     * @var SpeakerInterface[] $speakers Each speaker that is managed by this controller.
+     * @var array<string,int> $speakers The volume of each speaker.
      */
     private $speakers;
 
@@ -189,9 +190,9 @@ final class ControllerState implements ControllerStateInterface
     /**
      * Get the position of the currently active track.
      *
-     * @return Time
+     * @return TimeInterface
      */
-    public function getPosition(): Time
+    public function getPosition(): TimeInterface
     {
         return $this->position;
     }
@@ -233,7 +234,7 @@ final class ControllerState implements ControllerStateInterface
     /**
      * Get the speakers that are in the group of this controller.
      *
-     * @return SpeakerInterface[]
+     * @return array<string,int>
      */
     public function getSpeakers(): array
     {

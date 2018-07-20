@@ -111,7 +111,7 @@ final class Network implements NetworkInterface, LoggerAwareInterface
 
             $speaker = new Speaker($device);
 
-            $this->speakers[$device->ip] = $speaker;
+            $this->speakers[$device->getIp()] = $speaker;
         }
 
         return $this->speakers;
