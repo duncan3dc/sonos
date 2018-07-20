@@ -18,7 +18,8 @@ use duncan3dc\Sonos\Utils\Time;
 /**
  * Allows interaction with the groups of speakers.
  *
- * Although sometimes a Controller is synonymous with a Speaker, when speakers are grouped together only the coordinator can receive events (play/pause/etc)
+ * Although sometimes a Controller is synonymous with a Speaker,
+ * when speakers are grouped together only the coordinator can receive events (play/pause/etc)
  */
 final class Controller implements ControllerInterface
 {
@@ -44,7 +45,8 @@ final class Controller implements ControllerInterface
     public function __construct(SpeakerInterface $speaker, NetworkInterface $network)
     {
         if (!$speaker->isCoordinator()) {
-            throw new \InvalidArgumentException("You cannot create a Controller instance from a Speaker that is not the coordinator of it's group");
+            $error = "You cannot create a Controller instance from a Speaker that is not the coordinator of its group";
+            throw new \InvalidArgumentException($error);
         }
 
         $this->network = $network;
@@ -104,7 +106,7 @@ final class Controller implements ControllerInterface
 
         # Check for an empty queue
         if (!$data["TrackMetaData"]) {
-            return new State;
+            return new State();
         }
 
         $parser = new XmlParser($data["TrackMetaData"]);
@@ -147,7 +149,7 @@ final class Controller implements ControllerInterface
                 return $this->play();
             case self::STATE_PAUSED:
                 return $this->pause();
-            case self::STATE_STOPPED;
+            case self::STATE_STOPPED:
                 return $this->pause();
         }
         throw new \InvalidArgumentException("Unknown state: {$state})");

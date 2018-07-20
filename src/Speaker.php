@@ -72,7 +72,8 @@ final class Speaker implements SpeakerInterface
         }
 
         if (!$this->device->isSpeaker()) {
-            throw new \InvalidArgumentException("You cannot create a Speaker instance for this model: " . $this->device->getModel());
+            $error = "You cannot create a Speaker instance for this model: " . $this->device->getModel();
+            throw new \InvalidArgumentException($error);
         }
     }
 

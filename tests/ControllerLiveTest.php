@@ -56,7 +56,13 @@ class ControllerLiveTest extends LiveTest
 
     public function testGetState()
     {
-        $states = [Controller::STATE_STOPPED, Controller::STATE_PLAYING, Controller::STATE_PAUSED, Controller::STATE_TRANSITIONING];
+        $states = [
+            Controller::STATE_STOPPED,
+            Controller::STATE_PLAYING,
+            Controller::STATE_PAUSED,
+            Controller::STATE_TRANSITIONING,
+        ];
+
         foreach ($this->network->getControllers() as $controller) {
             $this->assertContains($controller->getState(), $states);
         }

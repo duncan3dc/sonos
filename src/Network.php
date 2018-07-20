@@ -53,7 +53,7 @@ final class Network implements NetworkInterface, LoggerAwareInterface
     public function __construct(CollectionInterface $collection = null)
     {
         if ($collection === null) {
-            $collection = new Discovery(new Collection(new Factory));
+            $collection = new Discovery(new Collection(new Factory()));
         }
         $this->collection = $collection;
     }

@@ -41,7 +41,7 @@ final class Device implements DeviceInterface
      * Create an instance of the Device class.
      *
      * @param string $ip The ip address that the device is listening on
-     * @param CacheInterface $cache The cache object to use for the expensive multicast discover to find Sonos devices on the network
+     * @param CacheInterface $cache The cache object to use for finding Sonos devices on the network
      * @param LoggerInterface $logger A logging object
      */
     public function __construct(string $ip, CacheInterface $cache = null, LoggerInterface $logger = null)
@@ -49,12 +49,12 @@ final class Device implements DeviceInterface
         $this->ip = $ip;
 
         if ($cache === null) {
-            $cache = new ArrayPool;
+            $cache = new ArrayPool();
         }
         $this->cache = $cache;
 
         if ($logger === null) {
-            $logger = new NullLogger;
+            $logger = new NullLogger();
         }
         $this->logger = $logger;
     }
@@ -86,7 +86,7 @@ final class Device implements DeviceInterface
             $xml = $this->cache->get($key);
         } else {
             $this->logger->notice("requesting xml from: {$uri}");
-            $xml = (string) (new Client)->get($uri)->getBody();
+            $xml = (string) (new Client())->get($uri)->getBody();
             $this->cache->set($key, $xml, new \DateInterval("P1D"));
         }
 
@@ -106,7 +106,7 @@ final class Device implements DeviceInterface
     public function soap(string $service, string $action, array $params = [])
     {
         switch ($service) {
-            case "AVTransport";
+            case "AVTransport":
             case "RenderingControl":
                 $path = "MediaRenderer";
                 break;

@@ -15,7 +15,8 @@ use duncan3dc\SonosTests\MockTest;
 
 class FactoryTest extends MockTest
 {
-    protected $factory;
+    /** @var Factory */
+    private $factory;
 
     public function setUp()
     {
@@ -29,42 +30,48 @@ class FactoryTest extends MockTest
 
     public function testNetworkTrackUri()
     {
-        $track = $this->factory->createFromUri("x-file-cifs://server/share/song.mp3");
+        $uri = "x-file-cifs://server/share/song.mp3";
+        $track = $this->factory->createFromUri($uri);
         $this->assertInstanceOf(Track::class, $track);
     }
 
 
     public function testSpotifyTrackUri()
     {
-        $track = $this->factory->createFromUri("x-sonos-spotify:spotify:track:123sdfd6");
+        $uri = "x-sonos-spotify:spotify:track:123sdfd6";
+        $track = $this->factory->createFromUri($uri);
         $this->assertInstanceOf(Spotify::class, $track);
     }
 
 
     public function testDeezerTrackUri()
     {
-        $track = $this->factory->createFromUri("x-sonos-http:tr:123sdfd6");
+        $uri = "x-sonos-http:tr:123sdfd6";
+        $track = $this->factory->createFromUri($uri);
         $this->assertInstanceOf(Deezer::class, $track);
     }
 
 
     public function testGoogleTrackUri()
     {
-        $track = $this->factory->createFromUri("x-sonos-http:_dklxfo-EJN34xu9HkcfzBMGUd86HezVdklbzxKIUjyXkqC23MIzxiZu8-PtSkgc.mp3");
+        $uri = "x-sonos-http:_dklxfo-EJN34xu9HkcfzBMGUd86HezVdklbzxKIUjyXkqC23MIzxiZu8-PtSkgc.mp3";
+        $track = $this->factory->createFromUri($uri);
         $this->assertInstanceOf(Google::class, $track);
     }
 
 
     public function testGoogleUnlimitedTrackUri()
     {
-        $track = $this->factory->createFromUri("x-sonos-http:A0DvPDnowsEJN34xu9HkcfzBMGUd86HezVdklbzxKIUjyXkqC23MIzxiZu8-PtSkgc.mp3");
+        $uri = "x-sonos-http:A0DvPDnowsEJN34xu9HkcfzBMGUd86HezVdklbzxKIUjyXkqC23MIzxiZu8-PtSkgc.mp3";
+        $track = $this->factory->createFromUri($uri);
         $this->assertInstanceOf(GoogleUnlimited::class, $track);
     }
 
 
     public function testStreamTrackUri()
     {
-        $track = $this->factory->createFromUri("x-sonosapi-stream:s200662?sid=254&flags=8224&sn=0");
+        $uri = "x-sonosapi-stream:s200662?sid=254&flags=8224&sn=0";
+        $track = $this->factory->createFromUri($uri);
         $this->assertInstanceOf(Stream::class, $track);
     }
 

@@ -36,14 +36,14 @@ class DirectoryTest extends TestCase
     public function testConstructor2()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage("Invalid filesystem, must be an instance of " . FilesystemInterface::class . " or a string containing a local path");
+        $this->expectExceptionMessage("Invalid filesystem");
         new Directory(44, "share", "directory");
     }
     public function testConstructor3()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage("Invalid filesystem, must be an instance of " . FilesystemInterface::class . " or a string containing a local path");
-        new Directory(new \DateTime, "share", "directory");
+        $this->expectExceptionMessage("Invalid filesystem");
+        new Directory(new \DateTime(), "share", "directory");
     }
 
 

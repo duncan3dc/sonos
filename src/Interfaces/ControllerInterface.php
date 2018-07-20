@@ -8,7 +8,8 @@ use duncan3dc\Sonos\Tracks\Stream;
 /**
  * Allows interaction with the groups of speakers.
  *
- * Although sometimes a Controller is synonymous with a Speaker, when speakers are grouped together only the coordinator can receive events (play/pause/etc)
+ * Although sometimes a Controller is synonymous with a Speaker,
+ * when speakers are grouped together only the coordinator can receive events (play/pause/etc)
  */
 interface ControllerInterface extends SpeakerInterface
 {

@@ -63,7 +63,7 @@ final class Socket implements SocketInterface
 
         $level = (int) getprotobyname("ip");
 
-        socket_set_option($sock, $level, \IP_MULTICAST_TTL,  2);
+        socket_set_option($sock, $level, \IP_MULTICAST_TTL, 2);
 
         if ($this->networkInterface !== null) {
             socket_set_option($sock, $level, \IP_MULTICAST_IF, $this->networkInterface);

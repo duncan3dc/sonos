@@ -155,7 +155,11 @@ final class Discovery implements CollectionInterface
     public function getDevices(): array
     {
         if (!$this->discovered) {
-            $socket = new Socket($this->getNetworkInterface(), $this->getMulticastAddress(), $this->collection->getLogger());
+            $socket = new Socket(
+                $this->getNetworkInterface(),
+                $this->getMulticastAddress(),
+                $this->collection->getLogger()
+            );
             $this->discoverDevices($socket);
             $this->discovered = true;
         }

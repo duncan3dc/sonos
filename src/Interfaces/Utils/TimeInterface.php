@@ -53,7 +53,8 @@ interface TimeInterface
     /**
      * Format the time in a custom way.
      *
-     * @param string $format The custom format to use. %h, %m, %s are available, and uppercase versions (%H, %M, %S) ensure a leading zero is present for single digit values
+     * @param string $format The custom format to use. %h, %m, %s are available,
+     *                  and uppercase versions (%H, %M, %S) ensure a leading zero is present for single digit values
      *
      * @return string
      */

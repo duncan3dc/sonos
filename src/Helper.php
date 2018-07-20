@@ -6,6 +6,7 @@ use duncan3dc\DomParser\XmlWriter;
 
 /**
  * Provides helper functions for the classes.
+ * @internal
  */
 class Helper
 {
@@ -71,8 +72,12 @@ class Helper
      *
      * @return string
      */
-    public static function createMetaDataXml(string $id, string $parent = "-1", array $extra = [], string $service = null): string
-    {
+    public static function createMetaDataXml(
+        string $id,
+        string $parent = "-1",
+        array $extra = [],
+        string $service = null
+    ): string {
         if ($service !== null) {
             $extra["desc"] = [
                 "_attributes"   =>  [

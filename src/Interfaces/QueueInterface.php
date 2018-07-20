@@ -25,7 +25,8 @@ interface QueueInterface extends \Countable
      * Add a track to the queue.
      *
      * @param string|UriInterface $track The URI of the track to add, or an object that implements the UriInterface
-     * @param int $position The position to insert the track in the queue (zero-based), by default the track will be added to the end of the queue
+     * @param int $position The position to insert the track in the queue (zero-based),
+     *                      by default the track will be added to the end of the queue
      *
      * @return QueueInterface
      */
@@ -35,8 +36,10 @@ interface QueueInterface extends \Countable
     /**
      * Add tracks to the queue.
      *
-     * @param string[]|UriInterface[] $tracks An array where each element is either the URI of the tracks to add, or an object that implements the UriInterface
-     * @param int $position The position to insert the tracks in the queue (zero-based), by default the tracks will be added to the end of the queue
+     * @param string[]|UriInterface[] $tracks An array where each element is either the URI of the tracks to add,
+     *                                          or an object that implements the UriInterface
+     * @param int $position The position to insert the tracks in the queue (zero-based),
+     *                      by default the tracks will be added to the end of the queue
      *
      * @return QueueInterface
      */

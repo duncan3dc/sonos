@@ -106,7 +106,7 @@ interface AlarmInterface
      * Get the frequency of the alarm.
      *
      * The result is an integer which can be compared using the bitwise operators and the class constants for each day.
-     * If the alarm is a one time only alarm then it will not match any of the day constants, but will be equal to the class constant ONCE.
+     * If the alarm is a one time only alarm then it will only be equal to the class constant ONCE (none of the days).
      *
      * @return int
      */

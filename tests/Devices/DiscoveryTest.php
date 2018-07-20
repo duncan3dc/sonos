@@ -20,7 +20,7 @@ class DiscoveryTest extends TestCase
     public function setUp()
     {
         $this->collection = Mockery::mock(CollectionInterface::class);
-        $this->collection->shouldReceive("getLogger")->with()->andReturn(new NullLogger);
+        $this->collection->shouldReceive("getLogger")->with()->andReturn(new NullLogger());
 
         $discovery = new Discovery($this->collection);
         $this->discovery = new Intruder($discovery);
@@ -127,7 +127,11 @@ class DiscoveryTest extends TestCase
     {
         $socket = Mockery::mock(SocketInterface::class);
 
-        $socket->shouldReceive("request")->with()->once()->andReturn(file_get_contents(__DIR__ . "/discovery/{$type}.http"));
+        $socket
+            ->shouldReceive("request")
+            ->with()
+            ->once()
+            ->andReturn(file_get_contents(__DIR__ . "/discovery/{$type}.http"));
 
         return $socket;
     }

@@ -180,7 +180,8 @@ class Queue implements QueueInterface
      * Add multiple uris to the queue.
      *
      * @param UriInterface[] $tracks The track to add
-     * @param int $position The position to insert the track in the queue (zero-based), by default the track will be added to the end of the queue
+     * @param int $position The position to insert the track in the queue (zero-based),
+     *                      by default the track will be added to the end of the queue
      *
      * @return void
      */
@@ -238,7 +239,8 @@ class Queue implements QueueInterface
      * Add a track to the queue.
      *
      * @param string|UriInterface $track The URI of the track to add, or an object that implements the UriInterface
-     * @param int $position The position to insert the track in the queue (zero-based), by default the track will be added to the end of the queue
+     * @param int $position The position to insert the track in the queue (zero-based),
+     *                      by default the track will be added to the end of the queue
      *
      * @return $this
      */
@@ -251,8 +253,10 @@ class Queue implements QueueInterface
     /**
      * Add tracks to the queue.
      *
-     * @param string[]|UriInterface[] $tracks An array where each element is either the URI of the tracks to add, or an object that implements the UriInterface
-     * @param int $position The position to insert the tracks in the queue (zero-based), by default the tracks will be added to the end of the queue
+     * @param string[]|UriInterface[] $tracks An array where each element is either the URI of the tracks to add,
+     *                                          or an object that implements the UriInterface
+     * @param int $position The position to insert the tracks in the queue (zero-based),
+     *                      by default the tracks will be added to the end of the queue
      *
      * @return $this
      */
@@ -266,7 +270,8 @@ class Queue implements QueueInterface
             }
 
             if (!$track instanceof UriInterface) {
-                throw new \InvalidArgumentException("The addTracks() array must contain either string URIs or objects that implement " . UriInterface::class);
+                $error = "The tracks must contain either string URIs or objects that implement " . UriInterface::class;
+                throw new \InvalidArgumentException($error);
             }
 
             $uris[] = $track;

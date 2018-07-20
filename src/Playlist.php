@@ -81,8 +81,10 @@ final class Playlist extends Queue implements PlaylistInterface
     /**
      * Add tracks to the playlist.
      *
+     * If no $position is passed the track will be added to the end of the playlist
+     *
      * @param UriInterface[] $tracks The tracks to add
-     * @param int $position The position to insert the track in the playlist (zero-based), by default the track will be added to the end of the playlist
+     * @param int $position The position to insert the track in the playlist (zero-based)
      *
      * @return void
      */

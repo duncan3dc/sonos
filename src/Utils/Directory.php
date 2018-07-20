@@ -31,7 +31,7 @@ final class Directory implements DirectoryInterface
     /**
      * Create a Directory instance to represent a file share.
      *
-     * @param FilesystemInterface|string $filesystem A Filesystem instance or the full path to the share on the local filesystem.
+     * @param FilesystemInterface|string $filesystem The full path to the share on the local filesystem.
      * @param string $share The full path to the share (including the hostname).
      * @param string $directory The name of the directory (to be appended to both $filesystem and $share).
      */
@@ -45,7 +45,10 @@ final class Directory implements DirectoryInterface
 
         # Ensure we got a Filesystem instance
         if (!$filesystem instanceof FilesystemInterface) {
-            throw new \InvalidArgumentException("Invalid filesystem, must be an instance of " . FilesystemInterface::class . " or a string containing a local path");
+            $error = "Invalid filesystem,";
+            $error .= " must be an instance of " . FilesystemInterface::class;
+            $error .= " or a string containing a local path";
+            throw new \InvalidArgumentException($error);
         }
 
         $this->filesystem = $filesystem;

@@ -7,9 +7,11 @@ use duncan3dc\Sonos\Alarm;
 use duncan3dc\Sonos\Interfaces\NetworkInterface;
 use duncan3dc\Sonos\Interfaces\SpeakerInterface;
 use Mockery;
+use Mockery\MockInterface;
 
 class AlarmTest extends MockTest
 {
+    /** @var SpeakerInterface|MockInterface */
     protected $speaker;
 
     public function getMockAlarm(array $attributes = [])
@@ -319,7 +321,10 @@ class AlarmTest extends MockTest
         $alarm = $this->getMockAlarm([
             "Volume"    =>  "30",
         ]);
-        $this->speaker->shouldReceive("soap")->once()->with("AlarmClock", "UpdateAlarm", Mockery::subset(["Volume" => 50]));
+        $this->speaker
+            ->shouldReceive("soap")
+            ->once()
+            ->with("AlarmClock", "UpdateAlarm", Mockery::subset(["Volume" => 50]));
 
         $alarm->setVolume(50);
         $this->assertSame(50, $alarm->getVolume());
@@ -340,7 +345,10 @@ class AlarmTest extends MockTest
         $alarm = $this->getMockAlarm([
             "PlayMode"  =>  "NORMAL",
         ]);
-        $this->speaker->shouldReceive("soap")->once()->with("AlarmClock", "UpdateAlarm", Mockery::subset(["PlayMode" => "REPEAT_ALL"]));
+        $this->speaker
+            ->shouldReceive("soap")
+            ->once()
+            ->with("AlarmClock", "UpdateAlarm", Mockery::subset(["PlayMode" => "REPEAT_ALL"]));
 
         $this->assertTrue($alarm->setRepeat(true)->getRepeat());
     }
@@ -368,7 +376,10 @@ class AlarmTest extends MockTest
         $alarm = $this->getMockAlarm([
             "PlayMode"  =>  "NORMAL",
         ]);
-        $this->speaker->shouldReceive("soap")->once()->with("AlarmClock", "UpdateAlarm", Mockery::subset(["PlayMode" => "SHUFFLE_NOREPEAT"]));
+        $this->speaker
+            ->shouldReceive("soap")
+            ->once()
+            ->with("AlarmClock", "UpdateAlarm", Mockery::subset(["PlayMode" => "SHUFFLE_NOREPEAT"]));
 
         $this->assertTrue($alarm->setShuffle(true)->getShuffle());
     }
@@ -405,7 +416,10 @@ class AlarmTest extends MockTest
         $alarm = $this->getMockAlarm([
             "Enabled"   =>  "0",
         ]);
-        $this->speaker->shouldReceive("soap")->once()->with("AlarmClock", "UpdateAlarm", Mockery::subset(["Enabled" => "1"]));
+        $this->speaker
+            ->shouldReceive("soap")
+            ->once()
+            ->with("AlarmClock", "UpdateAlarm", Mockery::subset(["Enabled" => "1"]));
 
         $this->assertTrue($alarm->activate()->isActive());
     }
@@ -416,7 +430,10 @@ class AlarmTest extends MockTest
         $alarm = $this->getMockAlarm([
             "Enabled"   =>  "1",
         ]);
-        $this->speaker->shouldReceive("soap")->once()->with("AlarmClock", "UpdateAlarm", Mockery::subset(["Enabled" => "0"]));
+        $this->speaker
+            ->shouldReceive("soap")
+            ->once()
+            ->with("AlarmClock", "UpdateAlarm", Mockery::subset(["Enabled" => "0"]));
 
         $this->assertFalse($alarm->deactivate()->isActive());
     }

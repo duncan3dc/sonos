@@ -12,7 +12,7 @@ use Psr\SimpleCache\CacheInterface;
 final class Factory implements FactoryInterface
 {
     /**
-     * @var CacheInterface $cache The cache object to use for the expensive multicast discover to find Sonos devices on the network.
+     * @var CacheInterface $cache The cache object to use for finding Sonos devices on the network.
      */
     private $cache;
 
@@ -25,18 +25,18 @@ final class Factory implements FactoryInterface
     /**
      * Create a new instance.
      *
-     * @param CacheInterface $cache The cache object to use for the expensive multicast discover to find Sonos devices on the network
+     * @param CacheInterface $cache The cache object to use for finding Sonos devices on the network
      * @param LoggerInterface $logger A logging object
      */
     public function __construct(CacheInterface $cache = null, LoggerInterface $logger = null)
     {
         if ($cache === null) {
-            $cache = new ArrayPool;
+            $cache = new ArrayPool();
         }
         $this->cache = $cache;
 
         if ($logger === null) {
-            $logger = new NullLogger;
+            $logger = new NullLogger();
         }
         $this->logger = $logger;
     }

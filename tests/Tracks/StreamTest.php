@@ -39,7 +39,10 @@ class StreamTest extends TestCase
             $xml .= '<item id="-1" parentID="-1" restricted="true">';
                 $xml .= '<dc:title>Stream</dc:title>';
                 $xml .= '<upnp:class>object.item.audioItem.audioBroadcast</upnp:class>';
-                $xml .= '<desc id="cdudn" nameSpace="urn:schemas-rinconnetworks-com:metadata-1-0/">SA_RINCON65031_</desc>';
+                $xml .= '<desc ';
+                    $xml .= 'id="cdudn" ';
+                    $xml .= 'nameSpace="urn:schemas-rinconnetworks-com:metadata-1-0/"';
+                $xml .= '>SA_RINCON65031_</desc>';
             $xml .= '</item>';
         $xml .= '</DIDL-Lite>';
         $this->assertSame($xml, $stream->getMetadata());
@@ -56,7 +59,10 @@ class StreamTest extends TestCase
             $xml .= '<item id="-1" parentID="-1" restricted="true">';
                 $xml .= '<dc:title>super stream</dc:title>';
                 $xml .= '<upnp:class>object.item.audioItem.audioBroadcast</upnp:class>';
-                $xml .= '<desc id="cdudn" nameSpace="urn:schemas-rinconnetworks-com:metadata-1-0/">SA_RINCON65031_</desc>';
+                $xml .= '<desc ';
+                    $xml .= 'id="cdudn" ';
+                    $xml .= 'nameSpace="urn:schemas-rinconnetworks-com:metadata-1-0/"';
+                    $xml .= '>SA_RINCON65031_</desc>';
             $xml .= '</item>';
         $xml .= '</DIDL-Lite>';
         $this->assertSame($xml, $stream->getMetadata());

@@ -132,12 +132,30 @@ class ControllerTest extends MockTest
         $state->shouldReceive("getTracks")->once()->with()->andReturn([]);
         $state->shouldReceive("getStream")->once()->with()->andReturn(null);
 
-        $device->shouldReceive("soap")->once()->with("AVTransport", "RemoveAllTracksFromQueue", ["ObjectID" => "Q:0"]);
-        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", [])->andReturn(["PlayMode" => "TEST"]);
-        $device->shouldReceive("soap")->once()->with("AVTransport", "SetCrossfadeMode", ["CrossfadeMode" => false]);
+        $device
+            ->shouldReceive("soap")
+            ->once()
+            ->with("AVTransport", "RemoveAllTracksFromQueue", ["ObjectID" => "Q:0"]);
+        $device
+            ->shouldReceive("soap")
+            ->once()
+            ->with("AVTransport", "GetTransportSettings", [])
+            ->andReturn(["PlayMode" => "TEST"]);
+        $device
+            ->shouldReceive("soap")
+            ->once()
+            ->with("AVTransport", "SetCrossfadeMode", ["CrossfadeMode" => false]);
 
-        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportInfo", [])->andReturn(["CurrentTransportState" => "TEST"]);
-        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", [])->andReturn(["PlayMode" => "TEST"]);
+        $device
+            ->shouldReceive("soap")
+            ->once()
+            ->with("AVTransport", "GetTransportInfo", [])
+            ->andReturn(["CurrentTransportState" => "TEST"]);
+        $device
+            ->shouldReceive("soap")
+            ->once()
+            ->with("AVTransport", "GetTransportSettings", [])
+            ->andReturn(["PlayMode" => "TEST"]);
 
         $result = $controller->restoreState($state);
         $this->assertSame($controller, $result);
@@ -160,9 +178,19 @@ class ControllerTest extends MockTest
         $state->shouldReceive("getTracks")->once()->with()->andReturn(["track"]);
         $state->shouldReceive("getStream")->once()->with()->andReturn(null);
 
-        $device->shouldReceive("soap")->once()->with("AVTransport", "RemoveAllTracksFromQueue", ["ObjectID" => "Q:0"]);
-        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", [])->andReturn(["PlayMode" => "TEST"]);
-        $device->shouldReceive("soap")->once()->with("AVTransport", "SetCrossfadeMode", ["CrossfadeMode" => false]);
+        $device
+            ->shouldReceive("soap")
+            ->once()
+            ->with("AVTransport", "RemoveAllTracksFromQueue", ["ObjectID" => "Q:0"]);
+        $device
+            ->shouldReceive("soap")
+            ->once()
+            ->with("AVTransport", "GetTransportSettings", [])
+            ->andReturn(["PlayMode" => "TEST"]);
+        $device
+            ->shouldReceive("soap")
+            ->once()
+            ->with("AVTransport", "SetCrossfadeMode", ["CrossfadeMode" => false]);
 
         $device->shouldReceive("soap")->once()->with("ContentDirectory", "Browse", [
             "BrowseFlag"        =>  "BrowseDirectChildren",
@@ -172,7 +200,11 @@ class ControllerTest extends MockTest
             "SortCriteria"      =>  "",
             "ObjectID"          =>  "Q:0",
         ]);
-        $device->shouldReceive("soap")->once()->with("AVTransport", "AddMultipleURIsToQueue", Mockery::any())->andReturn(["NumTracksAdded" => 1, "NewUpdateID" => 86]);
+        $device
+            ->shouldReceive("soap")
+            ->once()
+            ->with("AVTransport", "AddMultipleURIsToQueue", Mockery::any())
+            ->andReturn(["NumTracksAdded" => 1, "NewUpdateID" => 86]);
         $device->shouldReceive("soap")->once()->with("AVTransport", "Seek", [
             "Unit"      =>  "TRACK_NR",
             "Target"    =>  1,
@@ -182,8 +214,16 @@ class ControllerTest extends MockTest
             "Target"    =>  "05:03:01",
         ]);
 
-        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportInfo", [])->andReturn(["CurrentTransportState" => "TEST"]);
-        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", [])->andReturn(["PlayMode" => "TEST"]);
+        $device
+            ->shouldReceive("soap")
+            ->once()
+            ->with("AVTransport", "GetTransportInfo", [])
+            ->andReturn(["CurrentTransportState" => "TEST"]);
+        $device
+            ->shouldReceive("soap")
+            ->once()
+            ->with("AVTransport", "GetTransportSettings", [])
+            ->andReturn(["PlayMode" => "TEST"]);
 
         $result = $controller->restoreState($state);
         $this->assertSame($controller, $result);
@@ -195,20 +235,40 @@ class ControllerTest extends MockTest
         $device = $this->getDevice();
         $controller = $this->getController($device);
 
+        $xml = '<DIDL-Lite ';
+            $xml .= 'xmlns:dc="http://purl.org/dc/elements/1.1/" ';
+            $xml .= 'xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" ';
+            $xml .= 'xmlns:r="urn:schemas-rinconnetworks-com:metadata-1-0/" ';
+            $xml .= 'xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/"';
+        $xml .= '>';
+            $xml .= '<item id="-1" parentID="-1" restricted="true">';
+                $xml .= '<res protocolInfo="x-file-cifs:*:audio/mpeg:*" duration="0:04:04">';
+                    $xml .= 'x-file-cifs://LEMIEUX/sonos/afi/burials/12-Anxious.mp3';
+                $xml .= '</res>';
+                $xml .= '<r:streamContent></r:streamContent>';
+                $xml .= '<dc:title>anxious</dc:title>';
+                $xml .= '<upnp:class>object.item.audioItem.musicTrack</upnp:class>';
+                $xml .= '<dc:creator>afi</dc:creator>';
+                $xml .= '<upnp:album>burials</upnp:album>';
+                $xml .= '<upnp:originalTrackNumber>1</upnp:originalTrackNumber>';
+                $xml .= '<r:albumArtist>afi</r:albumArtist>';
+            $xml .= '</item>';
+        $xml .= '</DIDL-Lite>';
+
         $device->shouldReceive("soap")->once()->with("AVTransport", "GetPositionInfo", [])->andReturn([
             "Track"         =>  1,
             "TrackDuration" =>  "0:04:04",
-            "TrackMetaData" =>  '<DIDL-Lite xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns:r="urn:schemas-rinconnetworks-com:metadata-1-0/" xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/"><item id="-1" parentID="-1" restricted="true"><res protocolInfo="x-file-cifs:*:audio/mpeg:*" duration="0:04:04">x-file-cifs://LEMIEUX/sonos/the%20used/imaginary%20enemy/01-Revolution.mp3</res><r:streamContent></r:streamContent><dc:title>revolution</dc:title><upnp:class>object.item.audioItem.musicTrack</upnp:class><dc:creator>the used</dc:creator><upnp:album>imaginary enemy</upnp:album><upnp:originalTrackNumber>1</upnp:originalTrackNumber><r:albumArtist>the used</r:albumArtist></item></DIDL-Lite>',
-            "TrackURI"      =>  "x-file-cifs://LEMIEUX/sonos/the%20used/imaginary%20enemy/01-Revolution.mp3",
+            "TrackMetaData" =>  $xml,
+            "TrackURI"      =>  "x-file-cifs://LEMIEUX/sonos/afi/burials/12-Anxious.mp3",
             "RelTime"       =>  "0:00:15",
         ]);
 
         $state = $controller->getStateDetails();
 
-        $this->assertSame("x-file-cifs://LEMIEUX/sonos/the%20used/imaginary%20enemy/01-Revolution.mp3", $state->getUri());
-        $this->assertSame("revolution", $state->getTitle());
-        $this->assertSame("the used", $state->getArtist());
-        $this->assertSame("imaginary enemy", $state->getAlbum());
+        $this->assertSame("x-file-cifs://LEMIEUX/sonos/afi/burials/12-Anxious.mp3", $state->getUri());
+        $this->assertSame("anxious", $state->getTitle());
+        $this->assertSame("afi", $state->getArtist());
+        $this->assertSame("burials", $state->getAlbum());
         $this->assertSame(0, $state->getNumber());
         $this->assertSame("00:04:04", $state->getDuration()->asString());
         $this->assertSame("00:00:15", $state->getPosition()->asString());
@@ -221,17 +281,48 @@ class ControllerTest extends MockTest
         $device = $this->getDevice();
         $controller = $this->getController($device);
 
+        $xml = '<DIDL-Lite ';
+            $xml .= 'xmlns:dc="http://purl.org/dc/elements/1.1/" ';
+            $xml .= 'xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" ';
+            $xml .= 'xmlns:r="urn:schemas-rinconnetworks-com:metadata-1-0/" ';
+            $xml .= 'xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/"';
+        $xml .= '>';
+            $xml .= '<item id="-1" parentID="-1" restricted="true">';
+                $xml .= '<res protocolInfo="x-rincon-mp3radio:*:*:*">';
+                    $xml .= 'x-rincon-mp3radio://tx.sharp-stream.com/http_live.php?i=teamrock.mp3';
+                $xml .= '</res>';
+                $xml .= '<r:streamContent>New Found Glory - Hit Or Miss</r:streamContent>';
+                $xml .= '<dc:title>http_live.php?i=teamrock.mp3</dc:title>';
+                $xml .= '<upnp:class>object.item</upnp:class>';
+            $xml .= '</item>';
+        $xml .= '</DIDL-Lite>';
+
         $device->shouldReceive("soap")->once()->with("AVTransport", "GetPositionInfo", [])->andReturn([
             "Track"         =>  1,
             "TrackDuration" =>  "0:00:00",
-            "TrackMetaData" =>  '<DIDL-Lite xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns:r="urn:schemas-rinconnetworks-com:metadata-1-0/" xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/"><item id="-1" parentID="-1" restricted="true"><res protocolInfo="x-rincon-mp3radio:*:*:*">x-rincon-mp3radio://tx.sharp-stream.com/http_live.php?i=teamrock.mp3</res><r:streamContent>New Found Glory - Hit Or Miss</r:streamContent><dc:title>http_live.php?i=teamrock.mp3</dc:title><upnp:class>object.item</upnp:class></item></DIDL-Lite>',
+            "TrackMetaData" =>  $xml,
             "TrackURI"      =>  "x-rincon-mp3radio://tx.sharp-stream.com/http_live.php?i=teamrock.mp3",
             "RelTime"       =>  "0:00:02",
         ]);
 
+        $xml = '<DIDL-Lite xmlns:dc="http://purl.org/dc/elements/1.1/" ';
+            $xml .= 'xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" ';
+            $xml .= 'xmlns:r="urn:schemas-rinconnetworks-com:metadata-1-0/" ';
+            $xml .= 'xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/"';
+        $xml .= '>';
+            $xml .= '<item id="-1" parentID="-1" restricted="true">';
+                $xml .= '<dc:title>TeamRock Radio</dc:title>';
+                $xml .= '<upnp:class>object.item.audioItem.audioBroadcast</upnp:class>';
+                $xml .= '<desc ';
+                    $xml .= 'id="cdudn" ';
+                    $xml .= 'nameSpace="urn:schemas-rinconnetworks-com:metadata-1-0/"';
+                $xml .= '>SA_RINCON65031_</desc>';
+            $xml .= '</item>';
+        $xml .= '</DIDL-Lite>';
+
         $device->shouldReceive("soap")->once()->with("AVTransport", "GetMediaInfo", [])->andReturn([
             "CurrentURI"            =>  "x-sonosapi-stream:s200662?sid=254&flags=8224&sn=0",
-            "CurrentURIMetaData"    =>  '<DIDL-Lite xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns:r="urn:schemas-rinconnetworks-com:metadata-1-0/" xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/"><item id="-1" parentID="-1" restricted="true"><dc:title>TeamRock Radio</dc:title><upnp:class>object.item.audioItem.audioBroadcast</upnp:class><desc id="cdudn" nameSpace="urn:schemas-rinconnetworks-com:metadata-1-0/">SA_RINCON65031_</desc></item></DIDL-Lite>',
+            "CurrentURIMetaData"    =>  $xml,
         ]);
 
         $state = $controller->getStateDetails();

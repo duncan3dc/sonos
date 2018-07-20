@@ -25,7 +25,7 @@ final class CachedCollection implements CollectionInterface
     private $collection;
 
     /**
-     * @var CacheInterface $cache The cache object to use for the expensive multicast discover to find Sonos devices on the network.
+     * @var CacheInterface $cache The cache object to use for finding Sonos devices on the network.
      */
     private $cache;
 
