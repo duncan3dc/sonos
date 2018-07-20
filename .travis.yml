@@ -18,11 +18,14 @@ install:
   - composer update $COMPOSER_OPTS
 
 script:
-  - vendor/bin/phpunit --coverage-clover=clover.xml
-  - tests/lint.sh
+  - composer test
 
-after_success:
-  - vendor/bin/php-coveralls
+jobs:
+  include:
+    - stage: coverage
+      script:
+        - vendor/bin/phpunit --coverage-clover=coverage.xml
+        - bash <(curl -s https://codecov.io/bash)
 
 git:
   depth: 5

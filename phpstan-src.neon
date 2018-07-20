@@ -1,0 +1,3 @@
+parameters:
+  ignoreErrors:
+    - '/Parameter #4 \$optval of function socket_set_option expects array|int, int|string given/'
