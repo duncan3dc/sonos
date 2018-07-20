@@ -40,6 +40,21 @@ interface SpeakerInterface
      */
     public function getRoom(): string;
 
+    /**
+     * Remove any previously established group for this speaker.
+     *
+     * @return void
+     */
+    public function updateGroup(): void;
+
+    /**
+     * Set which group this speaker belongs to.
+     *
+     * @param string $group The group id
+     *
+     * @return void
+     */
+    public function setGroup(string $group): void;
 
     /**
      * Get the uuid of the group this speaker is a member of.

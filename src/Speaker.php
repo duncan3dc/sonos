@@ -5,6 +5,10 @@ namespace duncan3dc\Sonos;
 use duncan3dc\Sonos\Devices\Device;
 use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
 use duncan3dc\Sonos\Interfaces\SpeakerInterface;
+use function explode;
+use function in_array;
+use function preg_match;
+use function strpos;
 
 /**
  * Represents an individual Sonos speaker, to allow volume, equalisation, and other settings to be managed.
@@ -37,19 +41,9 @@ final class Speaker implements SpeakerInterface
     private $uuid;
 
     /**
-     * @var string $group The group id this speaker is a part of.
+     * @var string|null $group The group id this speaker is a part of.
      */
     private $group;
-
-    /**
-     * @var bool $coordinator Whether this speaker is the coordinator of it's current group.
-     */
-    private $coordinator;
-
-    /**
-     * @var bool $topology A flag to indicate whether we have gathered the topology for this speaker or not.
-     */
-    private $topology;
 
 
     /**
@@ -72,6 +66,11 @@ final class Speaker implements SpeakerInterface
         $this->name = (string) $device->getTag("friendlyName");
         $this->room = (string) $device->getTag("roomName");
 
+        $udn = (string) $device->getTag("UDN");
+        if (preg_match("/^uuid:(.*)$/", $udn, $matches)) {
+            $this->uuid = $matches[1];
+        }
+
         if (!$this->device->isSpeaker()) {
             throw new \InvalidArgumentException("You cannot create a Speaker instance for this model: " . $this->device->getModel());
         }
@@ -84,65 +83,6 @@ final class Speaker implements SpeakerInterface
     public function soap(string $service, string $action, array $params = [])
     {
         return $this->device->soap($service, $action, $params);
-    }
-
-
-    /**
-     * Remove any previously gathered topology for this speaker.
-     *
-     * @return $this
-     */
-    public function clearTopology(): SpeakerInterface
-    {
-        $this->topology = false;
-
-        return $this;
-    }
-
-
-    /**
-     * Set the topology of this speaker.
-     *
-     * @param array $topology The topology attributes as key/value pairs
-     *
-     * @return $this
-     */
-    public function setTopology(array $topology): SpeakerInterface
-    {
-        $this->topology = true;
-
-        $this->group = $topology["group"];
-        $this->coordinator = ($topology["coordinator"] === "true");
-        $this->uuid = $topology["uuid"];
-
-        return $this;
-    }
-
-
-    /**
-     * Get the attributes needed for the classes instance variables.
-     *
-     * @return void
-     */
-    private function getTopology()
-    {
-        if ($this->topology) {
-            return;
-        }
-
-        $topology = $this->device->getXml("/status/topology");
-        $players = $topology->getTag("ZonePlayers")->getTags("ZonePlayer");
-        foreach ($players as $player) {
-            $attributes = $player->getAttributes();
-            $ip = parse_url($attributes["location"])["host"];
-
-            if ($ip === $this->ip) {
-                $this->setTopology($attributes);
-                return;
-            }
-        }
-
-        throw new \RuntimeException("Failed to lookup the topology info for this speaker");
     }
 
 
@@ -186,8 +126,34 @@ final class Speaker implements SpeakerInterface
      */
     public function getGroup(): string
     {
-        $this->getTopology();
+        if ($this->group === null) {
+            $attributes = $this->soap("ZoneGroupTopology", "GetZoneGroupAttributes");
+            $this->setGroup($attributes["CurrentZoneGroupID"]);
+        }
+
         return $this->group;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function updateGroup(): void
+    {
+        $this->group = null;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function setGroup(string $group): void
+    {
+        if (strpos($group, ":")) {
+            list($group) = explode(":", $group);
+        }
+
+        $this->group = $group;
     }
 
 
@@ -198,8 +164,7 @@ final class Speaker implements SpeakerInterface
      */
     public function isCoordinator(): bool
     {
-        $this->getTopology();
-        return $this->coordinator;
+        return ($this->getUuid() === $this->getGroup());
     }
 
 
@@ -210,7 +175,6 @@ final class Speaker implements SpeakerInterface
      */
     public function getUuid(): string
     {
-        $this->getTopology();
         return $this->uuid;
     }
 

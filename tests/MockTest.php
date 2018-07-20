@@ -36,6 +36,7 @@ abstract class MockTest extends TestCase
         $parser->shouldReceive("getTag")->with("device")->once()->andReturn($tag);
         $tag->shouldReceive("getTag")->with("friendlyName")->once()->andReturn("Test Name");
         $tag->shouldReceive("getTag")->with("roomName")->once()->andReturn("Test Room");
+        $tag->shouldReceive("getTag")->with("UDN")->once()->andReturn("uuid:RINCON_5CAAFD472E1C01400");
         $device->shouldReceive("getXml")->with("/xml/device_description.xml")->once()->andReturn($parser);
 
         return $device;
@@ -45,25 +46,16 @@ abstract class MockTest extends TestCase
     {
         $device->shouldReceive("isSpeaker")->once()->andReturn(true);
 
+        $device->shouldReceive("soap")->with("ZoneGroupTopology", "GetZoneGroupAttributes", [])->andReturn([
+            "CurrentZoneGroupID" => "RINCON_5CAAFD472E1C01400:916619538",
+        ]);
+
         return new Speaker($device);
     }
 
     protected function getController(DeviceInterface $device)
     {
         $speaker = $this->getSpeaker($device);
-
-        $parser = Mockery::mock(XmlParser::class);
-        $players = Mockery::mock(XmlParser::class);
-        $player = Mockery::mock(XmlParser::class);
-        $parser->shouldReceive("getTag")->with("ZonePlayers")->once()->andReturn($players);
-        $players->shouldReceive("getTags")->with("ZonePlayer")->once()->andReturn([$player]);
-        $player->shouldReceive("getAttributes")->once()->andReturn([
-            "location"      =>  "http://192.168.0.66",
-            "group"         =>  "",
-            "coordinator"   =>  "true",
-            "uuid"          =>  "",
-        ]);
-        $device->shouldReceive("getXml")->with("/status/topology")->once()->andReturn($parser);
 
         return new Controller($speaker, $this->network);
     }

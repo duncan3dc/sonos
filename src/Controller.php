@@ -397,11 +397,7 @@ final class Controller implements ControllerInterface
             "CurrentURIMetaData"    =>  "",
         ]);
 
-        $speaker->setTopology([
-            "uuid"          =>  $speaker->getUuid(),
-            "group"         =>  $this->getGroup(),
-            "coordinator"   =>  "false",
-        ]);
+        $speaker->setGroup($speaker->getUuid());
 
         return $this;
     }
@@ -418,7 +414,7 @@ final class Controller implements ControllerInterface
     {
         $speaker->soap("AVTransport", "BecomeCoordinatorOfStandaloneGroup");
 
-        $speaker->clearTopology();
+        $speaker->updateGroup();
 
         return $this;
     }
@@ -756,13 +752,29 @@ final class Controller implements ControllerInterface
 
 
     /**
-     * Get the uuid of the group this speaker is a member of.
-     *
-     * @return string
+     * @inheritDoc
      */
     public function getGroup(): string
     {
         return $this->speaker->getGroup();
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function updateGroup(): void
+    {
+        $this->speaker->updateGroup();
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function setGroup(string $group): void
+    {
+        $this->speaker->setGroup($group);
     }
 
 

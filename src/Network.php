@@ -103,19 +103,6 @@ final class Network implements NetworkInterface, LoggerAwareInterface
 
         $this->getLogger()->info("creating speaker instances");
 
-        # Get the topology information from 1 speaker
-        $topology = [];
-        $ip = reset($devices)->ip;
-        $uri = "http://{$ip}:1400/status/topology";
-        $this->getLogger()->notice("Getting topology info from: {$uri}");
-        $xml = (string) (new Client)->get($uri)->getBody();
-        $players = (new XmlParser($xml))->getTag("ZonePlayers")->getTags("ZonePlayer");
-        foreach ($players as $player) {
-            $attributes = $player->getAttributes();
-            $ip = parse_url($attributes["location"])["host"];
-            $topology[$ip] = $attributes;
-        }
-
         $this->speakers = [];
         foreach ($devices as $device) {
             if (!$device->isSpeaker()) {
@@ -123,12 +110,6 @@ final class Network implements NetworkInterface, LoggerAwareInterface
             }
 
             $speaker = new Speaker($device);
-
-            if (!isset($topology[$device->ip])) {
-                throw new \RuntimeException("Failed to lookup the topology info for this speaker");
-            }
-
-            $speaker->setTopology($topology[$device->ip]);
 
             $this->speakers[$device->ip] = $speaker;
         }
