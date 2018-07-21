@@ -5,6 +5,41 @@ Changelog
 
 --------
 
+## 2.0.0 - 2018-07-21
+
+### Added
+
+* [Network] A new DeviceCollection class can be used to manually add devices to the network.
+* [Time] A Time class has been added to normalise the various representations of time used by Sonos.
+
+### Changed
+
+* [Network] The construction of a new instance now only accepts a DeviceCollection instance.
+* [Network] Replaced the doctrine/cache dependency with any PSR-16 compatible cache library.
+* [Controllers] An exception is now throw when adding track(s) fails.
+* [General] Scalar parameter type hints have been added where possible.
+* [General] Return type hints have been added where possible.
+* [General] All classes now implement an interface, and are marked as final to prevent inheritance.
+* [General] All public properties are no longer visible and should be accessed/updated using their getters/setters.
+* [General] NotFoundException is now thrown instead of methods returning null.
+* [Controllers] The class constants are now on ControllerInterface.
+* [Alarms] The class constants are now on the AlarmInterface.
+* [TextToSpeech] You must pass the provider you want to use, there is no default.
+* [Support] Drop support for PHP 5.6 and PHP 7.0
+* [Support] Drop support for HHVM as there is little demand to make it worthwhile.
+
+### Removed
+
+* [Tracks] The deprecated `getTitle()` method has been removed, use `getName()` instead.
+* [Radio] The deprecated `getRadioStations()` and `getRadioShows()` methods have been removed, use `getRadio()->getFavouriteShows()` and `getRadio()->getFavouriteStations()` instead.
+* [Controllers] The getNetwork() method has been removed.
+
+### Fixed
+
+* [Controllers] Corrected the group look ups for Sonos version 9.1
+
+--------
+
 ## 1.9.11 - 2017-11-25
 
 ### Added
