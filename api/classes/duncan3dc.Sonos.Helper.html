@@ -24,7 +24,7 @@
     <script type="text/javascript">
     function loadExternalCodeSnippets() {
         Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
-            var src = pre.getAttribute('data-src');
+            var src = pre.getAttribute('data-src').replace( /\\/g, '/');
             var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
             var language = 'php';
 
@@ -114,12 +114,12 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">46</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">87</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="../reports/markers.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
                                 </a>
                             </li>
                             <li>
@@ -144,42 +144,46 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1822808121"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-935502360"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-1822808121" class="accordion-body collapse in">
+            <div id="namespace-935502360" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-813411444"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1873800988"></a>
                                 <a href="../namespaces/duncan3dc.html" style="margin-left: 30px; padding-left: 0">duncan3dc</a>
             </div>
-            <div id="namespace-813411444" class="accordion-body collapse ">
+            <div id="namespace-1873800988" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1048939828"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1596627058"></a>
                                 <a href="../namespaces/duncan3dc.Sonos.html" style="margin-left: 30px; padding-left: 0">Sonos</a>
             </div>
-            <div id="namespace-1048939828" class="accordion-body collapse ">
+            <div id="namespace-1596627058" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-19187759"></a>
-                                <a href="../namespaces/duncan3dc.Sonos.Exceptions.html" style="margin-left: 30px; padding-left: 0">Exceptions</a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1866930541"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Devices.html" style="margin-left: 30px; padding-left: 0">Devices</a>
             </div>
-            <div id="namespace-19187759" class="accordion-body collapse ">
+            <div id="namespace-1866930541" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
                     <ul>
-                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Exceptions.SoapException.html">SoapException</a></li>
+                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Devices.CachedCollection.html">CachedCollection</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Devices.Collection.html">Collection</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Devices.Device.html">Device</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Devices.Discovery.html">Discovery</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Devices.Factory.html">Factory</a></li>
                                             </ul>
                 </div>
             </div>
@@ -189,10 +193,134 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-529708939"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1714352738"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Exceptions.html" style="margin-left: 30px; padding-left: 0">Exceptions</a>
+            </div>
+            <div id="namespace-1714352738" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Exceptions.NetworkException.html">NetworkException</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Exceptions.NotFoundException.html">NotFoundException</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Exceptions.SoapException.html">SoapException</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Exceptions.SonosException.html">SonosException</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1770193281"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Interfaces.html" style="margin-left: 30px; padding-left: 0">Interfaces</a>
+            </div>
+            <div id="namespace-1770193281" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-154244286"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Interfaces.Devices.html" style="margin-left: 30px; padding-left: 0">Devices</a>
+            </div>
+            <div id="namespace-154244286" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Devices.CollectionInterface.html">CollectionInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Devices.DeviceInterface.html">DeviceInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Devices.FactoryInterface.html">FactoryInterface</a></li>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1452751409"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Interfaces.Services.html" style="margin-left: 30px; padding-left: 0">Services</a>
+            </div>
+            <div id="namespace-1452751409" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Services.RadioInterface.html">RadioInterface</a></li>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-27622886"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Interfaces.Tracks.html" style="margin-left: 30px; padding-left: 0">Tracks</a>
+            </div>
+            <div id="namespace-27622886" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Tracks.FactoryInterface.html">FactoryInterface</a></li>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-738466324"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Interfaces.Utils.html" style="margin-left: 30px; padding-left: 0">Utils</a>
+            </div>
+            <div id="namespace-738466324" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Utils.DirectoryInterface.html">DirectoryInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Utils.SocketInterface.html">SocketInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Utils.TimeInterface.html">TimeInterface</a></li>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.AlarmInterface.html">AlarmInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.ControllerInterface.html">ControllerInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.ControllerStateInterface.html">ControllerStateInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.NetworkInterface.html">NetworkInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.PlaylistInterface.html">PlaylistInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.QueueInterface.html">QueueInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.SpeakerInterface.html">SpeakerInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.StateInterface.html">StateInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.TrackInterface.html">TrackInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.UriInterface.html">UriInterface</a></li>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-934082663"></a>
                                 <a href="../namespaces/duncan3dc.Sonos.Services.html" style="margin-left: 30px; padding-left: 0">Services</a>
             </div>
-            <div id="namespace-529708939" class="accordion-body collapse ">
+            <div id="namespace-934082663" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -207,16 +335,18 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-778570102"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1208467733"></a>
                                 <a href="../namespaces/duncan3dc.Sonos.Tracks.html" style="margin-left: 30px; padding-left: 0">Tracks</a>
             </div>
-            <div id="namespace-778570102" class="accordion-body collapse ">
+            <div id="namespace-1208467733" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
                     <ul>
-                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Tracks.UriInterface.html">UriInterface</a></li>
-                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.Factory.html">Factory</a></li>
+                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.Deezer.html">Deezer</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.Factory.html">Factory</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.Google.html">Google</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.GoogleUnlimited.html">GoogleUnlimited</a></li>
                                                     <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.Spotify.html">Spotify</a></li>
                                                     <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.Stream.html">Stream</a></li>
                                                     <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.TextToSpeech.html">TextToSpeech</a></li>
@@ -227,12 +357,31 @@
         </div>
     </div>
 
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1791094635"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Utils.html" style="margin-left: 30px; padding-left: 0">Utils</a>
+            </div>
+            <div id="namespace-1791094635" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
                     
                     <ul>
-                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Controller.html">Controller</a></li>
+                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Utils.Directory.html">Directory</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Utils.Socket.html">Socket</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Utils.Time.html">Time</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Alarm.html">Alarm</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Controller.html">Controller</a></li>
                                                     <li class="class"><a href="../classes/duncan3dc.Sonos.ControllerState.html">ControllerState</a></li>
-                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Device.html">Device</a></li>
-                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Directory.html">Directory</a></li>
                                                     <li class="class"><a href="../classes/duncan3dc.Sonos.Helper.html">Helper</a></li>
                                                     <li class="class"><a href="../classes/duncan3dc.Sonos.Network.html">Network</a></li>
                                                     <li class="class"><a href="../classes/duncan3dc.Sonos.Playlist.html">Playlist</a></li>
@@ -344,11 +493,18 @@
                         
                         
                         
-                        
+                                                
                                                                         </dl>
                     <h2>Tags</h2>
                     <table class="table table-condensed">
-                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                            <tr>
+                            <th>
+                                internal
+                            </th>
+                            <td>
+                                                                                                        
+                                                            </td>
+                        </tr>
                                         </table>
                 </aside>
             </div>
@@ -366,7 +522,7 @@
             <a id="constant_TRACK_HASH" name="constant_TRACK_HASH" class="anchor"></a>
             <article id="constant_TRACK_HASH" class="constant">
                 <h3 class="">TRACK_HASH</h3>
-                <pre class="signature">TRACK_HASH</pre>
+                <pre class="signature">TRACK_HASH = &quot;00032020&quot;</pre>
                 <p><em></em></p>
                 
             </article>
@@ -387,7 +543,7 @@
             <a id="constant_ALBUM_HASH" name="constant_ALBUM_HASH" class="anchor"></a>
             <article id="constant_ALBUM_HASH" class="constant">
                 <h3 class="">ALBUM_HASH</h3>
-                <pre class="signature">ALBUM_HASH</pre>
+                <pre class="signature">ALBUM_HASH = &quot;0004206c&quot;</pre>
                 <p><em></em></p>
                 
             </article>
@@ -434,14 +590,16 @@
                                     <h4>Returns</h4>
                     array
                                             &mdash; <p>Mode data containing the following boolean elements (shuffle, repeat)</p>
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                             <span class="label label-info">static</span>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Helper.html"><div class="path-wrapper">\duncan3dc\Sonos\Helper</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -471,14 +629,16 @@
                 
                                     <h4>Returns</h4>
                     string
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                             <span class="label label-info">static</span>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Helper.html"><div class="path-wrapper">\duncan3dc\Sonos\Helper</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -492,7 +652,7 @@
             <article class="method">
                 <h3 class="public ">createMetaDataXml()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">createMetaDataXml(string  <span class="argument">$id</span>, string  <span class="argument">$parent = &quot;-1&quot;</span>, array  <span class="argument">$extra = array()</span>,   <span class="argument">$service = null</span>) : string</pre>
+                <pre class="signature" style="margin-right: 54px;">createMetaDataXml(string  <span class="argument">$id</span>, string  <span class="argument">$parent = &quot;-1&quot;</span>, array  <span class="argument">$extra = array()</span>, string  <span class="argument">$service = null</span>) : string</pre>
                 <p><em>Create the xml metadata required by Sonos.</em></p>
                 
 
@@ -514,23 +674,25 @@
                                 <td><p>An xml array of extra attributes for this item</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$service </td>
-                                <td></td>
+                                <td><p>The Sonos service ID to use</p></td>
                             </tr>
                                             </table>
                 
                 
                                     <h4>Returns</h4>
                     string
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                             <span class="label label-info">static</span>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Helper.html"><div class="path-wrapper">\duncan3dc\Sonos\Helper</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -588,7 +750,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on March 12th, 2016 at 18:02.
+                    on July 22nd, 2018 at 16:23.
                 </section>
             </section>
         </section>

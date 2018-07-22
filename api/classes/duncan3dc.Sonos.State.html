@@ -24,7 +24,7 @@
     <script type="text/javascript">
     function loadExternalCodeSnippets() {
         Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
-            var src = pre.getAttribute('data-src');
+            var src = pre.getAttribute('data-src').replace( /\\/g, '/');
             var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
             var language = 'php';
 
@@ -114,12 +114,12 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">46</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">87</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="../reports/markers.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
                                 </a>
                             </li>
                             <li>
@@ -144,42 +144,46 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-611172728"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-465179259"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-611172728" class="accordion-body collapse in">
+            <div id="namespace-465179259" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-925796155"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-746537198"></a>
                                 <a href="../namespaces/duncan3dc.html" style="margin-left: 30px; padding-left: 0">duncan3dc</a>
             </div>
-            <div id="namespace-925796155" class="accordion-body collapse ">
+            <div id="namespace-746537198" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-132139252"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-439547319"></a>
                                 <a href="../namespaces/duncan3dc.Sonos.html" style="margin-left: 30px; padding-left: 0">Sonos</a>
             </div>
-            <div id="namespace-132139252" class="accordion-body collapse ">
+            <div id="namespace-439547319" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-555308998"></a>
-                                <a href="../namespaces/duncan3dc.Sonos.Exceptions.html" style="margin-left: 30px; padding-left: 0">Exceptions</a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1188901051"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Devices.html" style="margin-left: 30px; padding-left: 0">Devices</a>
             </div>
-            <div id="namespace-555308998" class="accordion-body collapse ">
+            <div id="namespace-1188901051" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
                     <ul>
-                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Exceptions.SoapException.html">SoapException</a></li>
+                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Devices.CachedCollection.html">CachedCollection</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Devices.Collection.html">Collection</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Devices.Device.html">Device</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Devices.Discovery.html">Discovery</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Devices.Factory.html">Factory</a></li>
                                             </ul>
                 </div>
             </div>
@@ -189,10 +193,134 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1312595948"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-911652642"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Exceptions.html" style="margin-left: 30px; padding-left: 0">Exceptions</a>
+            </div>
+            <div id="namespace-911652642" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Exceptions.NetworkException.html">NetworkException</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Exceptions.NotFoundException.html">NotFoundException</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Exceptions.SoapException.html">SoapException</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Exceptions.SonosException.html">SonosException</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-497795185"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Interfaces.html" style="margin-left: 30px; padding-left: 0">Interfaces</a>
+            </div>
+            <div id="namespace-497795185" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1523409088"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Interfaces.Devices.html" style="margin-left: 30px; padding-left: 0">Devices</a>
+            </div>
+            <div id="namespace-1523409088" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Devices.CollectionInterface.html">CollectionInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Devices.DeviceInterface.html">DeviceInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Devices.FactoryInterface.html">FactoryInterface</a></li>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-608208851"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Interfaces.Services.html" style="margin-left: 30px; padding-left: 0">Services</a>
+            </div>
+            <div id="namespace-608208851" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Services.RadioInterface.html">RadioInterface</a></li>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1439730211"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Interfaces.Tracks.html" style="margin-left: 30px; padding-left: 0">Tracks</a>
+            </div>
+            <div id="namespace-1439730211" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Tracks.FactoryInterface.html">FactoryInterface</a></li>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1503869099"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Interfaces.Utils.html" style="margin-left: 30px; padding-left: 0">Utils</a>
+            </div>
+            <div id="namespace-1503869099" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Utils.DirectoryInterface.html">DirectoryInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Utils.SocketInterface.html">SocketInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Utils.TimeInterface.html">TimeInterface</a></li>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.AlarmInterface.html">AlarmInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.ControllerInterface.html">ControllerInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.ControllerStateInterface.html">ControllerStateInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.NetworkInterface.html">NetworkInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.PlaylistInterface.html">PlaylistInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.QueueInterface.html">QueueInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.SpeakerInterface.html">SpeakerInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.StateInterface.html">StateInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.TrackInterface.html">TrackInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.UriInterface.html">UriInterface</a></li>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-192911654"></a>
                                 <a href="../namespaces/duncan3dc.Sonos.Services.html" style="margin-left: 30px; padding-left: 0">Services</a>
             </div>
-            <div id="namespace-1312595948" class="accordion-body collapse ">
+            <div id="namespace-192911654" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -207,16 +335,18 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1780690239"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-522846703"></a>
                                 <a href="../namespaces/duncan3dc.Sonos.Tracks.html" style="margin-left: 30px; padding-left: 0">Tracks</a>
             </div>
-            <div id="namespace-1780690239" class="accordion-body collapse ">
+            <div id="namespace-522846703" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
                     <ul>
-                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Tracks.UriInterface.html">UriInterface</a></li>
-                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.Factory.html">Factory</a></li>
+                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.Deezer.html">Deezer</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.Factory.html">Factory</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.Google.html">Google</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.GoogleUnlimited.html">GoogleUnlimited</a></li>
                                                     <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.Spotify.html">Spotify</a></li>
                                                     <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.Stream.html">Stream</a></li>
                                                     <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.TextToSpeech.html">TextToSpeech</a></li>
@@ -227,12 +357,31 @@
         </div>
     </div>
 
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-440996616"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Utils.html" style="margin-left: 30px; padding-left: 0">Utils</a>
+            </div>
+            <div id="namespace-440996616" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
                     
                     <ul>
-                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Controller.html">Controller</a></li>
+                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Utils.Directory.html">Directory</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Utils.Socket.html">Socket</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Utils.Time.html">Time</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Alarm.html">Alarm</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Controller.html">Controller</a></li>
                                                     <li class="class"><a href="../classes/duncan3dc.Sonos.ControllerState.html">ControllerState</a></li>
-                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Device.html">Device</a></li>
-                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Directory.html">Directory</a></li>
                                                     <li class="class"><a href="../classes/duncan3dc.Sonos.Helper.html">Helper</a></li>
                                                     <li class="class"><a href="../classes/duncan3dc.Sonos.Network.html">Network</a></li>
                                                     <li class="class"><a href="../classes/duncan3dc.Sonos.Playlist.html">Playlist</a></li>
@@ -294,22 +443,28 @@
                             <section class="span4">
                                                                     <a href="../classes/duncan3dc.Sonos.State.html#method___construct" class="">__construct()</a><br />
                                                                     <a href="../classes/duncan3dc.Sonos.Tracks.Track.html#method_getUri" class="">getUri()</a><br />
-                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.Track.html#method_getId" class="">getId()</a><br />
                                                                     <a href="../classes/duncan3dc.Sonos.Tracks.Track.html#method_getMetaData" class="">getMetaData()</a><br />
+                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.Track.html#method_setTitle" class="">setTitle()</a><br />
+                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.Track.html#method_getTitle" class="">getTitle()</a><br />
+                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.Track.html#method_setArtist" class="">setArtist()</a><br />
+                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.Track.html#method_getArtist" class="">getArtist()</a><br />
+                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.Track.html#method_setAlbum" class="">setAlbum()</a><br />
+                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.Track.html#method_getAlbum" class="">getAlbum()</a><br />
+                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.Track.html#method_setNumber" class="">setNumber()</a><br />
+                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.Track.html#method_getNumber" class="">getNumber()</a><br />
+                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.Track.html#method_setAlbumArt" class="">setAlbumArt()</a><br />
+                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.Track.html#method_getAlbumArt" class="">getAlbumArt()</a><br />
                                                                     <a href="../classes/duncan3dc.Sonos.State.html#method_createFromXml" class="">createFromXml()</a><br />
+                                                                    <a href="../classes/duncan3dc.Sonos.State.html#method_isStreaming" class="">isStreaming()</a><br />
+                                                                    <a href="../classes/duncan3dc.Sonos.State.html#method_setStream" class="">setStream()</a><br />
+                                                                    <a href="../classes/duncan3dc.Sonos.State.html#method_getStream" class="">getStream()</a><br />
+                                                                    <a href="../classes/duncan3dc.Sonos.State.html#method_setDuration" class="">setDuration()</a><br />
+                                                                    <a href="../classes/duncan3dc.Sonos.State.html#method_getDuration" class="">getDuration()</a><br />
+                                                                    <a href="../classes/duncan3dc.Sonos.State.html#method_setPosition" class="">setPosition()</a><br />
+                                                                    <a href="../classes/duncan3dc.Sonos.State.html#method_getPosition" class="">getPosition()</a><br />
                                                             </section>
                             <section class="span4">
-                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.Track.html#property_uri" class="">$uri</a><br />
-                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.Track.html#property_title" class="">$title</a><br />
-                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.Track.html#property_artist" class="">$artist</a><br />
-                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.Track.html#property_album" class="">$album</a><br />
-                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.Track.html#property_number" class="">$number</a><br />
-                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.Track.html#property_albumArt" class="">$albumArt</a><br />
-                                                                    <a href="../classes/duncan3dc.Sonos.State.html#property_stream" class="">$stream</a><br />
-                                                                    <a href="../classes/duncan3dc.Sonos.State.html#property_trackNumber" class="">$trackNumber</a><br />
-                                                                    <a href="../classes/duncan3dc.Sonos.State.html#property_queueNumber" class="">$queueNumber</a><br />
-                                                                    <a href="../classes/duncan3dc.Sonos.State.html#property_duration" class="">$duration</a><br />
-                                                                    <a href="../classes/duncan3dc.Sonos.State.html#property_position" class="">$position</a><br />
+                                                                    <em>No public properties found</em>
                                                             </section>
                             <section class="span4">
                                                                     <em>No constants found</em>
@@ -320,7 +475,7 @@
                                                                     <em>No protected methods found</em>
                                                             </section>
                             <section class="span4">
-                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.Track.html#property_queueId" class="">$queueId</a><br />
+                                                                    <em>No protected properties found</em>
                                                             </section>
                             <section class="span4">
                                 <em>N/A</em>
@@ -331,7 +486,16 @@
                                                                     <em>No private methods found</em>
                                                             </section>
                             <section class="span4">
-                                                                    <em>No private properties found</em>
+                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.Track.html#property_uri" class="">$uri</a><br />
+                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.Track.html#property_title" class="">$title</a><br />
+                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.Track.html#property_artist" class="">$artist</a><br />
+                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.Track.html#property_album" class="">$album</a><br />
+                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.Track.html#property_number" class="">$number</a><br />
+                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.Track.html#property_albumArt" class="">$albumArt</a><br />
+                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.Track.html#property_itemId" class="">$itemId</a><br />
+                                                                    <a href="../classes/duncan3dc.Sonos.State.html#property_stream" class="">$stream</a><br />
+                                                                    <a href="../classes/duncan3dc.Sonos.State.html#property_duration" class="">$duration</a><br />
+                                                                    <a href="../classes/duncan3dc.Sonos.State.html#property_position" class="">$position</a><br />
                                                             </section>
                             <section class="span4">
                                 <em>N/A</em>
@@ -340,7 +504,8 @@
                     </section>
                 </div>
                 <aside class="span4 detailsbar">
-                                        
+                                                                <span class="label label-info">final</span>
+                    
                     
                     <dl>
                         <dt>File</dt>
@@ -354,10 +519,12 @@
                                                                                                     <div class="namespace-wrapper">\duncan3dc\Sonos\State</div>
                             </dd>
 
+                                                                            <dt>Implements</dt>
+                                                        <dd><a href="../classes/duncan3dc.Sonos.Interfaces.StateInterface.html"><div class="namespace-wrapper">\duncan3dc\Sonos\Interfaces\StateInterface</div></a></dd>
                         
                         
                         
-                        
+                                                
                                                                         </dl>
                     <h2>Tags</h2>
                     <table class="table table-condensed">
@@ -375,11 +542,11 @@
                 <aside class="span4 detailsbar"></aside>
             </div>
 
-                                    <div class="row-fluid">
+                                                                    <div class="row-fluid">
         <div class="span8 content class">
             <a id="property_uri" name="property_uri" class="anchor"></a>
             <article class="property">
-                <h3 class="public ">$uri</h3>
+                <h3 class="private ">$uri</h3>
                 <pre class="signature">$uri : string</pre>
                 <p><em></em></p>
                 
@@ -405,7 +572,7 @@
         <div class="span8 content class">
             <a id="property_title" name="property_title" class="anchor"></a>
             <article class="property">
-                <h3 class="public ">$title</h3>
+                <h3 class="private ">$title</h3>
                 <pre class="signature">$title : string</pre>
                 <p><em></em></p>
                 
@@ -431,7 +598,7 @@
         <div class="span8 content class">
             <a id="property_artist" name="property_artist" class="anchor"></a>
             <article class="property">
-                <h3 class="public ">$artist</h3>
+                <h3 class="private ">$artist</h3>
                 <pre class="signature">$artist : string</pre>
                 <p><em></em></p>
                 
@@ -457,7 +624,7 @@
         <div class="span8 content class">
             <a id="property_album" name="property_album" class="anchor"></a>
             <article class="property">
-                <h3 class="public ">$album</h3>
+                <h3 class="private ">$album</h3>
                 <pre class="signature">$album : string</pre>
                 <p><em></em></p>
                 
@@ -483,7 +650,7 @@
         <div class="span8 content class">
             <a id="property_number" name="property_number" class="anchor"></a>
             <article class="property">
-                <h3 class="public ">$number</h3>
+                <h3 class="private ">$number</h3>
                 <pre class="signature">$number : integer</pre>
                 <p><em></em></p>
                 
@@ -509,7 +676,7 @@
         <div class="span8 content class">
             <a id="property_albumArt" name="property_albumArt" class="anchor"></a>
             <article class="property">
-                <h3 class="public ">$albumArt</h3>
+                <h3 class="private ">$albumArt</h3>
                 <pre class="signature">$albumArt : string</pre>
                 <p><em></em></p>
                 
@@ -533,64 +700,42 @@
 
                                     <div class="row-fluid">
         <div class="span8 content class">
+            <a id="property_itemId" name="property_itemId" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$itemId</h3>
+                <pre class="signature">$itemId : string</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                &mdash; The id of the item.                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Tracks.Track.html"><div class="path-wrapper">\duncan3dc\Sonos\Tracks\Track</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
             <a id="property_stream" name="property_stream" class="anchor"></a>
             <article class="property">
-                <h3 class="public ">$stream</h3>
-                <pre class="signature">$stream : string|null</pre>
+                <h3 class="private ">$stream</h3>
+                <pre class="signature">$stream : \duncan3dc\Sonos\Tracks\Stream|null</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                string|null
+                <a href="../classes/duncan3dc.Sonos.Tracks.Stream.html">\duncan3dc\Sonos\Tracks\Stream</a>|null
                 &mdash; The name of the stream currently currently playing (or null if we are not on a stream).                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                        <dl>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="property_trackNumber" name="property_trackNumber" class="anchor"></a>
-            <article class="property">
-                <h3 class="public ">$trackNumber</h3>
-                <pre class="signature">$trackNumber : integer</pre>
-                <p><em></em></p>
-                
-
-                                <h4>Type</h4>
-                integer
-                &mdash; The number of the track on it&#039;s album.                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                        <dl>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="property_queueNumber" name="property_queueNumber" class="anchor"></a>
-            <article class="property">
-                <h3 class="public ">$queueNumber</h3>
-                <pre class="signature">$queueNumber : integer</pre>
-                <p><em></em></p>
-                
-
-                                <h4>Type</h4>
-                integer
-                &mdash; The zero-based number of the track in the queue.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -607,14 +752,14 @@
         <div class="span8 content class">
             <a id="property_duration" name="property_duration" class="anchor"></a>
             <article class="property">
-                <h3 class="public ">$duration</h3>
-                <pre class="signature">$duration : string</pre>
+                <h3 class="private ">$duration</h3>
+                <pre class="signature">$duration : \duncan3dc\Sonos\Interfaces\Utils\TimeInterface</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                string
-                &mdash; The duration of the currently active track (hh:mm:ss).                            </article>
+                <a href="../classes/duncan3dc.Sonos.Interfaces.Utils.TimeInterface.html">\duncan3dc\Sonos\Interfaces\Utils\TimeInterface</a>
+                &mdash; The duration of the currently active track.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -631,14 +776,14 @@
         <div class="span8 content class">
             <a id="property_position" name="property_position" class="anchor"></a>
             <article class="property">
-                <h3 class="public ">$position</h3>
-                <pre class="signature">$position : string</pre>
+                <h3 class="private ">$position</h3>
+                <pre class="signature">$position : \duncan3dc\Sonos\Interfaces\Utils\TimeInterface</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                string
-                &mdash; The position of the currently active track (hh:mm:ss).                            </article>
+                <a href="../classes/duncan3dc.Sonos.Interfaces.Utils.TimeInterface.html">\duncan3dc\Sonos\Interfaces\Utils\TimeInterface</a>
+                &mdash; The position of the currently active track.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -651,33 +796,7 @@
         </aside>
     </div>
 
-                                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="property_queueId" name="property_queueId" class="anchor"></a>
-            <article class="property">
-                <h3 class="protected ">$queueId</h3>
-                <pre class="signature">$queueId : string</pre>
-                <p><em></em></p>
-                
-
-                                <h4>Type</h4>
-                string
-                &mdash; The id of the track in the queue.                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                        <dl>
-                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/duncan3dc.Sonos.Tracks.Track.html"><div class="path-wrapper">\duncan3dc\Sonos\Tracks\Track</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                            
+                            
                                     <a id="methods" name="methods"></a>
             <div class="row-fluid">
                 <div class="span8 content class"><h2>Methods</h2></div>
@@ -690,8 +809,8 @@
             <article class="method">
                 <h3 class="public ">__construct()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">__construct(string  <span class="argument">$uri = null</span>) </pre>
-                <p><em>Create a Track object.</em></p>
+                <pre class="signature" style="margin-right: 54px;">__construct(string  <span class="argument">$uri = &quot;&quot;</span>) </pre>
+                <p><em>Create a new instance.</em></p>
                 
 
                                     <h4>Parameters</h4>
@@ -704,13 +823,15 @@
                                             </table>
                 
                 
-                				
+                
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.State.html"><div class="path-wrapper">\duncan3dc\Sonos\State</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -732,37 +853,7 @@
                 
                                     <h4>Returns</h4>
                     string
-                                    				
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                                                            <dl>
-                                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/duncan3dc.Sonos.Tracks.Track.html"><div class="path-wrapper">\duncan3dc\Sonos\Tracks\Track</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="method_getId" name="method_getId" class="anchor"></a>
-            <article class="method">
-                <h3 class="public ">getId()</h3>
-                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getId() : string</pre>
-                <p><em>Get the ID of this track.</em></p>
-                
-
-                
-                
-                                    <h4>Returns</h4>
-                    string
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -792,7 +883,7 @@
                 
                                     <h4>Returns</h4>
                     string
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -810,11 +901,358 @@
 
                                     <div class="row-fluid">
         <div class="span8 content class">
+            <a id="method_setTitle" name="method_setTitle" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setTitle()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setTitle(string  <span class="argument">$title</span>) : $this</pre>
+                <p><em>Set the name of the track.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$title </td>
+                                <td><p>The title of the track</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    $this
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Tracks.Track.html"><div class="path-wrapper">\duncan3dc\Sonos\Tracks\Track</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getTitle" name="method_getTitle" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getTitle()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getTitle() : string</pre>
+                <p><em>Get the name of the track.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Tracks.Track.html"><div class="path-wrapper">\duncan3dc\Sonos\Tracks\Track</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setArtist" name="method_setArtist" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setArtist()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setArtist(string  <span class="argument">$artist</span>) : $this</pre>
+                <p><em>Set the artist of the track.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$artist </td>
+                                <td><p>The artist of the track</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    $this
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Tracks.Track.html"><div class="path-wrapper">\duncan3dc\Sonos\Tracks\Track</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getArtist" name="method_getArtist" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getArtist()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getArtist() : string</pre>
+                <p><em>Get the name of the artist of the track.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Tracks.Track.html"><div class="path-wrapper">\duncan3dc\Sonos\Tracks\Track</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setAlbum" name="method_setAlbum" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setAlbum()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setAlbum(string  <span class="argument">$album</span>) : $this</pre>
+                <p><em>Set the album of the track.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$album </td>
+                                <td><p>The album of the track</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    $this
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Tracks.Track.html"><div class="path-wrapper">\duncan3dc\Sonos\Tracks\Track</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getAlbum" name="method_getAlbum" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getAlbum()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getAlbum() : string</pre>
+                <p><em>Get the name of the album of the track.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Tracks.Track.html"><div class="path-wrapper">\duncan3dc\Sonos\Tracks\Track</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setNumber" name="method_setNumber" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setNumber()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setNumber(integer  <span class="argument">$number</span>) : $this</pre>
+                <p><em>Set the number of the track.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$number </td>
+                                <td><p>The number of the track</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    $this
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Tracks.Track.html"><div class="path-wrapper">\duncan3dc\Sonos\Tracks\Track</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getNumber" name="method_getNumber" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getNumber()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getNumber() : integer</pre>
+                <p><em>Get the track number.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    integer
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Tracks.Track.html"><div class="path-wrapper">\duncan3dc\Sonos\Tracks\Track</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setAlbumArt" name="method_setAlbumArt" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setAlbumArt()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setAlbumArt(string  <span class="argument">$albumArt</span>) : $this</pre>
+                <p><em>Set the album art of the track.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$albumArt </td>
+                                <td><p>The albumArt of the track</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    $this
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Tracks.Track.html"><div class="path-wrapper">\duncan3dc\Sonos\Tracks\Track</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getAlbumArt" name="method_getAlbumArt" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getAlbumArt()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getAlbumArt() : string</pre>
+                <p><em></em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Tracks.Track.html"><div class="path-wrapper">\duncan3dc\Sonos\Tracks\Track</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            var
+                        </th>
+                        <td>
+                                                                                            <p>The full path to the album art for this track.</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
             <a id="method_createFromXml" name="method_createFromXml" class="anchor"></a>
             <article class="method">
                 <h3 class="public ">createFromXml()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">createFromXml(\duncan3dc\DomParser\XmlElement  <span class="argument">$xml</span>, \duncan3dc\Sonos\Controller  <span class="argument">$controller</span>) : static</pre>
+                <pre class="signature" style="margin-right: 54px;">createFromXml(\duncan3dc\DomParser\XmlElement  <span class="argument">$xml</span>, \duncan3dc\Sonos\Interfaces\ControllerInterface  <span class="argument">$controller</span>) : \duncan3dc\Sonos\Interfaces\StateInterface</pre>
                 <p><em>Update the track properties using an xml element.</em></p>
                 
 
@@ -826,7 +1264,7 @@
                                 <td><p>The xml element representing the track meta data.</p></td>
                             </tr>
                                                     <tr>
-                                <td><a href="../classes/duncan3dc.Sonos.Controller.html">\duncan3dc\Sonos\Controller</a></td>
+                                <td><a href="../classes/duncan3dc.Sonos.Interfaces.ControllerInterface.html">\duncan3dc\Sonos\Interfaces\ControllerInterface</a></td>
                                 <td>$controller </td>
                                 <td><p>A controller instance on the playlist's network</p></td>
                             </tr>
@@ -834,15 +1272,251 @@
                 
                 
                                     <h4>Returns</h4>
-                    static
-                                    				
+                    <a href="../classes/duncan3dc.Sonos.Interfaces.StateInterface.html">\duncan3dc\Sonos\Interfaces\StateInterface</a>
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                             <span class="label label-info">static</span>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.State.html"><div class="path-wrapper">\duncan3dc\Sonos\State</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_isStreaming" name="method_isStreaming" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">isStreaming()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">isStreaming() : boolean</pre>
+                <p><em>Check if we are currently playing a stream.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.State.html"><div class="path-wrapper">\duncan3dc\Sonos\State</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setStream" name="method_setStream" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setStream()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setStream(\duncan3dc\Sonos\Tracks\Stream  <span class="argument">$stream</span>) : \duncan3dc\Sonos\Interfaces\StateInterface</pre>
+                <p><em>Set the stream object in use.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td><a href="../classes/duncan3dc.Sonos.Tracks.Stream.html">\duncan3dc\Sonos\Tracks\Stream</a></td>
+                                <td>$stream </td>
+                                <td><p>The stream</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/duncan3dc.Sonos.Interfaces.StateInterface.html">\duncan3dc\Sonos\Interfaces\StateInterface</a>
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.State.html"><div class="path-wrapper">\duncan3dc\Sonos\State</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getStream" name="method_getStream" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getStream()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getStream() : \duncan3dc\Sonos\Interfaces\TrackInterface|null</pre>
+                <p><em>Get the stream object in use (or null if we are not on a stream).</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/duncan3dc.Sonos.Interfaces.TrackInterface.html">\duncan3dc\Sonos\Interfaces\TrackInterface</a>|null
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.State.html"><div class="path-wrapper">\duncan3dc\Sonos\State</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setDuration" name="method_setDuration" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setDuration()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setDuration(\duncan3dc\Sonos\Interfaces\Utils\TimeInterface  <span class="argument">$duration</span>) : \duncan3dc\Sonos\Interfaces\StateInterface</pre>
+                <p><em>Set the duration of the currently active track.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td><a href="../classes/duncan3dc.Sonos.Interfaces.Utils.TimeInterface.html">\duncan3dc\Sonos\Interfaces\Utils\TimeInterface</a></td>
+                                <td>$duration </td>
+                                <td><p>The duration</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/duncan3dc.Sonos.Interfaces.StateInterface.html">\duncan3dc\Sonos\Interfaces\StateInterface</a>
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.State.html"><div class="path-wrapper">\duncan3dc\Sonos\State</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getDuration" name="method_getDuration" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getDuration()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getDuration() : \duncan3dc\Sonos\Interfaces\Utils\TimeInterface</pre>
+                <p><em>Get the duration of the currently active track.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/duncan3dc.Sonos.Interfaces.Utils.TimeInterface.html">\duncan3dc\Sonos\Interfaces\Utils\TimeInterface</a>
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.State.html"><div class="path-wrapper">\duncan3dc\Sonos\State</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setPosition" name="method_setPosition" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setPosition()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setPosition(\duncan3dc\Sonos\Interfaces\Utils\TimeInterface  <span class="argument">$position</span>) : \duncan3dc\Sonos\Interfaces\StateInterface</pre>
+                <p><em>Set the position of the currently active track.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td><a href="../classes/duncan3dc.Sonos.Interfaces.Utils.TimeInterface.html">\duncan3dc\Sonos\Interfaces\Utils\TimeInterface</a></td>
+                                <td>$position </td>
+                                <td><p>The position</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/duncan3dc.Sonos.Interfaces.StateInterface.html">\duncan3dc\Sonos\Interfaces\StateInterface</a>
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.State.html"><div class="path-wrapper">\duncan3dc\Sonos\State</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getPosition" name="method_getPosition" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getPosition()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getPosition() : \duncan3dc\Sonos\Interfaces\Utils\TimeInterface</pre>
+                <p><em>Get the position of the currently active track.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/duncan3dc.Sonos.Interfaces.Utils.TimeInterface.html">\duncan3dc\Sonos\Interfaces\Utils\TimeInterface</a>
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.State.html"><div class="path-wrapper">\duncan3dc\Sonos\State</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -900,7 +1574,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on March 12th, 2016 at 18:02.
+                    on July 22nd, 2018 at 16:23.
                 </section>
             </section>
         </section>

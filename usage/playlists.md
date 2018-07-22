@@ -2,7 +2,7 @@
 layout: default
 title: Playlists
 permalink: /usage/playlists/
-api: Playlist
+api: Interfaces.PlaylistInterface
 ---
 
 You can get existing playlists from the [Network class](../getting-started/#playlists) or create a new one like so:
@@ -39,7 +39,7 @@ You can list all the tracks from a playlist:
 $playlist = $sonos->getPlaylistByName("progmetal");
 
 foreach ($playlist->getTracks() as $track) {
-    echo "* {$track->artist} - {$track->title}\n";
+    echo "* " . $track->getArtist() . " - " . $track->getTitle() . "\n";
 }
 ```
 <p class="message-info">The getTracks() method returns an array of <a href='../tracks/'>Tracks</a>.</p>
@@ -53,7 +53,7 @@ $progmetal = $sonos->getPlaylistByName("progmetal");
 
 $remove = [];
 foreach ($progmetal->getTracks() as $position => $track) {
-    if ($track->artist === "protest the hero") {
+    if ($track->getArtist() === "protest the hero") {
         $remove[] = $position;
     }
 }

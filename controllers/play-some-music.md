@@ -3,7 +3,7 @@ layout: default
 title: Play Some Music
 page-title: Start the party!
 permalink: /controllers/play-some-music/
-api: Controller
+api: Interfaces.ControllerInterface
 ---
 
 
@@ -24,7 +24,7 @@ Or check on your networks current status:
 ```php
 $controllers = $sonos->getControllers();
 foreach ($controllers as $controller) {
-    echo "{$controller->room} = {$controller->getStateName()}\n";
+    echo "{$controller->room} = " . $controller->getStateName() . "\n";
 }
 ```
 
@@ -50,10 +50,10 @@ You can position to specific tracks, or a specific part of a track:
 $controller->selectTrack(0);
 
 # I love this bit
-$controller->seek(55);
+$controller->seek(Time::inSeconds(55));
 
 # 3 minutes and 15 seconds
-$controller->seek(195);
+$controller->seek(Time::parse("3:15"));
 ```
 
 See the <a href='../../usage/tracks/'>Tracks documentation</a> for info on adding tracks to your controller's queue.

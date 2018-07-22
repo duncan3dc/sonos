@@ -2,8 +2,9 @@ Getting Started:
     Introduction: /
     Installation: /installation/
     Setup: /setup/
-    Logging: /logging/
-    Version 2.0: /v2/
+    Cache: /setup/cache/
+    Devices: /setup/devices/
+    Logging: /setup/logging/
 
 Usage:
     Getting Started: /usage/getting-started/

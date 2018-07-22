@@ -2,7 +2,7 @@
 layout: default
 title: Queue
 permalink: /controllers/queue/
-api: Queue
+api: Interfaces.QueueInterface
 ---
 
 When playing tracks from your library or other music services you'll be using the queue.  
@@ -50,7 +50,7 @@ Remove tracks from the queue:
 ```php
 $remove = [];
 foreach ($queue->getTracks() as $position => $track) {
-    if ($track->artist === "pomegranate tiger") {
+    if ($track->getArtist() === "pomegranate tiger") {
         $remove[] = $position;
     }
 }

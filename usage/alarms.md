@@ -2,7 +2,7 @@
 layout: default
 title: Alarms
 permalink: /usage/alarms/
-api: Alarm
+api: Interfaces.AlarmInterface
 ---
 
 You can get existing alarms from the [Network class](../getting-started/#alarms) and delete one like so:
@@ -15,12 +15,12 @@ $alarm->delete();
 Get the details of the alarm:
 
 ```php
-echo "Alarm ID: {$alarm->getId()}\n";
-echo "Time: {$alarm->getTime()}\n";
-echo "Duration: {$alarm->getDuration()}\n";
-echo "Room: {$alarm->getSpeaker()->room}";
-echo "Volume: {$alarm->getVolume()}\n";
-echo "Frequency: {$alarm->getFrequencyDescription()}\n";
+echo "Alarm ID: " . $alarm->getId() . "\n";
+echo "Time: " . $alarm->getTime() . "\n";
+echo "Duration: " . $alarm->getDuration() . "\n";
+echo "Room: " . $alarm->getSpeaker()->room . "\n";
+echo "Volume: " . $alarm->getVolume() . "\n";
+echo "Frequency: " . $alarm->getFrequencyDescription() . "\n";
 ```
 
 
@@ -28,7 +28,7 @@ Update the details of the alarm:
 
 ```php
 $alarm
-    ->setTime("15:45");
+    ->setTime(Time::parse("15:45"));
     ->setDuration(15);
     ->setVolume(15);
     ->setRepeat(false)

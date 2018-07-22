@@ -18,7 +18,7 @@ Or you can manually add it to your composer.json:
 ```javascript
 {
     "require": {
-        "duncan3dc/sonos": "^1.7"
+        "duncan3dc/sonos": "^2.0"
     }
 }
 ```

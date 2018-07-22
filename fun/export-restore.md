@@ -2,7 +2,7 @@
 layout: default
 title: Export/Restore
 permalink: /fun/export-restore/
-api: ControllerState
+api: Interfaces.ControllerStateInterface
 ---
 
 The `ControllerState` class can be used to store the current state of a controller.

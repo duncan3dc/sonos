@@ -18,3 +18,5 @@ It allows you to manage what's playing now, which speakers are grouped together,
 <br><br>
 
 <p class="message-api">Full <a href='{{ site.baseurl }}/api/namespaces/duncan3dc.Sonos.html'>API documentation</a> is also available.</p>
+
+If you're upgrading to v2 from v1 then there's some [notes here](v2/) and the [CHANGELOG](https://github.com/duncan3dc/sonos/blob/master/CHANGELOG.md) lists some things to consider.

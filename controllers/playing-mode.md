@@ -9,8 +9,9 @@ Details about what is playing is available via a State object, this can be retri
 ```php
 $track = $controller->getStateDetails();
 
-echo "Now Playing: {$track->title} from {$track->album} by {$track->artist}\n";
-echo "Running Time: {$track->position} / {$track->duration}\n";
+echo "Now Playing: " . $track->getTitle() . " from ";
+echo $track->getAlbum() . " by " . $track->getArtist() . "\n";
+echo "Running Time: " . $track->getPosition() . "/" . $track->getDuration() . "\n";
 ```
 
 
@@ -20,11 +21,11 @@ If you are not playing tracks but are streaming then the State object should be 
 $state = $controller->getStateDetails();
 
 if ($state->stream) {
-    echo "Currently Streaming: {$state->stream}\n";
+    echo "Currently Streaming: " . $state->getStream() . "\n";
 
     # Most streams do not provide extra information, so check before using
-    if ($state->artist) {
-        echo "Artist: {$state->artist}\n";
+    if ($state->getArtist()) {
+        echo "Artist: " . $state->getArtist() . "\n";
     }
 }
 ```

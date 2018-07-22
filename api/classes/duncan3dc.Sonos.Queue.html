@@ -24,7 +24,7 @@
     <script type="text/javascript">
     function loadExternalCodeSnippets() {
         Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
-            var src = pre.getAttribute('data-src');
+            var src = pre.getAttribute('data-src').replace( /\\/g, '/');
             var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
             var language = 'php';
 
@@ -114,12 +114,12 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">46</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">87</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="../reports/markers.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
                                 </a>
                             </li>
                             <li>
@@ -144,42 +144,46 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-894357658"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-2123383261"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-894357658" class="accordion-body collapse in">
+            <div id="namespace-2123383261" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1811153183"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2104899876"></a>
                                 <a href="../namespaces/duncan3dc.html" style="margin-left: 30px; padding-left: 0">duncan3dc</a>
             </div>
-            <div id="namespace-1811153183" class="accordion-body collapse ">
+            <div id="namespace-2104899876" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2063867124"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1919651476"></a>
                                 <a href="../namespaces/duncan3dc.Sonos.html" style="margin-left: 30px; padding-left: 0">Sonos</a>
             </div>
-            <div id="namespace-2063867124" class="accordion-body collapse ">
+            <div id="namespace-1919651476" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1579262195"></a>
-                                <a href="../namespaces/duncan3dc.Sonos.Exceptions.html" style="margin-left: 30px; padding-left: 0">Exceptions</a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1603479021"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Devices.html" style="margin-left: 30px; padding-left: 0">Devices</a>
             </div>
-            <div id="namespace-1579262195" class="accordion-body collapse ">
+            <div id="namespace-1603479021" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
                     <ul>
-                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Exceptions.SoapException.html">SoapException</a></li>
+                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Devices.CachedCollection.html">CachedCollection</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Devices.Collection.html">Collection</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Devices.Device.html">Device</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Devices.Discovery.html">Discovery</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Devices.Factory.html">Factory</a></li>
                                             </ul>
                 </div>
             </div>
@@ -189,10 +193,134 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1934333858"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1102847338"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Exceptions.html" style="margin-left: 30px; padding-left: 0">Exceptions</a>
+            </div>
+            <div id="namespace-1102847338" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Exceptions.NetworkException.html">NetworkException</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Exceptions.NotFoundException.html">NotFoundException</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Exceptions.SoapException.html">SoapException</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Exceptions.SonosException.html">SonosException</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1778254962"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Interfaces.html" style="margin-left: 30px; padding-left: 0">Interfaces</a>
+            </div>
+            <div id="namespace-1778254962" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-582529624"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Interfaces.Devices.html" style="margin-left: 30px; padding-left: 0">Devices</a>
+            </div>
+            <div id="namespace-582529624" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Devices.CollectionInterface.html">CollectionInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Devices.DeviceInterface.html">DeviceInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Devices.FactoryInterface.html">FactoryInterface</a></li>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1525151083"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Interfaces.Services.html" style="margin-left: 30px; padding-left: 0">Services</a>
+            </div>
+            <div id="namespace-1525151083" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Services.RadioInterface.html">RadioInterface</a></li>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1193338887"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Interfaces.Tracks.html" style="margin-left: 30px; padding-left: 0">Tracks</a>
+            </div>
+            <div id="namespace-1193338887" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Tracks.FactoryInterface.html">FactoryInterface</a></li>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1597772772"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Interfaces.Utils.html" style="margin-left: 30px; padding-left: 0">Utils</a>
+            </div>
+            <div id="namespace-1597772772" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Utils.DirectoryInterface.html">DirectoryInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Utils.SocketInterface.html">SocketInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Utils.TimeInterface.html">TimeInterface</a></li>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.AlarmInterface.html">AlarmInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.ControllerInterface.html">ControllerInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.ControllerStateInterface.html">ControllerStateInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.NetworkInterface.html">NetworkInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.PlaylistInterface.html">PlaylistInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.QueueInterface.html">QueueInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.SpeakerInterface.html">SpeakerInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.StateInterface.html">StateInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.TrackInterface.html">TrackInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.UriInterface.html">UriInterface</a></li>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-915046348"></a>
                                 <a href="../namespaces/duncan3dc.Sonos.Services.html" style="margin-left: 30px; padding-left: 0">Services</a>
             </div>
-            <div id="namespace-1934333858" class="accordion-body collapse ">
+            <div id="namespace-915046348" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -207,16 +335,18 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1754257280"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1902742615"></a>
                                 <a href="../namespaces/duncan3dc.Sonos.Tracks.html" style="margin-left: 30px; padding-left: 0">Tracks</a>
             </div>
-            <div id="namespace-1754257280" class="accordion-body collapse ">
+            <div id="namespace-1902742615" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
                     <ul>
-                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Tracks.UriInterface.html">UriInterface</a></li>
-                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.Factory.html">Factory</a></li>
+                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.Deezer.html">Deezer</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.Factory.html">Factory</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.Google.html">Google</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.GoogleUnlimited.html">GoogleUnlimited</a></li>
                                                     <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.Spotify.html">Spotify</a></li>
                                                     <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.Stream.html">Stream</a></li>
                                                     <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.TextToSpeech.html">TextToSpeech</a></li>
@@ -227,12 +357,31 @@
         </div>
     </div>
 
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-27280368"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Utils.html" style="margin-left: 30px; padding-left: 0">Utils</a>
+            </div>
+            <div id="namespace-27280368" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
                     
                     <ul>
-                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Controller.html">Controller</a></li>
+                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Utils.Directory.html">Directory</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Utils.Socket.html">Socket</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Utils.Time.html">Time</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Alarm.html">Alarm</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Controller.html">Controller</a></li>
                                                     <li class="class"><a href="../classes/duncan3dc.Sonos.ControllerState.html">ControllerState</a></li>
-                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Device.html">Device</a></li>
-                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Directory.html">Directory</a></li>
                                                     <li class="class"><a href="../classes/duncan3dc.Sonos.Helper.html">Helper</a></li>
                                                     <li class="class"><a href="../classes/duncan3dc.Sonos.Network.html">Network</a></li>
                                                     <li class="class"><a href="../classes/duncan3dc.Sonos.Playlist.html">Playlist</a></li>
@@ -353,11 +502,11 @@
                             </dd>
 
                                                                             <dt>Implements</dt>
-                                                        <dd><a href=""><div class="namespace-wrapper"></div></a></dd>
+                                                        <dd><a href="../classes/duncan3dc.Sonos.Interfaces.QueueInterface.html"><div class="namespace-wrapper">\duncan3dc\Sonos\Interfaces\QueueInterface</div></a></dd>
                         
                         
                         
-                        
+                                                
                                                                         </dl>
                     <h2>Tags</h2>
                     <table class="table table-condensed">
@@ -428,12 +577,12 @@
             <a id="property_controller" name="property_controller" class="anchor"></a>
             <article class="property">
                 <h3 class="protected ">$controller</h3>
-                <pre class="signature">$controller : \duncan3dc\Sonos\Controller</pre>
+                <pre class="signature">$controller : \duncan3dc\Sonos\Interfaces\ControllerInterface</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                <a href="../classes/duncan3dc.Sonos.Controller.html">\duncan3dc\Sonos\Controller</a>
+                <a href="../classes/duncan3dc.Sonos.Interfaces.ControllerInterface.html">\duncan3dc\Sonos\Interfaces\ControllerInterface</a>
                 &mdash; The Controller instance this queue is for.                            </article>
         </div>
         <aside class="span4 detailsbar">
@@ -452,12 +601,12 @@
             <a id="property_trackFactory" name="property_trackFactory" class="anchor"></a>
             <article class="property">
                 <h3 class="protected ">$trackFactory</h3>
-                <pre class="signature">$trackFactory : \duncan3dc\Sonos\Tracks\Factory</pre>
+                <pre class="signature">$trackFactory : \duncan3dc\Sonos\Interfaces\Tracks\FactoryInterface</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                <a href="../classes/duncan3dc.Sonos.Tracks.Factory.html">\duncan3dc\Sonos\Tracks\Factory</a>
+                <a href="../classes/duncan3dc.Sonos.Interfaces.Tracks.FactoryInterface.html">\duncan3dc\Sonos\Interfaces\Tracks\FactoryInterface</a>
                 &mdash; A factory to create tracks from.                            </article>
         </div>
         <aside class="span4 detailsbar">
@@ -484,27 +633,34 @@
             <article class="method">
                 <h3 class="public ">__construct()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">__construct(\duncan3dc\Sonos\Controller  <span class="argument">$controller</span>) </pre>
+                <pre class="signature" style="margin-right: 54px;">__construct(\duncan3dc\Sonos\Interfaces\ControllerInterface  <span class="argument">$controller</span>, \duncan3dc\Sonos\Interfaces\Tracks\FactoryInterface  <span class="argument">$factory = null</span>) </pre>
                 <p><em>Create an instance of the Queue class.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td><a href="../classes/duncan3dc.Sonos.Controller.html">\duncan3dc\Sonos\Controller</a></td>
+                                <td><a href="../classes/duncan3dc.Sonos.Interfaces.ControllerInterface.html">\duncan3dc\Sonos\Interfaces\ControllerInterface</a></td>
                                 <td>$controller </td>
                                 <td><p>The Controller instance that this queue is for</p></td>
+                            </tr>
+                                                    <tr>
+                                <td><a href="../classes/duncan3dc.Sonos.Interfaces.Tracks.FactoryInterface.html">\duncan3dc\Sonos\Interfaces\Tracks\FactoryInterface</a></td>
+                                <td>$factory </td>
+                                <td><p>A factory to create tracks from</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Queue.html"><div class="path-wrapper">\duncan3dc\Sonos\Queue</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -526,13 +682,15 @@
                 
                                     <h4>Returns</h4>
                     integer
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Queue.html"><div class="path-wrapper">\duncan3dc\Sonos\Queue</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -546,7 +704,7 @@
             <article class="method">
                 <h3 class="public ">getTracks()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getTracks(integer  <span class="argument">$start</span>, integer  <span class="argument">$total</span>) : array&lt;mixed,\duncan3dc\Sonos\Tracks\Track&gt;</pre>
+                <pre class="signature" style="margin-right: 54px;">getTracks(integer  <span class="argument">$start</span>, integer  <span class="argument">$total</span>) : array&lt;mixed,\duncan3dc\Sonos\Interfaces\TrackInterface&gt;</pre>
                 <p><em>Get tracks from the queue.</em></p>
                 
 
@@ -566,14 +724,16 @@
                 
                 
                                     <h4>Returns</h4>
-                    array&lt;mixed,<a href="../classes/duncan3dc.Sonos.Tracks.Track.html">\duncan3dc\Sonos\Tracks\Track</a>&gt;
-                                    				
+                    array&lt;mixed,<a href="../classes/duncan3dc.Sonos.Interfaces.TrackInterface.html">\duncan3dc\Sonos\Interfaces\TrackInterface</a>&gt;
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Queue.html"><div class="path-wrapper">\duncan3dc\Sonos\Queue</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -587,34 +747,37 @@
             <article class="method">
                 <h3 class="public ">addTrack()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">addTrack(string|\duncan3dc\Sonos\Tracks\UriInterface  <span class="argument">$track</span>, integer  <span class="argument">$position = null</span>) : boolean</pre>
+                <pre class="signature" style="margin-right: 54px;">addTrack(string|\duncan3dc\Sonos\Interfaces\UriInterface  <span class="argument">$track</span>, integer  <span class="argument">$position = null</span>) : $this</pre>
                 <p><em>Add a track to the queue.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td>string|<a href="../classes/duncan3dc.Sonos.Tracks.UriInterface.html">\duncan3dc\Sonos\Tracks\UriInterface</a></td>
+                                <td>string|<a href="../classes/duncan3dc.Sonos.Interfaces.UriInterface.html">\duncan3dc\Sonos\Interfaces\UriInterface</a></td>
                                 <td>$track </td>
                                 <td><p>The URI of the track to add, or an object that implements the UriInterface</p></td>
                             </tr>
                                                     <tr>
                                 <td>integer</td>
                                 <td>$position </td>
-                                <td><p>The position to insert the track in the queue (zero-based), by default the track will be added to the end of the queue</p></td>
+                                <td><p>The position to insert the track in the queue (zero-based),
+by default the track will be added to the end of the queue</p></td>
                             </tr>
                                             </table>
                 
                 
                                     <h4>Returns</h4>
-                    boolean
-                                    				
+                    $this
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Queue.html"><div class="path-wrapper">\duncan3dc\Sonos\Queue</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -628,34 +791,38 @@
             <article class="method">
                 <h3 class="public ">addTracks()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">addTracks(array&lt;mixed,string&gt;|array&lt;mixed,\duncan3dc\Sonos\Tracks\UriInterface&gt;  <span class="argument">$tracks</span>, integer  <span class="argument">$position = null</span>) : boolean</pre>
+                <pre class="signature" style="margin-right: 54px;">addTracks(array&lt;mixed,string&gt;|array&lt;mixed,\duncan3dc\Sonos\Interfaces\UriInterface&gt;  <span class="argument">$tracks</span>, integer  <span class="argument">$position = null</span>) : $this</pre>
                 <p><em>Add tracks to the queue.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td>array&lt;mixed,string&gt;|array&lt;mixed,<a href="../classes/duncan3dc.Sonos.Tracks.UriInterface.html">\duncan3dc\Sonos\Tracks\UriInterface</a>&gt;</td>
+                                <td>array&lt;mixed,string&gt;|array&lt;mixed,<a href="../classes/duncan3dc.Sonos.Interfaces.UriInterface.html">\duncan3dc\Sonos\Interfaces\UriInterface</a>&gt;</td>
                                 <td>$tracks </td>
-                                <td><p>An array where each element is either the URI of the tracks to add, or an object that implements the UriInterface</p></td>
+                                <td><p>An array where each element is either the URI of the tracks to add,
+or an object that implements the UriInterface</p></td>
                             </tr>
                                                     <tr>
                                 <td>integer</td>
                                 <td>$position </td>
-                                <td><p>The position to insert the tracks in the queue (zero-based), by default the tracks will be added to the end of the queue</p></td>
+                                <td><p>The position to insert the tracks in the queue (zero-based),
+by default the tracks will be added to the end of the queue</p></td>
                             </tr>
                                             </table>
                 
                 
                                     <h4>Returns</h4>
-                    boolean
-                                    				
+                    $this
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Queue.html"><div class="path-wrapper">\duncan3dc\Sonos\Queue</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -685,13 +852,15 @@
                 
                                     <h4>Returns</h4>
                     boolean
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Queue.html"><div class="path-wrapper">\duncan3dc\Sonos\Queue</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -721,13 +890,15 @@
                 
                                     <h4>Returns</h4>
                     boolean
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Queue.html"><div class="path-wrapper">\duncan3dc\Sonos\Queue</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -741,21 +912,23 @@
             <article class="method">
                 <h3 class="public ">clear()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">clear() : static</pre>
+                <pre class="signature" style="margin-right: 54px;">clear() : $this</pre>
                 <p><em>Remove all tracks from the queue.</em></p>
                 
 
                 
                 
                                     <h4>Returns</h4>
-                    static
-                                    				
+                    $this
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Queue.html"><div class="path-wrapper">\duncan3dc\Sonos\Queue</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -795,13 +968,15 @@
                 
                                     <h4>Returns</h4>
                     mixed
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Queue.html"><div class="path-wrapper">\duncan3dc\Sonos\Queue</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -841,13 +1016,15 @@
                 
                                     <h4>Returns</h4>
                     mixed
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Queue.html"><div class="path-wrapper">\duncan3dc\Sonos\Queue</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -869,13 +1046,15 @@
                 
                                     <h4>Returns</h4>
                     integer
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Queue.html"><div class="path-wrapper">\duncan3dc\Sonos\Queue</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -897,13 +1076,15 @@
                 
                                     <h4>Returns</h4>
                     integer
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Queue.html"><div class="path-wrapper">\duncan3dc\Sonos\Queue</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -917,34 +1098,35 @@
             <article class="method">
                 <h3 class="protected ">addUris()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">addUris(array&lt;mixed,\duncan3dc\Sonos\Tracks\UriInterface&gt;  <span class="argument">$tracks</span>, integer  <span class="argument">$position = null</span>) : boolean</pre>
+                <pre class="signature" style="margin-right: 54px;">addUris(array&lt;mixed,\duncan3dc\Sonos\Interfaces\UriInterface&gt;  <span class="argument">$tracks</span>, integer  <span class="argument">$position = null</span>) : void</pre>
                 <p><em>Add multiple uris to the queue.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td>array&lt;mixed,<a href="../classes/duncan3dc.Sonos.Tracks.UriInterface.html">\duncan3dc\Sonos\Tracks\UriInterface</a>&gt;</td>
+                                <td>array&lt;mixed,<a href="../classes/duncan3dc.Sonos.Interfaces.UriInterface.html">\duncan3dc\Sonos\Interfaces\UriInterface</a>&gt;</td>
                                 <td>$tracks </td>
                                 <td><p>The track to add</p></td>
                             </tr>
                                                     <tr>
                                 <td>integer</td>
                                 <td>$position </td>
-                                <td><p>The position to insert the track in the queue (zero-based), by default the track will be added to the end of the queue</p></td>
+                                <td><p>The position to insert the track in the queue (zero-based),
+by default the track will be added to the end of the queue</p></td>
                             </tr>
                                             </table>
                 
                 
-                                    <h4>Returns</h4>
-                    boolean
-                                    				
+                
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Queue.html"><div class="path-wrapper">\duncan3dc\Sonos\Queue</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -1002,7 +1184,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on March 12th, 2016 at 18:02.
+                    on July 22nd, 2018 at 16:23.
                 </section>
             </section>
         </section>

@@ -24,7 +24,7 @@
     <script type="text/javascript">
     function loadExternalCodeSnippets() {
         Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
-            var src = pre.getAttribute('data-src');
+            var src = pre.getAttribute('data-src').replace( /\\/g, '/');
             var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
             var language = 'php';
 
@@ -114,12 +114,12 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">46</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">87</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="../reports/markers.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
                                 </a>
                             </li>
                             <li>
@@ -144,42 +144,46 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1227701507"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-2080616724"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-1227701507" class="accordion-body collapse in">
+            <div id="namespace-2080616724" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-17610023"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-436483101"></a>
                                 <a href="../namespaces/duncan3dc.html" style="margin-left: 30px; padding-left: 0">duncan3dc</a>
             </div>
-            <div id="namespace-17610023" class="accordion-body collapse ">
+            <div id="namespace-436483101" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1603151708"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1162020832"></a>
                                 <a href="../namespaces/duncan3dc.Sonos.html" style="margin-left: 30px; padding-left: 0">Sonos</a>
             </div>
-            <div id="namespace-1603151708" class="accordion-body collapse ">
+            <div id="namespace-1162020832" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-816359707"></a>
-                                <a href="../namespaces/duncan3dc.Sonos.Exceptions.html" style="margin-left: 30px; padding-left: 0">Exceptions</a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-387653679"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Devices.html" style="margin-left: 30px; padding-left: 0">Devices</a>
             </div>
-            <div id="namespace-816359707" class="accordion-body collapse ">
+            <div id="namespace-387653679" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
                     <ul>
-                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Exceptions.SoapException.html">SoapException</a></li>
+                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Devices.CachedCollection.html">CachedCollection</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Devices.Collection.html">Collection</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Devices.Device.html">Device</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Devices.Discovery.html">Discovery</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Devices.Factory.html">Factory</a></li>
                                             </ul>
                 </div>
             </div>
@@ -189,10 +193,134 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1781513422"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-408110669"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Exceptions.html" style="margin-left: 30px; padding-left: 0">Exceptions</a>
+            </div>
+            <div id="namespace-408110669" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Exceptions.NetworkException.html">NetworkException</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Exceptions.NotFoundException.html">NotFoundException</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Exceptions.SoapException.html">SoapException</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Exceptions.SonosException.html">SonosException</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-826218308"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Interfaces.html" style="margin-left: 30px; padding-left: 0">Interfaces</a>
+            </div>
+            <div id="namespace-826218308" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1088197226"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Interfaces.Devices.html" style="margin-left: 30px; padding-left: 0">Devices</a>
+            </div>
+            <div id="namespace-1088197226" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Devices.CollectionInterface.html">CollectionInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Devices.DeviceInterface.html">DeviceInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Devices.FactoryInterface.html">FactoryInterface</a></li>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1738734567"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Interfaces.Services.html" style="margin-left: 30px; padding-left: 0">Services</a>
+            </div>
+            <div id="namespace-1738734567" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Services.RadioInterface.html">RadioInterface</a></li>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1789737114"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Interfaces.Tracks.html" style="margin-left: 30px; padding-left: 0">Tracks</a>
+            </div>
+            <div id="namespace-1789737114" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Tracks.FactoryInterface.html">FactoryInterface</a></li>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1501245210"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Interfaces.Utils.html" style="margin-left: 30px; padding-left: 0">Utils</a>
+            </div>
+            <div id="namespace-1501245210" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Utils.DirectoryInterface.html">DirectoryInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Utils.SocketInterface.html">SocketInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.Utils.TimeInterface.html">TimeInterface</a></li>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.AlarmInterface.html">AlarmInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.ControllerInterface.html">ControllerInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.ControllerStateInterface.html">ControllerStateInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.NetworkInterface.html">NetworkInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.PlaylistInterface.html">PlaylistInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.QueueInterface.html">QueueInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.SpeakerInterface.html">SpeakerInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.StateInterface.html">StateInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.TrackInterface.html">TrackInterface</a></li>
+                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Interfaces.UriInterface.html">UriInterface</a></li>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1632209370"></a>
                                 <a href="../namespaces/duncan3dc.Sonos.Services.html" style="margin-left: 30px; padding-left: 0">Services</a>
             </div>
-            <div id="namespace-1781513422" class="accordion-body collapse ">
+            <div id="namespace-1632209370" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -207,16 +335,18 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-37290560"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1465176190"></a>
                                 <a href="../namespaces/duncan3dc.Sonos.Tracks.html" style="margin-left: 30px; padding-left: 0">Tracks</a>
             </div>
-            <div id="namespace-37290560" class="accordion-body collapse ">
+            <div id="namespace-1465176190" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
                     <ul>
-                                                    <li class="interface"><a href="../classes/duncan3dc.Sonos.Tracks.UriInterface.html">UriInterface</a></li>
-                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.Factory.html">Factory</a></li>
+                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.Deezer.html">Deezer</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.Factory.html">Factory</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.Google.html">Google</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.GoogleUnlimited.html">GoogleUnlimited</a></li>
                                                     <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.Spotify.html">Spotify</a></li>
                                                     <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.Stream.html">Stream</a></li>
                                                     <li class="class"><a href="../classes/duncan3dc.Sonos.Tracks.TextToSpeech.html">TextToSpeech</a></li>
@@ -227,12 +357,31 @@
         </div>
     </div>
 
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1820879426"></a>
+                                <a href="../namespaces/duncan3dc.Sonos.Utils.html" style="margin-left: 30px; padding-left: 0">Utils</a>
+            </div>
+            <div id="namespace-1820879426" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
                     
                     <ul>
-                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Controller.html">Controller</a></li>
+                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Utils.Directory.html">Directory</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Utils.Socket.html">Socket</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Utils.Time.html">Time</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Alarm.html">Alarm</a></li>
+                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Controller.html">Controller</a></li>
                                                     <li class="class"><a href="../classes/duncan3dc.Sonos.ControllerState.html">ControllerState</a></li>
-                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Device.html">Device</a></li>
-                                                    <li class="class"><a href="../classes/duncan3dc.Sonos.Directory.html">Directory</a></li>
                                                     <li class="class"><a href="../classes/duncan3dc.Sonos.Helper.html">Helper</a></li>
                                                     <li class="class"><a href="../classes/duncan3dc.Sonos.Network.html">Network</a></li>
                                                     <li class="class"><a href="../classes/duncan3dc.Sonos.Playlist.html">Playlist</a></li>
@@ -273,7 +422,7 @@
                     <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
 
                     <h1><small>\duncan3dc\Sonos\Tracks</small>TextToSpeech</h1>
-                    <p><em>Convert a string of a text to a spoken word mp3.</em></p>
+                    <p><em>Convert a string of a text to spoken word audio.</em></p>
                     
                     
                                         
@@ -293,9 +442,6 @@
                         <section class="row-fluid public">
                             <section class="span4">
                                                                     <a href="../classes/duncan3dc.Sonos.Tracks.TextToSpeech.html#method___construct" class="">__construct()</a><br />
-                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.TextToSpeech.html#method_setProvider" class="">setProvider()</a><br />
-                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.TextToSpeech.html#method_getProvider" class="">getProvider()</a><br />
-                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.TextToSpeech.html#method_setLanguage" class="">setLanguage()</a><br />
                                                                     <a href="../classes/duncan3dc.Sonos.Tracks.TextToSpeech.html#method_getUri" class="">getUri()</a><br />
                                                                     <a href="../classes/duncan3dc.Sonos.Tracks.TextToSpeech.html#method_getMetaData" class="">getMetaData()</a><br />
                                                             </section>
@@ -311,10 +457,7 @@
                                                                     <em>No protected methods found</em>
                                                             </section>
                             <section class="span4">
-                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.TextToSpeech.html#property_directory" class="">$directory</a><br />
-                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.TextToSpeech.html#property_text" class="">$text</a><br />
-                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.TextToSpeech.html#property_filename" class="">$filename</a><br />
-                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.TextToSpeech.html#property_provider" class="">$provider</a><br />
+                                                                    <em>No protected properties found</em>
                                                             </section>
                             <section class="span4">
                                 <em>N/A</em>
@@ -325,7 +468,9 @@
                                                                     <em>No private methods found</em>
                                                             </section>
                             <section class="span4">
-                                                                    <em>No private properties found</em>
+                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.TextToSpeech.html#property_directory" class="">$directory</a><br />
+                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.TextToSpeech.html#property_text" class="">$text</a><br />
+                                                                    <a href="../classes/duncan3dc.Sonos.Tracks.TextToSpeech.html#property_provider" class="">$provider</a><br />
                                                             </section>
                             <section class="span4">
                                 <em>N/A</em>
@@ -334,7 +479,8 @@
                     </section>
                 </div>
                 <aside class="span4 detailsbar">
-                                        
+                                                                <span class="label label-info">final</span>
+                    
                     
                     <dl>
                         <dt>File</dt>
@@ -347,11 +493,11 @@
                             </dd>
 
                                                                             <dt>Implements</dt>
-                                                        <dd><a href="../classes/duncan3dc.Sonos.Tracks.UriInterface.html"><div class="namespace-wrapper">\duncan3dc\Sonos\Tracks\UriInterface</div></a></dd>
+                                                        <dd><a href="../classes/duncan3dc.Sonos.Interfaces.UriInterface.html"><div class="namespace-wrapper">\duncan3dc\Sonos\Interfaces\UriInterface</div></a></dd>
                         
                         
                         
-                        
+                                                
                                                                         </dl>
                     <h2>Tags</h2>
                     <table class="table table-condensed">
@@ -369,18 +515,18 @@
                 <aside class="span4 detailsbar"></aside>
             </div>
 
-                                                    <div class="row-fluid">
+                                                                    <div class="row-fluid">
         <div class="span8 content class">
             <a id="property_directory" name="property_directory" class="anchor"></a>
             <article class="property">
-                <h3 class="protected ">$directory</h3>
-                <pre class="signature">$directory : \duncan3dc\Sonos\Directory</pre>
+                <h3 class="private ">$directory</h3>
+                <pre class="signature">$directory : \duncan3dc\Sonos\Interfaces\Utils\DirectoryInterface</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                <a href="../classes/duncan3dc.Sonos.Directory.html">\duncan3dc\Sonos\Directory</a>
-                &mdash; The directory to store the mp3 in.                            </article>
+                <a href="../classes/duncan3dc.Sonos.Interfaces.Utils.DirectoryInterface.html">\duncan3dc\Sonos\Interfaces\Utils\DirectoryInterface</a>
+                &mdash; The directory to store the audio file in.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -397,7 +543,7 @@
         <div class="span8 content class">
             <a id="property_text" name="property_text" class="anchor"></a>
             <article class="property">
-                <h3 class="protected ">$text</h3>
+                <h3 class="private ">$text</h3>
                 <pre class="signature">$text : string</pre>
                 <p><em></em></p>
                 
@@ -419,39 +565,15 @@
 
                                     <div class="row-fluid">
         <div class="span8 content class">
-            <a id="property_filename" name="property_filename" class="anchor"></a>
-            <article class="property">
-                <h3 class="protected ">$filename</h3>
-                <pre class="signature">$filename : string</pre>
-                <p><em></em></p>
-                
-
-                                <h4>Type</h4>
-                string
-                &mdash; The filename of the of the track.                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                        <dl>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
             <a id="property_provider" name="property_provider" class="anchor"></a>
             <article class="property">
-                <h3 class="protected ">$provider</h3>
-                <pre class="signature">$provider : \duncan3dc\Sonos\Tracks\Provider</pre>
+                <h3 class="private ">$provider</h3>
+                <pre class="signature">$provider : \duncan3dc\Speaker\Providers\ProviderInterface</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                \duncan3dc\Sonos\Tracks\Provider
+                \duncan3dc\Speaker\Providers\ProviderInterface
                 &mdash; The text to speech provider.                            </article>
         </div>
         <aside class="span4 detailsbar">
@@ -465,7 +587,7 @@
         </aside>
     </div>
 
-                                            
+                            
                                     <a id="methods" name="methods"></a>
             <div class="row-fluid">
                 <div class="span8 content class"><h2>Methods</h2></div>
@@ -478,7 +600,7 @@
             <article class="method">
                 <h3 class="public ">__construct()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">__construct(string  <span class="argument">$text</span>, \duncan3dc\Sonos\Directory  <span class="argument">$directory</span>, \duncan3dc\Speaker\Providers\ProviderInterface  <span class="argument">$provider = null</span>) </pre>
+                <pre class="signature" style="margin-right: 54px;">__construct(string  <span class="argument">$text</span>, \duncan3dc\Sonos\Interfaces\Utils\DirectoryInterface  <span class="argument">$directory</span>, \duncan3dc\Speaker\Providers\ProviderInterface  <span class="argument">$provider</span>) </pre>
                 <p><em>Create a TextToSpeech object.</em></p>
                 
 
@@ -490,121 +612,27 @@
                                 <td><p>The text to convert</p></td>
                             </tr>
                                                     <tr>
-                                <td><a href="../classes/duncan3dc.Sonos.Directory.html">\duncan3dc\Sonos\Directory</a></td>
+                                <td><a href="../classes/duncan3dc.Sonos.Interfaces.Utils.DirectoryInterface.html">\duncan3dc\Sonos\Interfaces\Utils\DirectoryInterface</a></td>
                                 <td>$directory </td>
-                                <td><p>The directory to store the mp3 in.</p></td>
+                                <td><p>The directory to store the audio file in</p></td>
                             </tr>
                                                     <tr>
                                 <td>\duncan3dc\Speaker\Providers\ProviderInterface</td>
                                 <td>$provider </td>
-                                <td></td>
+                                <td><p>The tts provider to use</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="method_setProvider" name="method_setProvider" class="anchor"></a>
-            <article class="method">
-                <h3 class="public ">setProvider()</h3>
-                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">setProvider(\duncan3dc\Speaker\Providers\ProviderInterface  <span class="argument">$provider</span>) </pre>
-                <p><em></em></p>
-                
-
-                                    <h4>Parameters</h4>
-                    <table class="table table-condensed table-hover">
-                                                    <tr>
-                                <td>\duncan3dc\Speaker\Providers\ProviderInterface</td>
-                                <td>$provider </td>
-                                <td></td>
-                            </tr>
-                                            </table>
-                
-                
-                				
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                                                            <dl>
-                                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="method_getProvider" name="method_getProvider" class="anchor"></a>
-            <article class="method">
-                <h3 class="public ">getProvider()</h3>
-                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getProvider() </pre>
-                <p><em></em></p>
-                
-
-                
-                
-                				
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                                                            <dl>
-                                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="method_setLanguage" name="method_setLanguage" class="anchor"></a>
-            <article class="method">
-                <h3 class="public ">setLanguage()</h3>
-                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">setLanguage(string  <span class="argument">$language</span>) : static</pre>
-                <p><em>Set the language to use in the google text-to-speech call.</em></p>
-                
-
-                                    <h4>Parameters</h4>
-                    <table class="table table-condensed table-hover">
-                                                    <tr>
-                                <td>string</td>
-                                <td>$language </td>
-                                <td><p>The language to use (eg 'en')</p></td>
-                            </tr>
-                                            </table>
-                
-                
-                                    <h4>Returns</h4>
-                    static
-                                    				
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                                                            <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Tracks.TextToSpeech.html"><div class="path-wrapper">\duncan3dc\Sonos\Tracks\TextToSpeech</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -626,13 +654,15 @@
                 
                                     <h4>Returns</h4>
                     string
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Tracks.TextToSpeech.html"><div class="path-wrapper">\duncan3dc\Sonos\Tracks\TextToSpeech</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -654,13 +684,15 @@
                 
                                     <h4>Returns</h4>
                     string
-                                    				
+                                    
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
                                                             <dl>
-                                                                            </dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/duncan3dc.Sonos.Tracks.TextToSpeech.html"><div class="path-wrapper">\duncan3dc\Sonos\Tracks\TextToSpeech</div></a></dd>
+                                                            </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
                                     <tr><td colspan="2"><em>None found</em></td></tr>
@@ -718,7 +750,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on March 12th, 2016 at 18:02.
+                    on July 22nd, 2018 at 16:23.
                 </section>
             </section>
         </section>

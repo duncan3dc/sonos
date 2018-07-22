@@ -13,10 +13,4 @@ use duncan3dc\Speaker\Providers\GoogleProvider;
 $track = new TextToSpeech("Testing, testing, 123", $directory, new GoogleProvider);
 ```
 
-To retain backwards compatibility, the provider parameter is optional, and will use `GoogleProvider` by default. It can also be overridden like so:
-
-```php
-use duncan3dc\Speaker\Providers\PicottsProvider;
-
-$track->setProvider(new PicottsProvider);
-```
+Once it's been created, it can be used exactly like any other [track](../../usage/tracks/), or as an [announcement](../announcements/).

@@ -2,7 +2,7 @@
 layout: default
 title: Speakers
 permalink: /usage/speakers/
-api: Speaker
+api: Interfaces.SpeakerInterface
 ---
 
 Most actions related to speakers take place on [Controllers](../../controllers/play-some-music/), but there are a few that should be handled via speakers.
@@ -11,13 +11,13 @@ Get some information about a speaker:
 
 ```php
 # Get the IP address of the speaker
-$speaker->ip;
+$speaker->getIp();
 
 # Get the "Friendly" name reported by the speaker (spoiler: it's not that friendly)
-$speaker->name;
+$speaker->getName();
 
 # Get the room name assigned to this speaker
-$speaker->room;
+$speaker->getRoom();
 ```
 
 

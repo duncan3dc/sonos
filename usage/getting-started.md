@@ -2,7 +2,7 @@
 layout: default
 title: Getting Started
 permalink: /usage/getting-started/
-api: Network
+api: Interfaces.NetworkInterface
 ---
 
 Most actions start from the [Network object](../../setup/) which has a set of methods for getting Sonos resources from your current network.
