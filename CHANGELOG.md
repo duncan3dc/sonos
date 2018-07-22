@@ -5,6 +5,15 @@ Changelog
 
 --------
 
+## 2.0.1 - 2018-07-22
+
+### Changed
+
+* [Collection] The collection class no longer requires a factory, it will create the default one if none is provided.
+* [Discovery] The Discovey class no longer requires a collection, it will create the default one if none is provided.
+
+--------
+
 ## 2.0.0 - 2018-07-21
 
 ### Added

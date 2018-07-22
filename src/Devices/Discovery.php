@@ -36,8 +36,11 @@ final class Discovery implements CollectionInterface
      *
      * @param CollectionInterface $collection The device collection to actually use
      */
-    public function __construct(CollectionInterface $collection)
+    public function __construct(CollectionInterface $collection = null)
     {
+        if ($collection === null) {
+            $collection = new Collection();
+        }
         $this->collection = $collection;
     }
 
