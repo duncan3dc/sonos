@@ -40,7 +40,10 @@
         "psr-4": {"duncan3dc\\Sonos\\": "src/"}
     },
     "autoload-dev": {
-        "psr-4": {"duncan3dc\\SonosTests\\": "tests/"}
+        "psr-4": {
+            "duncan3dc\\SonosTests\\": "tests/",
+            "Sonos\\": "tests/local/src"
+        }
     },
     "scripts": {
         "test": [
