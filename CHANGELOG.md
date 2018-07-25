@@ -5,6 +5,14 @@ Changelog
 
 --------
 
+## 2.0.2 - 2018-07-22
+
+### Fixed
+
+* [Network] Added support for the BEAM devices.
+
+--------
+
 ## 2.0.1 - 2018-07-22
 
 ### Changed
