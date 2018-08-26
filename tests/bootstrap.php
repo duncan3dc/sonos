@@ -2,7 +2,7 @@
 
 require __DIR__ . "/../vendor/autoload.php";
 
-if (!empty($_ENV["SONOS_LIVE_TESTS"])) {
+if (getenv("SONOS_LIVE_TESTS")) {
     echo "\nWARNING: These tests will make changes to the Sonos devices on the network:\n";
 
     $warnings = [
