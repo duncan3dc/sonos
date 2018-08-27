@@ -233,7 +233,7 @@ final class Network implements NetworkInterface, LoggerAwareInterface
     {
         $speakers = $this->getSpeakers();
         if (!array_key_exists($ip, $speakers)) {
-            throw new NotFoundException("Unable to find the speaker for the IP address '{$ip}'");
+            throw new NotFoundException("Unable to find a speaker for the IP address '{$ip}'");
         }
 
         $group = $speakers[$ip]->getGroup();
