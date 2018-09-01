@@ -280,6 +280,11 @@ final class Controller implements ControllerInterface
             return true;
         }
 
+        # Amazon Audio streams
+        if (strpos($uri, "x-sonosapi-radio:") === 0) {
+            return true;
+        }
+
         # Line in
         if (substr($uri, 0, 16) === "x-rincon-stream:") {
             return true;
