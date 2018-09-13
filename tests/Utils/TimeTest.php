@@ -40,6 +40,38 @@ class TimeTest extends TestCase
     }
 
 
+    public function testFromFormat1()
+    {
+        $time = Time::fromFormat("%h:%m:%s", "05:04:03");
+        $this->assertSame("05:04:03", $time->asString());
+    }
+    public function testFromFormat2()
+    {
+        $time = Time::fromFormat("%s:%m:%h", "59:44:14");
+        $this->assertSame("14:44:59", $time->asString());
+    }
+    public function testFromFormat3()
+    {
+        $time = Time::fromFormat("%h:%m", "23:59");
+        $this->assertSame("23:59:00", $time->asString());
+    }
+    public function testFromFormat4()
+    {
+        $time = Time::fromFormat("%m:%h", "30:22");
+        $this->assertSame("22:30:00", $time->asString());
+    }
+    public function testFromFormat5()
+    {
+        $time = Time::fromFormat("%m:%s", "59:1");
+        $this->assertSame("00:59:01", $time->asString());
+    }
+    public function testFromFormat6()
+    {
+        $time = Time::fromFormat("%s:%m", "30:22");
+        $this->assertSame("00:22:30", $time->asString());
+    }
+
+
     public function testInSeconds1()
     {
         $time = Time::inSeconds(0);

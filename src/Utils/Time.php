@@ -44,6 +44,21 @@ final class Time implements TimeInterface
 
 
     /**
+     * Create a new instance from a time in a specified format.
+     *
+     * @param string $format The format the string is in (using %h, %m, %s as placeholders)
+     * @param string $string The time to parse
+     *
+     * @return TimeInterface
+     */
+    public static function fromFormat(string $format, string $string): TimeInterface
+    {
+        $time = CommonTime::fromFormat($format, $string);
+        return new self($time->asInt());
+    }
+
+
+    /**
      * Create a new time instance representing the start.
      *
      * @return TimeInterface
