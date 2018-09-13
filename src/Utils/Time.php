@@ -2,6 +2,7 @@
 
 namespace duncan3dc\Sonos\Utils;
 
+use duncan3dc\Sonos\Common\Utils\Time as CommonTime;
 use duncan3dc\Sonos\Interfaces\Utils\TimeInterface;
 
 /**
@@ -37,21 +38,8 @@ final class Time implements TimeInterface
      */
     public static function parse(string $string): TimeInterface
     {
-        $bits = explode(":", $string);
-
-        $seconds = (int) array_pop($bits);
-
-        if (count($bits) > 0) {
-            $minutes = (int) array_pop($bits);
-            $seconds += ($minutes * 60);
-
-            if (count($bits) > 0) {
-                $hours = (int) array_pop($bits);
-                $seconds += ($hours * 60 * 60);
-            }
-        }
-
-        return new self($seconds);
+        $time = CommonTime::parse($string);
+        return new self($time->asInt());
     }
 
 
@@ -95,7 +83,7 @@ final class Time implements TimeInterface
      */
     public function asString(): string
     {
-        return $this->format("%H:%M:%S");
+        return CommonTime::inSeconds($this->seconds)->asString();
     }
 
 
@@ -106,7 +94,7 @@ final class Time implements TimeInterface
      */
     public function __toString(): string
     {
-        return $this->asString();
+        return (string) CommonTime::inSeconds($this->seconds);
     }
 
 
@@ -117,7 +105,7 @@ final class Time implements TimeInterface
      */
     public function getSeconds(): int
     {
-        return $this->seconds % 60;
+        return CommonTime::inSeconds($this->seconds)->getSeconds();
     }
 
 
@@ -128,8 +116,7 @@ final class Time implements TimeInterface
      */
     public function getMinutes(): int
     {
-        $minutes = (int) floor($this->seconds / 60);
-        return $minutes % 60;
+        return CommonTime::inSeconds($this->seconds)->getMinutes();
     }
 
 
@@ -140,7 +127,7 @@ final class Time implements TimeInterface
      */
     public function getHours(): int
     {
-        return (int) floor($this->seconds / 3600);
+        return CommonTime::inSeconds($this->seconds)->getHours();
     }
 
 
@@ -154,19 +141,6 @@ final class Time implements TimeInterface
      */
     public function format(string $format): string
     {
-        $hours = $this->getHours();
-        $minutes = $this->getMinutes();
-        $seconds = $this->getSeconds();
-
-        $replace = [
-            "%h"    =>  $hours,
-            "%H"    =>  sprintf("%02s", $hours),
-            "%m"    =>  $minutes,
-            "%M"    =>  sprintf("%02s", $minutes),
-            "%s"    =>  $seconds,
-            "%S"    =>  sprintf("%02s", $seconds),
-        ];
-
-        return str_replace(array_keys($replace), array_values($replace), $format);
+        return CommonTime::inSeconds($this->seconds)->format($format);
     }
 }
