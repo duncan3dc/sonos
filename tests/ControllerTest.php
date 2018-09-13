@@ -402,6 +402,19 @@ class ControllerTest extends MockTest
     }
 
 
+    public function testIsStreamingAmazon()
+    {
+        $device = $this->getDevice();
+        $controller = $this->getController($device);
+
+        $device->shouldReceive("soap")->once()->with("AVTransport", "GetMediaInfo", [])->andReturn([
+            "CurrentURI"    =>  "x-sonosapi-radio:s200662?sid=254&flags=8224&sn=0",
+        ]);
+
+        $this->assertTrue($controller->isStreaming());
+    }
+
+
     public function testIsStreamingPlaybar()
     {
         $device = $this->getDevice();

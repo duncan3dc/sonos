@@ -14,6 +14,7 @@ use duncan3dc\Sonos\Interfaces\UriInterface;
 use duncan3dc\Sonos\Interfaces\Utils\TimeInterface;
 use duncan3dc\Sonos\Tracks\Stream;
 use duncan3dc\Sonos\Utils\Time;
+use function strpos;
 
 /**
  * Allows interaction with the groups of speakers.
@@ -271,28 +272,26 @@ final class Controller implements ControllerInterface
      */
     public function isStreaming(): bool
     {
+        $prefixes = [
+            # Standard streams
+            "x-sonosapi-stream:",
+
+            # Other streams (eg Amazon)
+            "x-sonosapi-radio:",
+
+            # Line in
+            "x-rincon-stream:",
+
+            # Line in (playbar)
+            "x-sonos-htastream:",
+        ];
+
         $media = $this->getMediaInfo();
 
-        $uri = $media["CurrentURI"];
-
-        # Standard streams
-        if (substr($uri, 0, 18) === "x-sonosapi-stream:") {
-            return true;
-        }
-
-        # Amazon Audio streams
-        if (strpos($uri, "x-sonosapi-radio:") === 0) {
-            return true;
-        }
-
-        # Line in
-        if (substr($uri, 0, 16) === "x-rincon-stream:") {
-            return true;
-        }
-
-        # Line in (playbar)
-        if (substr($uri, 0, 18) === "x-sonos-htastream:") {
-            return true;
+        foreach ($prefixes as $prefix) {
+            if (strpos($media["CurrentURI"], $prefix) === 0) {
+                return true;
+            }
         }
 
         return false;
