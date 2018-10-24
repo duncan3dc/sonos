@@ -7,12 +7,16 @@ use duncan3dc\Sonos\Interfaces\Devices\CollectionInterface;
 use duncan3dc\Sonos\Interfaces\SpeakerInterface;
 use duncan3dc\Sonos\Network;
 use Mockery;
-use PHPUnit\Framework\TestCase;
+use Mockery\MockInterface;
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
-class NetworkTest extends TestCase
+class NetworkTest extends MockTest
 {
-    private $network;
+    /** @var Network */
+    protected $network;
+
+    /** @var CollectionInterface|MockInterface */
     private $collection;
 
 
@@ -68,5 +72,33 @@ class NetworkTest extends TestCase
 
         $this->assertSame(3, count($speakers));
         $this->assertContainsOnlyInstancesOf(SpeakerInterface::class, $speakers);
+    }
+
+
+    public function testExcludePairedSpeakers()
+    {
+        $devices = [];
+
+        $setup = [
+            "192.168.0.1" => "SPEAKER_A:1",
+            "192.168.0.2" => "",
+            "192.168.0.3" => "SPEAKER_B:1",
+        ];
+        foreach ($setup as $ip => $group) {
+            $device = $this->getDevice($ip);
+            $device->shouldReceive("isSpeaker")->with()->andReturn(true);
+            $device->shouldReceive("soap")
+                ->with("ZoneGroupTopology", "GetZoneGroupAttributes", [])
+                ->andReturn(["CurrentZoneGroupID" => $group]);
+
+            $devices[] = $device;
+        }
+
+        $this->collection->shouldReceive("getDevices")->with()->andReturn($devices);
+
+        $this->collection->shouldReceive("getLogger")->with()->andReturn(new NullLogger());
+        $speakers = $this->network->getSpeakers();
+
+        $this->assertSame(2, count($speakers));
     }
 }

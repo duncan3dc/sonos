@@ -7,6 +7,7 @@ use duncan3dc\Sonos\Devices\Collection;
 use duncan3dc\Sonos\Devices\Discovery;
 use duncan3dc\Sonos\Devices\Factory;
 use duncan3dc\Sonos\Exceptions\NotFoundException;
+use duncan3dc\Sonos\Exceptions\UnknownGroupException;
 use duncan3dc\Sonos\Interfaces\AlarmInterface;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Interfaces\Devices\CollectionInterface;
@@ -110,6 +111,12 @@ final class Network implements NetworkInterface, LoggerAwareInterface
             }
 
             $speaker = new Speaker($device);
+
+            try {
+                $speaker->getGroup();
+            } catch (UnknownGroupException $e) {
+                continue;
+            }
 
             $this->speakers[$device->getIp()] = $speaker;
         }

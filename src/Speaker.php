@@ -3,6 +3,7 @@
 namespace duncan3dc\Sonos;
 
 use duncan3dc\Sonos\Devices\Device;
+use duncan3dc\Sonos\Exceptions\UnknownGroupException;
 use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
 use duncan3dc\Sonos\Interfaces\SpeakerInterface;
 use function explode;
@@ -121,9 +122,7 @@ final class Speaker implements SpeakerInterface
 
 
     /**
-     * Get the uuid of the group this speaker is a member of.
-     *
-     * @return string
+     * @inheritDoc
      */
     public function getGroup(): string
     {
@@ -152,6 +151,10 @@ final class Speaker implements SpeakerInterface
     {
         if (strpos($group, ":")) {
             list($group) = explode(":", $group);
+        }
+
+        if ($group === "") {
+            throw new UnknownGroupException("Unable to figure out the group of this speaker");
         }
 
         $this->group = $group;

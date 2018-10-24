@@ -2,6 +2,8 @@
 
 namespace duncan3dc\SonosTests;
 
+use duncan3dc\Sonos\Exceptions\UnknownGroupException;
+use duncan3dc\Sonos\Speaker;
 use Mockery;
 
 class SpeakerTest extends MockTest
@@ -220,5 +222,22 @@ class SpeakerTest extends MockTest
         ]);
 
         $this->assertSame($this->speaker, $this->speaker->setLoudness(false));
+    }
+
+
+    public function testGetGroup()
+    {
+        $device = $this->getDevice();
+
+        $device->shouldReceive("isSpeaker")->once()->andReturn(true);
+        $device->shouldReceive("soap")->with("ZoneGroupTopology", "GetZoneGroupAttributes", [])->andReturn([
+            "CurrentZoneGroupID" => "",
+        ]);
+
+        $speaker = new Speaker($device);
+
+        $this->expectException(UnknownGroupException::class);
+        $this->expectExceptionMessage("Unable to figure out the group of this speaker");
+        $speaker->getGroup();
     }
 }

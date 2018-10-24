@@ -5,6 +5,15 @@ Changelog
 
 --------
 
+## 2.0.4 - 2018-10-24
+
+### Fixed
+
+* [Network] Ignore speakers that are hidden as part of a stereo pair.
+* [Streams] Ensure Amazon Radio streams are recognised.
+
+--------
+
 ## 2.0.3 - 2018-09-13
 
 ### Fixed

@@ -2,6 +2,8 @@
 
 namespace duncan3dc\Sonos\Interfaces;
 
+use duncan3dc\Sonos\Exceptions\UnknownGroupException;
+
 /**
  * Represents an individual Sonos speaker, to allow volume, equalisation, and other settings to be managed.
  */
@@ -60,6 +62,7 @@ interface SpeakerInterface
      * Get the uuid of the group this speaker is a member of.
      *
      * @return string
+     * @throws UnknownGroupException
      */
     public function getGroup(): string;
 

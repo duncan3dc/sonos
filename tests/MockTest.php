@@ -27,10 +27,10 @@ abstract class MockTest extends TestCase
         $this->network->shouldReceive("getSpeakers")->andReturn([]);
     }
 
-    protected function getDevice()
+    protected function getDevice(string $ip = "192.168.0.66")
     {
         $device = Mockery::mock(DeviceInterface::class);
-        $device->shouldReceive("getIp")->andReturn("192.168.0.66");
+        $device->shouldReceive("getIp")->andReturn($ip);
 
         $parser = Mockery::mock(XmlParser::class);
         $tag = Mockery::mock(XmlParser::class);
