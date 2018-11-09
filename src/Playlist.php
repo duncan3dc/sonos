@@ -170,6 +170,16 @@ final class Playlist extends Queue implements PlaylistInterface
         return $this;
     }
 
+    /**
+     * Get local file URI from playlist
+     *
+     * @return string
+     */
+    public function getUri()
+    {
+        $playlistId = str_replace('SQ:','', $this->id);
+        return 'file:///jffs/settings/savedqueues.rsq#'.$playlistId;
+    }
 
     /**
      * Delete this playlist from the network.

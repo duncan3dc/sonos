@@ -282,6 +282,37 @@ class Queue implements QueueInterface
         return $this;
     }
 
+    /**
+     * Add a sonos playlist to the queue.
+     *
+     * @param Playlist $playlist A playlist
+     * @param int $position The position to insert the tracks in the queue (zero-based),
+     *                      by default the tracks will be added to the end of the queue
+     *
+     * @return $this
+     */
+    public function addPlaylist(Playlist $playlist, $position = null): QueueInterface
+    {
+        if ($position === null) {
+            $position = $this->getNextPosition();
+        }
+
+        $numberOfTracks = count($playlist->getTracks());
+
+        $data = $this->soap("AVTransport", "AddURIToQueue", [
+            "UpdateID"                          =>  0,
+            "EnqueuedURI"                       =>  $playlist->getUri(),
+            "EnqueuedURIMetaData"               =>  '',
+            "DesiredFirstTrackNumberEnqueued"   =>  $position,
+            "EnqueueAsNext"                     =>  0,
+        ]);
+
+        if ($data["NumTracksAdded"] != $numberOfTracks) {
+            throw new SonosException("Failed to add all the tracks");
+        }
+
+        return $this;
+    }
 
     /**
      * Remove a track from the queue.

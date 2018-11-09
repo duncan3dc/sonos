@@ -4,6 +4,7 @@ namespace duncan3dc\Sonos\Interfaces;
 
 use duncan3dc\Sonos\Interfaces\TrackInterface;
 use duncan3dc\Sonos\Interfaces\UriInterface;
+use duncan3dc\Sonos\Playlist;
 
 /**
  * Provides an interface for managing the queue of a controller.
@@ -45,6 +46,16 @@ interface QueueInterface extends \Countable
      */
     public function addTracks(array $tracks, int $position = null): QueueInterface;
 
+    /**
+     * Add a sonos playlist to the queue.
+     *
+     * @param Playlist $playlist A playlist
+     * @param int $position The position to insert the tracks in the queue (zero-based),
+     *                      by default the tracks will be added to the end of the queue
+     *
+     * @return QueueInterface
+     */
+    public function addPlaylist(Playlist $playlist, $position = null): QueueInterface;
 
     /**
      * Remove a track from the queue.
