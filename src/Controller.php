@@ -403,7 +403,7 @@ final class Controller implements ControllerInterface
             "CurrentURIMetaData"    =>  "",
         ]);
 
-        $speaker->setGroup($speaker->getUuid());
+        $speaker->setGroup($speaker->getGroup());
 
         return $this;
     }

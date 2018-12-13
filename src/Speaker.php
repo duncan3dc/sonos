@@ -46,6 +46,11 @@ final class Speaker implements SpeakerInterface
      */
     private $group;
 
+    /**
+     * @var bool $coordinator Whether this speaker is the coordinator of its group or not.
+     */
+    private $coordinator = false;
+
 
     /**
      * Create an instance of the Speaker class.
@@ -122,14 +127,38 @@ final class Speaker implements SpeakerInterface
 
 
     /**
+     * Ensure we've determined this speaker's topology.
+     *
+     * @return void
+     */
+    private function lookupTopology(): void
+    {
+        if ($this->group !== null) {
+            return;
+        }
+
+        $attributes = $this->soap("ZoneGroupTopology", "GetZoneGroupAttributes");
+
+        $this->setGroup($attributes["CurrentZoneGroupID"]);
+
+        $this->coordinator = false;
+        if (strpos($attributes["CurrentZonePlayerUUIDsInGroup"], ",") === false) {
+            $this->coordinator = true;
+        } else {
+            list($uuid) = explode(":", $attributes["CurrentZoneGroupID"]);
+            if ($uuid === $this->getUuid()) {
+                $this->coordinator = true;
+            }
+        }
+    }
+
+
+    /**
      * @inheritDoc
      */
     public function getGroup(): string
     {
-        if ($this->group === null) {
-            $attributes = $this->soap("ZoneGroupTopology", "GetZoneGroupAttributes");
-            $this->setGroup($attributes["CurrentZoneGroupID"]);
-        }
+        $this->lookupTopology();
 
         return (string) $this->group;
     }
@@ -149,10 +178,6 @@ final class Speaker implements SpeakerInterface
      */
     public function setGroup(string $group): void
     {
-        if (strpos($group, ":")) {
-            list($group) = explode(":", $group);
-        }
-
         if ($group === "") {
             throw new UnknownGroupException("Unable to figure out the group of this speaker");
         }
@@ -168,7 +193,9 @@ final class Speaker implements SpeakerInterface
      */
     public function isCoordinator(): bool
     {
-        return ($this->getUuid() === $this->getGroup());
+        $this->lookupTopology();
+
+        return $this->coordinator;
     }
 
 

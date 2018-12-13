@@ -89,7 +89,10 @@ class NetworkTest extends MockTest
             $device->shouldReceive("isSpeaker")->with()->andReturn(true);
             $device->shouldReceive("soap")
                 ->with("ZoneGroupTopology", "GetZoneGroupAttributes", [])
-                ->andReturn(["CurrentZoneGroupID" => $group]);
+                ->andReturn([
+                    "CurrentZoneGroupID" => $group,
+                    "CurrentZonePlayerUUIDsInGroup" => "",
+                ]);
 
             $devices[] = $device;
         }

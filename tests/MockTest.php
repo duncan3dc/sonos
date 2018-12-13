@@ -53,6 +53,7 @@ abstract class MockTest extends TestCase
 
         $device->shouldReceive("soap")->with("ZoneGroupTopology", "GetZoneGroupAttributes", [])->andReturn([
             "CurrentZoneGroupID" => "RINCON_5CAAFD472E1C01400:916619538",
+            "CurrentZonePlayerUUIDsInGroup" => "RINCON_5CAAFD472E1C01400",
         ]);
 
         return new Speaker($device);

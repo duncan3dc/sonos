@@ -225,6 +225,64 @@ class SpeakerTest extends MockTest
     }
 
 
+    public function testIsCoordinator1()
+    {
+        $device = $this->getDevice();
+
+        $device->shouldReceive("isSpeaker")->once()->andReturn(true);
+        $device->shouldReceive("soap")->with("ZoneGroupTopology", "GetZoneGroupAttributes", [])->andReturn([
+            "CurrentZoneGroupID" => "RINCON_5CAAFD472E1C01400:195",
+            "CurrentZonePlayerUUIDsInGroup" => "RINCON_5CAAFD472E1C01400",
+        ]);
+
+        $speaker = new Speaker($device);
+
+        $this->assertTrue($speaker->isCoordinator());
+    }
+    public function testIsCoordinator2()
+    {
+        $device = $this->getDevice();
+
+        $device->shouldReceive("isSpeaker")->once()->andReturn(true);
+        $device->shouldReceive("soap")->with("ZoneGroupTopology", "GetZoneGroupAttributes", [])->andReturn([
+            "CurrentZoneGroupID" => "RINCON_5CAAFD472E1C01400:195",
+            "CurrentZonePlayerUUIDsInGroup" => "RINCON_5CAAF0000A1A01400",
+        ]);
+
+        $speaker = new Speaker($device);
+
+        $this->assertTrue($speaker->isCoordinator());
+    }
+    public function testIsCoordinator3()
+    {
+        $device = $this->getDevice();
+
+        $device->shouldReceive("isSpeaker")->once()->andReturn(true);
+        $device->shouldReceive("soap")->with("ZoneGroupTopology", "GetZoneGroupAttributes", [])->andReturn([
+            "CurrentZoneGroupID" => "RINCON_5CAAFD472E1C01400:195",
+            "CurrentZonePlayerUUIDsInGroup" => "RINCON_5CAAFD472E1C01400,RINCON_5CAAF0000A1A01400",
+        ]);
+
+        $speaker = new Speaker($device);
+
+        $this->assertTrue($speaker->isCoordinator());
+    }
+    public function testIsCoordinator4()
+    {
+        $device = $this->getDevice();
+
+        $device->shouldReceive("isSpeaker")->once()->andReturn(true);
+        $device->shouldReceive("soap")->with("ZoneGroupTopology", "GetZoneGroupAttributes", [])->andReturn([
+            "CurrentZoneGroupID" => "RINCON_5CAAF0000A1A01400:195",
+            "CurrentZonePlayerUUIDsInGroup" => "RINCON_5CAAFD472E1C01400,RINCON_5CAAF0000A1A01400",
+        ]);
+
+        $speaker = new Speaker($device);
+
+        $this->assertFalse($speaker->isCoordinator());
+    }
+
+
     public function testGetGroup()
     {
         $device = $this->getDevice();
@@ -232,6 +290,7 @@ class SpeakerTest extends MockTest
         $device->shouldReceive("isSpeaker")->once()->andReturn(true);
         $device->shouldReceive("soap")->with("ZoneGroupTopology", "GetZoneGroupAttributes", [])->andReturn([
             "CurrentZoneGroupID" => "",
+            "CurrentZonePlayerUUIDsInGroup" => "RINCON_5CAAFD472E1C01400",
         ]);
 
         $speaker = new Speaker($device);
