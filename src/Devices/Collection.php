@@ -2,15 +2,15 @@
 
 namespace duncan3dc\Sonos\Devices;
 
-use duncan3dc\Log\LoggerAwareTrait;
 use duncan3dc\Sonos\Interfaces\Devices\CollectionInterface;
 use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
 use duncan3dc\Sonos\Interfaces\Devices\FactoryInterface;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
+use function assert;
 
 final class Collection implements CollectionInterface
 {
-    use LoggerAwareTrait;
-
     /**
      * @var FactoryInterface The factory to create new devices from
      */
@@ -20,6 +20,11 @@ final class Collection implements CollectionInterface
      * @var DeviceInterface[] The devices that are in this collection.
      */
     private $devices = [];
+
+    /**
+     * @var LoggerInterface|null $logger The logging object.
+     */
+    private $logger;
 
 
     /**
@@ -33,6 +38,36 @@ final class Collection implements CollectionInterface
             $factory = new Factory();
         }
         $this->factory = $factory;
+    }
+
+
+    /**
+     * Set the logger object to use.
+     *
+     * @var LoggerInterface $logger The logging object
+     *
+     * @return $this
+     */
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+        $this->factory->setLogger($logger);
+        return $this;
+    }
+
+
+    /**
+     * Get the logger object to use.
+     *
+     * @return LoggerInterface $logger The logging object
+     */
+    public function getLogger(): LoggerInterface
+    {
+        if ($this->logger === null) {
+            $this->setLogger(new NullLogger());
+        }
+        assert($this->logger instanceof LoggerInterface);
+        return $this->logger;
     }
 
 

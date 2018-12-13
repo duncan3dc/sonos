@@ -2,7 +2,9 @@
 
 namespace duncan3dc\Sonos\Interfaces\Devices;
 
-interface FactoryInterface
+use Psr\Log\LoggerAwareInterface;
+
+interface FactoryInterface extends LoggerAwareInterface
 {
     /**
      * Create a new device.
