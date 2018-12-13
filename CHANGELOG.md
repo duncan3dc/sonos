@@ -5,6 +5,14 @@ Changelog
 
 --------
 
+## 2.0.6 - 2018-12-14
+
+### Fixed
+
+* [Device] Resolved a cache issue causing XML errors.
+
+--------
+
 ## 2.0.5 - 2018-12-13
 
 ### Fixed

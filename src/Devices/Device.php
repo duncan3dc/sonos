@@ -84,11 +84,16 @@ final class Device implements DeviceInterface
         if ($this->cache->has($key)) {
             $this->logger->info("getting xml from cache: {$uri}");
             $xml = $this->cache->get($key);
-        } else {
-            $this->logger->notice("requesting xml from: {$uri}");
-            $xml = (string) (new Client())->get($uri)->getBody();
-            $this->cache->set($key, $xml, new \DateInterval("P1D"));
+            if ($xml) {
+                return new XmlParser($xml);
+            }
+            $this->logger->error("empty xml in cache");
         }
+
+        $this->logger->notice("requesting xml from: {$uri}");
+        $xml = (string) (new Client())->get($uri)->getBody();
+
+        $this->cache->set($key, $xml, new \DateInterval("P1D"));
 
         return new XmlParser($xml);
     }
