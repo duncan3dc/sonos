@@ -5,6 +5,19 @@ Changelog
 
 --------
 
+## 2.0.5 - 2018-12-13
+
+### Fixed
+
+* [Logging] Ensure network loggers are passed all the way down to new devices.
+* [Controllers] Resolved several grouping/coordinator issues.
+
+### Added
+
+* [Support] Added support for PHP 7.3
+
+--------
+
 ## 2.0.4 - 2018-10-24
 
 ### Fixed

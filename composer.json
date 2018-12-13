@@ -30,7 +30,7 @@
         "maglnet/composer-require-checker": "^1.0",
         "mockery/mockery": "^1.0",
         "phpstan/phpstan": "^0.10.2",
-        "squizlabs/php_codesniffer": "^3.3",
+        "squizlabs/php_codesniffer": "^3.3.2",
         "phpunit/phpunit": "^6.4"
     },
     "autoload": {
