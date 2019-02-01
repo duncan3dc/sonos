@@ -9,7 +9,7 @@ jobs:
 
       - name: Create Docker Container
         run: |
-          docker build . -t ci-image --build-arg PHP_VERSION=7.3 --build-arg COVERAGE=xdebug
+          docker build . -t ci-image --build-arg PHP_VERSION=7.3 --build-arg COVERAGE=pcov
           docker run --interactive --detach \
             --volume ${{ github.workspace }}:/app \
             --env CODECOV_TOKEN=${{ secrets.CODECOV_TOKEN }} \
