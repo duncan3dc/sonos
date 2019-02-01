@@ -10,7 +10,7 @@ class PlaylistLiveTest extends LiveTest
     protected $playlist;
     protected $playlistName = "phpunit-test";
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -22,7 +22,7 @@ class PlaylistLiveTest extends LiveTest
     }
 
 
-    public function tearDown()
+    public function tearDown(): void
     {
         if ($this->playlist) {
             $this->playlist->delete();
@@ -30,11 +30,11 @@ class PlaylistLiveTest extends LiveTest
     }
 
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $this->assertSame($this->playlistName, $this->playlist->getName());
     }
-    public function testGetNameFromNetwork()
+    public function testGetNameFromNetwork(): void
     {
         $id = $this->playlist->getId();
         $playlist = new Playlist($id, $this->network->getController());
@@ -42,7 +42,7 @@ class PlaylistLiveTest extends LiveTest
     }
 
 
-    public function testAddTrack()
+    public function testAddTrack(): void
     {
         $uri = "x-file-cifs://TEST/music/artist/album/01-Song.mp3";
         $this->playlist->addTrack($uri);
@@ -57,7 +57,7 @@ class PlaylistLiveTest extends LiveTest
     }
 
 
-    public function testAddTracks()
+    public function testAddTracks(): void
     {
         $uris = [
             "x-file-cifs://TEST/music/artist/album/01-Song.mp3",
@@ -76,7 +76,7 @@ class PlaylistLiveTest extends LiveTest
     }
 
 
-    public function testRemoveTracks()
+    public function testRemoveTracks(): void
     {
         $uris = [
             "x-file-cifs://TEST/music/artist/album/01-Song.mp3",
@@ -95,7 +95,7 @@ class PlaylistLiveTest extends LiveTest
     }
 
 
-    public function testMoveTracks()
+    public function testMoveTracks(): void
     {
         $uris = [
             "x-file-cifs://TEST/music/artist/album/01-Song.mp3",
@@ -117,7 +117,7 @@ class PlaylistLiveTest extends LiveTest
     }
 
 
-    public function testClear()
+    public function testClear(): void
     {
         $uris = [
             "x-file-cifs://TEST/music/artist/album/01-Song.mp3",

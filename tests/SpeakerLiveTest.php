@@ -6,20 +6,20 @@ class SpeakerLiveTest extends LiveTest
 {
     protected $speaker;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $speakers = $this->network->getSpeakers();
         $this->speaker = reset($speakers);
     }
 
-    public function testMute()
+    public function testMute(): void
     {
         $this->speaker->mute();
         $this->assertSame(true, $this->speaker->isMuted());
     }
 
-    public function testUnmute()
+    public function testUnmute(): void
     {
         $this->speaker->unmute();
         $this->assertSame(false, $this->speaker->isMuted());

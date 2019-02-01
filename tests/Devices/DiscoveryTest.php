@@ -17,7 +17,7 @@ class DiscoveryTest extends TestCase
     private $collection;
     private $discovery;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->collection = Mockery::mock(CollectionInterface::class);
         $this->collection->shouldReceive("getLogger")->with()->andReturn(new NullLogger());
@@ -27,13 +27,13 @@ class DiscoveryTest extends TestCase
     }
 
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
 
 
-    public function testSetLogger()
+    public function testSetLogger(): void
     {
         $discovery = new Discovery($this->collection);
 
@@ -45,7 +45,7 @@ class DiscoveryTest extends TestCase
     }
 
 
-    public function testGetLogger()
+    public function testGetLogger(): void
     {
         $logger = Mockery::mock(LoggerInterface::class);
         $collection = Mockery::mock(CollectionInterface::class);
@@ -58,40 +58,40 @@ class DiscoveryTest extends TestCase
     }
 
 
-    public function testGetNetworkInterface()
+    public function testGetNetworkInterface(): void
     {
         $this->assertNull($this->discovery->getNetworkInterface());
     }
 
 
-    public function testSetNetworkInterfaceString()
+    public function testSetNetworkInterfaceString(): void
     {
         $this->discovery->setNetworkInterface("eth0");
         $this->assertSame("eth0", $this->discovery->getNetworkInterface());
     }
 
 
-    public function testSetNetworkInterfaceInteger()
+    public function testSetNetworkInterfaceInteger(): void
     {
         $this->discovery->setNetworkInterface(0);
         $this->assertSame(0, $this->discovery->getNetworkInterface());
     }
 
 
-    public function testSetNetworkInterfaceEmptyString()
+    public function testSetNetworkInterfaceEmptyString(): void
     {
         $this->discovery->setNetworkInterface("");
         $this->assertSame("", $this->discovery->getNetworkInterface());
     }
 
 
-    public function testGetMulticastAddress()
+    public function testGetMulticastAddress(): void
     {
         $this->assertSame("239.255.255.250", $this->discovery->getMulticastAddress());
     }
 
 
-    public function testSetMulticastAddress()
+    public function testSetMulticastAddress(): void
     {
         $discovery = new Discovery($this->collection);
 
@@ -100,7 +100,7 @@ class DiscoveryTest extends TestCase
     }
 
 
-    public function testAddDevice()
+    public function testAddDevice(): void
     {
         $discovery = new Discovery($this->collection);
 
@@ -112,7 +112,7 @@ class DiscoveryTest extends TestCase
     }
 
 
-    public function testAddIp()
+    public function testAddIp(): void
     {
         $discovery = new Discovery($this->collection);
 
@@ -137,7 +137,7 @@ class DiscoveryTest extends TestCase
     }
 
 
-    public function testDiscoverDevicesNormal()
+    public function testDiscoverDevicesNormal(): void
     {
         $socket = $this->getSocket("normal");
 
@@ -149,7 +149,7 @@ class DiscoveryTest extends TestCase
     }
 
 
-    public function testDiscoverDevicesEmpty()
+    public function testDiscoverDevicesEmpty(): void
     {
         $socket = $this->getSocket("empty");
 
@@ -158,7 +158,7 @@ class DiscoveryTest extends TestCase
     }
 
 
-    public function testDiscoverDevicesLineBreaks()
+    public function testDiscoverDevicesLineBreaks(): void
     {
         $socket = $this->getSocket("line-breaks");
 
@@ -170,7 +170,7 @@ class DiscoveryTest extends TestCase
     }
 
 
-    public function testDiscoverDevicesDuplicates()
+    public function testDiscoverDevicesDuplicates(): void
     {
         $socket = $this->getSocket("duplicates");
 
@@ -181,7 +181,7 @@ class DiscoveryTest extends TestCase
     }
 
 
-    public function testClear()
+    public function testClear(): void
     {
         $discovery = new Discovery($this->collection);
 

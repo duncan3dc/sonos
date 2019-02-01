@@ -13,7 +13,7 @@ abstract class LiveTest extends TestCase
     /** @var NetworkInterface */
     protected $network;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->network = new Network();
 

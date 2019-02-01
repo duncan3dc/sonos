@@ -10,7 +10,7 @@ use Mockery;
 
 class StateTest extends TrackTest
 {
-    public function setUp()
+    public function setUp(): void
     {
         $controller = Mockery::mock(ControllerInterface::class);
         $controller->shouldReceive("getIp")->andReturn("192.168.0.66");
@@ -26,11 +26,11 @@ class StateTest extends TrackTest
     /**
      * Ignore these inherited tests as they are Track specific.
      */
-    public function testItemId1()
+    public function testItemId1(): void
     {
         $this->assertTrue(true);
     }
-    public function testGetId2()
+    public function testGetId2(): void
     {
         $this->assertTrue(true);
     }

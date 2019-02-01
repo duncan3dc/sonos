@@ -15,7 +15,7 @@ class CachedCollectionTest extends TestCase
     private $cache;
     private $cachedCollection;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->collection = Mockery::mock(CollectionInterface::class);
         $this->cache = Mockery::mock(CacheInterface::class);
@@ -23,13 +23,13 @@ class CachedCollectionTest extends TestCase
     }
 
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
 
 
-    public function testGetDevicesFirstTime()
+    public function testGetDevicesFirstTime(): void
     {
         $this->cache->shouldReceive("has")->with("device-ip-addresses")->once()->andReturn(false);
 
@@ -48,7 +48,7 @@ class CachedCollectionTest extends TestCase
     }
 
 
-    public function testGetDevicesAlreadyRetrieved()
+    public function testGetDevicesAlreadyRetrieved(): void
     {
         $this->testGetDevicesFirstTime();
 
@@ -61,7 +61,7 @@ class CachedCollectionTest extends TestCase
     }
 
 
-    public function testGetDevicesFromCache()
+    public function testGetDevicesFromCache(): void
     {
         $this->cache->shouldReceive("has")->with("device-ip-addresses")->once()->andReturn(true);
 
@@ -78,7 +78,7 @@ class CachedCollectionTest extends TestCase
     }
 
 
-    public function testAddDevice()
+    public function testAddDevice(): void
     {
         $device = Mockery::mock(DeviceInterface::class);
 
@@ -91,7 +91,7 @@ class CachedCollectionTest extends TestCase
     }
 
 
-    public function testAddIp()
+    public function testAddIp(): void
     {
         $this->cache->shouldReceive("delete")->with("device-ip-addresses")->once();
 
@@ -102,7 +102,7 @@ class CachedCollectionTest extends TestCase
     }
 
 
-    public function testClear()
+    public function testClear(): void
     {
         $this->collection->shouldReceive("clear")->with()->once();
 

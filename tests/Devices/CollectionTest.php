@@ -13,20 +13,20 @@ class CollectionTest extends TestCase
     private $factory;
     private $collection;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->factory = Mockery::mock(FactoryInterface::class);
         $this->collection = new Collection($this->factory);
     }
 
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
 
 
-    public function testAddDevice()
+    public function testAddDevice(): void
     {
         $device1 = Mockery::mock(DeviceInterface::class);
         $device1->shouldReceive("getIp")->with()->andReturn("192.168.2.4");
@@ -42,7 +42,7 @@ class CollectionTest extends TestCase
     }
 
 
-    public function testAddIp()
+    public function testAddIp(): void
     {
         $device = Mockery::mock(DeviceInterface::class);
         $this->factory->shouldReceive("create")->with("192.168.2.4")->once()->andReturn($device);
@@ -54,7 +54,7 @@ class CollectionTest extends TestCase
     }
 
 
-    public function testClear()
+    public function testClear(): void
     {
         $this->testAddDevice();
         $this->assertGreaterThan(0, count($this->collection->getDevices()));

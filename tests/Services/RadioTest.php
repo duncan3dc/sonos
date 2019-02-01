@@ -19,7 +19,7 @@ class RadioTest extends MockTest
     private $radio;
 
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -28,7 +28,7 @@ class RadioTest extends MockTest
     }
 
 
-    public function testGetFavouriteStations()
+    public function testGetFavouriteStations(): void
     {
         $this->controller->shouldReceive("soap")->once()->with("ContentDirectory", "Browse", [
             "ObjectID"          =>  "R:0/0",
@@ -47,7 +47,7 @@ class RadioTest extends MockTest
     }
 
 
-    public function testGetFavouriteStationExact()
+    public function testGetFavouriteStationExact(): void
     {
         $this->controller->shouldReceive("soap")->once()->with("ContentDirectory", "Browse", [
             "ObjectID"          =>  "R:0/0",
@@ -66,7 +66,7 @@ class RadioTest extends MockTest
     }
 
 
-    public function testGetFavouriteStationRough()
+    public function testGetFavouriteStationRough(): void
     {
         $this->controller->shouldReceive("soap")->once()->with("ContentDirectory", "Browse", [
             "ObjectID"          =>  "R:0/0",
@@ -86,7 +86,7 @@ class RadioTest extends MockTest
 
 
 
-    public function testGetFavouriteStationFail()
+    public function testGetFavouriteStationFail(): void
     {
         $this->controller->shouldReceive("soap")->once()->with("ContentDirectory", "Browse", [
             "ObjectID"          =>  "R:0/0",
@@ -105,7 +105,7 @@ class RadioTest extends MockTest
     }
 
 
-    public function testGetFavouriteShows()
+    public function testGetFavouriteShows(): void
     {
         $this->controller->shouldReceive("soap")->once()->with("ContentDirectory", "Browse", [
             "ObjectID"          =>  "R:0/1",
@@ -124,7 +124,7 @@ class RadioTest extends MockTest
     }
 
 
-    public function testGetFavouriteShowExact()
+    public function testGetFavouriteShowExact(): void
     {
         $this->controller->shouldReceive("soap")->once()->with("ContentDirectory", "Browse", [
             "ObjectID"          =>  "R:0/1",
@@ -143,7 +143,7 @@ class RadioTest extends MockTest
     }
 
 
-    public function testGetFavouriteShowRough()
+    public function testGetFavouriteShowRough(): void
     {
         $this->controller->shouldReceive("soap")->once()->with("ContentDirectory", "Browse", [
             "ObjectID"          =>  "R:0/1",
@@ -163,7 +163,7 @@ class RadioTest extends MockTest
 
 
 
-    public function testGetFavouriteShowFail()
+    public function testGetFavouriteShowFail(): void
     {
         $this->controller->shouldReceive("soap")->once()->with("ContentDirectory", "Browse", [
             "ObjectID"          =>  "R:0/1",

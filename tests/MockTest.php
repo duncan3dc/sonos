@@ -15,12 +15,12 @@ abstract class MockTest extends TestCase
 {
     protected $network;
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->network = Mockery::mock(NetworkInterface::class);
 

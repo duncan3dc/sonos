@@ -11,13 +11,13 @@ use Psr\SimpleCache\CacheInterface;
 
 class FactoryTest extends TestCase
 {
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
 
 
-    public function testCreateFromDefaults()
+    public function testCreateFromDefaults(): void
     {
         $factory = new Factory();
         $device = $factory->create("192.168.4.1");
@@ -26,7 +26,7 @@ class FactoryTest extends TestCase
     }
 
 
-    public function testCreateWithDependencies()
+    public function testCreateWithDependencies(): void
     {
         $cache = Mockery::mock(CacheInterface::class);
         $logger = Mockery::mock(LoggerInterface::class);

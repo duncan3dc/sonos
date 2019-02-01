@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class HelperTest extends TestCase
 {
-    public function testGetModeRepeatAll()
+    public function testGetModeRepeatAll(): void
     {
         $mode = Helper::getMode("REPEAT_ALL");
         $this->assertTrue($mode["repeat"]);
@@ -15,7 +15,7 @@ class HelperTest extends TestCase
     }
 
 
-    public function testGetModeShuffle()
+    public function testGetModeShuffle(): void
     {
         $mode = Helper::getMode("SHUFFLE");
         $this->assertTrue($mode["repeat"]);
@@ -23,7 +23,7 @@ class HelperTest extends TestCase
     }
 
 
-    public function testGetModeShuffleNoRepeat()
+    public function testGetModeShuffleNoRepeat(): void
     {
         $mode = Helper::getMode("SHUFFLE_NOREPEAT");
         $this->assertFalse($mode["repeat"]);
@@ -31,7 +31,7 @@ class HelperTest extends TestCase
     }
 
 
-    public function testGetModeNormal()
+    public function testGetModeNormal(): void
     {
         $mode = Helper::getMode("NORMAL");
         $this->assertFalse($mode["repeat"]);

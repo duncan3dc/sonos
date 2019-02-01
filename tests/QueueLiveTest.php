@@ -10,7 +10,7 @@ class QueueLiveTest extends LiveTest
     protected $queue;
     protected $state;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -27,7 +27,7 @@ class QueueLiveTest extends LiveTest
     }
 
 
-    public function tearDown()
+    public function tearDown(): void
     {
         if ($this->controller) {
             $this->controller->restoreState($this->state);
@@ -35,7 +35,7 @@ class QueueLiveTest extends LiveTest
     }
 
 
-    public function testAddTrack()
+    public function testAddTrack(): void
     {
         $uri = "x-file-cifs://TEST/music/artist/album/01-Song.mp3";
         $this->queue->addTrack($uri);
@@ -50,7 +50,7 @@ class QueueLiveTest extends LiveTest
     }
 
 
-    public function testAddTracks()
+    public function testAddTracks(): void
     {
         $uris = [
             "x-file-cifs://TEST/music/artist/album/01-Song.mp3",
@@ -69,7 +69,7 @@ class QueueLiveTest extends LiveTest
     }
 
 
-    public function testRemoveTracks()
+    public function testRemoveTracks(): void
     {
         $uris = [
             "x-file-cifs://TEST/music/artist/album/01-Song.mp3",
@@ -89,7 +89,7 @@ class QueueLiveTest extends LiveTest
     }
 
 
-    public function testClear()
+    public function testClear(): void
     {
         $uris = [
             "x-file-cifs://TEST/music/artist/album/01-Song.mp3",

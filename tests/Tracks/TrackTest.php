@@ -34,7 +34,7 @@ XML;
     protected $track1;
     protected $track2;
 
-    public function setUp()
+    public function setUp(): void
     {
         $controller = Mockery::mock(ControllerInterface::class);
         $controller->shouldReceive("getIp")->with()->andReturn("192.168.0.66");
@@ -47,88 +47,88 @@ XML;
     }
 
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
 
 
-    public function testGetTrackMetaDataTitle()
+    public function testGetTrackMetaDataTitle(): void
     {
         $value = "TITLE";
         $this->assertSame($value, $this->track1->getTitle());
     }
 
 
-    public function testGetTrackMetaDataArtist()
+    public function testGetTrackMetaDataArtist(): void
     {
         $value = "ARTIST";
         $this->assertSame($value, $this->track1->getArtist());
     }
 
 
-    public function testGetTrackMetaDataAlbum()
+    public function testGetTrackMetaDataAlbum(): void
     {
         $value = "ALBUM";
         $this->assertSame($value, $this->track1->getAlbum());
     }
 
 
-    public function testGetTrackMetaDataNumber()
+    public function testGetTrackMetaDataNumber(): void
     {
         $value = 3;
         $this->assertSame($value, $this->track1->getNumber());
     }
 
 
-    public function testGetTrackMetaDataStreamTitle()
+    public function testGetTrackMetaDataStreamTitle(): void
     {
         $value = "Of Matter - Proxy";
         $this->assertSame($value, $this->track2->getTitle());
     }
 
 
-    public function testGetTrackMetaDataStreamArtist()
+    public function testGetTrackMetaDataStreamArtist(): void
     {
         $value = "Tesseract";
         $this->assertSame($value, $this->track2->getArtist());
     }
 
 
-    public function testGetTrackMetaDataStreamAlbum()
+    public function testGetTrackMetaDataStreamAlbum(): void
     {
         $value = "";
         $this->assertSame($value, $this->track2->getAlbum());
     }
 
 
-    public function testGetTrackMetaDataStreamNumber()
+    public function testGetTrackMetaDataStreamNumber(): void
     {
         $value = 0;
         $this->assertSame($value, $this->track2->getNumber());
     }
 
 
-    public function testItemId1()
+    public function testItemId1(): void
     {
         $track = new Intruder($this->track1);
         $this->assertSame("-1", $track->itemId);
     }
-    public function testGetId2()
+    public function testGetId2(): void
     {
         $track = new Intruder($this->track2);
         $this->assertSame("O:345", $track->itemId);
     }
 
 
-    public function testGetUri()
+    public function testGetUri(): void
     {
         $track = new Track("URI");
         $this->assertSame("URI", $track->getUri());
     }
 
 
-    public function testGetMetaData1()
+    public function testGetMetaData1(): void
     {
         $xml = '<DIDL-Lite ';
             $xml .= 'xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/" ';
@@ -146,7 +146,7 @@ XML;
         $xml .= '</DIDL-Lite>';
         $this->assertSame($xml, $this->track1->getMetadata());
     }
-    public function testGetMetaData2()
+    public function testGetMetaData2(): void
     {
         $xml = '<DIDL-Lite ';
             $xml .= 'xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/" ';

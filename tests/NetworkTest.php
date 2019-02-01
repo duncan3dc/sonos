@@ -20,20 +20,20 @@ class NetworkTest extends MockTest
     private $collection;
 
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->collection = Mockery::mock(CollectionInterface::class);
         $this->network = new Network($this->collection);
     }
 
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
 
 
-    public function testSetLogger()
+    public function testSetLogger(): void
     {
         $logger = Mockery::mock(LoggerInterface::class);
         $this->collection->shouldReceive("setLogger")->with($logger)->once();
@@ -41,7 +41,7 @@ class NetworkTest extends MockTest
     }
 
 
-    public function testGetLogger()
+    public function testGetLogger(): void
     {
         $logger = Mockery::mock(LoggerInterface::class);
         $this->collection->shouldReceive("getLogger")->with()->once()->andReturn($logger);
@@ -65,7 +65,7 @@ class NetworkTest extends MockTest
     }
 
 
-    public function testGetSpeakers()
+    public function testGetSpeakers(): void
     {
         $this->mockSpeakers();
         $speakers = $this->network->getSpeakers();
@@ -75,7 +75,7 @@ class NetworkTest extends MockTest
     }
 
 
-    public function testExcludePairedSpeakers()
+    public function testExcludePairedSpeakers(): void
     {
         $devices = [];
 

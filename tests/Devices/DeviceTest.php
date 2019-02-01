@@ -47,7 +47,7 @@ class DeviceTest extends MockTest
     /**
      * @dataProvider modelProvider
      */
-    public function testIsSpeaker($model, bool $expected)
+    public function testIsSpeaker($model, bool $expected): void
     {
         $device = new Intruder(new Device("127.0.0.1"));
 

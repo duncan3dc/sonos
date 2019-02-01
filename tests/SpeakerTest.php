@@ -11,7 +11,7 @@ class SpeakerTest extends MockTest
     protected $device;
     protected $speaker;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -19,13 +19,13 @@ class SpeakerTest extends MockTest
         $this->speaker = $this->getSpeaker($this->device);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
 
 
-    public function testGetVolume()
+    public function testGetVolume(): void
     {
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "GetVolume", [
             "Channel"   =>  "Master",
@@ -35,7 +35,7 @@ class SpeakerTest extends MockTest
     }
 
 
-    public function testSetVolume()
+    public function testSetVolume(): void
     {
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetVolume", [
             "Channel"       =>  "Master",
@@ -46,7 +46,7 @@ class SpeakerTest extends MockTest
     }
 
 
-    public function testAdjustVolume()
+    public function testAdjustVolume(): void
     {
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetRelativeVolume", [
             "Channel"       =>  "Master",
@@ -57,7 +57,7 @@ class SpeakerTest extends MockTest
     }
 
 
-    public function testisMuted()
+    public function testisMuted(): void
     {
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "GetMute", [
             "Channel"   =>  "Master",
@@ -67,7 +67,7 @@ class SpeakerTest extends MockTest
     }
 
 
-    public function testMute()
+    public function testMute(): void
     {
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetMute", [
             "Channel"       =>  "Master",
@@ -78,7 +78,7 @@ class SpeakerTest extends MockTest
     }
 
 
-    public function testUnmute()
+    public function testUnmute(): void
     {
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetMute", [
             "Channel"       =>  "Master",
@@ -89,7 +89,7 @@ class SpeakerTest extends MockTest
     }
 
 
-    public function testGetIndicator()
+    public function testGetIndicator(): void
     {
         $this->device->shouldReceive("soap")->once()->with("DeviceProperties", "GetLEDState", [])->andReturn(false);
 
@@ -97,7 +97,7 @@ class SpeakerTest extends MockTest
     }
 
 
-    public function testSetIndicatorOn()
+    public function testSetIndicatorOn(): void
     {
         $this->device->shouldReceive("soap")->once()->with("DeviceProperties", "SetLEDState", [
             "DesiredLEDState"   =>  "On",
@@ -107,7 +107,7 @@ class SpeakerTest extends MockTest
     }
 
 
-    public function testSetIndicatorOff()
+    public function testSetIndicatorOff(): void
     {
         $this->device->shouldReceive("soap")->once()->with("DeviceProperties", "SetLEDState", [
             "DesiredLEDState"   =>  "Off",
@@ -117,7 +117,7 @@ class SpeakerTest extends MockTest
     }
 
 
-    public function testGetTreble()
+    public function testGetTreble(): void
     {
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "GetTreble", [
             "Channel"   =>  "Master",
@@ -127,7 +127,7 @@ class SpeakerTest extends MockTest
     }
 
 
-    public function testSetTreble()
+    public function testSetTreble(): void
     {
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetTreble", [
             "Channel"       =>  "Master",
@@ -138,7 +138,7 @@ class SpeakerTest extends MockTest
     }
 
 
-    public function testSetTrebleHigh()
+    public function testSetTrebleHigh(): void
     {
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetTreble", [
             "Channel"       =>  "Master",
@@ -149,7 +149,7 @@ class SpeakerTest extends MockTest
     }
 
 
-    public function testSetTrebleLow()
+    public function testSetTrebleLow(): void
     {
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetTreble", [
             "Channel"       =>  "Master",
@@ -160,7 +160,7 @@ class SpeakerTest extends MockTest
     }
 
 
-    public function testSetBass()
+    public function testSetBass(): void
     {
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetBass", [
             "Channel"       =>  "Master",
@@ -171,7 +171,7 @@ class SpeakerTest extends MockTest
     }
 
 
-    public function testSetBassHigh()
+    public function testSetBassHigh(): void
     {
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetBass", [
             "Channel"       =>  "Master",
@@ -182,7 +182,7 @@ class SpeakerTest extends MockTest
     }
 
 
-    public function testSetBassLow()
+    public function testSetBassLow(): void
     {
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetBass", [
             "Channel"       =>  "Master",
@@ -193,7 +193,7 @@ class SpeakerTest extends MockTest
     }
 
 
-    public function testGetLoudness()
+    public function testGetLoudness(): void
     {
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "GetLoudness", [
             "Channel"           =>  "Master",
@@ -203,7 +203,7 @@ class SpeakerTest extends MockTest
     }
 
 
-    public function testSetLoudnessOn()
+    public function testSetLoudnessOn(): void
     {
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetLoudness", [
             "Channel"           =>  "Master",
@@ -214,7 +214,7 @@ class SpeakerTest extends MockTest
     }
 
 
-    public function testSetLoudnessOff()
+    public function testSetLoudnessOff(): void
     {
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetLoudness", [
             "Channel"           =>  "Master",
@@ -225,7 +225,7 @@ class SpeakerTest extends MockTest
     }
 
 
-    public function testIsCoordinator1()
+    public function testIsCoordinator1(): void
     {
         $device = $this->getDevice();
 
@@ -239,7 +239,7 @@ class SpeakerTest extends MockTest
 
         $this->assertTrue($speaker->isCoordinator());
     }
-    public function testIsCoordinator2()
+    public function testIsCoordinator2(): void
     {
         $device = $this->getDevice();
 
@@ -253,7 +253,7 @@ class SpeakerTest extends MockTest
 
         $this->assertTrue($speaker->isCoordinator());
     }
-    public function testIsCoordinator3()
+    public function testIsCoordinator3(): void
     {
         $device = $this->getDevice();
 
@@ -267,7 +267,7 @@ class SpeakerTest extends MockTest
 
         $this->assertTrue($speaker->isCoordinator());
     }
-    public function testIsCoordinator4()
+    public function testIsCoordinator4(): void
     {
         $device = $this->getDevice();
 
@@ -283,7 +283,7 @@ class SpeakerTest extends MockTest
     }
 
 
-    public function testGetGroup()
+    public function testGetGroup(): void
     {
         $device = $this->getDevice();
 

@@ -18,7 +18,7 @@ class FactoryTest extends MockTest
     /** @var Factory */
     private $factory;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -28,7 +28,7 @@ class FactoryTest extends MockTest
     }
 
 
-    public function testNetworkTrackUri()
+    public function testNetworkTrackUri(): void
     {
         $uri = "x-file-cifs://server/share/song.mp3";
         $track = $this->factory->createFromUri($uri);
@@ -36,7 +36,7 @@ class FactoryTest extends MockTest
     }
 
 
-    public function testSpotifyTrackUri()
+    public function testSpotifyTrackUri(): void
     {
         $uri = "x-sonos-spotify:spotify:track:123sdfd6";
         $track = $this->factory->createFromUri($uri);
@@ -44,7 +44,7 @@ class FactoryTest extends MockTest
     }
 
 
-    public function testDeezerTrackUri()
+    public function testDeezerTrackUri(): void
     {
         $uri = "x-sonos-http:tr:123sdfd6";
         $track = $this->factory->createFromUri($uri);
@@ -52,7 +52,7 @@ class FactoryTest extends MockTest
     }
 
 
-    public function testGoogleTrackUri()
+    public function testGoogleTrackUri(): void
     {
         $uri = "x-sonos-http:_dklxfo-EJN34xu9HkcfzBMGUd86HezVdklbzxKIUjyXkqC23MIzxiZu8-PtSkgc.mp3";
         $track = $this->factory->createFromUri($uri);
@@ -60,7 +60,7 @@ class FactoryTest extends MockTest
     }
 
 
-    public function testGoogleUnlimitedTrackUri()
+    public function testGoogleUnlimitedTrackUri(): void
     {
         $uri = "x-sonos-http:A0DvPDnowsEJN34xu9HkcfzBMGUd86HezVdklbzxKIUjyXkqC23MIzxiZu8-PtSkgc.mp3";
         $track = $this->factory->createFromUri($uri);
@@ -68,7 +68,7 @@ class FactoryTest extends MockTest
     }
 
 
-    public function testStreamTrackUri()
+    public function testStreamTrackUri(): void
     {
         $uri = "x-sonosapi-stream:s200662?sid=254&flags=8224&sn=0";
         $track = $this->factory->createFromUri($uri);
@@ -90,7 +90,7 @@ class FactoryTest extends MockTest
     }
 
 
-    public function testNetworkTrackXml()
+    public function testNetworkTrackXml(): void
     {
         $xml = $this->getXml("x-file-cifs://server/share/song.mp3");
         $track = $this->factory->createFromXml($xml);
@@ -98,7 +98,7 @@ class FactoryTest extends MockTest
     }
 
 
-    public function testSpotifyTrackXml()
+    public function testSpotifyTrackXml(): void
     {
         $xml = $this->getXml("x-sonos-spotify:spotify:track:123sdfd6");
         $track = $this->factory->createFromXml($xml);
@@ -106,7 +106,7 @@ class FactoryTest extends MockTest
     }
 
 
-    public function testDeezerTrackXml()
+    public function testDeezerTrackXml(): void
     {
         $xml = $this->getXml("x-sonos-http:tr:123sdfd6");
         $track = $this->factory->createFromXml($xml);
@@ -114,7 +114,7 @@ class FactoryTest extends MockTest
     }
 
 
-    public function testStreamTrackXml()
+    public function testStreamTrackXml(): void
     {
         $xml = $this->getXml("x-sonosapi-stream:s200662?sid=254&flags=8224&sn=0");
         $track = $this->factory->createFromXml($xml);

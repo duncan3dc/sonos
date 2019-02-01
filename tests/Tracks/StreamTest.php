@@ -7,26 +7,26 @@ use PHPUnit\Framework\TestCase;
 
 class StreamTest extends TestCase
 {
-    public function testGetUri()
+    public function testGetUri(): void
     {
         $stream = new Stream("uri-test");
         $this->assertSame("uri-test", $stream->getUri());
     }
 
 
-    public function testGetTitle1()
+    public function testGetTitle1(): void
     {
         $stream = new Stream("uri-test");
         $this->assertSame("", $stream->getTitle());
     }
-    public function testGetTitle2()
+    public function testGetTitle2(): void
     {
         $stream = new Stream("uri-test", "super stream");
         $this->assertSame("super stream", $stream->getTitle());
     }
 
 
-    public function testGetMetaData1()
+    public function testGetMetaData1(): void
     {
         $stream = new Stream("uri-test");
 
@@ -46,7 +46,7 @@ class StreamTest extends TestCase
         $xml .= '</DIDL-Lite>';
         $this->assertSame($xml, $stream->getMetadata());
     }
-    public function testGetMetaData2()
+    public function testGetMetaData2(): void
     {
         $stream = new Stream("uri-test", "super stream");
 
