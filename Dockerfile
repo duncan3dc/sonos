@@ -1,4 +1,4 @@
-ARG PHP_VERSION=7.1
+ARG PHP_VERSION=7.2
 FROM php:${PHP_VERSION}-cli
 
 RUN apt-get update && apt-get install -y libxml2-dev && docker-php-ext-install soap
