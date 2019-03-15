@@ -5,6 +5,14 @@ Changelog
 
 --------
 
+## 2.0.7 - 2019-03-15
+
+### Fixed
+
+* [Device] Added support for the new CONNECT (S15) device.
+
+--------
+
 ## 2.0.6 - 2018-12-14
 
 ### Fixed
