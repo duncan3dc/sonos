@@ -12,6 +12,7 @@ class Helper
 {
     const TRACK_HASH = "00032020";
     const ALBUM_HASH = "0004206c";
+    const PLAYLIST_HASH = "0006006c";
 
     /**
      * Create a mode array from the mode text value.
