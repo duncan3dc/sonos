@@ -9,7 +9,7 @@ use duncan3dc\Sonos\Helper;
  */
 class SpotifyPlaylist extends Track
 {
-    const PREFIX = "x-rincon-cpcontainer:" . Helper::PLAYLIST_HASH;
+    const PREFIX = "x-rincon-cpcontainer:";
     const REGION_EU = "2311";
     const REGION_US = "3079";
 
@@ -28,7 +28,7 @@ class SpotifyPlaylist extends Track
     {
         # If this is a spotify playlist ID and not a URI then convert it to a URI now
         if (substr($uri, 0, strlen(self::PREFIX)) !== self::PREFIX) {
-            $uri = self::PREFIX . urlencode($uri);
+            $uri = self::PREFIX . Helper::PLAYLIST_HASH . urlencode($uri);
         }
 
         parent::__construct($uri);
@@ -43,7 +43,7 @@ class SpotifyPlaylist extends Track
     {
         $uri = substr($this->getUri(), strlen(self::PREFIX));
 
-        return Helper::createMetaDataXml(Helper::PLAYLIST_HASH . "{$uri}", "-1", [
+        return Helper::createMetaDataXml($uri, "-1", [
             "dc:title"      =>  "",
             "upnp:class"    =>  "object.container.playlistContainer",
         ], static::$region);
