@@ -204,6 +204,7 @@ final class Device implements DeviceInterface
             "S9"    =>  "PLAYBAR",
             "S11"   =>  "PLAYBASE",
             "S13"   =>  "ONE",
+            "S18"   =>  "ONE",
             "S14"   =>  "BEAM",
             "S15"   =>  "CONNECT",
             "ZP80"  =>  "ZONEPLAYER",
