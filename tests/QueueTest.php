@@ -2,6 +2,7 @@
 
 namespace duncan3dc\SonosTests;
 
+use duncan3dc\DomParser\XmlElement;
 use duncan3dc\Sonos\Interfaces\UriInterface;
 use duncan3dc\Sonos\Playlist;
 use duncan3dc\Sonos\Queue;
@@ -137,7 +138,11 @@ class QueueTest extends MockTest
      */
     public function testAddTrack2(): void
     {
-        $playlist = new Playlist("SQ:487", $this->controller);
+        $xml = Mockery::mock(XmlElement::class);
+        $xml->shouldReceive("getAttribute")->once()->with("id")->andReturn("SQ:487");
+        $xml->shouldReceive("getTag")->once()->with("title")->andReturn((object) ["nodeValue" => "Good Songs"]);
+
+        $playlist = new Playlist($xml, $this->controller);
 
         $this->device->shouldReceive("soap")->once()->with("ContentDirectory", "Browse", [
             "BrowseFlag" => "BrowseDirectChildren",
@@ -151,10 +156,25 @@ class QueueTest extends MockTest
             "TotalMatches" => 0,
         ]);
 
+        $xml = '<DIDL-Lite ';
+        $xml .= 'xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/" ';
+        $xml .= 'xmlns:dc="http://purl.org/dc/elements/1.1/" ';
+        $xml .= 'xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" ';
+        $xml .= 'xmlns:r="urn:schemas-rinconnetworks-com:metadata-1-0/">';
+        $xml .= '<item id="SQ:487" parentID="SQ:" restricted="true">';
+        $xml .= '<dc:title>Good Songs</dc:title>';
+        $xml .= '<upnp:class>object.container.playlistContainer</upnp:class>';
+        $xml .= '<desc ';
+        $xml .= 'id="cdudn" ';
+        $xml .= 'nameSpace="urn:schemas-rinconnetworks-com:metadata-1-0/"';
+        $xml .= '>RINCON_AssociatedZPUDN</desc>';
+        $xml .= '</item>';
+        $xml .= '</DIDL-Lite>';
+
         $this->device->shouldReceive("soap")->once()->with("AVTransport", "AddURIToQueue", [
             "UpdateID" => 0,
             "EnqueuedURI" => "file:///jffs/settings/savedqueues.rsq#487",
-            "EnqueuedURIMetaData" => "",
+            "EnqueuedURIMetaData" => $xml,
             "DesiredFirstTrackNumberEnqueued" => 1,
             "EnqueueAsNext" => 0,
             "ObjectID" => "Q:0",

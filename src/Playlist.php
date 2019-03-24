@@ -194,6 +194,16 @@ final class Playlist extends Queue implements PlaylistInterface
      */
     public function getMetaData(): string
     {
-        return "";
+        return Helper::createMetaDataXml($this->id, "SQ:", [
+            "dc:title" => $this->getName(),
+            "upnp:class" => "object.container.playlistContainer",
+            "desc" => [
+                "_attributes" => [
+                    "id" => "cdudn",
+                    "nameSpace" => "urn:schemas-rinconnetworks-com:metadata-1-0/",
+                ],
+                "_value" => "RINCON_AssociatedZPUDN",
+            ],
+        ]);
     }
 }
