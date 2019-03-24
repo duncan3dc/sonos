@@ -10,6 +10,7 @@ use duncan3dc\Sonos\Interfaces\TrackInterface;
 use duncan3dc\Sonos\Interfaces\Tracks\FactoryInterface;
 use duncan3dc\Sonos\Interfaces\UriInterface;
 use duncan3dc\Sonos\Tracks\Factory;
+use function is_string;
 
 /**
  * Provides an interface for managing the queue of a controller.
@@ -242,7 +243,29 @@ class Queue implements QueueInterface
      */
     public function addTrack($track, int $position = null): QueueInterface
     {
-        return $this->addTracks([$track], $position);
+        # If a simple uri has been passed then convert it to a Track instance
+        if (is_string($track)) {
+            $track = $this->trackFactory->createFromUri($track);
+        }
+
+        if (!$track instanceof UriInterface) {
+            $error = "The first argument to addTrack() should be an object that implements " . UriInterface::class;
+            throw new \InvalidArgumentException($error);
+        }
+
+        if ($position === null) {
+            $position = $this->getNextPosition();
+        }
+
+        $this->soap("AVTransport", "AddURIToQueue", [
+            "UpdateID" => 0,
+            "EnqueuedURI" => $track->getUri(),
+            "EnqueuedURIMetaData" => $track->getMetaData(),
+            "DesiredFirstTrackNumberEnqueued" => $position,
+            "EnqueueAsNext" => 0,
+        ]);
+
+        return $this;
     }
 
 
@@ -278,31 +301,6 @@ class Queue implements QueueInterface
         return $this;
     }
 
-    /**
-     * Add a sonos playlist to the queue.
-     *
-     * @param Playlist $playlist A playlist
-     * @param int $position The position to insert the tracks in the queue (zero-based),
-     *                      by default the tracks will be added to the end of the queue
-     *
-     * @return $this
-     */
-    public function addPlaylist(Playlist $playlist, $position = null): QueueInterface
-    {
-        if ($position === null) {
-            $position = $this->getNextPosition();
-        }
-
-        $this->soap("AVTransport", "AddURIToQueue", [
-            "UpdateID"                          =>  0,
-            "EnqueuedURI"                       =>  $playlist->getUri(),
-            "EnqueuedURIMetaData"               =>  '',
-            "DesiredFirstTrackNumberEnqueued"   =>  $position,
-            "EnqueueAsNext"                     =>  0,
-        ]);
-
-        return $this;
-    }
 
     /**
      * Remove a track from the queue.

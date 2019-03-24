@@ -9,6 +9,7 @@ use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Interfaces\PlaylistInterface;
 use duncan3dc\Sonos\Interfaces\QueueInterface;
 use duncan3dc\Sonos\Interfaces\UriInterface;
+use function substr;
 
 /**
  * Provides an interface for managing Sonos playlists on the current network.
@@ -166,16 +167,6 @@ final class Playlist extends Queue implements PlaylistInterface
         return $this;
     }
 
-    /**
-     * Get local file URI from playlist
-     *
-     * @return string
-     */
-    public function getUri()
-    {
-        $playlistId = str_replace('SQ:','', $this->id);
-        return 'file:///jffs/settings/savedqueues.rsq#'.$playlistId;
-    }
 
     /**
      * Delete this playlist from the network.
@@ -185,5 +176,24 @@ final class Playlist extends Queue implements PlaylistInterface
     public function delete()
     {
         $this->soap("ContentDirectory", "DestroyObject");
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function getUri(): string
+    {
+        $id = substr($this->id, 3);
+        return "file:///jffs/settings/savedqueues.rsq#{$id}";
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function getMetaData(): string
+    {
+        return "";
     }
 }

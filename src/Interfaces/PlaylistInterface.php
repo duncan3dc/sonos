@@ -5,7 +5,7 @@ namespace duncan3dc\Sonos\Interfaces;
 /**
  * Provides an interface for managing Sonos playlists on the current network.
  */
-interface PlaylistInterface extends QueueInterface
+interface PlaylistInterface extends QueueInterface, UriInterface
 {
 
     /**
@@ -33,14 +33,6 @@ interface PlaylistInterface extends QueueInterface
      * @return PlaylistInterface
      */
     public function moveTrack(int $from, int $to): PlaylistInterface;
-
-
-    /**
-     * Get the local file URI of the playlist
-     *
-     * @return string
-     */
-    public function getUri();
 
 
     /**

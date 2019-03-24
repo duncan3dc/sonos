@@ -2,6 +2,8 @@
 
 namespace duncan3dc\SonosTests;
 
+use duncan3dc\Sonos\Interfaces\UriInterface;
+use duncan3dc\Sonos\Playlist;
 use duncan3dc\Sonos\Queue;
 use Mockery;
 
@@ -92,6 +94,74 @@ class QueueTest extends MockTest
 
         $tracks = $this->queue->getTracks(5, 2);
         $this->assertSame(0, count($tracks));
+    }
+
+
+    /**
+     * Ensure we can add a track.
+     */
+    public function testAddTrack1(): void
+    {
+        $track = Mockery::mock(UriInterface::class);
+        $track->shouldReceive("getUri")->once()->with()->andReturn("uri://example-file.mp3");
+        $track->shouldReceive("getMetaData")->once()->with()->andReturn("<DIDL-Lite></DIDL-Lite>");
+
+        $this->device->shouldReceive("soap")->once()->with("ContentDirectory", "Browse", [
+            "BrowseFlag" => "BrowseDirectChildren",
+            "StartingIndex" => 0,
+            "RequestedCount" => 1,
+            "Filter" => "",
+            "SortCriteria" => "",
+            "ObjectID" => "Q:0",
+        ])->andReturn([
+            "UpdateID" => 123,
+            "TotalMatches" => 7,
+        ]);
+
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "AddURIToQueue", [
+            "UpdateID" => 0,
+            "EnqueuedURI" => "uri://example-file.mp3",
+            "EnqueuedURIMetaData" => "<DIDL-Lite></DIDL-Lite>",
+            "DesiredFirstTrackNumberEnqueued" => 8,
+            "EnqueueAsNext" => 0,
+            "ObjectID" => "Q:0",
+        ]);
+
+        $result = $this->queue->addTrack($track);
+        $this->assertSame($result, $this->queue);
+    }
+
+
+    /**
+     * Ensure we can add a playlist.
+     */
+    public function testAddTrack2(): void
+    {
+        $playlist = new Playlist("SQ:487", $this->controller);
+
+        $this->device->shouldReceive("soap")->once()->with("ContentDirectory", "Browse", [
+            "BrowseFlag" => "BrowseDirectChildren",
+            "StartingIndex" => 0,
+            "RequestedCount" => 1,
+            "Filter" => "",
+            "SortCriteria" => "",
+            "ObjectID" => "Q:0",
+        ])->andReturn([
+            "UpdateID" => 123,
+            "TotalMatches" => 0,
+        ]);
+
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "AddURIToQueue", [
+            "UpdateID" => 0,
+            "EnqueuedURI" => "file:///jffs/settings/savedqueues.rsq#487",
+            "EnqueuedURIMetaData" => "",
+            "DesiredFirstTrackNumberEnqueued" => 1,
+            "EnqueueAsNext" => 0,
+            "ObjectID" => "Q:0",
+        ]);
+
+        $result = $this->queue->addTrack($playlist);
+        $this->assertSame($result, $this->queue);
     }
 
 
