@@ -36,6 +36,14 @@ interface PlaylistInterface extends QueueInterface
 
 
     /**
+     * Get the local file URI of the playlist
+     *
+     * @return string
+     */
+    public function getUri();
+
+
+    /**
      * Delete this playlist from the network.
      *
      * @return void
