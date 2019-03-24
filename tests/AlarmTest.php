@@ -6,6 +6,7 @@ use duncan3dc\DomParser\XmlElement;
 use duncan3dc\Sonos\Alarm;
 use duncan3dc\Sonos\Interfaces\NetworkInterface;
 use duncan3dc\Sonos\Interfaces\SpeakerInterface;
+use duncan3dc\Sonos\Uri;
 use Mockery;
 use Mockery\MockInterface;
 
@@ -304,6 +305,35 @@ class AlarmTest extends MockTest
             "Duration"  =>  "00:01:02",
         ]);
         $this->assertSame(62, $alarm->getDuration()->asInt());
+    }
+
+
+    public function testGetMusic(): void
+    {
+        $alarm = $this->getMockAlarm([
+            "ProgramURI" => "file:///jffs/settings/savedqueues.rsq#411",
+            "ProgramMetaData" => "<DIDL-Lite>Playlist 411</DIDL-Lite>",
+        ]);
+        $music = $alarm->getMusic();
+        $this->assertSame("file:///jffs/settings/savedqueues.rsq#411", $music->getUri());
+        $this->assertSame("<DIDL-Lite>Playlist 411</DIDL-Lite>", $music->getMetaData());
+    }
+
+
+    public function testSetMusic(): void
+    {
+        $alarm = $this->getMockAlarm();
+        $this->speaker
+            ->shouldReceive("soap")
+            ->once()
+            ->with("AlarmClock", "UpdateAlarm", Mockery::subset([
+                "ProgramURI" => "file:///jffs/settings/savedqueues.rsq#34",
+                "ProgramMetaData" => "<DIDL-Lite>Playlist 34</DIDL-Lite>",
+            ]));
+
+        $uri = new Uri("file:///jffs/settings/savedqueues.rsq#34", "<DIDL-Lite>Playlist 34</DIDL-Lite>");
+        $this->assertSame($alarm, $alarm->setMusic($uri));
+        $this->assertSame("file:///jffs/settings/savedqueues.rsq#34", $alarm->getMusic()->getUri());
     }
 
 

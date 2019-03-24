@@ -6,7 +6,9 @@ use duncan3dc\DomParser\XmlElement;
 use duncan3dc\Sonos\Interfaces\AlarmInterface;
 use duncan3dc\Sonos\Interfaces\NetworkInterface;
 use duncan3dc\Sonos\Interfaces\SpeakerInterface;
+use duncan3dc\Sonos\Interfaces\UriInterface;
 use duncan3dc\Sonos\Interfaces\Utils\TimeInterface;
+use duncan3dc\Sonos\Tracks\Factory;
 use duncan3dc\Sonos\Utils\Time;
 
 /**
@@ -452,6 +454,27 @@ final class Alarm implements AlarmInterface
             }
         }
         return $description;
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function getMusic(): UriInterface
+    {
+        return new Uri($this->attributes["ProgramURI"], $this->attributes["ProgramMetaData"]);
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function setMusic(UriInterface $uri): AlarmInterface
+    {
+        $this->attributes["ProgramURI"] = $uri->getUri();
+        $this->attributes["ProgramMetaData"] = $uri->getMetaData();
+
+        return $this->save();
     }
 
 

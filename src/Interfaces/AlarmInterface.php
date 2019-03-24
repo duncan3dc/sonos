@@ -222,6 +222,24 @@ interface AlarmInterface
 
 
     /**
+     * Get the music that will be played when this alarm goes off.
+     *
+     * @return UriInterface
+     */
+    public function getMusic(): UriInterface;
+
+
+    /**
+     * Set the music that will be played when this alarm goes off.
+     *
+     * @param UriInterface $uri
+     *
+     * @return AlarmInterface
+     */
+    public function setMusic(UriInterface $uri): AlarmInterface;
+
+
+    /**
      * Get the volume of the alarm.
      *
      * @return int
