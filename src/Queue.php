@@ -227,10 +227,6 @@ class Queue implements QueueInterface
             $this->updateId = $data["NewUpdateID"];
 
             $position += $numberOfTracks;
-
-            if ($data["NumTracksAdded"] != $numberOfTracks) {
-                throw new SonosException("Failed to add all the tracks");
-            }
         }
     }
 
@@ -297,19 +293,13 @@ class Queue implements QueueInterface
             $position = $this->getNextPosition();
         }
 
-        $numberOfTracks = count($playlist->getTracks());
-
-        $data = $this->soap("AVTransport", "AddURIToQueue", [
+        $this->soap("AVTransport", "AddURIToQueue", [
             "UpdateID"                          =>  0,
             "EnqueuedURI"                       =>  $playlist->getUri(),
             "EnqueuedURIMetaData"               =>  '',
             "DesiredFirstTrackNumberEnqueued"   =>  $position,
             "EnqueueAsNext"                     =>  0,
         ]);
-
-        if ($data["NumTracksAdded"] != $numberOfTracks) {
-            throw new SonosException("Failed to add all the tracks");
-        }
 
         return $this;
     }

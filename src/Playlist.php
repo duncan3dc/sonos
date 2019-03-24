@@ -104,10 +104,6 @@ final class Playlist extends Queue implements PlaylistInterface
             $this->updateId = $data["NewUpdateID"];
 
             $position++;
-
-            if ($data["NumTracksAdded"] != 1) {
-                throw new SonosException("Failed to add all the tracks to the playlist");
-            }
         }
     }
 
