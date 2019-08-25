@@ -28,7 +28,7 @@
     "require-dev": {
         "duncan3dc/object-intruder": "^0.3.0",
         "maglnet/composer-require-checker": "^1.0",
-        "mockery/mockery": "^1.0",
+        "mockery/mockery": "^1.0,<1.2.3",
         "phpstan/phpstan": "^0.10.2",
         "squizlabs/php_codesniffer": "^3.3.2",
         "phpunit/phpunit": "^6.4"
