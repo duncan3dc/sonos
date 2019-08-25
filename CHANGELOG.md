@@ -5,6 +5,21 @@ Changelog
 
 --------
 
+## 2.1.0 - 2019-08-25
+
+### Added
+
+* [Alarms] Allow music to be get/set via `getMusic()` and `setMusic()`.
+* [Queues] `addTrack()` now accepts `PlaylistInterface` instances for efficiency.
+
+### Fixed
+
+* [Device] Added support for the new SYMFONISK speakers.
+* [Device] Added support for the new version of the PLAY:ONE.
+* [Queues] Correct the handling of errors when adding a lot of tracks.
+
+--------
+
 ## 2.0.7 - 2019-03-15
 
 ### Fixed
