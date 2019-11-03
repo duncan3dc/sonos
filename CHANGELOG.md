@@ -5,6 +5,14 @@ Changelog
 
 --------
 
+## 2.1.1 - 2019-11-03
+
+### Fixed
+
+* [Device] Added support for the new Move speakers.
+
+--------
+
 ## 2.1.0 - 2019-08-25
 
 ### Added

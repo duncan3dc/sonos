@@ -22,6 +22,7 @@ class DeviceTest extends MockTest
             "S13",
             "S14",
             "S15",
+            "S17",
             "S18",
             "S20",
             "S21",

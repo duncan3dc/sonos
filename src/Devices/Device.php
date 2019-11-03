@@ -207,6 +207,7 @@ final class Device implements DeviceInterface
             "S18"   =>  "ONE",
             "S14"   =>  "BEAM",
             "S15"   =>  "CONNECT",
+            "S17" => "Move",
             "S20" => "SYMFONISK Table Lamp",
             "S21" => "SYMFONISK Bookshelf",
             "ZP80"  =>  "ZONEPLAYER",
