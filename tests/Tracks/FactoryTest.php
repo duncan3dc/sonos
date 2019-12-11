@@ -9,6 +9,7 @@ use duncan3dc\Sonos\Tracks\Factory;
 use duncan3dc\Sonos\Tracks\Google;
 use duncan3dc\Sonos\Tracks\GoogleUnlimited;
 use duncan3dc\Sonos\Tracks\Spotify;
+use duncan3dc\Sonos\Tracks\SpotifyPlaylist;
 use duncan3dc\Sonos\Tracks\Stream;
 use duncan3dc\Sonos\Tracks\Track;
 use duncan3dc\SonosTests\MockTest;
@@ -43,6 +44,13 @@ class FactoryTest extends MockTest
         $this->assertInstanceOf(Spotify::class, $track);
     }
 
+
+    public function testSpotifyPlaylistUri()
+    {
+        $uri = "x-rincon-cpcontainer:0006006cspotify:user:123sdfd6:playlist:123sdfd6";
+        $track = $this->factory->createFromUri($uri);
+        $this->assertInstanceOf(SpotifyPlaylist::class, $track);
+    }
 
     public function testDeezerTrackUri()
     {
@@ -103,6 +111,14 @@ class FactoryTest extends MockTest
         $xml = $this->getXml("x-sonos-spotify:spotify:track:123sdfd6");
         $track = $this->factory->createFromXml($xml);
         $this->assertInstanceOf(Spotify::class, $track);
+    }
+
+
+    public function testSpotifyPlaylistTrackXml()
+    {
+        $xml = $this->getXml("x-rincon-cpcontainer:0006006cspotify:user:123sdfd6:playlist:123sdfd6");
+        $track = $this->factory->createFromXml($xml);
+        $this->assertInstanceOf(SpotifyPlaylist::class, $track);
     }
 
 
