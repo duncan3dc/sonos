@@ -24,7 +24,7 @@ Or check on your networks current status:
 ```php
 $controllers = $sonos->getControllers();
 foreach ($controllers as $controller) {
-    echo "{$controller->room} = " . $controller->getStateName() . "\n";
+    echo $controller->getRoom() . " = " . $controller->getStateName() . "\n";
 }
 ```
 

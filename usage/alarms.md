@@ -18,7 +18,7 @@ Get the details of the alarm:
 echo "Alarm ID: " . $alarm->getId() . "\n";
 echo "Time: " . $alarm->getTime() . "\n";
 echo "Duration: " . $alarm->getDuration() . "\n";
-echo "Room: " . $alarm->getSpeaker()->room . "\n";
+echo "Room: " . $alarm->getSpeaker()->getRoom() . "\n";
 echo "Volume: " . $alarm->getVolume() . "\n";
 echo "Frequency: " . $alarm->getFrequencyDescription() . "\n";
 ```

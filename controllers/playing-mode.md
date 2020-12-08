@@ -20,7 +20,7 @@ If you are not playing tracks but are streaming then the State object should be 
 ```php
 $state = $controller->getStateDetails();
 
-if ($state->stream) {
+if ($state->isStreaming()) {
     echo "Currently Streaming: " . $state->getStream() . "\n";
 
     # Most streams do not provide extra information, so check before using
