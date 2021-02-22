@@ -17,7 +17,7 @@
         "duncan3dc/logger-aware-trait": "^0.2.0",
         "duncan3dc/sonos-common": "^0.1.0",
         "duncan3dc/speaker": "^0.7.0",
-        "guzzlehttp/guzzle": "^6.0",
+        "guzzlehttp/guzzle": "^6.0|^7.0",
         "league/flysystem": "^1.0",
         "psr/log": "^1.0",
         "psr/simple-cache": "^1.0",
