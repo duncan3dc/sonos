@@ -13,7 +13,7 @@ class SpeakerLiveTest extends LiveTest
     /** @var SpeakerInterface */
     protected $speaker;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $speakers = $this->network->getSpeakers();

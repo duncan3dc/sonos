@@ -40,7 +40,7 @@ XML;
     /** @var TrackInterface */
     protected $track2;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $controller = Mockery::mock(ControllerInterface::class);
         $controller->shouldReceive("getIp")->with()->andReturn("192.168.0.66");
@@ -53,7 +53,7 @@ XML;
     }
 
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         Mockery::close();
     }

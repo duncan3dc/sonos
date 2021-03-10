@@ -20,14 +20,14 @@ class NetworkTest extends MockTest
     private $collection;
 
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->collection = Mockery::mock(CollectionInterface::class);
         $this->network = new Network($this->collection);
     }
 
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         Mockery::close();
     }
