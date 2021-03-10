@@ -15,13 +15,13 @@ class DirectoryTest extends TestCase
     private $filesystem;
 
 
-    public function setUp()
+    protected function setUp()
     {
         $this->filesystem = Mockery::mock(FilesystemInterface::class);
     }
 
 
-    public function tearDown()
+    protected function tearDown()
     {
         Mockery::close();
     }

@@ -11,7 +11,7 @@ use Psr\SimpleCache\CacheInterface;
 
 class FactoryTest extends TestCase
 {
-    public function tearDown()
+    protected function tearDown()
     {
         Mockery::close();
     }

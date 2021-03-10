@@ -10,7 +10,7 @@ class QueueLiveTest extends LiveTest
     protected $queue;
     protected $state;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -27,7 +27,7 @@ class QueueLiveTest extends LiveTest
     }
 
 
-    public function tearDown()
+    protected function tearDown()
     {
         if ($this->controller) {
             $this->controller->restoreState($this->state);

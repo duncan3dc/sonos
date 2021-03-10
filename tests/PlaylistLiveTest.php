@@ -10,7 +10,7 @@ class PlaylistLiveTest extends LiveTest
     protected $playlist;
     protected $playlistName = "phpunit-test";
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
@@ -22,7 +22,7 @@ class PlaylistLiveTest extends LiveTest
     }
 
 
-    public function tearDown()
+    protected function tearDown()
     {
         if ($this->playlist) {
             $this->playlist->delete();
