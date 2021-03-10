@@ -18,7 +18,7 @@ class FactoryTest extends MockTest
     /** @var Factory */
     private $factory;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 

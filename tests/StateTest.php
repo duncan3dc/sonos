@@ -10,7 +10,7 @@ use Mockery;
 
 class StateTest extends TrackTest
 {
-    public function setUp()
+    protected function setUp()
     {
         $controller = Mockery::mock(ControllerInterface::class);
         $controller->shouldReceive("getIp")->andReturn("192.168.0.66");
