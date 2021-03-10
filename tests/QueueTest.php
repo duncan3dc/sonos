@@ -22,7 +22,7 @@ class QueueTest extends MockTest
     /** @var Queue */
     protected $queue;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -31,7 +31,7 @@ class QueueTest extends MockTest
         $this->queue = new Queue($this->controller);
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         Mockery::close();
     }

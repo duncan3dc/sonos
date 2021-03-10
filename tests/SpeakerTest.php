@@ -16,7 +16,7 @@ class SpeakerTest extends MockTest
     /** @var Speaker */
     protected $speaker;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -24,7 +24,7 @@ class SpeakerTest extends MockTest
         $this->speaker = $this->getSpeaker($this->device);
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         Mockery::close();
     }

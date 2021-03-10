@@ -21,7 +21,7 @@ class DiscoveryTest extends TestCase
     /** @var Intruder */
     private $discovery;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->collection = Mockery::mock(CollectionInterface::class);
         $this->collection->shouldReceive("getLogger")->with()->andReturn(new NullLogger());
@@ -31,7 +31,7 @@ class DiscoveryTest extends TestCase
     }
 
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         Mockery::close();
     }

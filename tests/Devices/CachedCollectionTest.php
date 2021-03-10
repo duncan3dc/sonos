@@ -21,7 +21,7 @@ class CachedCollectionTest extends TestCase
     /** @var CachedCollection */
     private $cachedCollection;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->collection = Mockery::mock(CollectionInterface::class);
         $this->cache = Mockery::mock(CacheInterface::class);
@@ -29,7 +29,7 @@ class CachedCollectionTest extends TestCase
     }
 
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         Mockery::close();
     }
