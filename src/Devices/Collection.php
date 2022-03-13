@@ -7,6 +7,7 @@ use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
 use duncan3dc\Sonos\Interfaces\Devices\FactoryInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+
 use function assert;
 
 final class Collection implements CollectionInterface

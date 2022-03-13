@@ -12,7 +12,7 @@ use duncan3dc\Sonos\Interfaces\TrackInterface;
  */
 class Stream extends Track
 {
-    const PREFIX = "x-sonosapi-stream";
+    public const PREFIX = "x-sonosapi-stream";
 
     /**
      * Create a Stream object.

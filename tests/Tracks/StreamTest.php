@@ -7,7 +7,6 @@ use PHPUnit\Framework\TestCase;
 
 class StreamTest extends TestCase
 {
-
     public function testGetUri()
     {
         $stream = new Stream("uri-test");

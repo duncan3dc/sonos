@@ -18,31 +18,31 @@ interface ControllerInterface extends SpeakerInterface
      *
      * This is a rare state, but can be encountered after an upgrade, or if the queue was cleared
      */
-    const STATE_STOPPED = 201;
+    public const STATE_STOPPED = 201;
 
     /**
      * Currently plating music.
      */
-    const STATE_PLAYING = 202;
+    public const STATE_PLAYING = 202;
 
     /**
      * Music is currently paused.
      */
-    const STATE_PAUSED = 203;
+    public const STATE_PAUSED = 203;
 
     /**
      * The speaker is currently working on either playing or pausing.
      *
      * Check it's state again in a second or two
      */
-    const STATE_TRANSITIONING = 204;
+    public const STATE_TRANSITIONING = 204;
 
     /**
      * The speaker is in an unknown state.
      *
      * This should only happen if Sonos introduce a new state that this code has not been updated to handle.
      */
-    const STATE_UNKNOWN = 205;
+    public const STATE_UNKNOWN = 205;
 
 
     /**

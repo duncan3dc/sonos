@@ -5,6 +5,7 @@ namespace duncan3dc\Sonos\Utils;
 use duncan3dc\Sonos\Exceptions\NetworkException;
 use duncan3dc\Sonos\Interfaces\Utils\SocketInterface;
 use Psr\Log\LoggerInterface;
+
 use function getprotobyname;
 use function socket_create;
 use function socket_last_error;

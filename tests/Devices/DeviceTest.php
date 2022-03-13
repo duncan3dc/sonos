@@ -8,7 +8,6 @@ use duncan3dc\SonosTests\MockTest;
 
 class DeviceTest extends MockTest
 {
-
     public function modelProvider()
     {
         $speakers = [

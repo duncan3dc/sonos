@@ -11,15 +11,15 @@ use duncan3dc\Sonos\Utils\Time;
  */
 interface AlarmInterface
 {
-    const ONCE      =   0;
-    const MONDAY    =   1;
-    const TUESDAY   =   self::MONDAY    * 2;
-    const WEDNESDAY =   self::TUESDAY   * 2;
-    const THURSDAY  =   self::WEDNESDAY * 2;
-    const FRIDAY    =   self::THURSDAY  * 2;
-    const SATURDAY  =   self::FRIDAY    * 2;
-    const SUNDAY    =   self::SATURDAY  * 2;
-    const DAILY     =   (self::SUNDAY   * 2) - 1;
+    public const ONCE      =   0;
+    public const MONDAY    =   1;
+    public const TUESDAY   =   self::MONDAY    * 2;
+    public const WEDNESDAY =   self::TUESDAY   * 2;
+    public const THURSDAY  =   self::WEDNESDAY * 2;
+    public const FRIDAY    =   self::THURSDAY  * 2;
+    public const SATURDAY  =   self::FRIDAY    * 2;
+    public const SUNDAY    =   self::SATURDAY  * 2;
+    public const DAILY     =   (self::SUNDAY   * 2) - 1;
 
 
     /**

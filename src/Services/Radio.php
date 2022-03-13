@@ -16,12 +16,12 @@ final class Radio implements RadioInterface
     /**
      * @var int The key for station types.
      */
-    const STATIONS = 0;
+    private const STATIONS = 0;
 
     /**
      * @var int The key for show types.
      */
-    const SHOWS = 1;
+    private const SHOWS = 1;
 
     /**
      * @var ControllerInterface $controller The Controller instance to send commands to.

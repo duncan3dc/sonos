@@ -7,7 +7,6 @@ use PHPUnit\Framework\TestCase;
 
 class TimeTest extends TestCase
 {
-
     public function testParse1()
     {
         $time = Time::parse(55);

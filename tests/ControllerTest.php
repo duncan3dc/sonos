@@ -10,7 +10,6 @@ use Mockery;
 
 class ControllerTest extends MockTest
 {
-
     public function testPlay()
     {
         $device = $this->getDevice();

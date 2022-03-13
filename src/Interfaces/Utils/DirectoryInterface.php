@@ -7,7 +7,6 @@ namespace duncan3dc\Sonos\Interfaces\Utils;
  */
 interface DirectoryInterface
 {
-
     /**
      * Get the full path to the directory on the file share.
      *

@@ -9,9 +9,9 @@ use duncan3dc\Sonos\Helper;
  */
 class Spotify extends Track
 {
-    const PREFIX = "x-sonos-spotify:";
-    const REGION_EU = "2311";
-    const REGION_US = "3079";
+    public const PREFIX = "x-sonos-spotify:";
+    public const REGION_EU = "2311";
+    public const REGION_US = "3079";
 
     /**
      * @var string $region The region code for the Spotify service (the default is EU).

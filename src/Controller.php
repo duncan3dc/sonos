@@ -14,6 +14,7 @@ use duncan3dc\Sonos\Interfaces\UriInterface;
 use duncan3dc\Sonos\Interfaces\Utils\TimeInterface;
 use duncan3dc\Sonos\Tracks\Stream;
 use duncan3dc\Sonos\Utils\Time;
+
 use function strpos;
 
 /**

@@ -9,8 +9,8 @@ use duncan3dc\Sonos\Helper;
  */
 class Google extends Track
 {
-    const UNIQUE = "_dklxfo-";
-    const PREFIX = "x-sonos-http:" . self::UNIQUE;
+    protected const UNIQUE = "_dklxfo-";
+    public const PREFIX = "x-sonos-http:" . self::UNIQUE;
 
     /**
      * Create a Google track object.

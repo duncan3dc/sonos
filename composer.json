@@ -30,7 +30,7 @@
         "maglnet/composer-require-checker": "^1.0",
         "mockery/mockery": "^1.0,<1.2.3",
         "phpstan/phpstan": "^0.10.2",
-        "squizlabs/php_codesniffer": "^3.3.2",
+        "squizlabs/php_codesniffer": "^3.6",
         "phpunit/phpunit": "^6.4"
     },
     "autoload": {
@@ -45,7 +45,7 @@
             "vendor/bin/composer-require-checker",
             "vendor/bin/phpstan analyse --level=max src",
             "vendor/bin/phpstan analyse --level=max --configuration=phpstan-tests.neon tests",
-            "vendor/bin/phpcs --standard=PSR1,PSR2,PSR12 src tests"
+            "vendor/bin/phpcs"
         ]
     }
 }

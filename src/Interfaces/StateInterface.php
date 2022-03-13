@@ -12,7 +12,6 @@ use duncan3dc\Sonos\Utils\Time;
  */
 interface StateInterface extends TrackInterface
 {
-
     /**
      * Check if this state is currently playing a stream.
      *

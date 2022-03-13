@@ -10,7 +10,6 @@ use duncan3dc\Sonos\Interfaces\TrackInterface;
  */
 interface FactoryInterface
 {
-
     /**
      * Create a new Track instance from a URI.
      *

@@ -7,7 +7,6 @@ namespace duncan3dc\Sonos\Interfaces;
  */
 interface PlaylistInterface extends QueueInterface, UriInterface
 {
-
     /**
      * Get the id of the playlist.
      *

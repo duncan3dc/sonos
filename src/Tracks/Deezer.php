@@ -9,8 +9,8 @@ use duncan3dc\Sonos\Helper;
  */
 class Deezer extends Track
 {
-    const UNIQUE = "tr";
-    const PREFIX = "x-sonos-http:" . self::UNIQUE;
+    private const UNIQUE = "tr";
+    public const PREFIX = "x-sonos-http:" . self::UNIQUE;
 
     /**
      * Create a Deezer track object.

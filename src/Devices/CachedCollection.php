@@ -12,7 +12,7 @@ use Psr\SimpleCache\CacheInterface;
  */
 final class CachedCollection implements CollectionInterface
 {
-    const CACHE_KEY = "device-ip-addresses";
+    private const CACHE_KEY = "device-ip-addresses";
 
     /**
      * @var bool $retrieved A flag to indicate whether we've retrieved the devices from cache yet or not.

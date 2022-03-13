@@ -7,7 +7,6 @@ namespace duncan3dc\Sonos\Interfaces;
  */
 interface UriInterface
 {
-
     /**
      * Get the URI for this object.
      *

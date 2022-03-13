@@ -7,7 +7,6 @@ use PHPUnit\Framework\TestCase;
 
 class HelperTest extends TestCase
 {
-
     public function testGetModeRepeatAll()
     {
         $mode = Helper::getMode("REPEAT_ALL");

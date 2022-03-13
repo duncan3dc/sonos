@@ -5,6 +5,7 @@ namespace duncan3dc\SonosTests;
 use duncan3dc\Sonos\Interfaces\NetworkInterface;
 use duncan3dc\Sonos\Network;
 use PHPUnit\Framework\TestCase;
+
 use function getenv;
 
 abstract class LiveTest extends TestCase

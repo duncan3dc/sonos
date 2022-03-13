@@ -10,6 +10,7 @@ use duncan3dc\Sonos\Interfaces\TrackInterface;
 use duncan3dc\Sonos\Interfaces\Tracks\FactoryInterface;
 use duncan3dc\Sonos\Interfaces\UriInterface;
 use duncan3dc\Sonos\Tracks\Factory;
+
 use function is_string;
 
 /**

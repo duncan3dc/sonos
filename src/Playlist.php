@@ -9,6 +9,7 @@ use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Interfaces\PlaylistInterface;
 use duncan3dc\Sonos\Interfaces\QueueInterface;
 use duncan3dc\Sonos\Interfaces\UriInterface;
+
 use function substr;
 
 /**

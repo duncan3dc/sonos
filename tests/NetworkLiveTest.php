@@ -10,7 +10,6 @@ use duncan3dc\Sonos\Speaker;
 
 class NetworkLiveTest extends LiveTest
 {
-
     public function testGetSpeakers()
     {
         $result = $this->network->getSpeakers();

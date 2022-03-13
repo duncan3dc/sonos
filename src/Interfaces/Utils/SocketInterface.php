@@ -6,7 +6,6 @@ use Psr\Log\LoggerInterface;
 
 interface SocketInterface
 {
-
     /**
      * Send out the multicast discover request.
      *
