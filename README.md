@@ -7,7 +7,7 @@ Full documentation is available at http://duncan3dc.github.io/sonos/
 PHPDoc API documentation is also available at [http://duncan3dc.github.io/sonos/api/](http://duncan3dc.github.io/sonos/api/namespaces/duncan3dc.Sonos.html)  
 
 [![release](https://poser.pugx.org/duncan3dc/sonos/version.svg)](https://packagist.org/packages/duncan3dc/sonos)
-[![build](https://travis-ci.org/duncan3dc/sonos.svg?branch=master)](https://travis-ci.org/duncan3dc/sonos)
+[![build](https://github.com/duncan3dc/sonos/workflows/.github/workflows/buildcheck.yml/badge.svg?branch=main)](https://github.com/duncan3dc/sonos/actions?query=branch%3Amain+workflow%3A.github%2Fworkflows%2Fbuildcheck.yml)
 [![coverage](https://codecov.io/gh/duncan3dc/sonos/graph/badge.svg)](https://codecov.io/gh/duncan3dc/sonos)
 
 
