@@ -18,7 +18,7 @@ class Helper
      *
      * @param string $mode
      *
-     * @return array Mode data containing the following boolean elements (shuffle, repeat)
+     * @return array<string, bool> Mode data containing the following boolean elements (shuffle, repeat)
      */
     public static function getMode(string $mode): array
     {
@@ -41,7 +41,7 @@ class Helper
     /**
      * Create a mode string from a mode array.
      *
-     * @param array $options An array with 2 boolean elements (shuffle and repeat)
+     * @param array<string, bool> $options An array with 2 elements (shuffle and repeat)
      *
      * @return string
      */
@@ -67,7 +67,7 @@ class Helper
      *
      * @param string $id The ID of the track
      * @param string $parent The ID of the parent
-     * @param array $extra An xml array of extra attributes for this item
+     * @param array<string, mixed> $extra An xml array of extra attributes for this item
      * @param string $service The Sonos service ID to use
      *
      * @return string

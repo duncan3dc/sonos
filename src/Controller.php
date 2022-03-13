@@ -255,11 +255,6 @@ final class Controller implements ControllerInterface
     }
 
 
-    /**
-     * Get the currently active media info.
-     *
-     * @return array
-     */
     public function getMediaInfo(): array
     {
         return $this->soap("AVTransport", "GetMediaInfo");
@@ -427,11 +422,6 @@ final class Controller implements ControllerInterface
     }
 
 
-    /**
-     * Get the current play mode settings.
-     *
-     * @return array An array with 2 boolean elements (shuffle and repeat)
-     */
     public function getMode(): array
     {
         $data = $this->soap("AVTransport", "GetTransportSettings");
@@ -439,13 +429,6 @@ final class Controller implements ControllerInterface
     }
 
 
-    /**
-     * Set the current play mode settings.
-     *
-     * @param array $options An array with 2 boolean elements (shuffle and repeat)
-     *
-     * @return $this
-     */
     public function setMode(array $options): ControllerInterface
     {
         $this->soap("AVTransport", "SetPlayMode", [
@@ -597,7 +580,7 @@ final class Controller implements ControllerInterface
 
         $export = new ControllerState($this);
 
-        if ($pause && isset($state)) {
+        if ($pause) {
             $export->setState($state);
         }
 
@@ -710,15 +693,6 @@ final class Controller implements ControllerInterface
     }
 
 
-    /**
-     * Send a soap request to the speaker.
-     *
-     * @param string $service The service to send the request to
-     * @param string $action The action to call
-     * @param array $params The parameters to pass
-     *
-     * @return mixed
-     */
     public function soap(string $service, string $action, array $params = [])
     {
         return $this->speaker->soap($service, $action, $params);

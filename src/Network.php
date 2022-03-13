@@ -250,6 +250,8 @@ final class Network implements NetworkInterface, LoggerAwareInterface
                 return $controller;
             }
         }
+
+        throw new NotFoundException("Unable to find a controller for the IP address '{$ip}'");
     }
 
 

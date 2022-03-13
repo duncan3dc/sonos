@@ -3,9 +3,9 @@ parameters:
     - '/Access to an undefined property duncan3dc\\ObjectIntruder\\Intruder::/'
     - '/Call to an undefined method duncan3dc\\ObjectIntruder\\Intruder::/'
 
-    - '/Call to an undefined method .*MockInterface::shouldReceive\(\)/'
-    - '/Parameter #[0-9] .* of .* expects .*Mockery\\MockInterface given/'
-    - '/Call to an undefined method Mockery\\ExpectationInterface|Mockery\\HigherOrderMessage::andReturn\(\)/'
-
     - '/Parameter #1 \$string of static method duncan3dc\\Sonos\\Utils\\Time::parse\(\) expects string, int given/'
     - '/Parameter #1 \$filesystem of class duncan3dc\\Sonos\\Utils\\Directory constructor expects/'
+
+includes:
+	- vendor/phpstan/phpstan-mockery/extension.neon
+	- vendor/phpstan/phpstan-phpunit/extension.neon

@@ -2,12 +2,16 @@
 
 namespace duncan3dc\SonosTests;
 
+use duncan3dc\Sonos\Interfaces\PlaylistInterface;
 use duncan3dc\Sonos\Playlist;
 use duncan3dc\Sonos\Tracks\Track;
 
 class PlaylistLiveTest extends LiveTest
 {
+    /** @var PlaylistInterface */
     protected $playlist;
+
+    /** @var string */
     protected $playlistName = "phpunit-test";
 
     public function setUp(): void
@@ -24,9 +28,7 @@ class PlaylistLiveTest extends LiveTest
 
     public function tearDown(): void
     {
-        if ($this->playlist) {
-            $this->playlist->delete();
-        }
+        $this->playlist->delete();
     }
 
 

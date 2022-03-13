@@ -69,7 +69,7 @@ interface ControllerStateInterface
     /**
      * Get the stream this controller is using.
      *
-     * @var Stream|null
+     * @return Stream|null
      */
     public function getStream();
 }

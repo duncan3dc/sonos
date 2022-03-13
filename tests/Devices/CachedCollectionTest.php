@@ -6,13 +6,19 @@ use duncan3dc\Sonos\Devices\CachedCollection;
 use duncan3dc\Sonos\Interfaces\Devices\CollectionInterface;
 use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
 use Mockery;
+use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\SimpleCache\CacheInterface;
 
 class CachedCollectionTest extends TestCase
 {
+    /** @var CollectionInterface|MockInterface */
     private $collection;
+
+    /** @var CacheInterface&MockInterface */
     private $cache;
+
+    /** @var CachedCollection */
     private $cachedCollection;
 
     public function setUp(): void

@@ -8,7 +8,7 @@ namespace duncan3dc\Sonos\Exceptions;
 class SoapException extends SonosException
 {
     /**
-     * @param \SoapClient $client The SoapClient instance that threw the SoapFault
+     * @var \SoapClient $client The SoapClient instance that threw the SoapFault
      */
     protected $client;
 

@@ -15,7 +15,11 @@ class AlarmTest extends MockTest
     /** @var SpeakerInterface|MockInterface */
     protected $speaker;
 
-    public function getMockAlarm(array $attributes = [])
+
+    /**
+     * @param array<string, string|int> $attributes
+     */
+    public function getMockAlarm(array $attributes = []): Alarm
     {
         $attributes = array_merge([
             "StartTime"             =>  "09:00:00",
@@ -44,7 +48,7 @@ class AlarmTest extends MockTest
     }
 
 
-    protected function getMockRecurrence(string $recurrence)
+    protected function getMockRecurrence(string $recurrence): Alarm
     {
         return $this->getMockAlarm([
             "Recurrence"    =>  $recurrence,
@@ -142,7 +146,7 @@ class AlarmTest extends MockTest
         $this->assertSame(0, $alarm->getFrequency() & Alarm::SATURDAY);
         $this->assertSame(0, $alarm->getFrequency() & Alarm::SUNDAY);
         $this->assertSame(Alarm::ONCE, $alarm->getFrequency());
-        $this->assertFalse($alarm->getFrequency() === Alarm::DAILY);
+        $this->assertNotSame(Alarm::DAILY, $alarm->getFrequency());
     }
 
 
@@ -478,6 +482,7 @@ class AlarmTest extends MockTest
             "ID"    =>  999,
         ]);
 
-        $this->assertNull($alarm->delete());
+        $alarm->delete();
+        self::assertTrue(true);
     }
 }

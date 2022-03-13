@@ -17,16 +17,16 @@ use duncan3dc\Sonos\Utils\Time;
 final class Alarm implements AlarmInterface
 {
     /**
-     * @var array $days An mapping of php day values to our day constants.
+     * @var array<int, int> $days An mapping of php day values to our day constants.
      */
     protected $days = [
-        "0" =>  AlarmInterface::SUNDAY,
-        "1" =>  AlarmInterface::MONDAY,
-        "2" =>  AlarmInterface::TUESDAY,
-        "3" =>  AlarmInterface::WEDNESDAY,
-        "4" =>  AlarmInterface::THURSDAY,
-        "5" =>  AlarmInterface::FRIDAY,
-        "6" =>  AlarmInterface::SATURDAY,
+        0 =>  AlarmInterface::SUNDAY,
+        1 =>  AlarmInterface::MONDAY,
+        2 =>  AlarmInterface::TUESDAY,
+        3 =>  AlarmInterface::WEDNESDAY,
+        4 =>  AlarmInterface::THURSDAY,
+        5 =>  AlarmInterface::FRIDAY,
+        6 =>  AlarmInterface::SATURDAY,
     ];
 
     /**
@@ -35,7 +35,7 @@ final class Alarm implements AlarmInterface
     protected $id;
 
     /**
-     * @var array $attributes The attributes of the alarm
+     * @var array<string, mixed> $attributes The attributes of the alarm
      */
     protected $attributes;
 
@@ -63,7 +63,7 @@ final class Alarm implements AlarmInterface
      *
      * @param string $service The service to send the request to
      * @param string $action The action to call
-     * @param array $params The parameters to pass
+     * @param array<string, string|int|bool> $params The parameters to pass
      *
      * @return mixed
      */

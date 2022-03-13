@@ -154,7 +154,7 @@ final class ControllerState implements ControllerStateInterface
     /**
      * Set the playing mode of the controller.
      *
-     * $param int $state One of the ControllerInterface::STATE_ constants
+     * @param int $state One of the ControllerInterface::STATE_ constants
      *
      * @return $this
      */

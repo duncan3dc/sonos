@@ -134,7 +134,7 @@ interface ControllerInterface extends SpeakerInterface
     /**
      * Get the currently active media info.
      *
-     * @return array
+     * @return array<string, string>
      */
     public function getMediaInfo(): array;
 
@@ -216,7 +216,7 @@ interface ControllerInterface extends SpeakerInterface
     /**
      * Get the current play mode settings.
      *
-     * @return array An array with 2 boolean elements (shuffle and repeat)
+     * @return array<string, bool> An array with 2 elements (shuffle and repeat)
      */
     public function getMode(): array;
 
@@ -224,7 +224,7 @@ interface ControllerInterface extends SpeakerInterface
     /**
      * Set the current play mode settings.
      *
-     * @param array $options An array with 2 boolean elements (shuffle and repeat)
+     * @param array<string, bool> $options An array with 2 elements (shuffle and repeat)
      *
      * @return self
      */

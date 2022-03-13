@@ -3,12 +3,17 @@
 namespace duncan3dc\SonosTests;
 
 use duncan3dc\Sonos\Exceptions\UnknownGroupException;
+use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
 use duncan3dc\Sonos\Speaker;
 use Mockery;
+use Mockery\MockInterface;
 
 class SpeakerTest extends MockTest
 {
+    /** @var DeviceInterface&MockInterface  */
     protected $device;
+
+    /** @var Speaker */
     protected $speaker;
 
     public function setUp(): void

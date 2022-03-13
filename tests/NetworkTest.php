@@ -49,7 +49,10 @@ class NetworkTest extends MockTest
     }
 
 
-    private function mockSpeakers()
+    /**
+     * @return array<SpeakerInterface&MockInterface>
+     */
+    private function mockSpeakers(): array
     {
         $speakers = [];
         foreach (range(1, 3) as $id) {

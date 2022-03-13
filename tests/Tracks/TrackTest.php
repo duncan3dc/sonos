@@ -5,12 +5,14 @@ namespace duncan3dc\SonosTests\Tracks;
 use duncan3dc\DomParser\XmlParser;
 use duncan3dc\ObjectIntruder\Intruder;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
+use duncan3dc\Sonos\Interfaces\TrackInterface;
 use duncan3dc\Sonos\Tracks\Track;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 
 class TrackTest extends TestCase
 {
+    /** @var string */
     protected $xml1 = <<<XML
             <track>
                 <title>TITLE</title>
@@ -20,6 +22,7 @@ class TrackTest extends TestCase
             </track>
 XML;
 
+    /** @var string */
     protected $xml2 = <<<XML
             <track id="O:345">
                 <title>TITLE</title>
@@ -31,7 +34,10 @@ XML;
             </track>
 XML;
 
+    /** @var TrackInterface */
     protected $track1;
+
+    /** @var TrackInterface */
     protected $track2;
 
     public function setUp(): void

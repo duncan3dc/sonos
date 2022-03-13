@@ -2,12 +2,20 @@
 
 namespace duncan3dc\SonosTests;
 
+use duncan3dc\Sonos\Interfaces\ControllerInterface;
+use duncan3dc\Sonos\Interfaces\ControllerStateInterface;
+use duncan3dc\Sonos\Interfaces\QueueInterface;
 use duncan3dc\Sonos\Tracks\Track;
 
 class QueueLiveTest extends LiveTest
 {
+    /** @var ControllerInterface|null */
     protected $controller;
+
+    /** @var QueueInterface */
     protected $queue;
+
+    /** @var ControllerStateInterface */
     protected $state;
 
     public function setUp(): void

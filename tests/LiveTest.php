@@ -19,7 +19,6 @@ abstract class LiveTest extends TestCase
 
         if (!getenv("SONOS_LIVE_TESTS")) {
             $this->markTestSkipped("Ignoring live tests (set the SONOS_LIVE_TESTS environment variable to run)");
-            return;
         }
 
         try {

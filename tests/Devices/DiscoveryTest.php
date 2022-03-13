@@ -8,13 +8,17 @@ use duncan3dc\Sonos\Interfaces\Devices\CollectionInterface;
 use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
 use duncan3dc\Sonos\Interfaces\Utils\SocketInterface;
 use Mockery;
+use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
 class DiscoveryTest extends TestCase
 {
+    /** @var CollectionInterface&MockInterface */
     private $collection;
+
+    /** @var Intruder */
     private $discovery;
 
     public function setUp(): void
@@ -123,7 +127,7 @@ class DiscoveryTest extends TestCase
     }
 
 
-    private function getSocket($type)
+    private function getSocket(string $type): SocketInterface
     {
         $socket = Mockery::mock(SocketInterface::class);
 

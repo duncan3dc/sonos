@@ -8,11 +8,12 @@ use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
 use duncan3dc\Sonos\Interfaces\NetworkInterface;
 use duncan3dc\Sonos\Speaker;
 use Mockery;
-use PHPUnit\Framework\TestCase;
 use Mockery\MockInterface;
+use PHPUnit\Framework\TestCase;
 
 abstract class MockTest extends TestCase
 {
+    /** @var NetworkInterface&MockInterface */
     protected $network;
 
     public function tearDown(): void
@@ -27,7 +28,10 @@ abstract class MockTest extends TestCase
         $this->network->shouldReceive("getSpeakers")->andReturn([]);
     }
 
-    protected function getDevice(string $ip = "192.168.0.66")
+    /**
+     * @return DeviceInterface&MockInterface
+     */
+    protected function getDevice(string $ip = "192.168.0.66"): MockInterface
     {
         $device = Mockery::mock(DeviceInterface::class);
         $device->shouldReceive("getIp")->andReturn($ip);
@@ -44,7 +48,7 @@ abstract class MockTest extends TestCase
     }
 
     /**
-     * @param DeviceInterface|MockInterface $device
+     * @param DeviceInterface&MockInterface $device
      * @return Speaker
      */
     protected function getSpeaker($device)
@@ -59,7 +63,10 @@ abstract class MockTest extends TestCase
         return new Speaker($device);
     }
 
-    protected function getController(DeviceInterface $device)
+    /**
+     * @param DeviceInterface&MockInterface $device
+     */
+    protected function getController(DeviceInterface $device): Controller
     {
         $speaker = $this->getSpeaker($device);
 

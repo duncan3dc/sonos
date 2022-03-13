@@ -3,15 +3,23 @@
 namespace duncan3dc\SonosTests;
 
 use duncan3dc\DomParser\XmlElement;
+use duncan3dc\Sonos\Controller;
+use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
 use duncan3dc\Sonos\Interfaces\UriInterface;
 use duncan3dc\Sonos\Playlist;
 use duncan3dc\Sonos\Queue;
 use Mockery;
+use Mockery\MockInterface;
 
 class QueueTest extends MockTest
 {
+    /** @var DeviceInterface&MockInterface  */
     protected $device;
+
+    /** @var Controller */
     protected $controller;
+
+    /** @var Queue */
     protected $queue;
 
     public function setUp(): void
@@ -29,7 +37,7 @@ class QueueTest extends MockTest
     }
 
 
-    protected function mockUpdateId()
+    protected function mockUpdateId(): void
     {
         $class = new \ReflectionClass($this->queue);
 

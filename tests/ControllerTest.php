@@ -5,6 +5,7 @@ namespace duncan3dc\SonosTests;
 use duncan3dc\Sonos\Controller;
 use duncan3dc\Sonos\Exceptions\SoapException;
 use duncan3dc\Sonos\Interfaces\ControllerStateInterface;
+use duncan3dc\Sonos\Tracks\Stream;
 use duncan3dc\Sonos\Utils\Time;
 use Mockery;
 
@@ -331,7 +332,10 @@ class ControllerTest extends MockTest
         $this->assertSame("New Found Glory", $state->getArtist());
         $this->assertSame("00:00:00", $state->getDuration()->asString());
         $this->assertSame("00:00:02", $state->getPosition()->asString());
-        $this->assertSame("TeamRock Radio", $state->getStream()->getTitle());
+
+        $stream = $state->getStream();
+        self::assertInstanceOf(Stream::class, $stream);
+        $this->assertSame("TeamRock Radio", $stream->getTitle());
     }
 
 
@@ -351,7 +355,9 @@ class ControllerTest extends MockTest
         $state = $controller->getStateDetails();
 
         $this->assertSame("x-rincon-stream:RINCON_B8E9372C898401400", $state->getUri());
-        $this->assertSame("Line-In", $state->getStream()->getTitle());
+        $stream = $state->getStream();
+        self::assertInstanceOf(Stream::class, $stream);
+        $this->assertSame("Line-In", $stream->getTitle());
     }
 
 

@@ -7,6 +7,8 @@ namespace duncan3dc\Sonos\Interfaces;
  */
 interface TrackInterface extends UriInterface
 {
+    public function __construct(string $uri);
+
     /**
      * Set the name of the track.
      */

@@ -2,6 +2,7 @@
 
 namespace duncan3dc\SonosTests\Tracks;
 
+use duncan3dc\DomParser\XmlElement;
 use duncan3dc\DomParser\XmlParser;
 use duncan3dc\DomParser\XmlWriter;
 use duncan3dc\Sonos\Tracks\Deezer;
@@ -76,7 +77,7 @@ class FactoryTest extends MockTest
     }
 
 
-    private function getXml(string $uri, string $title = "")
+    private function getXml(string $uri, string $title = ""): XmlElement
     {
         $xml = XmlWriter::createXml([
             "track" =>  [

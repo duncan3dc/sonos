@@ -6,11 +6,15 @@ use duncan3dc\Sonos\Devices\Collection;
 use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
 use duncan3dc\Sonos\Interfaces\Devices\FactoryInterface;
 use Mockery;
+use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 
 class CollectionTest extends TestCase
 {
+    /** @var FactoryInterface|MockInterface */
     private $factory;
+
+    /** @var Collection */
     private $collection;
 
     public function setUp(): void

@@ -8,7 +8,10 @@ use duncan3dc\SonosTests\MockTest;
 
 class DeviceTest extends MockTest
 {
-    public function modelProvider()
+    /**
+     * @return iterable<array<mixed>>
+     */
+    public function modelProvider(): iterable
     {
         $speakers = [
             "S1",
@@ -46,6 +49,7 @@ class DeviceTest extends MockTest
     }
     /**
      * @dataProvider modelProvider
+     * @param mixed $model
      */
     public function testIsSpeaker($model, bool $expected): void
     {

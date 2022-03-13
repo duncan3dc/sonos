@@ -8,6 +8,9 @@ use duncan3dc\Sonos\Interfaces\Utils\SocketInterface;
 use duncan3dc\Sonos\Utils\Socket;
 use Psr\Log\LoggerInterface;
 
+use function assert;
+use function is_array;
+
 final class Discovery implements CollectionInterface
 {
     /**
@@ -222,7 +225,8 @@ final class Discovery implements CollectionInterface
             $unique[] = $device["usn"];
 
             $url = parse_url($device["location"]);
-            $this->collection->addIp($url["host"]);
+            assert(is_array($url));
+            $this->collection->addIp($url["host"] ?? "");
         }
     }
 

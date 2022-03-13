@@ -2,15 +2,24 @@
 
 namespace duncan3dc\SonosTests;
 
+use duncan3dc\Sonos\Interfaces\SpeakerInterface;
+use duncan3dc\Sonos\Speaker;
+
+use function assert;
+use function reset;
+
 class SpeakerLiveTest extends LiveTest
 {
+    /** @var SpeakerInterface */
     protected $speaker;
 
     public function setUp(): void
     {
         parent::setUp();
         $speakers = $this->network->getSpeakers();
-        $this->speaker = reset($speakers);
+        $speaker = reset($speakers);
+        assert($speaker instanceof Speaker);
+        $this->speaker = $speaker;
     }
 
     public function testMute(): void

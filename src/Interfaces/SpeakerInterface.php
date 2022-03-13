@@ -14,7 +14,7 @@ interface SpeakerInterface
      *
      * @param string $service The service to send the request to
      * @param string $action The action to call
-     * @param array $params The parameters to pass
+     * @param array<string, string|int|bool> $params The parameters to pass
      *
      * @return mixed
      * @internal
