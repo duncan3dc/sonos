@@ -40,6 +40,8 @@ class ControllerTest extends MockTest
             "Filter"            =>  "",
             "SortCriteria"      =>  "",
             "ObjectID"          =>  "Q:0",
+        ])->andReturn([
+            "TotalMatches" => 0,
         ]);
 
         $this->expectException(\BadMethodCallException::class);
@@ -199,6 +201,9 @@ class ControllerTest extends MockTest
             "Filter"            =>  "",
             "SortCriteria"      =>  "",
             "ObjectID"          =>  "Q:0",
+        ])->andReturn([
+            "UpdateID" => 85,
+            "TotalMatches" => 1,
         ]);
         $device
             ->shouldReceive("soap")
