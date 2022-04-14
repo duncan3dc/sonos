@@ -28,6 +28,7 @@ class DeviceTest extends MockTest
             "S18",
             "S20",
             "S21",
+            "S24",
             "ZP80",
             "ZP90",
             "ZP100",
