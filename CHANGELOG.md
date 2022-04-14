@@ -5,6 +5,20 @@ Changelog
 
 --------
 
+## 2.2.0 - 2022-04-14
+
+### Fixed
+
+* [Device] Added support for the Play:5 Gen2 speaker ([#117](https://github.com/duncan3dc/sonos/issues/117)).
+* [Dependencies] Avoid a security issue in league/flysystem ([#121](https://github.com/duncan3dc/sonos/issues/121)).
+
+### Changed
+
+* [Support] Added support for PHP 8.0, and 8.1.
+* [Support] Dropped support for PHP 7.1, and 7.2.
+
+--------
+
 ## 2.1.1 - 2019-11-03
 
 ### Fixed
