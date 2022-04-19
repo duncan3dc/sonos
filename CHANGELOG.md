@@ -5,6 +5,14 @@ Changelog
 
 --------
 
+## 2.2.1 - 2022-04-19
+
+### Fixed
+
+* [Device] Added support for a bunch of other speaker models ([#122](https://github.com/duncan3dc/sonos/issues/122)).
+
+--------
+
 ## 2.2.0 - 2022-04-14
 
 ### Fixed
