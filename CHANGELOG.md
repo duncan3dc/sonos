@@ -5,6 +5,14 @@ Changelog
 
 --------
 
+## 2.2.2 - 2022-09-06
+
+### Added
+
+* [Dependencies] Added support for a domparser 2.0.
+
+--------
+
 ## 2.2.1 - 2022-04-19
 
 ### Fixed
