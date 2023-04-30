@@ -5,6 +5,14 @@ Changelog
 
 --------
 
+## 2.2.4 - 2023-04-30
+
+### Changed
+
+* [Support] Added support for Guzzle 7.
+
+--------
+
 ## 2.2.3 - 2023-01-17
 
 ### Changed
