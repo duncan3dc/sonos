@@ -7,6 +7,7 @@ Changelog
 
 * [Logging] setLogger() no longer returns anything (to match the psr/log interface).
 * [Dependencies] Switched to league/flysystem v3 ([#132](https://github.com/duncan3dc/sonos/issues/132)).
+* [Tracks] Dropped the Google and GoogleUnlimited tracks as the service has been shutdown.
 * [Support] Dropped support for PHP 7.3, 7.4, and 8.0.
 
 --------

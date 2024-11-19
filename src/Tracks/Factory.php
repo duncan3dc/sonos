@@ -40,8 +40,6 @@ final class Factory implements FactoryInterface
     {
         $classes = [
             Spotify::class,
-            Google::class,
-            GoogleUnlimited::class,
             Deezer::class,
             Stream::class,
         ];
