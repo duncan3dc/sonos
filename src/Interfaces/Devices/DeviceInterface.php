@@ -42,12 +42,4 @@ interface DeviceInterface
      * @return string
      */
     public function getModel(): string;
-
-
-    /**
-     * Check if this sonos device is a speaker.
-     *
-     * @return bool
-     */
-    public function isSpeaker(): bool;
 }

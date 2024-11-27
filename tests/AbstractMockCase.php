@@ -53,8 +53,6 @@ abstract class AbstractMockCase extends TestCase
      */
     protected function getSpeaker($device)
     {
-        $device->shouldReceive("isSpeaker")->once()->andReturn(true);
-
         $device->shouldReceive("soap")->with("ZoneGroupTopology", "GetZoneGroupAttributes", [])->andReturn([
             "CurrentZoneGroupID" => "RINCON_5CAAFD472E1C01400:916619538",
             "CurrentZonePlayerUUIDsInGroup" => "RINCON_5CAAFD472E1C01400",

@@ -5,6 +5,7 @@ Changelog
 
 ### Changed
 
+* [Device] Removed the isSpeaker() method, this is now handled by the Speakers collection.
 * [Logging] setLogger() no longer returns anything (to match the psr/log interface).
 * [Dependencies] Switched to league/flysystem v3 ([#132](https://github.com/duncan3dc/sonos/issues/132)).
 * [Tracks] Dropped the Google and GoogleUnlimited tracks as the service has been shutdown.
