@@ -3,9 +3,8 @@
 namespace duncan3dc\Sonos;
 
 use duncan3dc\DomParser\XmlParser;
-use duncan3dc\Sonos\Devices\Collection;
 use duncan3dc\Sonos\Devices\Discovery;
-use duncan3dc\Sonos\Devices\Factory;
+use duncan3dc\Sonos\Devices\Speakers;
 use duncan3dc\Sonos\Exceptions\NotFoundException;
 use duncan3dc\Sonos\Exceptions\UnknownGroupException;
 use duncan3dc\Sonos\Interfaces\AlarmInterface;
@@ -16,7 +15,6 @@ use duncan3dc\Sonos\Interfaces\PlaylistInterface;
 use duncan3dc\Sonos\Interfaces\Services\RadioInterface;
 use duncan3dc\Sonos\Interfaces\SpeakerInterface;
 use duncan3dc\Sonos\Services\Radio;
-use GuzzleHttp\Client;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 
@@ -54,7 +52,7 @@ final class Network implements NetworkInterface, LoggerAwareInterface
     public function __construct(CollectionInterface $collection = null)
     {
         if ($collection === null) {
-            $collection = new Discovery();
+            $collection = new Speakers(new Discovery());
         }
         $this->collection = $collection;
     }
@@ -106,10 +104,6 @@ final class Network implements NetworkInterface, LoggerAwareInterface
 
         $this->speakers = [];
         foreach ($devices as $device) {
-            if (!$device->isSpeaker()) {
-                continue;
-            }
-
             $speaker = new Speaker($device);
 
             try {

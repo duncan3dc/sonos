@@ -77,11 +77,6 @@ final class Speaker implements SpeakerInterface
         if (preg_match("/^uuid:(.*)$/", $udn, $matches)) {
             $this->uuid = $matches[1];
         }
-
-        if (!$this->device->isSpeaker()) {
-            $error = "You cannot create a Speaker instance for this model: " . $this->device->getModel();
-            throw new \InvalidArgumentException($error);
-        }
     }
 
 

@@ -184,48 +184,4 @@ final class Device implements DeviceInterface
 
         return $this->model;
     }
-
-
-    /**
-     * Check if this sonos device is a speaker.
-     *
-     * @return bool
-     */
-    public function isSpeaker(): bool
-    {
-        $model = $this->getModel();
-
-        $models = [
-            "S1"    =>  "PLAY:1",
-            "S12"   =>  "PLAY:1",
-            "S3"    =>  "PLAY:3",
-            "S5"    =>  "PLAY:5",
-            "S6"    =>  "PLAY:5",
-            "S24" => "PLAY:5",
-            "S9"    =>  "PLAYBAR",
-            "S11"   =>  "PLAYBASE",
-            "S13"   =>  "ONE",
-            "S18"   =>  "ONE",
-            "S14"   =>  "BEAM",
-            "S31" => "BEAM",
-            "S15"   =>  "CONNECT",
-            "S17" => "Move",
-            "S19" => "ARC",
-            "S20" => "SYMFONISK Table Lamp",
-            "S21" => "SYMFONISK Bookshelf",
-            "S29" => "SYMFONISK Picture Frame",
-            "S22" => "ONE SL",
-            "S38" => "ONE SL",
-            "S23" => "PORT",
-            "S27" => "ROAM",
-            "S35" => "ROAM SL",
-            "ZP80"  =>  "ZONEPLAYER",
-            "ZP90"  =>  "CONNECT",
-            "S16" => "CONNECT:AMP",
-            "ZP100" =>  "CONNECT:AMP",
-            "ZP120" =>  "CONNECT:AMP",
-        ];
-
-        return array_key_exists($model, $models);
-    }
 }
