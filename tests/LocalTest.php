@@ -26,7 +26,7 @@ class LocalTest extends TestCase
     public function setUp(): void
     {
         $collection = new Collection();
-        $collection->addDevice(new Device("localhost"));
+        $collection->addDevice(new Device("sonos-test"));
 
         $this->network = new Network($collection);
         $this->controller = $this->network->getController();

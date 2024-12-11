@@ -13,3 +13,7 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 RUN git config --global --add safe.directory /app
 
 WORKDIR /app
+
+
+FROM php:8.4-cli AS test
+CMD ["php", "-S", "sonos-test:1400", "/app/tests/local/router.php"]

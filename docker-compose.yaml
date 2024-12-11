@@ -11,3 +11,13 @@ services:
       - ./:/app
     stdin_open: true
     tty: true
+
+  sonos-test:
+    container_name: sonos-test
+    build:
+      context: ./
+      target: test
+    volumes:
+      - ./:/app
+    stdin_open: true
+    tty: true
