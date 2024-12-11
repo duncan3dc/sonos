@@ -9,7 +9,9 @@ use duncan3dc\Sonos\Interfaces\NetworkInterface;
 use duncan3dc\Sonos\Interfaces\QueueInterface;
 use duncan3dc\Sonos\Network;
 use duncan3dc\Sonos\Tracks\Track;
+use League\CLImate\Logger;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LogLevel;
 
 class LocalTest extends TestCase
 {
@@ -25,8 +27,9 @@ class LocalTest extends TestCase
 
     public function setUp(): void
     {
+        $logger = new Logger(LogLevel::DEBUG);
         $collection = new Collection();
-        $collection->addDevice(new Device("sonos-test"));
+        $collection->addDevice(new Device("sonos-test", null, $logger));
 
         $this->network = new Network($collection);
         $this->controller = $this->network->getController();
