@@ -1,0 +1,13 @@
+services:
+
+  sonos-cli:
+    container_name: sonos-cli
+    build:
+      context: ./
+      target: dev
+      args:
+        COVERAGE: pcov
+    volumes:
+      - ./:/app
+    stdin_open: true
+    tty: true
