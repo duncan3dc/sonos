@@ -5,6 +5,14 @@ Changelog
 
 --------
 
+## 2.2.6 - 2024-12-18
+
+### Changed
+
+* [Support] Added support for PHP 8.3 and 8.4.
+
+--------
+
 ## 2.2.5 - 2024-12-18
 
 ### Changed

@@ -90,7 +90,7 @@ final class Playlist extends Queue implements PlaylistInterface
      *
      * @return void
      */
-    protected function addUris(array $tracks, int $position = null)
+    protected function addUris(array $tracks, ?int $position = null)
     {
         if ($position === null) {
             $position = $this->getNextPosition();

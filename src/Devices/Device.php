@@ -41,10 +41,10 @@ final class Device implements DeviceInterface
      * Create an instance of the Device class.
      *
      * @param string $ip The ip address that the device is listening on
-     * @param CacheInterface $cache The cache object to use for finding Sonos devices on the network
-     * @param LoggerInterface $logger A logging object
+     * @param ?CacheInterface $cache The cache object to use for finding Sonos devices on the network
+     * @param ?LoggerInterface $logger A logging object
      */
-    public function __construct(string $ip, CacheInterface $cache = null, LoggerInterface $logger = null)
+    public function __construct(string $ip, ?CacheInterface $cache = null, ?LoggerInterface $logger = null)
     {
         $this->ip = $ip;
 

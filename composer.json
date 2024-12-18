@@ -35,7 +35,7 @@
         "phpstan/phpstan-mockery": "^0.12.14",
         "phpstan/phpstan-phpunit": "^0.12.22",
         "squizlabs/php_codesniffer": "^3.6",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.6"
     },
     "autoload": {
         "psr-4": {"duncan3dc\\Sonos\\": "src/"}

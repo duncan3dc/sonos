@@ -31,9 +31,9 @@ final class Collection implements CollectionInterface
     /**
      * Create a new instance.
      *
-     * @param FactoryInterface $factory The factory to create new devices from
+     * @param ?FactoryInterface $factory The factory to create new devices from
      */
-    public function __construct(FactoryInterface $factory = null)
+    public function __construct(?FactoryInterface $factory = null)
     {
         if ($factory === null) {
             $factory = new Factory();

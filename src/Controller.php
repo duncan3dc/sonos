@@ -317,11 +317,11 @@ final class Controller implements ControllerInterface
      *
      * If no speaker is passed then the current controller's is used.
      *
-     * @param SpeakerInterface|null $speaker The speaker to get the line-in from
+     * @param ?SpeakerInterface $speaker The speaker to get the line-in from
      *
      * @return static
      */
-    public function useLineIn(SpeakerInterface $speaker = null): ControllerInterface
+    public function useLineIn(?SpeakerInterface $speaker = null): ControllerInterface
     {
         if ($speaker === null) {
             $speaker = $this;
@@ -649,11 +649,11 @@ final class Controller implements ControllerInterface
      * This is useful for making announcements over the Sonos network.
      *
      * @param UriInterface $track The track to play
-     * @param int $volume The volume to play the track at
+     * @param ?int $volume The volume to play the track at
      *
      * @return $this
      */
-    public function interrupt(UriInterface $track, int $volume = null): ControllerInterface
+    public function interrupt(UriInterface $track, ?int $volume = null): ControllerInterface
     {
         /**
          * Ensure the track has been generated.
