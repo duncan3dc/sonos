@@ -5,6 +5,14 @@ Changelog
 
 --------
 
+## 2.2.5 - 2024-12-18
+
+### Changed
+
+* [Support] Added support for the updated PSRs.
+
+--------
+
 ## 2.2.4 - 2023-04-30
 
 ### Changed
