@@ -49,9 +49,9 @@ final class Network implements NetworkInterface, LoggerAwareInterface
     /**
      * Create a new instance.
      *
-     * @param CollectionInterface $collection The collection of devices on this network
+     * @param ?CollectionInterface $collection The collection of devices on this network
      */
-    public function __construct(CollectionInterface $collection = null)
+    public function __construct(?CollectionInterface $collection = null)
     {
         if ($collection === null) {
             $collection = new Discovery();

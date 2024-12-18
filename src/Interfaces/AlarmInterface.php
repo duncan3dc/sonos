@@ -126,91 +126,91 @@ interface AlarmInterface
     /**
      * Check or set whether this alarm is active on mondays.
      *
-     * @param bool $set Set this alarm to be active or not on mondays
+     * @param ?bool $set Set this alarm to be active or not on mondays
      *
      * @return bool|static Returns true/false when checking, or static when setting
      */
-    public function onMonday(bool $set = null);
+    public function onMonday(?bool $set = null);
 
 
     /**
      * Check or set whether this alarm is active on tuesdays.
      *
-     * @param bool $set Set this alarm to be active or not on tuesdays
+     * @param ?bool $set Set this alarm to be active or not on tuesdays
      *
      * @return bool|static Returns true/false when checking, or static when setting
      */
-    public function onTuesday(bool $set = null);
+    public function onTuesday(?bool $set = null);
 
 
     /**
      * Check or set whether this alarm is active on wednesdays.
      *
-     * @param bool $set Set this alarm to be active or not on wednesdays
+     * @param ?bool $set Set this alarm to be active or not on wednesdays
      *
      * @return bool|static Returns true/false when checking, or static when setting
      */
-    public function onWednesday(bool $set = null);
+    public function onWednesday(?bool $set = null);
 
 
     /**
      * Check or set whether this alarm is active on thursdays.
      *
-     * @param bool $set Set this alarm to be active or not on thursdays
+     * @param ?bool $set Set this alarm to be active or not on thursdays
      *
      * @return bool|static Returns true/false when checking, or static when setting
      */
-    public function onThursday(bool $set = null);
+    public function onThursday(?bool $set = null);
 
 
     /**
      * Check or set whether this alarm is active on fridays.
      *
-     * @param bool $set Set this alarm to be active or not on fridays
+     * @param ?bool $set Set this alarm to be active or not on fridays
      *
      * @return bool|static Returns true/false when checking, or static when setting
      */
-    public function onFriday(bool $set = null);
+    public function onFriday(?bool $set = null);
 
 
     /**
      * Check or set whether this alarm is active on saturdays.
      *
-     * @param bool $set Set this alarm to be active or not on saturdays
+     * @param ?bool $set Set this alarm to be active or not on saturdays
      *
      * @return bool|static Returns true/false when checking, or static when setting
      */
-    public function onSaturday(bool $set = null);
+    public function onSaturday(?bool $set = null);
 
 
     /**
      * Check or set whether this alarm is active on sundays.
      *
-     * @param bool $set Set this alarm to be active or not on sundays
+     * @param ?bool $set Set this alarm to be active or not on sundays
      *
      * @return bool|static Returns true/false when checking, or static when setting
      */
-    public function onSunday(bool $set = null);
+    public function onSunday(?bool $set = null);
 
 
     /**
      * Check or set whether this alarm is a one time only alarm.
      *
-     * @param bool $set Set this alarm to be a one time only alarm
+     * @param ?bool $set Set this alarm to be a one time only alarm
      *
      * @return bool|static Returns true/false when checking, or static when setting
      */
-    public function once(bool $set = null);
+    public function once(?bool $set = null);
 
 
     /**
      * Check or set whether this alarm runs every day or not.
      *
-     * @param bool $set Set this alarm to be active every day
+     * @param ?bool $set Set this alarm to be active every day
      *
      * @return bool|static Returns true/false when checking, or static when setting
      */
-    public function daily(bool $set = null);
+    public function daily(?bool $set = null);
 
 
     /**

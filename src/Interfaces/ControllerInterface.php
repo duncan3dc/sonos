@@ -162,11 +162,11 @@ interface ControllerInterface extends SpeakerInterface
      *
      * If no speaker is passed then the current controller's is used.
      *
-     * @param SpeakerInterface|null $speaker The speaker to get the line-in from
+     * @param ?SpeakerInterface $speaker The speaker to get the line-in from
      *
      * @return self
      */
-    public function useLineIn(SpeakerInterface $speaker = null): ControllerInterface;
+    public function useLineIn(?SpeakerInterface $speaker = null): ControllerInterface;
 
 
     /**
@@ -322,9 +322,9 @@ interface ControllerInterface extends SpeakerInterface
      * This is useful for making announcements over the Sonos network.
      *
      * @param UriInterface $track The track to play
-     * @param int $volume The volume to play the track at
+     * @param ?int $volume The volume to play the track at
      *
      * @return self
      */
-    public function interrupt(UriInterface $track, int $volume = null): ControllerInterface;
+    public function interrupt(UriInterface $track, ?int $volume = null): ControllerInterface;
 }

@@ -22,10 +22,10 @@ final class Factory implements FactoryInterface
     /**
      * Create a new instance.
      *
-     * @param CacheInterface $cache The cache object to use for finding Sonos devices on the network
-     * @param LoggerInterface $logger A logging object
+     * @param ?CacheInterface $cache The cache object to use for finding Sonos devices on the network
+     * @param ?LoggerInterface $logger A logging object
      */
-    public function __construct(CacheInterface $cache = null, LoggerInterface $logger = null)
+    public function __construct(?CacheInterface $cache = null, ?LoggerInterface $logger = null)
     {
         if ($cache === null) {
             $cache = new ArrayPool();

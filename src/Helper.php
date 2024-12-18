@@ -68,7 +68,7 @@ class Helper
      * @param string $id The ID of the track
      * @param string $parent The ID of the parent
      * @param array<string, mixed> $extra An xml array of extra attributes for this item
-     * @param string $service The Sonos service ID to use
+     * @param ?string $service The Sonos service ID to use
      *
      * @return string
      */
@@ -76,7 +76,7 @@ class Helper
         string $id,
         string $parent = "-1",
         array $extra = [],
-        string $service = null
+        ?string $service = null
     ): string {
         if ($service !== null) {
             $extra["desc"] = [
