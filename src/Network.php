@@ -425,6 +425,28 @@ final class Network implements NetworkInterface, LoggerAwareInterface
     }
 
 
+    public function createAlarm(SpeakerInterface $speaker): AlarmInterface
+    {
+        $id = $speaker->soap("AlarmClock", "CreateAlarm", [
+            "StartLocalTime" => "00:00:00",
+            "Duration" => "00:10:00",
+            "Recurrence" => "ONCE",
+            "Enabled" => "0",
+            "RoomUUID" => $speaker->getUuid(),
+            "ProgramURI" => "x-rincon-buzzer:0",
+            "ProgramMetaData" => "",
+            "PlayMode" => "NORMAL",
+            "Volume" => 10,
+            "IncludeLinkedZones" => "0",
+        ]);
+
+        # If we ask for the new alarm too quickly Sonos says it doesn't exist, give it a second...
+        sleep(1);
+        $this->alarms = null;
+        return $this->getAlarmById($id);
+    }
+
+
     /**
      * Get a Radio instance for the network.
      *

@@ -107,4 +107,35 @@ class NetworkTest extends MockTest
 
         $this->assertSame(2, count($speakers));
     }
+
+
+    public function testCreateAlarm1(): void
+    {
+        $speaker = Mockery::mock(SpeakerInterface::class);
+        $speaker->shouldReceive("getUuid")->once()->with()->andReturn("RINCON_3CBFDE542C8101400");
+        $speaker->shouldReceive("soap")->once()->with("AlarmClock", "CreateAlarm", [
+            "StartLocalTime" => "00:00:00",
+            "Duration" => "00:10:00",
+            "Recurrence" => "ONCE",
+            "Enabled" => "0",
+            "RoomUUID" => "RINCON_3CBFDE542C8101400",
+            "ProgramURI" => "x-rincon-buzzer:0",
+            "ProgramMetaData" => "",
+            "PlayMode" => "NORMAL",
+            "Volume" => 10,
+            "IncludeLinkedZones" => "0",
+        ])->andReturn(741);
+
+        $network = new Intruder($this->network);
+        $network->speakers = [$speaker];
+
+        $speaker->shouldReceive("isCoordinator")->with()->andReturn(true);
+        $speaker->shouldReceive("getIp")->with()->andReturn("127.0.0.3");
+        $speaker->shouldReceive("soap")->with("AlarmClock", "ListAlarms", [])->andReturn([
+            "CurrentAlarmList" => "<Alarm ID='741'></Alarm>",
+        ]);
+
+        $alarm = $this->network->createAlarm($speaker);
+        self::assertSame(741, $alarm->getId());
+    }
 }
