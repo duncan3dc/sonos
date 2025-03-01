@@ -636,15 +636,15 @@ final class Alarm implements AlarmInterface
         unset($this->id);
     }
 
-
     /**
-     * Update the alarm with the current instance settings.
+     * Returns params array for Alarm creation and update.
      *
-     * @return $this
+     * @return array
      */
-    protected function save(): AlarmInterface
+
+    private function getParams(): array
     {
-        $params = [
+        return [
             "StartLocalTime"        =>  $this->attributes["StartTime"],
             "Duration"              =>  $this->attributes["Duration"],
             "Recurrence"            =>  $this->attributes["Recurrence"],
@@ -656,8 +656,27 @@ final class Alarm implements AlarmInterface
             "Volume"                =>  $this->attributes["Volume"],
             "IncludeLinkedZones"    =>  $this->attributes["IncludeLinkedZones"],
         ];
+    }
 
-        $this->soap("AlarmClock", "UpdateAlarm", $params);
+    /**
+     * Create the alarm with the current instance settings.
+     *
+     * @return $this
+     */
+    public function create(): AlarmInterface
+    {
+        $this->id = $this->soap("AlarmClock", "CreateAlarm", $this->getParams());
+        return $this;
+    }
+
+    /**
+     * Update the alarm with the current instance settings.
+     *
+     * @return $this
+     */
+    protected function save(): AlarmInterface
+    {
+        $this->soap("AlarmClock", "UpdateAlarm", $this->getParams());
 
         return $this;
     }

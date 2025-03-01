@@ -4,6 +4,7 @@ namespace duncan3dc\SonosTests;
 
 use duncan3dc\DomParser\XmlElement;
 use duncan3dc\Sonos\Alarm;
+use duncan3dc\Sonos\Interfaces\AlarmInterface;
 use duncan3dc\Sonos\Interfaces\NetworkInterface;
 use duncan3dc\Sonos\Interfaces\SpeakerInterface;
 use duncan3dc\Sonos\Uri;
@@ -484,5 +485,15 @@ class AlarmTest extends MockTest
 
         $alarm->delete();
         self::assertTrue(true);
+    }
+
+    public function testCreate(): void
+    {
+        $alarm = $this->getMockAlarm();
+        $this->speaker->shouldReceive("soap")->once()->with("AlarmClock", "CreateAlarm", [
+                "ID"    =>  999,
+        ]);
+
+        $this->assertIsObject($alarm->create(), AlarmInterface::class);
     }
 }
