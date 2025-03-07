@@ -2,7 +2,7 @@
 
 namespace duncan3dc\Sonos;
 
-use duncan3dc\DomParser\XmlWriter;
+use duncan3dc\Dom\Xml\Writer;
 
 /**
  * Provides helper functions for the classes.
@@ -84,7 +84,7 @@ class Helper
             ];
         }
 
-        $xml = XmlWriter::createXml([
+        $xml = Writer::createXml([
             "DIDL-Lite" =>  [
                 "_attributes"   =>  [
                     "xmlns:dc"      =>  "http://purl.org/dc/elements/1.1/",

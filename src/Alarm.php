@@ -2,7 +2,7 @@
 
 namespace duncan3dc\Sonos;
 
-use duncan3dc\DomParser\XmlElement;
+use duncan3dc\Dom\ElementInterface;
 use duncan3dc\Sonos\Exceptions\NotFoundException;
 use duncan3dc\Sonos\Exceptions\UnexpectedValueException;
 use duncan3dc\Sonos\Interfaces\AlarmInterface;
@@ -49,10 +49,10 @@ final class Alarm implements AlarmInterface
     /**
      * Create an instance of the Alarm class.
      *
-     * @param XmlElement $xml The xml element with the relevant attributes
+     * @param ElementInterface $xml The xml element with the relevant attributes
      * @param NetworkInterface $network A Network instance this alarm is from
      */
-    public function __construct(XmlElement $xml, NetworkInterface $network)
+    public function __construct(ElementInterface $xml, NetworkInterface $network)
     {
         $this->id = $xml->getAttribute("ID");
         $this->attributes = $xml->getAttributes();

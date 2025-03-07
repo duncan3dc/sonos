@@ -2,12 +2,13 @@
 
 namespace duncan3dc\Sonos;
 
-use duncan3dc\DomParser\XmlElement;
-use duncan3dc\DomParser\XmlParser;
+use duncan3dc\Dom\Xml\ElementInterface;
+use duncan3dc\Dom\Xml\Parser;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Interfaces\PlaylistInterface;
 use duncan3dc\Sonos\Interfaces\QueueInterface;
 use duncan3dc\Sonos\Interfaces\UriInterface;
+use duncan3dc\Sonos\Utils\Xml;
 
 use function substr;
 
@@ -25,10 +26,10 @@ final class Playlist extends Queue implements PlaylistInterface
     /**
      * Create an instance of the Playlist class.
      *
-     * @param XmlElement|string $param The id of the playlist, or an xml element with the relevant attributes
+     * @param ElementInterface|string $param The id of the playlist, or an xml element with the relevant attributes
      * @param ControllerInterface $controller A controller instance on the playlist's network
      */
-    public function __construct(XmlElement|string $param, ControllerInterface $controller)
+    public function __construct(ElementInterface|string $param, ControllerInterface $controller)
     {
         parent::__construct($controller);
 
@@ -36,7 +37,7 @@ final class Playlist extends Queue implements PlaylistInterface
             $this->id = $param;
         } else {
             $this->id = $param->getAttribute("id");
-            $this->name = $param->getTag("title")->nodeValue;
+            $this->name = Xml::tag($param, "title")->getValue();
         }
     }
 
@@ -52,15 +53,13 @@ final class Playlist extends Queue implements PlaylistInterface
 
     /**
      * Get the name of the playlist.
-     *
-     * @return string
      */
     public function getName(): string
     {
         if ($this->name === null) {
             $data = $this->browse("Metadata");
-            $xml = new XmlParser($data["Result"]);
-            $this->name = $xml->getTag("title")->nodeValue;
+            $xml = new Parser($data["Result"]);
+            $this->name = Xml::tag($xml, "title")->getValue();
         }
         return $this->name;
     }

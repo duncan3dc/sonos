@@ -2,14 +2,14 @@
 
 namespace duncan3dc\Sonos\Interfaces;
 
-use duncan3dc\DomParser\XmlElement;
+use duncan3dc\Dom\ElementInterface;
 
 /**
  * Representation of a track.
  */
 interface TrackInterface extends UriInterface
 {
-    public static function createFromXml(XmlElement $xml, ControllerInterface $controller): TrackInterface;
+    public static function createFromXml(ElementInterface $xml, ControllerInterface $controller): TrackInterface;
 
     public function __construct(string $uri);
 

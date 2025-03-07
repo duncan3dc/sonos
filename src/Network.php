@@ -2,7 +2,7 @@
 
 namespace duncan3dc\Sonos;
 
-use duncan3dc\DomParser\XmlParser;
+use duncan3dc\Dom\Xml\Parser;
 use duncan3dc\Sonos\Devices\Discovery;
 use duncan3dc\Sonos\Devices\Speakers;
 use duncan3dc\Sonos\Exceptions\NotFoundException;
@@ -242,7 +242,7 @@ final class Network implements NetworkInterface, LoggerAwareInterface
             "RequestedCount"    =>  100,
             "SortCriteria"      =>  "",
         ])->getArray();
-        $parser = new XmlParser($data["Result"]);
+        $parser = new Parser($data["Result"]);
 
         $playlists = [];
         foreach ($parser->getTags("container") as $container) {
@@ -351,7 +351,7 @@ final class Network implements NetworkInterface, LoggerAwareInterface
         }
 
         $data = $this->getController()->soap("AlarmClock", "ListAlarms")->getArray();
-        $parser = new XmlParser($data["CurrentAlarmList"]);
+        $parser = new Parser($data["CurrentAlarmList"]);
 
         $alarms = [];
         foreach ($parser->getTags("Alarm") as $tag) {

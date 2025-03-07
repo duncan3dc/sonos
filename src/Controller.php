@@ -2,7 +2,7 @@
 
 namespace duncan3dc\Sonos;
 
-use duncan3dc\DomParser\XmlParser;
+use duncan3dc\Dom\Xml\Parser;
 use duncan3dc\Sonos\Exceptions\InvalidArgumentException;
 use duncan3dc\Sonos\Exceptions\SoapException;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
@@ -17,6 +17,7 @@ use duncan3dc\Sonos\Interfaces\Utils\TimeInterface;
 use duncan3dc\Sonos\Tracks\Stream;
 use duncan3dc\Sonos\Utils\SoapResponse;
 use duncan3dc\Sonos\Utils\Time;
+use duncan3dc\Sonos\Utils\Xml;
 
 use function strpos;
 
@@ -107,16 +108,16 @@ final class Controller implements ControllerInterface
             return new State();
         }
 
-        $parser = new XmlParser($data["TrackMetaData"]);
-        $state = State::createFromXml($parser->getTag("item"), $this);
+        $parser = new Parser($data["TrackMetaData"]);
+        $state = State::createFromXml(Xml::tag($parser, "item"), $this);
 
         if ((string) $parser->getTag("streamContent")) {
             $info = $this->getMediaInfo();
-            $meta = new XmlParser($info["CurrentURIMetaData"]);
+            $meta = new Parser($info["CurrentURIMetaData"]);
             if ($title = (string) $meta->getTag("title")) {
                 $state->setStream(new Stream("", $title));
             } else {
-                $state->setStream(new Stream("", $parser->getTag("title")));
+                $state->setStream(new Stream("", Xml::tag($parser, "title")->getValue()));
             }
         }
 

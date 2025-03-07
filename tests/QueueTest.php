@@ -2,7 +2,7 @@
 
 namespace duncan3dc\SonosTests;
 
-use duncan3dc\DomParser\XmlElement;
+use duncan3dc\Dom\Xml\ElementInterface;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
 use duncan3dc\Sonos\Interfaces\UriInterface;
@@ -74,7 +74,7 @@ class QueueTest extends TestCase
             "SortCriteria"      =>  "",
             "ObjectID"          =>  "Q:0",
         ])->andReturn(new SoapResponse([
-            "Result"            =>  "<items><item></item><item></item><item></item><item></item><item></item></items>",
+            "Result"            =>  "<items><item><res></res></item><item><res></res></item><item><res></res></item><item><res></res></item><item><res></res></item></items>",
             "NumberReturned"    =>  2,
             "TotalMatches"      =>  10,
         ]));
@@ -144,9 +144,9 @@ class QueueTest extends TestCase
      */
     public function testAddTrack2(): void
     {
-        $xml = Mockery::mock(XmlElement::class);
+        $xml = Mockery::mock(ElementInterface::class);
         $xml->shouldReceive("getAttribute")->once()->with("id")->andReturn("SQ:487");
-        $xml->shouldReceive("getTag")->once()->with("title")->andReturn((object) ["nodeValue" => "Good Songs"]);
+        $xml->shouldReceive("getTag")->once()->with("title")->andReturn(MockFactory::xmlTag("Good Songs"));
 
         $playlist = new Playlist($xml, $this->controller);
 

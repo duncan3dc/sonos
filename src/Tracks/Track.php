@@ -2,10 +2,11 @@
 
 namespace duncan3dc\Sonos\Tracks;
 
-use duncan3dc\DomParser\XmlElement;
+use duncan3dc\Dom\ElementInterface;
 use duncan3dc\Sonos\Helper;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Interfaces\TrackInterface;
+use duncan3dc\Sonos\Utils\Xml;
 
 /**
  * Representation of a track.
@@ -216,14 +217,14 @@ class Track implements TrackInterface
     /**
      * Update the track properties using an xml element.
      *
-     * @param XmlElement $xml The xml element representing the track meta data
+     * @param ElementInterface $xml The xml element representing the track meta data
      * @param ControllerInterface $controller A controller instance to communicate with
      *
      * @return static
      */
-    public static function createFromXml(XmlElement $xml, ControllerInterface $controller): TrackInterface
+    public static function createFromXml(ElementInterface $xml, ControllerInterface $controller): TrackInterface
     {
-        $track = new static($xml->getTag("res"));
+        $track = new static(Xml::tag($xml, "res")->getValue());
 
         $track->title = (string) $xml->getTag("title");
 
@@ -237,7 +238,7 @@ class Track implements TrackInterface
             $track->album = (string) $xml->getTag("album");
         }
 
-        # Cast the node to a string first (we do this instead of calling nodeValue in case the object is null)
+        # Cast the node to a string first (we do this instead of calling getValue() in case the object is null)
         $number = (string) $xml->getTag("originalTrackNumber");
 
         # Then convert to a number

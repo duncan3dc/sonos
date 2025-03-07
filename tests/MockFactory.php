@@ -2,6 +2,7 @@
 
 namespace duncan3dc\SonosTests;
 
+use duncan3dc\Dom\Xml\ElementInterface;
 use duncan3dc\Sonos\Controller;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
@@ -37,5 +38,13 @@ final class MockFactory
         $network->shouldReceive("getSpeakers")->andReturn([]);
 
         return new Controller($speaker, $network);
+    }
+
+    public static function xmlTag(string $value): ElementInterface
+    {
+        $element = Mockery::mock(ElementInterface::class);
+        $element->shouldReceive("__toString")->zeroOrMoreTimes()->andReturn($value);
+        $element->shouldReceive("getValue")->zeroOrMoreTimes()->andReturn($value);
+        return $element;
     }
 }

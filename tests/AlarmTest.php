@@ -2,7 +2,7 @@
 
 namespace duncan3dc\SonosTests;
 
-use duncan3dc\DomParser\XmlElement;
+use duncan3dc\Dom\Xml\ElementInterface;
 use duncan3dc\Sonos\Alarm;
 use duncan3dc\Sonos\Interfaces\NetworkInterface;
 use duncan3dc\Sonos\Interfaces\SpeakerInterface;
@@ -36,7 +36,7 @@ class AlarmTest extends TestCase
             "IncludeLinkedZones"    =>  "1",
         ], $attributes);
 
-        $xml = Mockery::mock(XmlElement::class);
+        $xml = Mockery::mock(ElementInterface::class);
         $xml->shouldReceive("getAttribute")->once()->with("ID")->andReturn(999);
         $xml->shouldReceive("getAttributes")->once()->andReturn($attributes);
 
