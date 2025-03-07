@@ -2,11 +2,12 @@
 
 namespace duncan3dc\Sonos\Services;
 
-use duncan3dc\DomParser\XmlParser;
+use duncan3dc\Dom\Xml\Parser;
 use duncan3dc\Sonos\Exceptions\NotFoundException;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Interfaces\Services\RadioInterface;
 use duncan3dc\Sonos\Tracks\Stream;
+use duncan3dc\Sonos\Utils\Xml;
 
 /**
  * Handle radio streams using TuneIn.
@@ -59,12 +60,12 @@ final class Radio implements RadioInterface
             "RequestedCount"    =>  100,
             "SortCriteria"      =>  "",
         ]);
-        $parser = new XmlParser($result["Result"]);
+        $parser = new Parser($result["Result"]);
 
         $tagName = ($type === self::STATIONS) ? "item" : "container";
         foreach ($parser->getTags($tagName) as $tag) {
-            $name = $tag->getTag("title")->nodeValue;
-            $uri = $tag->getTag("res")->nodeValue;
+            $name = Xml::tag($tag, "title")->getValue();
+            $uri = Xml::tag($tag, "res")->getValue();
             $items[] = new Stream($uri, $name);
         }
 

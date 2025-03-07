@@ -2,9 +2,9 @@
 
 namespace duncan3dc\SonosTests\Tracks;
 
-use duncan3dc\DomParser\XmlElement;
-use duncan3dc\DomParser\XmlParser;
-use duncan3dc\DomParser\XmlWriter;
+use duncan3dc\Dom\ElementInterface;
+use duncan3dc\Dom\Xml\Parser;
+use duncan3dc\Dom\Xml\Writer;
 use duncan3dc\Sonos\Tracks\Deezer;
 use duncan3dc\Sonos\Tracks\Factory;
 use duncan3dc\Sonos\Tracks\Google;
@@ -12,6 +12,7 @@ use duncan3dc\Sonos\Tracks\GoogleUnlimited;
 use duncan3dc\Sonos\Tracks\Spotify;
 use duncan3dc\Sonos\Tracks\Stream;
 use duncan3dc\Sonos\Tracks\Track;
+use duncan3dc\Sonos\Utils\Xml;
 use duncan3dc\SonosTests\MockTest;
 
 class FactoryTest extends MockTest
@@ -77,17 +78,17 @@ class FactoryTest extends MockTest
     }
 
 
-    private function getXml(string $uri, string $title = ""): XmlElement
+    private function getXml(string $uri, string $title = ""): ElementInterface
     {
-        $xml = XmlWriter::createXml([
+        $xml = Writer::createXml([
             "track" =>  [
                 "res"   =>  $uri,
                 "title" =>  $title,
             ],
         ]);
 
-        $parser = new XmlParser($xml);
-        return $parser->getTag("track");
+        $parser = new Parser($xml);
+        return Xml::tag($parser, "track");
     }
 
 

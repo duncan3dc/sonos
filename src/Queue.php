@@ -2,8 +2,7 @@
 
 namespace duncan3dc\Sonos;
 
-use duncan3dc\DomParser\XmlParser;
-use duncan3dc\Sonos\Exceptions\SonosException;
+use duncan3dc\Dom\Xml\Parser;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Interfaces\QueueInterface;
 use duncan3dc\Sonos\Interfaces\TrackInterface;
@@ -148,7 +147,7 @@ class Queue implements QueueInterface
 
         do {
             $data = $this->browse("DirectChildren", $start, $limit);
-            $parser = new XmlParser($data["Result"]);
+            $parser = new Parser($data["Result"]);
             foreach ($parser->getTags("item") as $item) {
                 $tracks[] = $this->trackFactory->createFromXml($item);
                 if ($total > 0 && count($tracks) >= $total) {

@@ -2,11 +2,12 @@
 
 namespace duncan3dc\SonosTests\Tracks;
 
-use duncan3dc\DomParser\XmlParser;
+use duncan3dc\Dom\Xml\Parser;
 use duncan3dc\ObjectIntruder\Intruder;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Interfaces\TrackInterface;
 use duncan3dc\Sonos\Tracks\Track;
+use duncan3dc\Sonos\Utils\Xml;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 
@@ -15,6 +16,7 @@ class TrackTest extends TestCase
     /** @var string */
     protected $xml1 = <<<XML
             <track>
+                <res></res>
                 <title>TITLE</title>
                 <creator>ARTIST</creator>
                 <album>ALBUM</album>
@@ -25,6 +27,7 @@ XML;
     /** @var string */
     protected $xml2 = <<<XML
             <track id="O:345">
+                <res></res>
                 <title>TITLE</title>
                 <creator>ARTIST</creator>
                 <album>ALBUM</album>
@@ -45,11 +48,11 @@ XML;
         $controller = Mockery::mock(ControllerInterface::class);
         $controller->shouldReceive("getIp")->with()->andReturn("192.168.0.66");
 
-        $xml = new XmlParser($this->xml1);
-        $this->track1 = Track::createFromXml($xml->getTag("track"), $controller);
+        $xml = new Parser($this->xml1);
+        $this->track1 = Track::createFromXml(Xml::tag($xml, "track"), $controller);
 
-        $xml = new XmlParser($this->xml2);
-        $this->track2 = Track::createFromXml($xml->getTag("track"), $controller);
+        $xml = new Parser($this->xml2);
+        $this->track2 = Track::createFromXml(Xml::tag($xml, "track"), $controller);
     }
 
 

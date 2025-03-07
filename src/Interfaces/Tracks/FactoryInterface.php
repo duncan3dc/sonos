@@ -2,7 +2,7 @@
 
 namespace duncan3dc\Sonos\Interfaces\Tracks;
 
-use duncan3dc\DomParser\XmlElement;
+use duncan3dc\Dom\ElementInterface;
 use duncan3dc\Sonos\Interfaces\TrackInterface;
 
 /**
@@ -23,9 +23,7 @@ interface FactoryInterface
     /**
      * Create a new Track instance from a URI.
      *
-     * @param XmlElement $xml The xml element representing the track meta data.
-     *
-     * @return TrackInterface
+     * @param ElementInterface $xml The xml element representing the track meta data.
      */
-    public function createFromXml(XmlElement $xml): TrackInterface;
+    public function createFromXml(ElementInterface $xml): TrackInterface;
 }

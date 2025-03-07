@@ -53,6 +53,6 @@ class FactoryTest extends TestCase
             ->andReturn("<test>ok</test>");
 
         $result = $device->getXml("/test.xml");
-        $this->assertSame("ok", $result->getTag("test")->nodeValue);
+        $this->assertSame("ok", (string) $result->getTag("test"));
     }
 }

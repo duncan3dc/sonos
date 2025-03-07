@@ -2,10 +2,11 @@
 
 namespace duncan3dc\Sonos\Tracks;
 
-use duncan3dc\DomParser\XmlElement;
+use duncan3dc\Dom\ElementInterface;
 use duncan3dc\Sonos\Helper;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Interfaces\TrackInterface;
+use duncan3dc\Sonos\Utils\Xml;
 
 /**
  * Representation of a stream.
@@ -52,13 +53,15 @@ class Stream extends Track
     /**
      * Create a stream from an xml element.
      *
-     * @param XmlElement $xml The xml element representing the track meta data
+     * @param ElementInterface $xml The xml element representing the track meta data
      * @param ControllerInterface $controller A controller instance to communicate with
      *
-     * @return self
+     * @return static
      */
-    public static function createFromXml(XmlElement $xml, ControllerInterface $controller): TrackInterface
+    public static function createFromXml(ElementInterface $xml, ControllerInterface $controller): TrackInterface
     {
-        return new static($xml->getTag("res")->nodeValue, $xml->getTag("title")->nodeValue);
+        $res = Xml::tag($xml, "res")->getValue();
+        $title = Xml::tag($xml, "title")->getValue();
+        return new static($res, $title);
     }
 }

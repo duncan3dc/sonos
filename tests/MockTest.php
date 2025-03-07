@@ -2,7 +2,8 @@
 
 namespace duncan3dc\SonosTests;
 
-use duncan3dc\DomParser\XmlParser;
+use duncan3dc\Dom\Xml\ElementInterface;
+use duncan3dc\Dom\Xml\ParserInterface;
 use duncan3dc\Sonos\Controller;
 use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
 use duncan3dc\Sonos\Interfaces\NetworkInterface;
@@ -28,6 +29,14 @@ abstract class MockTest extends TestCase
         $this->network->shouldReceive("getSpeakers")->andReturn([]);
     }
 
+    protected function mockStringTag(string $value): ElementInterface
+    {
+        $element = Mockery::mock(ElementInterface::class);
+        $element->shouldReceive("__toString")->zeroOrMoreTimes()->andReturn($value);
+        $element->shouldReceive("getValue")->zeroOrMoreTimes()->andReturn($value);
+        return $element;
+    }
+
     /**
      * @return DeviceInterface&MockInterface
      */
@@ -36,12 +45,12 @@ abstract class MockTest extends TestCase
         $device = Mockery::mock(DeviceInterface::class);
         $device->shouldReceive("getIp")->andReturn($ip);
 
-        $parser = Mockery::mock(XmlParser::class);
-        $tag = Mockery::mock(XmlParser::class);
+        $parser = Mockery::mock(ParserInterface::class);
+        $tag = Mockery::mock(ElementInterface::class);
         $parser->shouldReceive("getTag")->with("device")->once()->andReturn($tag);
-        $tag->shouldReceive("getTag")->with("friendlyName")->once()->andReturn("Test Name");
-        $tag->shouldReceive("getTag")->with("roomName")->once()->andReturn("Test Room");
-        $tag->shouldReceive("getTag")->with("UDN")->once()->andReturn("uuid:RINCON_5CAAFD472E1C01400");
+        $tag->shouldReceive("getTag")->with("friendlyName")->once()->andReturn($this->mockStringTag("Test Name"));
+        $tag->shouldReceive("getTag")->with("roomName")->once()->andReturn($this->mockStringTag("Test Room"));
+        $tag->shouldReceive("getTag")->with("UDN")->once()->andReturn($this->mockStringTag("uuid:RINCON_5CAAFD472E1C01400"));
         $device->shouldReceive("getXml")->with("/xml/device_description.xml")->once()->andReturn($parser);
 
         return $device;

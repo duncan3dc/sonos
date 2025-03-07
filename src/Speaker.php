@@ -3,12 +3,14 @@
 namespace duncan3dc\Sonos;
 
 use duncan3dc\Sonos\Devices\Device;
+use duncan3dc\Sonos\Exceptions\UnexpectedResponseException;
 use duncan3dc\Sonos\Exceptions\UnknownGroupException;
 use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
 use duncan3dc\Sonos\Interfaces\SpeakerInterface;
 
+use duncan3dc\Sonos\Utils\Xml;
+
 use function explode;
-use function in_array;
 use function preg_match;
 use function strpos;
 
@@ -69,7 +71,7 @@ final class Speaker implements SpeakerInterface
         }
 
         $parser = $this->device->getXml("/xml/device_description.xml");
-        $device = $parser->getTag("device");
+        $device = Xml::tag($parser, "device");
         $this->name = (string) $device->getTag("friendlyName");
         $this->room = (string) $device->getTag("roomName");
 

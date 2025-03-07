@@ -13,7 +13,7 @@
     }],
     "require": {
         "duncan3dc/cache": "^1.0 || ^2.0",
-        "duncan3dc/domparser": "^1.4.1 || ^2.1",
+        "duncan3dc/domparser": "^2.1",
         "duncan3dc/logger-aware-trait": "^0.2 || ^1.0",
         "duncan3dc/sonos-common": "^1.0",
         "duncan3dc/speaker": "^1.0",

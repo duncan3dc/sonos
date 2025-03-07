@@ -2,7 +2,7 @@
 
 namespace duncan3dc\Sonos\Interfaces\Devices;
 
-use duncan3dc\DomParser\XmlParser;
+use duncan3dc\Dom\Xml\ParserInterface;
 
 interface DeviceInterface
 {
@@ -18,10 +18,8 @@ interface DeviceInterface
      * Retrieve some xml from the device.
      *
      * @param string $url The url to retrieve
-     *
-     * @return XmlParser
      */
-    public function getXml(string $url): XmlParser;
+    public function getXml(string $url): ParserInterface;
 
 
     /**

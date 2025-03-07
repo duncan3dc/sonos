@@ -2,7 +2,7 @@
 
 namespace duncan3dc\Sonos;
 
-use duncan3dc\DomParser\XmlElement;
+use duncan3dc\Dom\ElementInterface;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Interfaces\StateInterface;
 use duncan3dc\Sonos\Interfaces\TrackInterface;
@@ -35,12 +35,12 @@ final class State extends Track implements StateInterface
     /**
      * Update the track properties using an xml element.
      *
-     * @param XmlElement $xml The xml element representing the track meta data.
+     * @param ElementInterface $xml The xml element representing the track meta data.
      * @param ControllerInterface $controller A controller instance on the playlist's network
      *
      * @return StateInterface
      */
-    public static function createFromXml(XmlElement $xml, ControllerInterface $controller): TrackInterface
+    public static function createFromXml(ElementInterface $xml, ControllerInterface $controller): TrackInterface
     {
         $track = parent::createFromXml($xml, $controller);
 

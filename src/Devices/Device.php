@@ -3,7 +3,8 @@
 namespace duncan3dc\Sonos\Devices;
 
 use duncan3dc\Cache\ArrayPool;
-use duncan3dc\DomParser\XmlParser;
+use duncan3dc\Dom\Xml\Parser;
+use duncan3dc\Dom\Xml\ParserInterface;
 use duncan3dc\Sonos\Exceptions\SoapException;
 use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
 use GuzzleHttp\Client;
@@ -73,10 +74,8 @@ final class Device implements DeviceInterface
      * Retrieve some xml from the device.
      *
      * @param string $url The url to retrieve
-     *
-     * @return XmlParser
      */
-    public function getXml(string $url): XmlParser
+    public function getXml(string $url): ParserInterface
     {
         $uri = "http://{$this->ip}:1400{$url}";
         $key = str_replace("/", "_", $this->ip . $url);
@@ -85,7 +84,7 @@ final class Device implements DeviceInterface
             $this->logger->info("getting xml from cache: {$uri}");
             $xml = $this->cache->get($key);
             if ($xml) {
-                return new XmlParser($xml);
+                return new Parser($xml);
             }
             $this->logger->error("empty xml in cache");
         }
@@ -95,7 +94,7 @@ final class Device implements DeviceInterface
 
         $this->cache->set($key, $xml, new \DateInterval("P1D"));
 
-        return new XmlParser($xml);
+        return new Parser($xml);
     }
 
 
