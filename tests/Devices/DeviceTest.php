@@ -36,6 +36,7 @@ class DeviceTest extends MockTest
             "S27",
             "S29",
             "S31",
+            "S33",
             "S35",
             "S38",
             "ZP80",

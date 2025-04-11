@@ -213,6 +213,7 @@ final class Device implements DeviceInterface
             "S19" => "ARC",
             "S20" => "SYMFONISK Table Lamp",
             "S21" => "SYMFONISK Bookshelf",
+            "S33" => "SYMFONISK Bookshelf",
             "S29" => "SYMFONISK Picture Frame",
             "S22" => "ONE SL",
             "S38" => "ONE SL",
