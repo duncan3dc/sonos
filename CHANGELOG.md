@@ -5,6 +5,19 @@ Changelog
 
 --------
 
+=======
+## 2.3.0 - 2025-07-12
+
+### Added
+
+* [Network] Added a method to create an alarm [#130](https://github.com/duncan3dc/sonos/pull/130).
+
+### Fixed
+
+* [Device] Added support for a new SYMFONISK speaker [#131](https://github.com/duncan3dc/sonos/pull/131).
+
+--------
+
 ## 2.2.6 - 2024-12-18
 
 ### Changed
