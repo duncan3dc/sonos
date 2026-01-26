@@ -4,7 +4,6 @@ parameters:
     - '/Call to an undefined method duncan3dc\\ObjectIntruder\\Intruder::/'
 
     - '/Parameter #1 \$string of static method duncan3dc\\Sonos\\Utils\\Time::parse\(\) expects string, int given/'
-    - '/Parameter #1 \$filesystem of class duncan3dc\\Sonos\\Utils\\Directory constructor expects/'
 
 includes:
 	- vendor/phpstan/phpstan-mockery/extension.neon

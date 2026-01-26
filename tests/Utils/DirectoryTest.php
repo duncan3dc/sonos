@@ -4,20 +4,20 @@ namespace duncan3dc\SonosTests\Utils;
 
 use duncan3dc\ObjectIntruder\Intruder;
 use duncan3dc\Sonos\Utils\Directory;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 
 class DirectoryTest extends TestCase
 {
-    /** @var FilesystemInterface|MockInterface */
+    /** @var FilesystemOperator|MockInterface */
     private $filesystem;
 
 
     protected function setUp(): void
     {
-        $this->filesystem = Mockery::mock(FilesystemInterface::class);
+        $this->filesystem = Mockery::mock(FilesystemOperator::class);
     }
 
 
@@ -31,19 +31,7 @@ class DirectoryTest extends TestCase
     {
         $directory = new Directory(sys_get_temp_dir(), "share", "directory");
         $intruder = new Intruder($directory);
-        $this->assertInstanceOf(FilesystemInterface::class, $intruder->filesystem);
-    }
-    public function testConstructor2(): void
-    {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage("Invalid filesystem");
-        new Directory(44, "share", "directory");
-    }
-    public function testConstructor3(): void
-    {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage("Invalid filesystem");
-        new Directory(new \DateTime(), "share", "directory");
+        $this->assertInstanceOf(FilesystemOperator::class, $intruder->filesystem);
     }
 
 
@@ -57,13 +45,13 @@ class DirectoryTest extends TestCase
     public function testHas1(): void
     {
         $directory = new Directory($this->filesystem, "share/", "directory/");
-        $this->filesystem->shouldReceive("has")->once()->with("directory/file.txt")->andReturn(true);
+        $this->filesystem->shouldReceive("fileExists")->once()->with("directory/file.txt")->andReturn(true);
         $this->assertTrue($directory->has("file.txt"));
     }
     public function testHas2(): void
     {
         $directory = new Directory($this->filesystem, "share/", "directory/");
-        $this->filesystem->shouldReceive("has")->once()->with("directory/stuff.txt")->andReturn(false);
+        $this->filesystem->shouldReceive("fileExists")->once()->with("directory/stuff.txt")->andReturn(false);
         $this->assertFalse($directory->has("stuff.txt"));
     }
 
