@@ -3,9 +3,7 @@
 namespace duncan3dc\Sonos\Utils;
 
 use duncan3dc\Sonos\Interfaces\Utils\DirectoryInterface;
-use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
-use League\Flysystem\FilesystemInterface;
 
 /**
  * Represents a shared directory.
@@ -13,7 +11,7 @@ use League\Flysystem\FilesystemInterface;
 final class Directory implements DirectoryInterface
 {
     /**
-     * @var FilesystemInterface $filesystem The full path to the share on the local filesystem.
+     * @var object $filesystem The full path to the share on the local filesystem.
      */
     private $filesystem;
 
@@ -31,7 +29,7 @@ final class Directory implements DirectoryInterface
     /**
      * Create a Directory instance to represent a file share.
      *
-     * @param FilesystemInterface|string $filesystem The full path to the share on the local filesystem.
+     * @param object|string $filesystem The full path to the share on the local filesystem.
      * @param string $share The full path to the share (including the hostname).
      * @param string $directory The name of the directory (to be appended to both $filesystem and $share).
      */
@@ -39,14 +37,13 @@ final class Directory implements DirectoryInterface
     {
         # If a string was passed then convert it to a Filesystem instance
         if (is_string($filesystem)) {
-            $adapter = new Local($filesystem);
-            $filesystem = new Filesystem($adapter);
+            $filesystem = $this->createFilesystem($filesystem);
         }
 
         # Ensure we got a Filesystem instance
-        if (!$filesystem instanceof FilesystemInterface) {
+        if (!$this->isFilesystem($filesystem)) {
             $error = "Invalid filesystem,";
-            $error .= " must be an instance of " . FilesystemInterface::class;
+            $error .= " must be an instance of a Flysystem filesystem";
             $error .= " or a string containing a local path";
             throw new \InvalidArgumentException($error);
         }
@@ -77,7 +74,14 @@ final class Directory implements DirectoryInterface
      */
     public function has(string $file): bool
     {
-        return $this->filesystem->has("{$this->directory}/{$file}");
+        $path = "{$this->directory}/{$file}";
+
+        if (class_exists(\League\Flysystem\FilesystemOperator::class)
+            && $this->filesystem instanceof \League\Flysystem\FilesystemOperator) {
+            return $this->filesystem->fileExists($path);
+        }
+
+        return $this->filesystem->has($path);
     }
 
 
@@ -94,5 +98,29 @@ final class Directory implements DirectoryInterface
         $this->filesystem->write("{$this->directory}/{$file}", $contents);
 
         return $this;
+    }
+
+    private function createFilesystem(string $path): object
+    {
+        if (class_exists(\League\Flysystem\Adapter\Local::class)) {
+            $adapter = new \League\Flysystem\Adapter\Local($path);
+
+            return new Filesystem($adapter);
+        }
+
+        $adapter = new \League\Flysystem\Local\LocalFilesystemAdapter($path);
+
+        return new Filesystem($adapter);
+    }
+
+    private function isFilesystem(object $filesystem): bool
+    {
+        if (class_exists(\League\Flysystem\FilesystemInterface::class)
+            && $filesystem instanceof \League\Flysystem\FilesystemInterface) {
+            return true;
+        }
+
+        return class_exists(\League\Flysystem\FilesystemOperator::class)
+            && $filesystem instanceof \League\Flysystem\FilesystemOperator;
     }
 }
