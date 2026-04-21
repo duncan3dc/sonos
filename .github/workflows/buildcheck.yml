@@ -20,12 +20,13 @@ jobs:
           - "8.2"
           - "8.3"
           - "8.4"
+          - "8.5"
         composer:
           - ""
           - "--prefer-lowest"
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v6
 
       - name: Create Docker Container
         run: |
