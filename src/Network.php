@@ -23,7 +23,7 @@ use Psr\Log\LoggerInterface;
 /**
  * Provides methods to locate speakers/controllers/playlists on the current network.
  */
-final class Network implements NetworkInterface, LoggerAwareInterface
+final class Network implements LoggerAwareInterface, NetworkInterface
 {
     /**
      * @var CollectionInterface $collection The collection of devices on the network.
