@@ -23,11 +23,11 @@
         "psr/simple-cache": "^1.0 || ^2.0 || ^3.0",
         "ext-soap": "*",
         "ext-sockets": "*",
-        "php": "^7.3 || ^8.0"
+        "php": "^8.1"
     },
     "require-dev": {
         "duncan3dc/object-intruder": "^0.3 || ^1.0",
-        "maglnet/composer-require-checker": "^2.0 || ^3.0 || ^4.0",
+        "maglnet/composer-require-checker": "^4.0",
         "mockery/mockery": "^1.5",
         "monolog/monolog": "^2.10",
         "nikic/php-parser": "^4.13",

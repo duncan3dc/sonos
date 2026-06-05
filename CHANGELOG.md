@@ -1,11 +1,14 @@
 Changelog
 =========
 
-## x.y.z - UNRELEASED
+## 3.0.0 - UNRELEASED
+
+### Changed
+
+* [Support] Dropped support for PHP 7.3, 7.4, and 8.0.
 
 --------
 
-=======
 ## 2.3.0 - 2025-07-12
 
 ### Added
