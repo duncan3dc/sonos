@@ -42,26 +42,13 @@ final class Collection implements CollectionInterface
     }
 
 
-    /**
-     * Set the logger object to use.
-     *
-     * @var LoggerInterface $logger The logging object
-     *
-     * @return $this
-     */
-    public function setLogger(LoggerInterface $logger)
+    public function setLogger(LoggerInterface $logger): void
     {
         $this->logger = $logger;
         $this->factory->setLogger($logger);
-        return $this;
     }
 
 
-    /**
-     * Get the logger object to use.
-     *
-     * @return LoggerInterface $logger The logging object
-     */
     public function getLogger(): LoggerInterface
     {
         if ($this->logger === null) {

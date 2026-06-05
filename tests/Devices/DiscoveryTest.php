@@ -44,8 +44,8 @@ class DiscoveryTest extends TestCase
         $logger = Mockery::mock(LoggerInterface::class);
         $this->collection->shouldReceive("setLogger")->with($logger)->once();
 
-        $result = $discovery->setLogger($logger);
-        $this->assertSame($discovery, $result);
+        $discovery->setLogger($logger);
+        $this->assertTrue(true);
     }
 
 

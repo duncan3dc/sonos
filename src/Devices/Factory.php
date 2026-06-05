@@ -3,7 +3,6 @@
 namespace duncan3dc\Sonos\Devices;
 
 use duncan3dc\Cache\ArrayPool;
-use duncan3dc\Log\LoggerAwareTrait;
 use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
 use duncan3dc\Sonos\Interfaces\Devices\FactoryInterface;
 use Psr\Log\LoggerInterface;
@@ -12,7 +11,8 @@ use Psr\SimpleCache\CacheInterface;
 
 final class Factory implements FactoryInterface
 {
-    use LoggerAwareTrait;
+    private ?LoggerInterface $logger = null;
+
 
     /**
      * @var CacheInterface $cache The cache object to use for finding Sonos devices on the network.
@@ -48,5 +48,21 @@ final class Factory implements FactoryInterface
     public function create($ip): DeviceInterface
     {
         return new Device($ip, $this->cache, $this->logger);
+    }
+
+
+    public function setLogger(LoggerInterface $logger): void
+    {
+        $this->logger = $logger;
+    }
+
+
+    public function getLogger(): LoggerInterface
+    {
+        if ($this->logger === null) {
+            $this->logger = new NullLogger();
+        }
+
+        return $this->logger;
     }
 }

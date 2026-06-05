@@ -5,6 +5,7 @@ Changelog
 
 ### Changed
 
+* [Logging] setLogger() no longer returns anything (to match the psr/log interface).
 * [Support] Dropped support for PHP 7.3, 7.4, and 8.0.
 
 --------
