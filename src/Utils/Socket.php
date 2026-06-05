@@ -21,17 +21,17 @@ final class Socket implements SocketInterface
     /**
      * @var string|int|null $networkInterface The network interface to use for SSDP discovery.
      */
-    private $networkInterface;
+    private string|int|null $networkInterface;
 
     /**
      * @var string $multicastAddress The multicast address to use for SSDP discovery.
      */
-    private $multicastAddress;
+    private string $multicastAddress;
 
     /**
      * @var LoggerInterface $logger The logging object.
      */
-    private $logger;
+    private LoggerInterface $logger;
 
 
     /**
@@ -41,7 +41,7 @@ final class Socket implements SocketInterface
      * @param string $multicastAddress The address to use
      * @param LoggerInterface $logger A logging object
      */
-    public function __construct($networkInterface, string $multicastAddress, LoggerInterface $logger)
+    public function __construct(string|int|null $networkInterface, string $multicastAddress, LoggerInterface $logger)
     {
         $this->networkInterface = $networkInterface;
         $this->multicastAddress = $multicastAddress;
@@ -52,7 +52,6 @@ final class Socket implements SocketInterface
     /**
      * Send out the multicast discover request.
      *
-     * @return string
      * @throws NetworkException
      */
     public function request(): string

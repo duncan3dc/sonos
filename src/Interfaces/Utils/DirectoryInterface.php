@@ -9,18 +9,12 @@ interface DirectoryInterface
 {
     /**
      * Get the full path to the directory on the file share.
-     *
-     * @return string
      */
     public function getSharePath(): string;
 
 
     /**
      * Check if a file exists.
-     *
-     * @param string $file The path to the file.
-     *
-     * @return bool
      */
     public function has(string $file): bool;
 

@@ -47,8 +47,6 @@ final class Directory implements DirectoryInterface
 
     /**
      * Get the full path to the directory on the file share.
-     *
-     * @return string
      */
     public function getSharePath(): string
     {
@@ -58,10 +56,6 @@ final class Directory implements DirectoryInterface
 
     /**
      * Check if a file exists.
-     *
-     * @param string $file The path to the file.
-     *
-     * @return bool
      */
     public function has(string $file): bool
     {
@@ -74,8 +68,6 @@ final class Directory implements DirectoryInterface
      *
      * @param string $file The path to the file
      * @param string $contents The contents to write to the file
-     *
-     * @return $this
      */
     public function write(string $file, string $contents): DirectoryInterface
     {

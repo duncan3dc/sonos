@@ -8,8 +8,6 @@ interface SocketInterface
 {
     /**
      * Send out the multicast discover request.
-     *
-     * @return string
      */
     public function request(): string;
 }

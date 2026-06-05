@@ -17,19 +17,19 @@ use duncan3dc\Sonos\Utils\Time;
 final class State extends Track implements StateInterface
 {
     /**
-     * @var Stream|null $stream The name of the stream currently currently playing (or null if we are not on a stream).
+     * @var ?Stream $stream The name of the stream currently currently playing (or null if we are not on a stream).
      */
-    private $stream;
+    private ?Stream $stream = null;
 
     /**
      * @var TimeInterface $duration The duration of the currently active track.
      */
-    private $duration;
+    private TimeInterface $duration;
 
     /**
      * @var TimeInterface $position The position of the currently active track.
      */
-    private $position;
+    private TimeInterface $position;
 
 
     /**
@@ -37,8 +37,6 @@ final class State extends Track implements StateInterface
      *
      * @param XmlElement $xml The xml element representing the track meta data.
      * @param ControllerInterface $controller A controller instance on the playlist's network
-     *
-     * @return StateInterface
      */
     public static function createFromXml(XmlElement $xml, ControllerInterface $controller): TrackInterface
     {
@@ -64,8 +62,6 @@ final class State extends Track implements StateInterface
 
     /**
      * Check if we are currently playing a stream.
-     *
-     * @return bool
      */
     public function isStreaming(): bool
     {
@@ -75,10 +71,6 @@ final class State extends Track implements StateInterface
 
     /**
      * Set the stream object in use.
-     *
-     * @param Stream $stream The stream
-     *
-     * @return StateInterface
      */
     public function setStream(Stream $stream): StateInterface
     {
@@ -90,10 +82,8 @@ final class State extends Track implements StateInterface
 
     /**
      * Get the stream object in use (or null if we are not on a stream).
-     *
-     * @return TrackInterface|null
      */
-    public function getStream()
+    public function getStream(): ?TrackInterface
     {
         return $this->stream;
     }
@@ -101,10 +91,6 @@ final class State extends Track implements StateInterface
 
     /**
      * Set the duration of the currently active track.
-     *
-     * @param TimeInterface $duration The duration
-     *
-     * @return StateInterface
      */
     public function setDuration(TimeInterface $duration): StateInterface
     {
@@ -115,8 +101,6 @@ final class State extends Track implements StateInterface
 
     /**
      * Get the duration of the currently active track.
-     *
-     * @return TimeInterface
      */
     public function getDuration(): TimeInterface
     {
@@ -126,10 +110,6 @@ final class State extends Track implements StateInterface
 
     /**
      * Set the position of the currently active track.
-     *
-     * @param TimeInterface $position The position
-     *
-     * @return StateInterface
      */
     public function setPosition(TimeInterface $position): StateInterface
     {
@@ -140,8 +120,6 @@ final class State extends Track implements StateInterface
 
     /**
      * Get the position of the currently active track.
-     *
-     * @return TimeInterface
      */
     public function getPosition(): TimeInterface
     {

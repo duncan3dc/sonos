@@ -44,8 +44,6 @@ interface CollectionInterface extends LoggerAwareInterface
 
     /**
      * Get the logger currently in use.
-     *
-     * @return LoggerInterface
      */
     public function getLogger(): LoggerInterface;
 }

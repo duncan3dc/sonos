@@ -10,8 +10,7 @@ use function getenv;
 
 abstract class AbstractLiveCase extends TestCase
 {
-    /** @var NetworkInterface */
-    protected $network;
+    protected NetworkInterface $network;
 
     protected function setUp(): void
     {

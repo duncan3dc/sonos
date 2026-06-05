@@ -24,36 +24,28 @@ interface ControllerStateInterface
 
     /**
      * Get the position of the currently active track.
-     *
-     * @return TimeInterface
      */
     public function getPosition(): TimeInterface;
 
     /**
      * Check if repeat is currently active.
-     *
-     * @return bool
      */
     public function getRepeat(): bool;
 
     /**
      * Check if shuffle is currently active.
-     *
-     * @return bool
      */
     public function getShuffle(): bool;
 
     /**
      * Check if crossfade is currently active.
-     *
-     * @return bool
      */
     public function getCrossfade(): bool;
 
     /**
      * Each speaker's UUID and its volume.
      *
-     * @return array<string,int>
+     * @return array<string, int>
      */
     public function getSpeakers(): array;
 
@@ -66,8 +58,6 @@ interface ControllerStateInterface
 
     /**
      * Get the stream this controller is using.
-     *
-     * @return Stream|null
      */
-    public function getStream();
+    public function getStream(): ?Stream;
 }

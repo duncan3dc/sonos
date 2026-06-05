@@ -12,8 +12,7 @@ use PHPUnit\Framework\TestCase;
 
 class TrackTest extends TestCase
 {
-    /** @var string */
-    protected $xml1 = <<<XML
+    protected string $xml1 = <<<XML
             <track>
                 <title>TITLE</title>
                 <creator>ARTIST</creator>
@@ -22,8 +21,7 @@ class TrackTest extends TestCase
             </track>
 XML;
 
-    /** @var string */
-    protected $xml2 = <<<XML
+    protected string $xml2 = <<<XML
             <track id="O:345">
                 <title>TITLE</title>
                 <creator>ARTIST</creator>
@@ -34,11 +32,9 @@ XML;
             </track>
 XML;
 
-    /** @var TrackInterface */
-    protected $track1;
+    protected TrackInterface $track1;
 
-    /** @var TrackInterface */
-    protected $track2;
+    protected TrackInterface $track2;
 
     protected function setUp(): void
     {

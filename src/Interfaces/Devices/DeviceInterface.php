@@ -8,10 +8,8 @@ interface DeviceInterface
 {
     /**
      * Get the IP address of this device.
-     *
-     * @return string
      */
-    public function getIp();
+    public function getIp(): string;
 
 
     public function getName(): string;

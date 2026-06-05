@@ -23,67 +23,48 @@ interface SpeakerInterface
 
     /**
      * Get the IP address of this speaker.
-     *
-     * @return string
      */
     public function getIp(): string;
 
     /**
      * Get the "Friendly" name of this speaker.
-     *
-     * @return string
      */
     public function getName(): string;
 
     /**
      * Get the room name of this speaker.
-     *
-     * @return string
      */
     public function getRoom(): string;
 
     /**
      * Remove any previously established group for this speaker.
-     *
-     * @return void
      */
     public function updateGroup(): void;
 
     /**
      * Set which group this speaker belongs to.
-     *
-     * @param string $group The group id
-     *
-     * @return void
      */
     public function setGroup(string $group): void;
 
     /**
      * Get the uuid of the group this speaker is a member of.
      *
-     * @return string
      * @throws UnknownGroupException
      */
     public function getGroup(): string;
 
     /**
      * Check if this speaker is the coordinator of it's current group.
-     *
-     * @return bool
      */
     public function isCoordinator(): bool;
 
     /**
      * Get the uuid of this speaker.
-     *
-     * @return string The uuid of this speaker
      */
     public function getUuid(): string;
 
     /**
      * Get the current volume of this speaker.
-     *
-     * @return int The current volume between 0 and 100
      */
     public function getVolume(): int;
 
@@ -107,8 +88,6 @@ interface SpeakerInterface
 
     /**
      * Check if this speaker is currently muted.
-     *
-     * @return bool
      */
     public function isMuted(): bool;
 
@@ -139,15 +118,11 @@ interface SpeakerInterface
 
     /**
      * Check whether the indicator light is on or not.
-     *
-     * @return bool
      */
     public function getIndicator(): bool;
 
     /**
      * Get the treble equalisation level.
-     *
-     * @return int
      */
     public function getTreble(): int;
 
@@ -162,8 +137,6 @@ interface SpeakerInterface
 
     /**
      * Get the bass equalisation level.
-     *
-     * @return int
      */
     public function getBass(): int;
 
@@ -178,8 +151,6 @@ interface SpeakerInterface
 
     /**
      * Check whether loudness normalisation is on or not.
-     *
-     * @return bool
      */
     public function getLoudness(): bool;
 

@@ -61,7 +61,7 @@ final class Device implements DeviceInterface
     }
 
 
-    public function getIp()
+    public function getIp(): string
     {
         return $this->ip;
     }

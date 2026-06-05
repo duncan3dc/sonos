@@ -9,15 +9,11 @@ interface UriInterface
 {
     /**
      * Get the URI for this object.
-     *
-     * @return string
      */
     public function getUri(): string;
 
     /**
      * Get the metadata xml for this object.
-     *
-     * @return string
      */
     public function getMetaData(): string;
 }

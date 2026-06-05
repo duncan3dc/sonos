@@ -9,14 +9,11 @@ use duncan3dc\Sonos\Tracks\Track;
 
 class QueueLiveTest extends AbstractLiveCase
 {
-    /** @var ControllerInterface|null */
-    protected $controller;
+    protected ControllerInterface $controller;
 
-    /** @var QueueInterface */
-    protected $queue;
+    protected QueueInterface $queue;
 
-    /** @var ControllerStateInterface */
-    protected $state;
+    protected ControllerStateInterface $state;
 
     protected function setUp(): void
     {

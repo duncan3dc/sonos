@@ -24,8 +24,6 @@ interface NetworkInterface
      * Get a Controller instance from the network.
      *
      * Useful for managing playlists/alarms, as these need a controller but it doesn't matter which one.
-     *
-     * @return ControllerInterface
      */
     public function getController(): ControllerInterface;
 
@@ -34,8 +32,6 @@ interface NetworkInterface
      * Get a speaker with the specified room name.
      *
      * @param string $room The name of the room to look for
-     *
-     * @return SpeakerInterface
      */
     public function getSpeakerByRoom(string $room): SpeakerInterface;
 
@@ -62,8 +58,6 @@ interface NetworkInterface
      * Get the coordinator for the specified room name.
      *
      * @param string $room The name of the room to look for
-     *
-     * @return ControllerInterface
      */
     public function getControllerByRoom(string $room): ControllerInterface;
 
@@ -72,8 +66,6 @@ interface NetworkInterface
      * Get the coordinator for the specified ip address.
      *
      * @param string $ip The ip address of the speaker
-     *
-     * @return ControllerInterface
      */
     public function getControllerByIp(string $ip): ControllerInterface;
 
@@ -92,8 +84,6 @@ interface NetworkInterface
      * If no case-sensitive match is found it will return a case-insensitive match.
      *
      * @param string $name The name of the playlist
-     *
-     * @return bool
      */
     public function hasPlaylist(string $name): bool;
 
@@ -102,10 +92,6 @@ interface NetworkInterface
      * Get the playlist with the specified name.
      *
      * If no case-sensitive match is found it will return a case-insensitive match.
-     *
-     * @param string $name The name of the playlist
-     *
-     * @return PlaylistInterface
      */
     public function getPlaylistByName(string $name): PlaylistInterface;
 
@@ -114,8 +100,6 @@ interface NetworkInterface
      * Get the playlist with the specified id.
      *
      * @param string $id The ID of the playlist (eg SQ:123)
-     *
-     * @return PlaylistInterface
      */
     public function getPlaylistById(string $id): PlaylistInterface;
 
@@ -124,8 +108,6 @@ interface NetworkInterface
      * Create a new playlist.
      *
      * @param string $name The name to give to the playlist
-     *
-     * @return PlaylistInterface
      */
     public function createPlaylist(string $name): PlaylistInterface;
 
@@ -140,18 +122,12 @@ interface NetworkInterface
 
     /**
      * Get the alarm from the specified id.
-     *
-     * @param int $id The ID of the alarm
-     *
-     * @return AlarmInterface
      */
     public function getAlarmById(int $id): AlarmInterface;
 
 
     /**
      * Get a Radio instance for the network.
-     *
-     * @return RadioInterface
      */
     public function getRadio(): RadioInterface;
 }

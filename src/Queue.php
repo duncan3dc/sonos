@@ -22,22 +22,22 @@ class Queue implements QueueInterface
     /**
      * @var string $id The unique id of the queue.
      */
-    protected $id;
+    protected string $id;
 
     /**
      * @var int The current update id to be issued with upnp requests.
      */
-    protected $updateId = 0;
+    protected int $updateId = 0;
 
     /**
      * @var ControllerInterface $controller The Controller instance this queue is for.
      */
-    protected $controller;
+    protected ControllerInterface $controller;
 
     /**
      * @var FactoryInterface $trackFactory A factory to create tracks from.
      */
-    protected $trackFactory;
+    protected FactoryInterface $trackFactory;
 
 
     /**
@@ -88,7 +88,7 @@ class Queue implements QueueInterface
      *
      * @return array<string, string>
      */
-    protected function browse(string $type, int $start = 0, int $limit = 1)
+    protected function browse(string $type, int $start = 0, int $limit = 1): array
     {
         return $this->soap("ContentDirectory", "Browse", [
             "BrowseFlag"        =>  "Browse{$type}",
@@ -102,8 +102,6 @@ class Queue implements QueueInterface
 
     /**
      * Get the next update id, or used the previously cached one.
-     *
-     * @return int
      */
     protected function getUpdateId(): int
     {
@@ -116,7 +114,7 @@ class Queue implements QueueInterface
 
 
     /**
-     * The the number of tracks in the queue.
+     * Get the number of tracks in the queue.
      *
      * @return int
      */
@@ -164,8 +162,6 @@ class Queue implements QueueInterface
 
     /**
      * Calculate the position number to be used to add a track to the end of the queue.
-     *
-     * @return int
      */
     protected function getNextPosition(): int
     {
@@ -182,10 +178,8 @@ class Queue implements QueueInterface
      *
      * @param UriInterface[] $tracks The track to add
      * @param ?int $position The position to insert the track in the queue (zero-based), by default the track will be added to the end of the queue
-     *
-     * @return void
      */
-    protected function addUris(array $tracks, ?int $position = null)
+    protected function addUris(array $tracks, ?int $position = null): void
     {
         if ($position === null) {
             $position = $this->getNextPosition();
@@ -239,7 +233,7 @@ class Queue implements QueueInterface
      *
      * @return $this
      */
-    public function addTrack($track, ?int $position = null): QueueInterface
+    public function addTrack(UriInterface|string $track, ?int $position = null): QueueInterface
     {
         # If a simple uri has been passed then convert it to a Track instance
         if (is_string($track)) {
@@ -300,8 +294,6 @@ class Queue implements QueueInterface
      * Remove a track from the queue.
      *
      * @param int $position The zero-based position of the track to remove
-     *
-     * @return bool
      */
     public function removeTrack(int $position): bool
     {
@@ -313,8 +305,6 @@ class Queue implements QueueInterface
      * Remove tracks from the queue.
      *
      * @param int[] $positions The zero-based positions of the tracks to remove
-     *
-     * @return bool
      */
     public function removeTracks(array $positions): bool
     {
@@ -353,8 +343,6 @@ class Queue implements QueueInterface
 
     /**
      * Remove all tracks from the queue.
-     *
-     * @return $this
      */
     public function clear(): QueueInterface
     {

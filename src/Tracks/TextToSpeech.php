@@ -16,17 +16,17 @@ final class TextToSpeech implements UriInterface
     /**
      * @var DirectoryInterface The directory to store the audio file in.
      */
-    private $directory;
+    private DirectoryInterface $directory;
 
     /**
      * @var string The text to convert.
      */
-    private $text;
+    private string $text;
 
     /**
      * @var ProviderInterface The text to speech provider.
      */
-    private $provider;
+    private ProviderInterface $provider;
 
     /**
      * Create a TextToSpeech object.
@@ -47,8 +47,6 @@ final class TextToSpeech implements UriInterface
      * Get the URI for this message.
      *
      * If it doesn't already exist on the filesystem then the text-to-speech handler will be called.
-     *
-     * @return string
      */
     public function getUri(): string
     {
@@ -67,8 +65,6 @@ final class TextToSpeech implements UriInterface
 
     /**
      * Get the metadata xml for this message.
-     *
-     * @return string
      */
     public function getMetaData(): string
     {

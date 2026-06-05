@@ -15,37 +15,37 @@ class Track implements TrackInterface
     /**
      * @var string $uri The uri of the track.
      */
-    private $uri = "";
+    private string $uri = "";
 
     /**
      * @var string $title The name of the track.
      */
-    private $title = "";
+    private string $title = "";
 
     /**
      * @var string $artist The name of the artist of the track.
      */
-    private $artist = "";
+    private string $artist = "";
 
     /**
      * @var string $album The name of the album of the track.
      */
-    private $album = "";
+    private string $album = "";
 
     /**
      * @var int $number The number of the track.
      */
-    private $number = 0;
+    private int $number = 0;
 
     /**
      * @var string $albumArt The full path to the album art for this track.
      */
-    private $albumArt = "";
+    private string $albumArt = "";
 
     /**
      * @var string $itemId The id of the item.
      */
-    private $itemId = "-1";
+    private string $itemId = "-1";
 
 
     /**

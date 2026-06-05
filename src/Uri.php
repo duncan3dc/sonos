@@ -9,17 +9,11 @@ use duncan3dc\Sonos\Interfaces\UriInterface;
  */
 class Uri implements UriInterface
 {
-    /** @var string */
-    private $uri = "";
+    private string $uri = "";
 
-    /** @var string */
-    private $metadata = "";
+    private string $metadata = "";
 
 
-    /**
-     * @param string $uri
-     * @param string $metadata
-     */
     public function __construct(string $uri, string $metadata)
     {
         $this->uri = $uri;
@@ -29,8 +23,6 @@ class Uri implements UriInterface
 
     /**
      * Get the URI for this track.
-     *
-     * @return string
      */
     public function getUri(): string
     {
@@ -40,8 +32,6 @@ class Uri implements UriInterface
 
     /**
      * Get the metadata xml for this track.
-     *
-     * @return string
      */
     public function getMetaData(): string
     {

@@ -26,10 +26,8 @@ interface QueueInterface extends \Countable
      *
      * @param string|UriInterface $track The URI of the track to add, or an object that implements the UriInterface
      * @param ?int $position The position to insert the track in the queue (zero-based), by default the track will be added to the end of the queue
-     *
-     * @return QueueInterface
      */
-    public function addTrack($track, ?int $position = null): QueueInterface;
+    public function addTrack(UriInterface|string $track, ?int $position = null): QueueInterface;
 
 
     /**
@@ -37,8 +35,6 @@ interface QueueInterface extends \Countable
      *
      * @param string[]|UriInterface[] $tracks An array where each element is either the URI of the tracks to add, or an object that implements the UriInterface
      * @param ?int $position The position to insert the tracks in the queue (zero-based), by default the tracks will be added to the end of the queue
-     *
-     * @return QueueInterface
      */
     public function addTracks(array $tracks, ?int $position = null): QueueInterface;
 
@@ -47,8 +43,6 @@ interface QueueInterface extends \Countable
      * Remove a track from the queue.
      *
      * @param int $position The zero-based position of the track to remove
-     *
-     * @return bool
      */
     public function removeTrack(int $position): bool;
 
@@ -57,16 +51,12 @@ interface QueueInterface extends \Countable
      * Remove tracks from the queue.
      *
      * @param int[] $positions The zero-based positions of the tracks to remove
-     *
-     * @return bool
      */
     public function removeTracks(array $positions): bool;
 
 
     /**
      * Remove all tracks from the queue.
-     *
-     * @return QueueInterface
      */
     public function clear(): QueueInterface;
 }

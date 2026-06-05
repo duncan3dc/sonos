@@ -10,8 +10,7 @@ use function reset;
 
 class SpeakerLiveTest extends AbstractLiveCase
 {
-    /** @var SpeakerInterface */
-    protected $speaker;
+    protected SpeakerInterface $speaker;
 
     protected function setUp(): void
     {

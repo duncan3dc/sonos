@@ -42,8 +42,6 @@ class Helper
      * Create a mode string from a mode array.
      *
      * @param array<string, bool> $options An array with 2 elements (shuffle and repeat)
-     *
-     * @return string
      */
     public static function setMode(array $options): string
     {
@@ -69,8 +67,6 @@ class Helper
      * @param string $parent The ID of the parent
      * @param array<string, mixed> $extra An xml array of extra attributes for this item
      * @param ?string $service The Sonos service ID to use
-     *
-     * @return string
      */
     public static function createMetaDataXml(
         string $id,

@@ -23,25 +23,22 @@ use Psr\Log\LoggerInterface;
  */
 final class Network implements NetworkInterface, LoggerAwareInterface
 {
-    /**
-     * @var CollectionInterface $collection The collection of devices on the network.
-     */
-    private $collection;
+    private CollectionInterface $collection;
 
     /**
-     * @var Speaker[]|null $speakers Speakers that are available on the current network.
+     * @var ?Speaker[] $speakers Speakers that are available on the current network.
      */
-    protected $speakers;
+    protected ?array $speakers = null;
 
     /**
-     * @var PlaylistInterface[]|null $playlists Playlists that are available on the current network.
+     * @var ?PlaylistInterface[] $playlists Playlists that are available on the current network.
      */
-    protected $playlists;
+    protected ?array $playlists = null;
 
     /**
-     * @var AlarmInterface[]|null $alarms Alarms that are available on the current network.
+     * @var ?AlarmInterface[] $alarms Alarms that are available on the current network.
      */
-    protected $alarms;
+    protected ?array $alarms = null;
 
 
     /**
@@ -109,8 +106,6 @@ final class Network implements NetworkInterface, LoggerAwareInterface
      * Get a Controller instance from the network.
      *
      * Useful for managing playlists/alarms, as these need a controller but it doesn't matter which one.
-     *
-     * @return ControllerInterface
      */
     public function getController(): ControllerInterface
     {
@@ -127,8 +122,6 @@ final class Network implements NetworkInterface, LoggerAwareInterface
      * Get a speaker with the specified room name.
      *
      * @param string $room The name of the room to look for
-     *
-     * @return SpeakerInterface
      */
     public function getSpeakerByRoom(string $room): SpeakerInterface
     {
@@ -191,8 +184,6 @@ final class Network implements NetworkInterface, LoggerAwareInterface
      * Get the coordinator for the specified room name.
      *
      * @param string $room The name of the room to look for
-     *
-     * @return ControllerInterface
      */
     public function getControllerByRoom(string $room): ControllerInterface
     {
@@ -211,10 +202,6 @@ final class Network implements NetworkInterface, LoggerAwareInterface
 
     /**
      * Get the coordinator for the specified ip address.
-     *
-     * @param string $ip The ip address of the speaker
-     *
-     * @return ControllerInterface
      */
     public function getControllerByIp(string $ip): ControllerInterface
     {
@@ -272,8 +259,6 @@ final class Network implements NetworkInterface, LoggerAwareInterface
      * If no case-sensitive match is found it will return a case-insensitive match.
      *
      * @param string $name The name of the playlist
-     *
-     * @return bool
      */
     public function hasPlaylist(string $name): bool
     {
@@ -295,10 +280,6 @@ final class Network implements NetworkInterface, LoggerAwareInterface
      * Get the playlist with the specified name.
      *
      * If no case-sensitive match is found it will return a case-insensitive match.
-     *
-     * @param string $name The name of the playlist
-     *
-     * @return PlaylistInterface
      */
     public function getPlaylistByName(string $name): PlaylistInterface
     {
@@ -326,8 +307,6 @@ final class Network implements NetworkInterface, LoggerAwareInterface
      * Get the playlist with the specified id.
      *
      * @param string $id The ID of the playlist (eg SQ:123)
-     *
-     * @return PlaylistInterface
      */
     public function getPlaylistById(string $id): PlaylistInterface
     {
@@ -341,8 +320,6 @@ final class Network implements NetworkInterface, LoggerAwareInterface
      * Create a new playlist.
      *
      * @param string $name The name to give to the playlist
-     *
-     * @return PlaylistInterface
      */
     public function createPlaylist(string $name): PlaylistInterface
     {
@@ -387,10 +364,6 @@ final class Network implements NetworkInterface, LoggerAwareInterface
 
     /**
      * Get the alarm from the specified id.
-     *
-     * @param int $id The ID of the alarm
-     *
-     * @return AlarmInterface
      */
     public function getAlarmById(int $id): AlarmInterface
     {
@@ -429,8 +402,6 @@ final class Network implements NetworkInterface, LoggerAwareInterface
 
     /**
      * Get a Radio instance for the network.
-     *
-     * @return RadioInterface
      */
     public function getRadio(): RadioInterface
     {

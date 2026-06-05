@@ -14,8 +14,7 @@ use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 
 class AlarmTest extends AbstractMockCase
 {
-    /** @var SpeakerInterface|MockInterface */
-    protected $speaker;
+    protected SpeakerInterface&MockInterface $speaker;
 
 
     /**

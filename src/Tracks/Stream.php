@@ -30,8 +30,6 @@ class Stream extends Track
 
     /**
      * Get the metadata xml for this stream.
-     *
-     * @return string
      */
     public function getMetaData(): string
     {

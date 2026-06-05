@@ -11,11 +11,9 @@ use Mockery\MockInterface;
 
 class SpeakerTest extends AbstractMockCase
 {
-    /** @var DeviceInterface&MockInterface  */
-    protected $device;
+    protected DeviceInterface&MockInterface $device;
 
-    /** @var Speaker */
-    protected $speaker;
+    protected Speaker $speaker;
 
     protected function setUp(): void
     {

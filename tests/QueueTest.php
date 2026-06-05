@@ -14,14 +14,11 @@ use Mockery\MockInterface;
 
 class QueueTest extends AbstractMockCase
 {
-    /** @var DeviceInterface&MockInterface  */
-    protected $device;
+    protected DeviceInterface&MockInterface $device;
 
-    /** @var Controller */
-    protected $controller;
+    protected Controller $controller;
 
-    /** @var Queue */
-    protected $queue;
+    protected Queue $queue;
 
     protected function setUp(): void
     {

@@ -12,20 +12,14 @@ use function assert;
 
 final class Collection implements CollectionInterface
 {
-    /**
-     * @var FactoryInterface The factory to create new devices from
-     */
-    private $factory;
+    private FactoryInterface $factory;
 
     /**
      * @var DeviceInterface[] The devices that are in this collection.
      */
-    private $devices = [];
+    private array $devices = [];
 
-    /**
-     * @var LoggerInterface|null $logger The logging object.
-     */
-    private $logger;
+    private ?LoggerInterface $logger = null;
 
 
     /**

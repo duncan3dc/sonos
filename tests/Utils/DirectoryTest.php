@@ -11,8 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 class DirectoryTest extends TestCase
 {
-    /** @var FilesystemOperator|MockInterface */
-    private $filesystem;
+    private FilesystemOperator&MockInterface $filesystem;
 
 
     protected function setUp(): void

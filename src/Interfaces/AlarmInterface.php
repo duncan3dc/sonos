@@ -24,16 +24,12 @@ interface AlarmInterface
 
     /**
      * Get the id of the alarm.
-     *
-     * @return int
      */
     public function getId(): int;
 
 
     /**
      * Get the room of the alarm.
-     *
-     * @return string
      */
     public function getRoom(): string;
 
@@ -42,16 +38,12 @@ interface AlarmInterface
      * Set the room of the alarm.
      *
      * @param string $uuid The unique id of the room (eg, RINCON_B8E93758723601400)
-     *
-     * @return AlarmInterface
      */
     public function setRoom(string $uuid): AlarmInterface;
 
 
     /**
      * Get the speaker of the alarm.
-     *
-     * @return SpeakerInterface
      */
     public function getSpeaker(): SpeakerInterface;
 
@@ -60,44 +52,30 @@ interface AlarmInterface
      * Set the speaker of the alarm.
      *
      * @param SpeakerInterface $speaker The speaker to attach this alarm to
-     *
-     * @return AlarmInterface
      */
     public function setSpeaker(SpeakerInterface $speaker): AlarmInterface;
 
 
     /**
      * Get the start time of the alarm.
-     *
-     * @return TimeInterface
      */
     public function getTime(): TimeInterface;
 
 
     /**
      * Set the start time of the alarm.
-     *
-     * @param TimeInterface $time The time to set the alarm for
-     *
-     * @return AlarmInterface
      */
     public function setTime(TimeInterface $time): AlarmInterface;
 
 
     /**
      * Get the duration of the alarm.
-     *
-     * @return TimeInterface
      */
     public function getDuration(): TimeInterface;
 
 
     /**
      * Set the duration of the alarm.
-     *
-     * @param TimeInterface $duration The duration of the alarm
-     *
-     * @return AlarmInterface
      */
     public function setDuration(TimeInterface $duration): AlarmInterface;
 
@@ -107,8 +85,6 @@ interface AlarmInterface
      *
      * The result is an integer which can be compared using the bitwise operators and the class constants for each day.
      * If the alarm is a one time only alarm then it will only be equal to the class constant ONCE (none of the days).
-     *
-     * @return int
      */
     public function getFrequency(): int;
 
@@ -117,8 +93,6 @@ interface AlarmInterface
      * Set the frequency of the alarm.
      *
      * @param int $frequency The integer representing the frequency (using the bitwise class constants)
-     *
-     * @return AlarmInterface
      */
     public function setFrequency(int $frequency): AlarmInterface;
 
@@ -128,9 +102,9 @@ interface AlarmInterface
      *
      * @param ?bool $set Set this alarm to be active or not on mondays
      *
-     * @return bool|static Returns true/false when checking, or static when setting
+     * @return $this|bool Returns true/false when checking, or itself when setting
      */
-    public function onMonday(?bool $set = null);
+    public function onMonday(?bool $set = null): self|bool;
 
 
     /**
@@ -138,9 +112,9 @@ interface AlarmInterface
      *
      * @param ?bool $set Set this alarm to be active or not on tuesdays
      *
-     * @return bool|static Returns true/false when checking, or static when setting
+     * @return $this|bool Returns true/false when checking, or itself when setting
      */
-    public function onTuesday(?bool $set = null);
+    public function onTuesday(?bool $set = null): self|bool;
 
 
     /**
@@ -148,9 +122,9 @@ interface AlarmInterface
      *
      * @param ?bool $set Set this alarm to be active or not on wednesdays
      *
-     * @return bool|static Returns true/false when checking, or static when setting
+     * @return $this|bool Returns true/false when checking, or itself when setting
      */
-    public function onWednesday(?bool $set = null);
+    public function onWednesday(?bool $set = null): self|bool;
 
 
     /**
@@ -158,9 +132,9 @@ interface AlarmInterface
      *
      * @param ?bool $set Set this alarm to be active or not on thursdays
      *
-     * @return bool|static Returns true/false when checking, or static when setting
+     * @return $this|bool Returns true/false when checking, or itself when setting
      */
-    public function onThursday(?bool $set = null);
+    public function onThursday(?bool $set = null): self|bool;
 
 
     /**
@@ -168,9 +142,9 @@ interface AlarmInterface
      *
      * @param ?bool $set Set this alarm to be active or not on fridays
      *
-     * @return bool|static Returns true/false when checking, or static when setting
+     * @return $this|bool Returns true/false when checking, or itself when setting
      */
-    public function onFriday(?bool $set = null);
+    public function onFriday(?bool $set = null): self|bool;
 
 
     /**
@@ -178,9 +152,9 @@ interface AlarmInterface
      *
      * @param ?bool $set Set this alarm to be active or not on saturdays
      *
-     * @return bool|static Returns true/false when checking, or static when setting
+     * @return $this|bool Returns true/false when checking, or itself when setting
      */
-    public function onSaturday(?bool $set = null);
+    public function onSaturday(?bool $set = null): self|bool;
 
 
     /**
@@ -188,9 +162,9 @@ interface AlarmInterface
      *
      * @param ?bool $set Set this alarm to be active or not on sundays
      *
-     * @return bool|static Returns true/false when checking, or static when setting
+     * @return $this|bool Returns true/false when checking, or itself when setting
      */
-    public function onSunday(?bool $set = null);
+    public function onSunday(?bool $set = null): self|bool;
 
 
     /**
@@ -198,9 +172,9 @@ interface AlarmInterface
      *
      * @param ?bool $set Set this alarm to be a one time only alarm
      *
-     * @return bool|static Returns true/false when checking, or static when setting
+     * @return $this|bool Returns true/false when checking, or itself when setting
      */
-    public function once(?bool $set = null);
+    public function once(?bool $set = null): self|bool;
 
 
     /**
@@ -208,23 +182,19 @@ interface AlarmInterface
      *
      * @param ?bool $set Set this alarm to be active every day
      *
-     * @return bool|static Returns true/false when checking, or static when setting
+     * @return $this|bool Returns true/false when checking, or itself when setting
      */
-    public function daily(?bool $set = null);
+    public function daily(?bool $set = null): self|bool;
 
 
     /**
      * Get the frequency of the alarm as a human readable description.
-     *
-     * @return string
      */
     public function getFrequencyDescription(): string;
 
 
     /**
      * Get the music that will be played when this alarm goes off.
-     *
-     * @return UriInterface
      */
     public function getMusic(): UriInterface;
 
@@ -233,16 +203,12 @@ interface AlarmInterface
      * Set the music that will be played when this alarm goes off.
      *
      * @param UriInterface $uri
-     *
-     * @return AlarmInterface
      */
     public function setMusic(UriInterface $uri): AlarmInterface;
 
 
     /**
      * Get the volume of the alarm.
-     *
-     * @return int
      */
     public function getVolume(): int;
 
@@ -251,16 +217,12 @@ interface AlarmInterface
      * Set the volume of the alarm.
      *
      * @param int $volume The volume of the alarm
-     *
-     * @return AlarmInterface
      */
     public function setVolume(int $volume): AlarmInterface;
 
 
     /**
      * Check if repeat is active.
-     *
-     * @return bool
      */
     public function getRepeat(): bool;
 
@@ -269,16 +231,12 @@ interface AlarmInterface
      * Turn repeat mode on or off.
      *
      * @param bool $repeat Whether repeat should be on or not
-     *
-     * @return AlarmInterface
      */
     public function setRepeat(bool $repeat): AlarmInterface;
 
 
     /**
      * Check if shuffle is active.
-     *
-     * @return bool
      */
     public function getShuffle(): bool;
 
@@ -287,40 +245,30 @@ interface AlarmInterface
      * Turn shuffle mode on or off.
      *
      * @param bool $shuffle Whether shuffle should be on or not
-     *
-     * @return AlarmInterface
      */
     public function setShuffle(bool $shuffle): AlarmInterface;
 
 
     /**
      * Check if the alarm is active.
-     *
-     * @return bool
      */
     public function isActive(): bool;
 
 
     /**
      * Make the alarm active.
-     *
-     * @return AlarmInterface
      */
     public function activate(): AlarmInterface;
 
 
     /**
      * Make the alarm inactive.
-     *
-     * @return AlarmInterface
      */
     public function deactivate(): AlarmInterface;
 
 
     /**
      * Delete this alarm.
-     *
-     * @return void
      */
-    public function delete();
+    public function delete(): void;
 }

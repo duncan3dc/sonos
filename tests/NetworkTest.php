@@ -15,11 +15,9 @@ use Psr\Log\NullLogger;
 
 class NetworkTest extends AbstractMockCase
 {
-    /** @var Network */
-    protected $network;
+    protected Network $network;
 
-    /** @var CollectionInterface|MockInterface */
-    private $collection;
+    private CollectionInterface&MockInterface $collection;
 
 
     protected function setUp(): void

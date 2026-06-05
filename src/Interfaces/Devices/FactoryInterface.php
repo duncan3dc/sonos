@@ -10,8 +10,6 @@ interface FactoryInterface extends LoggerAwareInterface
      * Create a new device.
      *
      * @param string $ip The IP address of the device
-     *
-     * @return DeviceInterface
      */
-    public function create($ip): DeviceInterface;
+    public function create(string $ip): DeviceInterface;
 }

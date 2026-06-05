@@ -12,14 +12,11 @@ use Psr\SimpleCache\CacheInterface;
 
 class CachedCollectionTest extends TestCase
 {
-    /** @var CollectionInterface|MockInterface */
-    private $collection;
+    private CollectionInterface&MockInterface $collection;
 
-    /** @var CacheInterface&MockInterface */
-    private $cache;
+    private CacheInterface&MockInterface $cache;
 
-    /** @var CachedCollection */
-    private $cachedCollection;
+    private CachedCollection $cachedCollection;
 
     protected function setUp(): void
     {

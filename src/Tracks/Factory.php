@@ -15,7 +15,7 @@ final class Factory implements FactoryInterface
     /**
      * @var ControllerInterface $controller A Controller instance to communicate with.
      */
-    private $controller;
+    private ControllerInterface $controller;
 
 
     /**
@@ -57,8 +57,6 @@ final class Factory implements FactoryInterface
      * Create a new Track instance from a URI.
      *
      * @param string $uri The URI of the track
-     *
-     * @return TrackInterface
      */
     public function createFromUri(string $uri): TrackInterface
     {
@@ -72,8 +70,6 @@ final class Factory implements FactoryInterface
      * Create a new Track instance from a URI.
      *
      * @param XmlElement $xml The xml element representing the track meta data.
-     *
-     * @return TrackInterface
      */
     public function createFromXml(XmlElement $xml): TrackInterface
     {

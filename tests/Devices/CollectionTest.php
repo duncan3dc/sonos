@@ -11,11 +11,9 @@ use PHPUnit\Framework\TestCase;
 
 class CollectionTest extends TestCase
 {
-    /** @var FactoryInterface|MockInterface */
-    private $factory;
+    private FactoryInterface&MockInterface $factory;
 
-    /** @var Collection */
-    private $collection;
+    private Collection $collection;
 
     protected function setUp(): void
     {

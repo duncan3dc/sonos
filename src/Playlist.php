@@ -17,18 +17,18 @@ use function substr;
 final class Playlist extends Queue implements PlaylistInterface
 {
     /**
-     * @var string|null $name The name of the playlist.
+     * @var ?string $name The name of the playlist.
      */
-    private $name;
+    private ?string $name = null;
 
 
     /**
      * Create an instance of the Playlist class.
      *
-     * @param string|XmlElement $param The id of the playlist, or an xml element with the relevant attributes
+     * @param XmlElement|string $param The id of the playlist, or an xml element with the relevant attributes
      * @param ControllerInterface $controller A controller instance on the playlist's network
      */
-    public function __construct($param, ControllerInterface $controller)
+    public function __construct(XmlElement|string $param, ControllerInterface $controller)
     {
         parent::__construct($controller);
 
@@ -43,8 +43,6 @@ final class Playlist extends Queue implements PlaylistInterface
 
     /**
      * Get the id of the playlist.
-     *
-     * @return string
      */
     public function getId(): string
     {
@@ -70,8 +68,6 @@ final class Playlist extends Queue implements PlaylistInterface
 
     /**
      * Calculate the position number to be used to add a track to the end of the playlist.
-     *
-     * @return int
      */
     protected function getNextPosition(): int
     {
@@ -86,10 +82,8 @@ final class Playlist extends Queue implements PlaylistInterface
      *
      * @param UriInterface[] $tracks The tracks to add
      * @param int $position The position to insert the track in the playlist (zero-based)
-     *
-     * @return void
      */
-    protected function addUris(array $tracks, ?int $position = null)
+    protected function addUris(array $tracks, ?int $position = null): void
     {
         if ($position === null) {
             $position = $this->getNextPosition();
@@ -113,8 +107,6 @@ final class Playlist extends Queue implements PlaylistInterface
      * Remove tracks from the playlist.
      *
      * @param int[] $positions The zero-based positions of the tracks to remove
-     *
-     * @return bool
      */
     public function removeTracks(array $positions): bool
     {
@@ -170,10 +162,8 @@ final class Playlist extends Queue implements PlaylistInterface
 
     /**
      * Delete this playlist from the network.
-     *
-     * @return void
      */
-    public function delete()
+    public function delete(): void
     {
         $this->soap("ContentDirectory", "DestroyObject");
     }

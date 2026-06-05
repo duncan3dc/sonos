@@ -21,7 +21,7 @@ final class Alarm implements AlarmInterface
     /**
      * @var array<int, int> $days An mapping of php day values to our day constants.
      */
-    protected $days = [
+    protected array $days = [
         0 =>  AlarmInterface::SUNDAY,
         1 =>  AlarmInterface::MONDAY,
         2 =>  AlarmInterface::TUESDAY,
@@ -34,17 +34,17 @@ final class Alarm implements AlarmInterface
     /**
      * @var string $id The unique id of the alarm
      */
-    protected $id;
+    protected string $id;
 
     /**
      * @var array<string, string> $attributes The attributes of the alarm
      */
-    protected $attributes;
+    protected array $attributes;
 
     /**
      * @var NetworkInterface $network A Network instance this alarm is from.
      */
-    protected $network;
+    protected NetworkInterface $network;
 
     /**
      * Create an instance of the Alarm class.
@@ -77,8 +77,6 @@ final class Alarm implements AlarmInterface
 
     /**
      * Get the id of the alarm.
-     *
-     * @return int
      */
     public function getId(): int
     {
@@ -88,8 +86,6 @@ final class Alarm implements AlarmInterface
 
     /**
      * Get the room of the alarm.
-     *
-     * @return string
      */
     public function getRoom(): string
     {
@@ -114,8 +110,6 @@ final class Alarm implements AlarmInterface
 
     /**
      * Get the speaker of the alarm.
-     *
-     * @return SpeakerInterface
      */
     public function getSpeaker(): SpeakerInterface
     {
@@ -144,8 +138,6 @@ final class Alarm implements AlarmInterface
 
     /**
      * Get the start time of the alarm.
-     *
-     * @return TimeInterface
      */
     public function getTime(): TimeInterface
     {
@@ -170,8 +162,6 @@ final class Alarm implements AlarmInterface
 
     /**
      * Get the duration of the alarm.
-     *
-     * @return TimeInterface
      */
     public function getDuration(): TimeInterface
     {
@@ -200,8 +190,6 @@ final class Alarm implements AlarmInterface
      * The result is an integer which can be compared using the bitwise operators and the class constants for each day.
      * If the alarm is a one time only alarm then it will not match any of the day constants,
      * but will be equal to the class constant ONCE.
-     *
-     * @return int
      */
     public function getFrequency(): int
     {
@@ -270,9 +258,9 @@ final class Alarm implements AlarmInterface
      * @param int $day Which day to check/set
      * @param ?bool $set Set this alarm to be active or not on the specified day
      *
-     * @return bool|AlarmInterface Returns true/false when checking, or AlarmInterface when setting
+     * @return $this|bool Returns true/false when checking, or itself when setting
      */
-    protected function onHandler(int $day, ?bool $set = null)
+    protected function onHandler(int $day, ?bool $set = null): AlarmInterface|bool
     {
         $frequency = $this->getFrequency();
         if ($set === null) {
@@ -294,9 +282,9 @@ final class Alarm implements AlarmInterface
      *
      * @param ?bool $set Set this alarm to be active or not on mondays
      *
-     * @return bool|AlarmInterface Returns true/false when checking, or AlarmInterface when setting
+     * @return $this|bool Returns true/false when checking, or itself when setting
      */
-    public function onMonday(?bool $set = null)
+    public function onMonday(?bool $set = null): AlarmInterface|bool
     {
         return $this->onHandler(AlarmInterface::MONDAY, $set);
     }
@@ -307,9 +295,9 @@ final class Alarm implements AlarmInterface
      *
      * @param ?bool $set Set this alarm to be active or not on tuesdays
      *
-     * @return bool|AlarmInterface Returns true/false when checking, or AlarmInterface when setting
+     * @return $this|bool Returns true/false when checking, or itself when setting
      */
-    public function onTuesday(?bool $set = null)
+    public function onTuesday(?bool $set = null): AlarmInterface|bool
     {
         return $this->onHandler(AlarmInterface::TUESDAY, $set);
     }
@@ -320,9 +308,9 @@ final class Alarm implements AlarmInterface
      *
      * @param ?bool $set Set this alarm to be active or not on wednesdays
      *
-     * @return bool|AlarmInterface Returns true/false when checking, or AlarmInterface when setting
+     * @return $this|bool Returns true/false when checking, or itself when setting
      */
-    public function onWednesday(?bool $set = null)
+    public function onWednesday(?bool $set = null): AlarmInterface|bool
     {
         return $this->onHandler(AlarmInterface::WEDNESDAY, $set);
     }
@@ -333,9 +321,9 @@ final class Alarm implements AlarmInterface
      *
      * @param ?bool $set Set this alarm to be active or not on thursdays
      *
-     * @return bool|AlarmInterface Returns true/false when checking, or AlarmInterface when setting
+     * @return $this|bool Returns true/false when checking, or itself when setting
      */
-    public function onThursday(?bool $set = null)
+    public function onThursday(?bool $set = null): AlarmInterface|bool
     {
         return $this->onHandler(AlarmInterface::THURSDAY, $set);
     }
@@ -346,9 +334,9 @@ final class Alarm implements AlarmInterface
      *
      * @param ?bool $set Set this alarm to be active or not on fridays
      *
-     * @return bool|AlarmInterface Returns true/false when checking, or AlarmInterface when setting
+     * @return $this|bool Returns true/false when checking, or itself when setting
      */
-    public function onFriday(?bool $set = null)
+    public function onFriday(?bool $set = null): AlarmInterface|bool
     {
         return $this->onHandler(AlarmInterface::FRIDAY, $set);
     }
@@ -359,9 +347,9 @@ final class Alarm implements AlarmInterface
      *
      * @param ?bool $set Set this alarm to be active or not on saturdays
      *
-     * @return bool|AlarmInterface Returns true/false when checking, or AlarmInterface when setting
+     * @return $this|bool Returns true/false when checking, or itself when setting
      */
-    public function onSaturday(?bool $set = null)
+    public function onSaturday(?bool $set = null): AlarmInterface|bool
     {
         return $this->onHandler(AlarmInterface::SATURDAY, $set);
     }
@@ -372,9 +360,9 @@ final class Alarm implements AlarmInterface
      *
      * @param ?bool $set Set this alarm to be active or not on sundays
      *
-     * @return bool|AlarmInterface Returns true/false when checking, or AlarmInterface when setting
+     * @return $this|bool Returns true/false when checking, or itself when setting
      */
-    public function onSunday(?bool $set = null)
+    public function onSunday(?bool $set = null): AlarmInterface|bool
     {
         return $this->onHandler(AlarmInterface::SUNDAY, $set);
     }
@@ -385,9 +373,9 @@ final class Alarm implements AlarmInterface
      *
      * @param ?bool $set Set this alarm to be a one time only alarm
      *
-     * @return bool|AlarmInterface Returns true/false when checking, or AlarmInterface when setting
+     * @return $this|bool Returns true/false when checking, or itself when setting
      */
-    public function once(?bool $set = null)
+    public function once(?bool $set = null): AlarmInterface|bool
     {
         if ($set) {
             return $this->setFrequency(AlarmInterface::ONCE);
@@ -401,9 +389,9 @@ final class Alarm implements AlarmInterface
      *
      * @param ?bool $set Set this alarm to be active every day
      *
-     * @return bool|AlarmInterface Returns true/false when checking, or AlarmInterface when setting
+     * @return $this|bool Returns true/false when checking, or itself when setting
      */
-    public function daily(?bool $set = null)
+    public function daily(?bool $set = null): AlarmInterface|bool
     {
         if ($set) {
             return $this->setFrequency(AlarmInterface::DAILY);
@@ -414,8 +402,6 @@ final class Alarm implements AlarmInterface
 
     /**
      * Get the frequency of the alarm as a human readable description.
-     *
-     * @return string
      */
     public function getFrequencyDescription(): string
     {
@@ -479,8 +465,6 @@ final class Alarm implements AlarmInterface
 
     /**
      * Get the volume of the alarm.
-     *
-     * @return int
      */
     public function getVolume(): int
     {
@@ -507,8 +491,6 @@ final class Alarm implements AlarmInterface
      * Get a particular PlayMode.
      *
      * @param string $type The play mode attribute to get
-     *
-     * @return bool
      */
     protected function getPlayMode(string $type): bool
     {
@@ -541,8 +523,6 @@ final class Alarm implements AlarmInterface
 
     /**
      * Check if repeat is active.
-     *
-     * @return bool
      */
     public function getRepeat(): bool
     {
@@ -565,8 +545,6 @@ final class Alarm implements AlarmInterface
 
     /**
      * Check if shuffle is active.
-     *
-     * @return bool
      */
     public function getShuffle(): bool
     {
@@ -589,8 +567,6 @@ final class Alarm implements AlarmInterface
 
     /**
      * Check if the alarm is active.
-     *
-     * @return bool
      */
     public function isActive(): bool
     {
@@ -626,10 +602,8 @@ final class Alarm implements AlarmInterface
 
     /**
      * Delete this alarm.
-     *
-     * @return void
      */
-    public function delete()
+    public function delete(): void
     {
         $this->soap("AlarmClock", "DestroyAlarm");
         unset($this->id);

@@ -19,42 +19,42 @@ final class ControllerState implements ControllerStateInterface
     /**
      * @var int $track The zero-based number of the track in the queue.
      */
-    private $track;
+    private int $track;
 
     /**
      * @var TimeInterface $position The position of the currently active track.
      */
-    private $position;
+    private TimeInterface $position;
 
     /**
      * @var bool $repeat Whether repeat mode is currently active.
      */
-    private $repeat;
+    private bool $repeat;
 
     /**
      * @var bool $shuffle Whether shuffle is currently active.
      */
-    private $shuffle;
+    private bool $shuffle;
 
     /**
      * @var bool $crossfade Whether crossfade is currently active.
      */
-    private $crossfade;
+    private bool $crossfade;
 
     /**
      * @var array<string,int> $speakers The volume of each speaker.
      */
-    private $speakers;
+    private array $speakers;
 
     /**
      * @var TrackInterface[] $tracks An array of tracks from the queue.
      */
-    private $tracks;
+    private array $tracks;
 
     /**
      * @var Stream $stream A stream object (if the controller is currently streaming).
      */
-    private $stream;
+    private Stream $stream;
 
     /**
      * Create a ControllerState object.
@@ -181,8 +181,6 @@ final class ControllerState implements ControllerStateInterface
 
     /**
      * Get the position of the currently active track.
-     *
-     * @return TimeInterface
      */
     public function getPosition(): TimeInterface
     {
@@ -192,8 +190,6 @@ final class ControllerState implements ControllerStateInterface
 
     /**
      * Check if repeat is currently active.
-     *
-     * @return bool
      */
     public function getRepeat(): bool
     {
@@ -203,8 +199,6 @@ final class ControllerState implements ControllerStateInterface
 
     /**
      * Check if shuffle is currently active.
-     *
-     * @return bool
      */
     public function getShuffle(): bool
     {
@@ -214,8 +208,6 @@ final class ControllerState implements ControllerStateInterface
 
     /**
      * Check if crossfade is currently active.
-     *
-     * @return bool
      */
     public function getCrossfade(): bool
     {
@@ -226,7 +218,7 @@ final class ControllerState implements ControllerStateInterface
     /**
      * Get the speakers that are in the group of this controller.
      *
-     * @return array<string,int>
+     * @return array<string, int>
      */
     public function getSpeakers(): array
     {
@@ -247,10 +239,8 @@ final class ControllerState implements ControllerStateInterface
 
     /**
      * Get the stream this controller is using.
-     *
-     * @var Stream|null
      */
-    public function getStream()
+    public function getStream(): ?Stream
     {
         return $this->stream;
     }

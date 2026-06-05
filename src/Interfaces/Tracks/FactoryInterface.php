@@ -12,10 +12,6 @@ interface FactoryInterface
 {
     /**
      * Create a new Track instance from a URI.
-     *
-     * @param string $uri The URI of the track
-     *
-     * @return TrackInterface
      */
     public function createFromUri(string $uri): TrackInterface;
 

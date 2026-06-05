@@ -80,7 +80,7 @@ interface ControllerInterface extends SpeakerInterface
      *
      * @param int $position The zero-based position of the track to skip to
      *
-     * @return self
+     * @return $this
      */
     public function selectTrack(int $position): ControllerInterface;
 
@@ -90,7 +90,7 @@ interface ControllerInterface extends SpeakerInterface
      *
      * @param TimeInterface $position The position to seek to in the track
      *
-     * @return self
+     * @return $this
      */
     public function seek(TimeInterface $position): ControllerInterface;
 
@@ -105,8 +105,6 @@ interface ControllerInterface extends SpeakerInterface
 
     /**
      * Check if this controller is currently playing a stream.
-     *
-     * @return bool
      */
     public function isStreaming(): bool;
 
@@ -116,7 +114,7 @@ interface ControllerInterface extends SpeakerInterface
      *
      * @param Stream $stream The Stream object to play
      *
-     * @return self
+     * @return $this
      */
     public function useStream(Stream $stream): ControllerInterface;
 
@@ -128,15 +126,13 @@ interface ControllerInterface extends SpeakerInterface
      *
      * @param ?SpeakerInterface $speaker The speaker to get the line-in from
      *
-     * @return self
+     * @return $this
      */
     public function useLineIn(?SpeakerInterface $speaker = null): ControllerInterface;
 
 
     /**
      * Check if this controller is currently using its queue.
-     *
-     * @return bool
      */
     public function isUsingQueue(): bool;
 
@@ -144,7 +140,7 @@ interface ControllerInterface extends SpeakerInterface
     /**
      * Set this controller to use its queue (rather than a stream).
      *
-     * @return self
+     * @return $this
      */
     public function useQueue(): ControllerInterface;
 
@@ -162,7 +158,7 @@ interface ControllerInterface extends SpeakerInterface
      *
      * @param SpeakerInterface $speaker The speaker to add to the group
      *
-     * @return self
+     * @return $this
      */
     public function addSpeaker(SpeakerInterface $speaker): ControllerInterface;
 
@@ -172,7 +168,7 @@ interface ControllerInterface extends SpeakerInterface
      *
      * @param SpeakerInterface $speaker The speaker to remove from the group
      *
-     * @return self
+     * @return $this
      */
     public function removeSpeaker(SpeakerInterface $speaker): ControllerInterface;
 
@@ -190,15 +186,13 @@ interface ControllerInterface extends SpeakerInterface
      *
      * @param array<string, bool> $options An array with 2 elements (shuffle and repeat)
      *
-     * @return self
+     * @return $this
      */
     public function setMode(array $options): ControllerInterface;
 
 
     /**
      * Check if repeat is currently active.
-     *
-     * @return bool
      */
     public function getRepeat(): bool;
 
@@ -208,15 +202,13 @@ interface ControllerInterface extends SpeakerInterface
      *
      * @param bool $repeat Whether repeat should be on or not
      *
-     * @return self
+     * @return $this
      */
     public function setRepeat(bool $repeat): ControllerInterface;
 
 
     /**
      * Check if shuffle is currently active.
-     *
-     * @return bool
      */
     public function getShuffle(): bool;
 
@@ -226,15 +218,13 @@ interface ControllerInterface extends SpeakerInterface
      *
      * @param bool $shuffle Whether shuffle should be on or not
      *
-     * @return self
+     * @return $this
      */
     public function setShuffle(bool $shuffle): ControllerInterface;
 
 
     /**
      * Check if crossfade is currently active.
-     *
-     * @return bool
      */
     public function getCrossfade(): bool;
 
@@ -244,15 +234,13 @@ interface ControllerInterface extends SpeakerInterface
      *
      * @param bool $crossfade Whether crossfade should be on or not
      *
-     * @return self
+     * @return $this
      */
     public function setCrossfade(bool $crossfade): self;
 
 
     /**
      * Get the queue for this controller.
-     *
-     * @return QueueInterface
      */
     public function getQueue(): QueueInterface;
 
@@ -261,8 +249,6 @@ interface ControllerInterface extends SpeakerInterface
      * Grab the current state of the Controller (including it's queue and playing attributes).
      *
      * @param bool $pause Whether to pause the controller or not
-     *
-     * @return ControllerStateInterface
      */
     public function exportState(bool $pause = true): ControllerStateInterface;
 
@@ -272,7 +258,7 @@ interface ControllerInterface extends SpeakerInterface
      *
      * @param ControllerStateInterface $state The state to be restored
      *
-     * @return self
+     * @return $this
      */
     public function restoreState(ControllerStateInterface $state): ControllerInterface;
 
@@ -288,7 +274,7 @@ interface ControllerInterface extends SpeakerInterface
      * @param UriInterface $track The track to play
      * @param ?int $volume The volume to play the track at
      *
-     * @return self
+     * @return $this
      */
     public function interrupt(UriInterface $track, ?int $volume = null): ControllerInterface;
 }

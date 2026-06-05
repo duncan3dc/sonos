@@ -13,32 +13,15 @@ use function is_array;
 
 final class Discovery implements CollectionInterface
 {
-    /**
-     * @var CollectionInterface $collection The collection we'll store our discovered devices in.
-     */
-    private $collection;
+    private CollectionInterface $collection;
 
-    /**
-     * @var bool $discovered A flag to indicate whether we've discovered the devices yet or not.
-     */
-    private $discovered = false;
+    private bool $discovered = false;
 
-    /**
-     * @var string|int $networkInterface The network interface to use for SSDP discovery.
-     */
-    private $networkInterface;
+    private string|int|null $networkInterface = null;
 
-    /**
-     * @var string $multicastAddress The multicast address to use for SSDP discovery.
-     */
-    private $multicastAddress = "239.255.255.250";
+    private string $multicastAddress = "239.255.255.250";
 
 
-    /**
-     * Create a new instance.
-     *
-     * @param ?CollectionInterface $collection The device collection to actually use
-     */
     public function __construct(?CollectionInterface $collection = null)
     {
         if ($collection === null) {
@@ -69,7 +52,7 @@ final class Discovery implements CollectionInterface
      *
      * @return $this
      */
-    public function setNetworkInterface($networkInterface): Discovery
+    public function setNetworkInterface(string|int $networkInterface): Discovery
     {
         $this->networkInterface = $networkInterface;
         return $this;
@@ -78,10 +61,8 @@ final class Discovery implements CollectionInterface
 
     /**
      * Get the network interface currently in use
-     *
-     * @return string|int|null The network interface name
      */
-    public function getNetworkInterface()
+    public function getNetworkInterface(): string|int|null
     {
         return $this->networkInterface;
     }
@@ -103,8 +84,6 @@ final class Discovery implements CollectionInterface
 
     /**
      * Get the multicast address to use for SSDP discovery.
-     *
-     * @return string The address to use
      */
     public function getMulticastAddress(): string
     {
@@ -165,10 +144,8 @@ final class Discovery implements CollectionInterface
      * Get all the devices on the current network.
      *
      * @param SocketInterface $socket An instance to send the discovery request via
-     *
-     * @return void
      */
-    private function discoverDevices(SocketInterface $socket)
+    private function discoverDevices(SocketInterface $socket): void
     {
         $this->collection->getLogger()->info("discovering devices...");
 

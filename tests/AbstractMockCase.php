@@ -14,8 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 abstract class AbstractMockCase extends TestCase
 {
-    /** @var NetworkInterface&MockInterface */
-    protected $network;
+    protected NetworkInterface&MockInterface $network;
 
     protected function tearDown(): void
     {
@@ -45,11 +44,7 @@ abstract class AbstractMockCase extends TestCase
         return $device;
     }
 
-    /**
-     * @param DeviceInterface&MockInterface $device
-     * @return Speaker
-     */
-    protected function getSpeaker($device)
+    protected function getSpeaker(DeviceInterface&MockInterface $device): Speaker
     {
         $device->shouldReceive("soap")->with("ZoneGroupTopology", "GetZoneGroupAttributes", [])->andReturn(new SoapResponse([
             "CurrentZoneGroupID" => "RINCON_5CAAFD472E1C01400:916619538",

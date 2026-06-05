@@ -20,8 +20,6 @@ interface RadioInterface
      * If no case-sensitive match is found it will return a case-insensitive match.
      *
      * @param string $name The name of the station
-     *
-     * @return Stream
      */
     public function getFavouriteStation(string $name): Stream;
 
@@ -40,8 +38,6 @@ interface RadioInterface
      * If no case-sensitive match is found it will return a case-insensitive match.
      *
      * @param string $name The name of the show
-     *
-     * @return Stream
      */
     public function getFavouriteShow(string $name): Stream;
 }

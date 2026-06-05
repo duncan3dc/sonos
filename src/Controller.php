@@ -31,13 +31,13 @@ final class Controller implements ControllerInterface
     /**
      * @var NetworkInterface $network The network instance this Controller is part of.
      */
-    private $network;
+    private NetworkInterface $network;
 
 
     /**
      * @var SpeakerInterface $speaker The underlying speaker instance for this controller.
      */
-    private $speaker;
+    private SpeakerInterface $speaker;
 
 
     /**
@@ -60,8 +60,6 @@ final class Controller implements ControllerInterface
 
     /**
      * Get the current state of the group of speakers as the string reported by sonos: PLAYING, PAUSED_PLAYBACK, etc
-     *
-     * @return string
      */
     public function getStateName(): string
     {
@@ -92,8 +90,6 @@ final class Controller implements ControllerInterface
 
     /**
      * Get attributes about the currently active track in the queue.
-     *
-     * @return StateInterface
      */
     public function getStateDetails(): StateInterface
     {
@@ -264,8 +260,6 @@ final class Controller implements ControllerInterface
 
     /**
      * Check if this controller is currently playing a stream.
-     *
-     * @return bool
      */
     public function isStreaming(): bool
     {
@@ -320,7 +314,7 @@ final class Controller implements ControllerInterface
      *
      * @param ?SpeakerInterface $speaker The speaker to get the line-in from
      *
-     * @return static
+     * @return $this
      */
     public function useLineIn(?SpeakerInterface $speaker = null): ControllerInterface
     {
@@ -337,8 +331,6 @@ final class Controller implements ControllerInterface
 
     /**
      * Check if this controller is currently using its queue.
-     *
-     * @return bool
      */
     public function isUsingQueue(): bool
     {
@@ -444,8 +436,6 @@ final class Controller implements ControllerInterface
      * Get a particular PlayMode.
      *
      * @param string $type The play mode attribute to get
-     *
-     * @return bool
      */
     private function getPlayMode(string $type): bool
     {
@@ -478,8 +468,6 @@ final class Controller implements ControllerInterface
 
     /**
      * Check if repeat is currently active.
-     *
-     * @return bool
      */
     public function getRepeat(): bool
     {
@@ -502,8 +490,6 @@ final class Controller implements ControllerInterface
 
     /**
      * Check if shuffle is currently active.
-     *
-     * @return bool
      */
     public function getShuffle(): bool
     {
@@ -526,8 +512,6 @@ final class Controller implements ControllerInterface
 
     /**
      * Check if crossfade is currently active.
-     *
-     * @return bool
      */
     public function getCrossfade(): bool
     {
@@ -554,8 +538,6 @@ final class Controller implements ControllerInterface
 
     /**
      * Get the queue for this controller.
-     *
-     * @return Queue
      */
     public function getQueue(): QueueInterface
     {
@@ -567,8 +549,6 @@ final class Controller implements ControllerInterface
      * Grab the current state of the Controller (including it's queue and playing attributes).
      *
      * @param bool $pause Whether to pause the controller or not
-     *
-     * @return ControllerStateInterface
      */
     public function exportState(bool $pause = true): ControllerStateInterface
     {
@@ -702,8 +682,6 @@ final class Controller implements ControllerInterface
 
     /**
      * Get the IP address of this speaker.
-     *
-     * @return string
      */
     public function getIp(): string
     {
@@ -713,8 +691,6 @@ final class Controller implements ControllerInterface
 
     /**
      * Get the "Friendly" name of this speaker.
-     *
-     * @return string
      */
     public function getName(): string
     {
@@ -724,8 +700,6 @@ final class Controller implements ControllerInterface
 
     /**
      * Get the room name of this speaker.
-     *
-     * @return string
      */
     public function getRoom(): string
     {
@@ -765,8 +739,6 @@ final class Controller implements ControllerInterface
      *
      * This method is only here for SpeakerInterface compatibility.
      * A Controller instance is always the coordinator of it's group.
-     *
-     * @return bool
      */
     public function isCoordinator(): bool
     {
@@ -776,8 +748,6 @@ final class Controller implements ControllerInterface
 
     /**
      * Get the uuid of this speaker.
-     *
-     * @return string The uuid of this speaker
      */
     public function getUuid(): string
     {
@@ -787,8 +757,6 @@ final class Controller implements ControllerInterface
 
     /**
      * Get the current volume of this speaker.
-     *
-     * @return int The current volume between 0 and 100
      */
     public function getVolume(): int
     {
@@ -834,8 +802,6 @@ final class Controller implements ControllerInterface
 
     /**
      * Check if this speaker is currently muted.
-     *
-     * @return bool
      */
     public function isMuted(): bool
     {
@@ -871,8 +837,6 @@ final class Controller implements ControllerInterface
 
     /**
      * Check whether the indicator light is on or not.
-     *
-     * @return bool
      */
     public function getIndicator(): bool
     {
@@ -896,8 +860,6 @@ final class Controller implements ControllerInterface
 
     /**
      * Get the treble equalisation level.
-     *
-     * @return int
      */
     public function getTreble(): int
     {
@@ -921,8 +883,6 @@ final class Controller implements ControllerInterface
 
     /**
      * Get the bass equalisation level.
-     *
-     * @return int
      */
     public function getBass(): int
     {
@@ -946,8 +906,6 @@ final class Controller implements ControllerInterface
 
     /**
      * Check whether loudness normalisation is on or not.
-     *
-     * @return bool
      */
     public function getLoudness(): bool
     {

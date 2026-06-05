@@ -17,7 +17,7 @@ final class Factory implements FactoryInterface
     /**
      * @var CacheInterface $cache The cache object to use for finding Sonos devices on the network.
      */
-    private $cache;
+    private CacheInterface $cache;
 
     /**
      * Create a new instance.
@@ -42,10 +42,8 @@ final class Factory implements FactoryInterface
      * Create a new device.
      *
      * @param string $ip The IP address of the device
-     *
-     * @return DeviceInterface
      */
-    public function create($ip): DeviceInterface
+    public function create(string $ip): DeviceInterface
     {
         return new Device($ip, $this->cache, $this->logger);
     }

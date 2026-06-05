@@ -16,11 +16,9 @@ use Psr\Log\NullLogger;
 
 class DiscoveryTest extends TestCase
 {
-    /** @var CollectionInterface&MockInterface */
-    private $collection;
+    private CollectionInterface&MockInterface $collection;
 
-    /** @var Intruder */
-    private $discovery;
+    private Intruder $discovery;
 
     protected function setUp(): void
     {

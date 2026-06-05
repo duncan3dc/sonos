@@ -9,16 +9,12 @@ interface PlaylistInterface extends QueueInterface, UriInterface
 {
     /**
      * Get the id of the playlist.
-     *
-     * @return string
      */
     public function getId(): string;
 
 
     /**
      * Get the name of the playlist.
-     *
-     * @return string
      */
     public function getName(): string;
 
@@ -28,16 +24,12 @@ interface PlaylistInterface extends QueueInterface, UriInterface
      *
      * @param int $from The current position of the track in the playlist (zero-based)
      * @param int $to The desired position in the playlist (zero-based)
-     *
-     * @return PlaylistInterface
      */
     public function moveTrack(int $from, int $to): PlaylistInterface;
 
 
     /**
      * Delete this playlist from the network.
-     *
-     * @return void
      */
-    public function delete();
+    public function delete(): void;
 }

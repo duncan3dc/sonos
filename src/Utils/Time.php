@@ -10,18 +10,11 @@ use duncan3dc\Sonos\Interfaces\Utils\TimeInterface;
  */
 final class Time implements TimeInterface
 {
-    /**
-     * @var int $seconds The number of seconds this instance represents.
-     */
-    private $seconds = 0;
+    private int $seconds = 0;
 
 
     /**
      * Create a new instance from a number of seconds.
-     *
-     * @param int $seconds The number of seconds
-     *
-     * @return TimeInterface
      */
     public static function inSeconds(int $seconds): TimeInterface
     {
@@ -31,10 +24,6 @@ final class Time implements TimeInterface
 
     /**
      * Create a new instance from a time in the format hh:mm:ss.
-     *
-     * @param string $string The time to parse
-     *
-     * @return TimeInterface
      */
     public static function parse(string $string): TimeInterface
     {
@@ -48,8 +37,6 @@ final class Time implements TimeInterface
      *
      * @param string $format The format the string is in (using %h, %m, %s as placeholders)
      * @param string $string The time to parse
-     *
-     * @return TimeInterface
      */
     public static function fromFormat(string $format, string $string): TimeInterface
     {
@@ -60,8 +47,6 @@ final class Time implements TimeInterface
 
     /**
      * Create a new time instance representing the start.
-     *
-     * @return TimeInterface
      */
     public static function start(): TimeInterface
     {
@@ -74,7 +59,7 @@ final class Time implements TimeInterface
      *
      * @param int $seconds The number of seconds
      */
-    private function __construct($seconds)
+    private function __construct(int $seconds)
     {
         $this->seconds = $seconds;
     }
@@ -82,8 +67,6 @@ final class Time implements TimeInterface
 
     /**
      * Get the number of seconds this instance represents.
-     *
-     * @return int
      */
     public function asInt(): int
     {
@@ -93,8 +76,6 @@ final class Time implements TimeInterface
 
     /**
      * Get the time in the format hh:mm:ss.
-     *
-     * @return string
      */
     public function asString(): string
     {
@@ -104,8 +85,6 @@ final class Time implements TimeInterface
 
     /**
      * Get the time in the format hh:mm:ss.
-     *
-     * @return string
      */
     public function __toString(): string
     {
@@ -115,8 +94,6 @@ final class Time implements TimeInterface
 
     /**
      * Get the seconds portion of the time.
-     *
-     * @return int
      */
     public function getSeconds(): int
     {
@@ -126,8 +103,6 @@ final class Time implements TimeInterface
 
     /**
      * Get the minutes portion of the time.
-     *
-     * @return int
      */
     public function getMinutes(): int
     {
@@ -137,8 +112,6 @@ final class Time implements TimeInterface
 
     /**
      * Get the hours portion of the time.
-     *
-     * @return int
      */
     public function getHours(): int
     {
@@ -150,8 +123,6 @@ final class Time implements TimeInterface
      * Format the time in a custom way.
      *
      * @param string $format The custom format to use. %h, %m, %s are available, and uppercase versions (%H, %M, %S) ensure a leading zero is present for single digit values
-     *
-     * @return string
      */
     public function format(string $format): string
     {

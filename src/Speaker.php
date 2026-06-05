@@ -19,27 +19,22 @@ final class Speaker implements SpeakerInterface
     /**
      * @var string $ip The IP address of the speaker.
      */
-    private $ip;
+    private string $ip;
 
     /**
      * @var DeviceInterface $device The instance of the Device class to send requests to.
      */
-    private $device;
+    private DeviceInterface $device;
 
     /**
-     * @var string $uuid The unique id of this speaker.
+     * @var ?string $group The group id this speaker is a part of.
      */
-    private $uuid;
-
-    /**
-     * @var string|null $group The group id this speaker is a part of.
-     */
-    private $group;
+    private ?string $group = null;
 
     /**
      * @var bool $coordinator Whether this speaker is the coordinator of its group or not.
      */
-    private $coordinator = false;
+    private bool $coordinator = false;
 
 
     /**
@@ -47,7 +42,7 @@ final class Speaker implements SpeakerInterface
      *
      * @param DeviceInterface|string $param An Device instance or the ip address that the speaker is listening on
      */
-    public function __construct($param)
+    public function __construct(DeviceInterface|string $param)
     {
         if ($param instanceof DeviceInterface) {
             $this->device = $param;
@@ -67,8 +62,6 @@ final class Speaker implements SpeakerInterface
 
     /**
      * Get the IP address of this speaker.
-     *
-     * @return string
      */
     public function getIp(): string
     {
@@ -78,8 +71,6 @@ final class Speaker implements SpeakerInterface
 
     /**
      * Get the "Friendly" name of this speaker.
-     *
-     * @return string
      */
     public function getName(): string
     {
@@ -89,8 +80,6 @@ final class Speaker implements SpeakerInterface
 
     /**
      * Get the room name of this speaker.
-     *
-     * @return string
      */
     public function getRoom(): string
     {
@@ -100,8 +89,6 @@ final class Speaker implements SpeakerInterface
 
     /**
      * Ensure we've determined this speaker's topology.
-     *
-     * @return void
      */
     private function lookupTopology(): void
     {
@@ -160,8 +147,6 @@ final class Speaker implements SpeakerInterface
 
     /**
      * Check if this speaker is the coordinator of it's current group.
-     *
-     * @return bool
      */
     public function isCoordinator(): bool
     {
@@ -173,8 +158,6 @@ final class Speaker implements SpeakerInterface
 
     /**
      * Get the uuid of this speaker.
-     *
-     * @return string The uuid of this speaker
      */
     public function getUuid(): string
     {
@@ -184,8 +167,6 @@ final class Speaker implements SpeakerInterface
 
     /**
      * Get the current volume of this speaker.
-     *
-     * @return int The current volume between 0 and 100
      */
     public function getVolume(): int
     {
@@ -234,8 +215,6 @@ final class Speaker implements SpeakerInterface
 
     /**
      * Check if this speaker is currently muted.
-     *
-     * @return bool
      */
     public function isMuted(): bool
     {
@@ -293,8 +272,6 @@ final class Speaker implements SpeakerInterface
 
     /**
      * Check whether the indicator light is on or not.
-     *
-     * @return bool
      */
     public function getIndicator(): bool
     {
@@ -378,8 +355,6 @@ final class Speaker implements SpeakerInterface
 
     /**
      * Check whether loudness normalisation is on or not.
-     *
-     * @return bool
      */
     public function getLoudness(): bool
     {
@@ -393,8 +368,6 @@ final class Speaker implements SpeakerInterface
      * Set whether loudness normalisation is on or not.
      *
      * @param bool $on Whether loudness should be on or not
-     *
-     * @return $this
      */
     public function setLoudness(bool $on): SpeakerInterface
     {

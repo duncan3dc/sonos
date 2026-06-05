@@ -26,7 +26,7 @@ final class Radio implements RadioInterface
     /**
      * @var ControllerInterface $controller The Controller instance to send commands to.
      */
-    protected $controller;
+    protected ControllerInterface $controller;
 
 
     /**
@@ -89,8 +89,6 @@ final class Radio implements RadioInterface
      * If no case-sensitive match is found it will return a case-insensitive match.
      *
      * @param string $name The name of the station
-     *
-     * @return Stream
      */
     public function getFavouriteStation(string $name): Stream
     {
@@ -131,8 +129,6 @@ final class Radio implements RadioInterface
      * If no case-sensitive match is found it will return a case-insensitive match.
      *
      * @param string $name The name of the show
-     *
-     * @return Stream
      */
     public function getFavouriteShow(string $name): Stream
     {

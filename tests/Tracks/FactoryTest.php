@@ -14,8 +14,7 @@ use duncan3dc\SonosTests\AbstractMockCase;
 
 class FactoryTest extends AbstractMockCase
 {
-    /** @var Factory */
-    private $factory;
+    private Factory $factory;
 
     protected function setUp(): void
     {

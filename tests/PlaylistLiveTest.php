@@ -8,11 +8,9 @@ use duncan3dc\Sonos\Tracks\Track;
 
 class PlaylistLiveTest extends AbstractLiveCase
 {
-    /** @var PlaylistInterface */
-    protected $playlist;
+    protected PlaylistInterface $playlist;
 
-    /** @var string */
-    protected $playlistName = "phpunit-test";
+    protected string $playlistName = "phpunit-test";
 
     protected function setUp(): void
     {

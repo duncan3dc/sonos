@@ -17,17 +17,17 @@ final class CachedCollection implements CollectionInterface
     /**
      * @var bool $retrieved A flag to indicate whether we've retrieved the devices from cache yet or not.
      */
-    private $retrieved = false;
+    private bool $retrieved = false;
 
     /**
      * @var CollectionInterface $collection The device collection to actually use.
      */
-    private $collection;
+    private CollectionInterface $collection;
 
     /**
      * @var CacheInterface $cache The cache object to use for finding Sonos devices on the network.
      */
-    private $cache;
+    private CacheInterface $cache;
 
 
     /**
@@ -57,10 +57,8 @@ final class CachedCollection implements CollectionInterface
 
     /**
      * Remove any cached data we have.
-     *
-     * @return void
      */
-    private function clearCache()
+    private function clearCache(): void
     {
         $this->cache->delete(self::CACHE_KEY);
 

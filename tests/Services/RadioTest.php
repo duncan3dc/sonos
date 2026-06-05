@@ -13,11 +13,9 @@ use Mockery\MockInterface;
 
 class RadioTest extends AbstractMockCase
 {
-    /** @var ControllerInterface|MockInterface */
-    private $controller;
+    private ControllerInterface&MockInterface $controller;
 
-    /** @var Radio */
-    private $radio;
+    private Radio $radio;
 
 
     protected function setUp(): void

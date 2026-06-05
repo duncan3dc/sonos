@@ -37,8 +37,6 @@ class Spotify extends Track
 
     /**
      * Get the metadata xml for this track.
-     *
-     * @return string
      */
     public function getMetaData(): string
     {
