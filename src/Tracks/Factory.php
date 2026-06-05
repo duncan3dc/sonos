@@ -39,6 +39,7 @@ final class Factory implements FactoryInterface
     private function guessTrackClass(string $uri): string
     {
         $classes = [
+            Tidal:: class,
             Spotify::class,
             Deezer::class,
             Stream::class,

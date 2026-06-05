@@ -3,6 +3,10 @@ Changelog
 
 ## 3.0.0 - UNRELEASED
 
+### Added
+
+* [Tracks] Added support for Tidal.
+
 ### Changed
 
 * [PlayState] The `ControllerInterface::STATE_*` constants have been replaced by a `PlayState` enum.
