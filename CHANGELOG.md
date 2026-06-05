@@ -9,6 +9,7 @@ Changelog
 * [Device] Removed the isSpeaker() method, this is now handled by the Speakers collection.
 * [DeviceInterface] Replaced the getXml() method with getName(), getRoom(), and getUuid().
 * [DeviceInterface] The `soap()` method now returns a `SoapResponse` instance.
+* [TrackInterface] Added the static `createFromXml()`.
 * [Logging] setLogger() no longer returns anything (to match the psr/log interface).
 * [Dependencies] Switched to league/flysystem v3 ([#132](https://github.com/duncan3dc/sonos/issues/132)).
 * [Tracks] Dropped the Google and GoogleUnlimited tracks as the service has been shutdown.

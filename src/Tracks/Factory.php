@@ -34,7 +34,7 @@ final class Factory implements FactoryInterface
      *
      * @param string $uri The URI of the track
      *
-     * @return string
+     * @return class-string<TrackInterface>
      */
     private function guessTrackClass(string $uri): string
     {
