@@ -52,9 +52,9 @@ final class ControllerState implements ControllerStateInterface
     private array $tracks;
 
     /**
-     * @var Stream $stream A stream object (if the controller is currently streaming).
+     * @var ?Stream $stream A stream object (if the controller is currently streaming).
      */
-    private Stream $stream;
+    private ?Stream $stream = null;
 
     /**
      * Create a ControllerState object.

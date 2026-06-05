@@ -121,6 +121,7 @@ final class CachedCollection implements CollectionInterface
             $this->cache->set(self::CACHE_KEY, $addresses);
         }
 
+        /** @var array<string> $addresses */
         $addresses = $this->cache->get(self::CACHE_KEY);
         foreach ($addresses as $address) {
             $this->collection->addIp($address);

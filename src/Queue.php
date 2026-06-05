@@ -107,7 +107,7 @@ class Queue implements QueueInterface
     {
         if (!$this->updateId) {
             $data = $this->browse("DirectChildren");
-            $this->updateId = $data["UpdateID"];
+            $this->updateId = (int) $data["UpdateID"];
         }
         return $this->updateId;
     }
@@ -167,9 +167,11 @@ class Queue implements QueueInterface
     {
         $data = $this->browse("DirectChildren");
 
-        $this->updateId = $data["UpdateID"];
+        $this->updateId = (int) $data["UpdateID"];
 
-        return $data["TotalMatches"] + 1;
+        $totalMatches = (int) $data["TotalMatches"];
+
+        return $totalMatches + 1;
     }
 
 
@@ -218,7 +220,7 @@ class Queue implements QueueInterface
                 "DesiredFirstTrackNumberEnqueued"   =>  $position,
                 "EnqueueAsNext"                     =>  0,
             ])->getArray();
-            $this->updateId = $data["NewUpdateID"];
+            $this->updateId = (int) $data["NewUpdateID"];
 
             $position += $numberOfTracks;
         }
@@ -238,10 +240,6 @@ class Queue implements QueueInterface
         # If a simple uri has been passed then convert it to a Track instance
         if (is_string($track)) {
             $track = $this->trackFactory->createFromUri($track);
-        }
-
-        if (!$track instanceof UriInterface) {
-            throw new InvalidArgumentException("The first argument to addTrack() should be an object that implements " . UriInterface::class);
         }
 
         if ($position === null) {
@@ -271,6 +269,8 @@ class Queue implements QueueInterface
     public function addTracks(array $tracks, ?int $position = null): QueueInterface
     {
         $uris = [];
+
+        /** @var mixed $track */
         foreach ($tracks as $track) {
             # If a simple uri has been passed then convert it to a Track instance
             if (is_string($track)) {
@@ -329,12 +329,11 @@ class Queue implements QueueInterface
         $offset = 0;
         foreach ($ranges as $position => $limit) {
             $position -= $offset;
-            $data = $this->soap("AVTransport", "RemoveTrackRangeFromQueue", [
+            $this->updateId = $this->soap("AVTransport", "RemoveTrackRangeFromQueue", [
                 "UpdateID"          =>  $this->getUpdateID(),
                 "StartingIndex"     =>  $position,
                 "NumberOfTracks"    =>  $limit,
-            ])->getString();
-            $this->updateId = $data;
+            ])->getInteger();
             $offset += $limit;
         }
         return true;

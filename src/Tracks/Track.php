@@ -204,9 +204,7 @@ class Track implements TrackInterface
 
 
     /**
-     * @var string $albumArt The full path to the album art for this track.
-     *
-     * @return string
+     * @return string The full path to the album art for this track.
      */
     public function getAlbumArt(): string
     {

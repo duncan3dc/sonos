@@ -59,7 +59,7 @@ interface TrackInterface extends UriInterface
     public function setAlbumArt(string $albumArt): TrackInterface;
 
     /**
-     * @var string $albumArt The full path to the album art for this track.
+     * Get the full path to the album art for this track.
      */
     public function getAlbumArt(): string;
 }

@@ -396,7 +396,7 @@ final class Network implements NetworkInterface, LoggerAwareInterface
         # If we ask for the new alarm too quickly Sonos says it doesn't exist, give it a second...
         sleep(1);
         $this->alarms = null;
-        return $this->getAlarmById($id);
+        return $this->getAlarmById((int) $id);
     }
 
 

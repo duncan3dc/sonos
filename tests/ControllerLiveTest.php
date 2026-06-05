@@ -148,6 +148,7 @@ class ControllerLiveTest extends AbstractLiveCase
 
     public function testGetMode(): void
     {
+        /** @var array<string, mixed> $mode */
         $mode = $this->network->getController()->getMode();
         self::assertIsBool($mode["shuffle"]);
         self::assertIsBool($mode["repeat"]);

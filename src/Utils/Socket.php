@@ -89,6 +89,7 @@ final class Socket implements SocketInterface
         $response = "";
         while (socket_select($read, $write, $except, 1)) {
             socket_recvfrom($sock, $tmp, 2048, 0, $name, $port);
+            /** @var string $tmp */
             $response .= $tmp;
         }
 

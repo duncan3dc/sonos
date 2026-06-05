@@ -354,7 +354,7 @@ class AlarmTest extends TestCase
         $alarm = $this->getMockAlarm([
             "Volume"    =>  "30",
         ]);
-        $this->speaker->shouldReceive("soap")->once()->with("AlarmClock", "UpdateAlarm", Mockery::subset(["Volume" => 50]))->andReturn(new SoapResponse(null));
+        $this->speaker->shouldReceive("soap")->once()->with("AlarmClock", "UpdateAlarm", Mockery::subset(["Volume" => "50"]))->andReturn(new SoapResponse(null));
 
         $alarm->setVolume(50);
         $this->assertSame(50, $alarm->getVolume());

@@ -22,7 +22,7 @@ class FactoryTest extends TestCase
         $factory = new Factory();
         $device = $factory->create("192.168.4.1");
 
-        $this->assertInstanceOf(DeviceInterface::class, $device);
+        self::assertSame("192.168.4.1", $device->getIp());
     }
 
 

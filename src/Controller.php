@@ -121,7 +121,7 @@ final class Controller implements ControllerInterface
             }
         }
 
-        $state->setNumber($data["Track"]);
+        $state->setNumber((int) $data["Track"]);
         $state->setDuration(Time::parse($data["TrackDuration"]));
         $state->setPosition(Time::parse($data["RelTime"]));
 

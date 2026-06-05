@@ -99,6 +99,7 @@ final class Device implements DeviceInterface
         $cacheKey = "get_xml_{$this->ip}";
         if ($this->cache->has($cacheKey)) {
             $this->logger->info("getting xml from cache: {$uri}");
+            /** @var string $xml */
             $xml = $this->cache->get($cacheKey);
             if ($xml) {
                 return new Parser($xml);

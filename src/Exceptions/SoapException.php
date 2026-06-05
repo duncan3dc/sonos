@@ -12,16 +12,17 @@ final class SoapException extends \Exception implements Exception
      */
     private \SoapClient $client;
 
-    /**
-     * Create a new SoapException.
-     */
     public function __construct(\SoapFault $fault, \SoapClient $client)
     {
         $message = $fault->getMessage();
         $code = $fault->getCode();
 
         if ($message === "UPnPError") {
-            $code = $fault->detail->UPnPError->errorCode ?? "";
+            /**
+             * @var int $code
+             * @phpstan-ignore-next-line
+             */
+            $code = $fault->detail->UPnPError->errorCode ?? 0;
             if ($code) {
                 $message .= ": {$code}";
             }
@@ -34,22 +35,18 @@ final class SoapException extends \Exception implements Exception
 
     /**
      * Get the body of the soap request.
-     *
-     * @return string
      */
     public function getRequest(): string
     {
-        return $this->client->__getLastRequest();
+        return (string) $this->client->__getLastRequest();
     }
 
 
     /**
      * Get the body of the soap response.
-     *
-     * @return string
      */
     public function getResponse(): string
     {
-        return $this->client->__getLastResponse();
+        return (string) $this->client->__getLastResponse();
     }
 }

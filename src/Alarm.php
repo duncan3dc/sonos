@@ -481,7 +481,7 @@ final class Alarm implements AlarmInterface
      */
     public function setVolume(int $volume): AlarmInterface
     {
-        $this->attributes["Volume"] = $volume;
+        $this->attributes["Volume"] = (string) $volume;
 
         return $this->save();
     }
@@ -581,7 +581,7 @@ final class Alarm implements AlarmInterface
      */
     public function activate(): AlarmInterface
     {
-        $this->attributes["Enabled"] = true;
+        $this->attributes["Enabled"] = "1";
 
         return $this->save();
     }
@@ -594,7 +594,7 @@ final class Alarm implements AlarmInterface
      */
     public function deactivate(): AlarmInterface
     {
-        $this->attributes["Enabled"] = false;
+        $this->attributes["Enabled"] = "0";
 
         return $this->save();
     }
