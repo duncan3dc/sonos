@@ -134,30 +134,12 @@ class ControllerTest extends AbstractMockCase
         $state->shouldReceive("getTracks")->once()->with()->andReturn([]);
         $state->shouldReceive("getStream")->once()->with()->andReturn(null);
 
-        $device
-            ->shouldReceive("soap")
-            ->once()
-            ->with("AVTransport", "RemoveAllTracksFromQueue", ["ObjectID" => "Q:0"]);
-        $device
-            ->shouldReceive("soap")
-            ->once()
-            ->with("AVTransport", "GetTransportSettings", [])
-            ->andReturn(["PlayMode" => "TEST"]);
-        $device
-            ->shouldReceive("soap")
-            ->once()
-            ->with("AVTransport", "SetCrossfadeMode", ["CrossfadeMode" => false]);
+        $device->shouldReceive("soap")->once()->with("AVTransport", "RemoveAllTracksFromQueue", ["ObjectID" => "Q:0"]);
+        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", [])->andReturn(["PlayMode" => "TEST"]);
+        $device->shouldReceive("soap")->once()->with("AVTransport", "SetCrossfadeMode", ["CrossfadeMode" => false]);
 
-        $device
-            ->shouldReceive("soap")
-            ->once()
-            ->with("AVTransport", "GetTransportInfo", [])
-            ->andReturn(["CurrentTransportState" => "TEST"]);
-        $device
-            ->shouldReceive("soap")
-            ->once()
-            ->with("AVTransport", "GetTransportSettings", [])
-            ->andReturn(["PlayMode" => "TEST"]);
+        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportInfo", [])->andReturn(["CurrentTransportState" => "TEST"]);
+        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", [])->andReturn(["PlayMode" => "TEST"]);
 
         $result = $controller->restoreState($state);
         $this->assertSame($controller, $result);
@@ -180,19 +162,9 @@ class ControllerTest extends AbstractMockCase
         $state->shouldReceive("getTracks")->once()->with()->andReturn(["track"]);
         $state->shouldReceive("getStream")->once()->with()->andReturn(null);
 
-        $device
-            ->shouldReceive("soap")
-            ->once()
-            ->with("AVTransport", "RemoveAllTracksFromQueue", ["ObjectID" => "Q:0"]);
-        $device
-            ->shouldReceive("soap")
-            ->once()
-            ->with("AVTransport", "GetTransportSettings", [])
-            ->andReturn(["PlayMode" => "TEST"]);
-        $device
-            ->shouldReceive("soap")
-            ->once()
-            ->with("AVTransport", "SetCrossfadeMode", ["CrossfadeMode" => false]);
+        $device->shouldReceive("soap")->once()->with("AVTransport", "RemoveAllTracksFromQueue", ["ObjectID" => "Q:0"]);
+        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", [])->andReturn(["PlayMode" => "TEST"]);
+        $device->shouldReceive("soap")->once()->with("AVTransport", "SetCrossfadeMode", ["CrossfadeMode" => false]);
 
         $device->shouldReceive("soap")->once()->with("ContentDirectory", "Browse", [
             "BrowseFlag"        =>  "BrowseDirectChildren",
@@ -205,11 +177,7 @@ class ControllerTest extends AbstractMockCase
             "UpdateID" => 85,
             "TotalMatches" => 1,
         ]);
-        $device
-            ->shouldReceive("soap")
-            ->once()
-            ->with("AVTransport", "AddMultipleURIsToQueue", Mockery::any())
-            ->andReturn(["NumTracksAdded" => 1, "NewUpdateID" => 86]);
+        $device->shouldReceive("soap")->once()->with("AVTransport", "AddMultipleURIsToQueue", Mockery::any())->andReturn(["NumTracksAdded" => 1, "NewUpdateID" => 86]);
         $device->shouldReceive("soap")->once()->with("AVTransport", "Seek", [
             "Unit"      =>  "TRACK_NR",
             "Target"    =>  1,
@@ -219,16 +187,8 @@ class ControllerTest extends AbstractMockCase
             "Target"    =>  "05:03:01",
         ]);
 
-        $device
-            ->shouldReceive("soap")
-            ->once()
-            ->with("AVTransport", "GetTransportInfo", [])
-            ->andReturn(["CurrentTransportState" => "TEST"]);
-        $device
-            ->shouldReceive("soap")
-            ->once()
-            ->with("AVTransport", "GetTransportSettings", [])
-            ->andReturn(["PlayMode" => "TEST"]);
+        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportInfo", [])->andReturn(["CurrentTransportState" => "TEST"]);
+        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", [])->andReturn(["PlayMode" => "TEST"]);
 
         $result = $controller->restoreState($state);
         $this->assertSame($controller, $result);

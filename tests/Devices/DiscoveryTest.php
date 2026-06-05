@@ -132,11 +132,7 @@ class DiscoveryTest extends TestCase
     {
         $socket = Mockery::mock(SocketInterface::class);
 
-        $socket
-            ->shouldReceive("request")
-            ->with()
-            ->once()
-            ->andReturn(file_get_contents(__DIR__ . "/discovery/{$type}.http"));
+        $socket->shouldReceive("request")->with()->once()->andReturn(file_get_contents(__DIR__ . "/discovery/{$type}.http"));
 
         return $socket;
     }

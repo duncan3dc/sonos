@@ -328,13 +328,10 @@ class AlarmTest extends AbstractMockCase
     public function testSetMusic(): void
     {
         $alarm = $this->getMockAlarm();
-        $this->speaker
-            ->shouldReceive("soap")
-            ->once()
-            ->with("AlarmClock", "UpdateAlarm", Mockery::subset([
-                "ProgramURI" => "file:///jffs/settings/savedqueues.rsq#34",
-                "ProgramMetaData" => "<DIDL-Lite>Playlist 34</DIDL-Lite>",
-            ]));
+        $this->speaker->shouldReceive("soap")->once()->with("AlarmClock", "UpdateAlarm", Mockery::subset([
+            "ProgramURI" => "file:///jffs/settings/savedqueues.rsq#34",
+            "ProgramMetaData" => "<DIDL-Lite>Playlist 34</DIDL-Lite>",
+        ]));
 
         $uri = new Uri("file:///jffs/settings/savedqueues.rsq#34", "<DIDL-Lite>Playlist 34</DIDL-Lite>");
         $this->assertSame($alarm, $alarm->setMusic($uri));
@@ -356,10 +353,7 @@ class AlarmTest extends AbstractMockCase
         $alarm = $this->getMockAlarm([
             "Volume"    =>  "30",
         ]);
-        $this->speaker
-            ->shouldReceive("soap")
-            ->once()
-            ->with("AlarmClock", "UpdateAlarm", Mockery::subset(["Volume" => 50]));
+        $this->speaker->shouldReceive("soap")->once()->with("AlarmClock", "UpdateAlarm", Mockery::subset(["Volume" => 50]));
 
         $alarm->setVolume(50);
         $this->assertSame(50, $alarm->getVolume());
@@ -380,10 +374,7 @@ class AlarmTest extends AbstractMockCase
         $alarm = $this->getMockAlarm([
             "PlayMode"  =>  "NORMAL",
         ]);
-        $this->speaker
-            ->shouldReceive("soap")
-            ->once()
-            ->with("AlarmClock", "UpdateAlarm", Mockery::subset(["PlayMode" => "REPEAT_ALL"]));
+        $this->speaker->shouldReceive("soap")->once()->with("AlarmClock", "UpdateAlarm", Mockery::subset(["PlayMode" => "REPEAT_ALL"]));
 
         $this->assertTrue($alarm->setRepeat(true)->getRepeat());
     }
@@ -411,10 +402,7 @@ class AlarmTest extends AbstractMockCase
         $alarm = $this->getMockAlarm([
             "PlayMode"  =>  "NORMAL",
         ]);
-        $this->speaker
-            ->shouldReceive("soap")
-            ->once()
-            ->with("AlarmClock", "UpdateAlarm", Mockery::subset(["PlayMode" => "SHUFFLE_NOREPEAT"]));
+        $this->speaker->shouldReceive("soap")->once()->with("AlarmClock", "UpdateAlarm", Mockery::subset(["PlayMode" => "SHUFFLE_NOREPEAT"]));
 
         $this->assertTrue($alarm->setShuffle(true)->getShuffle());
     }
@@ -451,10 +439,7 @@ class AlarmTest extends AbstractMockCase
         $alarm = $this->getMockAlarm([
             "Enabled"   =>  "0",
         ]);
-        $this->speaker
-            ->shouldReceive("soap")
-            ->once()
-            ->with("AlarmClock", "UpdateAlarm", Mockery::subset(["Enabled" => "1"]));
+        $this->speaker->shouldReceive("soap")->once()->with("AlarmClock", "UpdateAlarm", Mockery::subset(["Enabled" => "1"]));
 
         $this->assertTrue($alarm->activate()->isActive());
     }
@@ -465,10 +450,7 @@ class AlarmTest extends AbstractMockCase
         $alarm = $this->getMockAlarm([
             "Enabled"   =>  "1",
         ]);
-        $this->speaker
-            ->shouldReceive("soap")
-            ->once()
-            ->with("AlarmClock", "UpdateAlarm", Mockery::subset(["Enabled" => "0"]));
+        $this->speaker->shouldReceive("soap")->once()->with("AlarmClock", "UpdateAlarm", Mockery::subset(["Enabled" => "0"]));
 
         $this->assertFalse($alarm->deactivate()->isActive());
     }
