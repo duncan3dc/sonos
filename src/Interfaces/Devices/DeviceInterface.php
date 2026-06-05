@@ -2,7 +2,7 @@
 
 namespace duncan3dc\Sonos\Interfaces\Devices;
 
-use duncan3dc\DomParser\XmlParser;
+use duncan3dc\Sonos\Utils\SoapResponse;
 
 interface DeviceInterface
 {
@@ -32,8 +32,6 @@ interface DeviceInterface
      * @param string $service The service to send the request to
      * @param string $action The action to call
      * @param array<string, string|int|bool> $params The parameters to pass
-     *
-     * @return mixed
      */
-    public function soap(string $service, string $action, array $params = []);
+    public function soap(string $service, string $action, array $params = []): SoapResponse;
 }

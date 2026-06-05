@@ -254,7 +254,7 @@ final class Network implements NetworkInterface, LoggerAwareInterface
             "StartingIndex"     =>  0,
             "RequestedCount"    =>  100,
             "SortCriteria"      =>  "",
-        ]);
+        ])->getArray();
         $parser = new XmlParser($data["Result"]);
 
         $playlists = [];
@@ -352,7 +352,7 @@ final class Network implements NetworkInterface, LoggerAwareInterface
             "Title"                 =>  $name,
             "EnqueuedURI"           =>  "",
             "EnqueuedURIMetaData"   =>  "",
-        ]);
+        ])->getArray();
 
         $playlist = new Playlist($data["AssignedObjectID"], $controller);
 
@@ -373,7 +373,7 @@ final class Network implements NetworkInterface, LoggerAwareInterface
             return $this->alarms;
         }
 
-        $data = $this->getController()->soap("AlarmClock", "ListAlarms");
+        $data = $this->getController()->soap("AlarmClock", "ListAlarms")->getArray();
         $parser = new XmlParser($data["CurrentAlarmList"]);
 
         $alarms = [];
@@ -418,7 +418,7 @@ final class Network implements NetworkInterface, LoggerAwareInterface
             "PlayMode" => "NORMAL",
             "Volume" => 10,
             "IncludeLinkedZones" => "0",
-        ]);
+        ])->getString();
 
         # If we ask for the new alarm too quickly Sonos says it doesn't exist, give it a second...
         sleep(1);

@@ -7,6 +7,7 @@ use duncan3dc\Sonos\Alarm;
 use duncan3dc\Sonos\Interfaces\NetworkInterface;
 use duncan3dc\Sonos\Interfaces\SpeakerInterface;
 use duncan3dc\Sonos\Uri;
+use duncan3dc\Sonos\Utils\SoapResponse;
 use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
@@ -331,7 +332,7 @@ class AlarmTest extends AbstractMockCase
         $this->speaker->shouldReceive("soap")->once()->with("AlarmClock", "UpdateAlarm", Mockery::subset([
             "ProgramURI" => "file:///jffs/settings/savedqueues.rsq#34",
             "ProgramMetaData" => "<DIDL-Lite>Playlist 34</DIDL-Lite>",
-        ]));
+        ]))->andReturn(new SoapResponse(null));
 
         $uri = new Uri("file:///jffs/settings/savedqueues.rsq#34", "<DIDL-Lite>Playlist 34</DIDL-Lite>");
         $this->assertSame($alarm, $alarm->setMusic($uri));
@@ -353,7 +354,7 @@ class AlarmTest extends AbstractMockCase
         $alarm = $this->getMockAlarm([
             "Volume"    =>  "30",
         ]);
-        $this->speaker->shouldReceive("soap")->once()->with("AlarmClock", "UpdateAlarm", Mockery::subset(["Volume" => 50]));
+        $this->speaker->shouldReceive("soap")->once()->with("AlarmClock", "UpdateAlarm", Mockery::subset(["Volume" => 50]))->andReturn(new SoapResponse(null));
 
         $alarm->setVolume(50);
         $this->assertSame(50, $alarm->getVolume());
@@ -374,7 +375,7 @@ class AlarmTest extends AbstractMockCase
         $alarm = $this->getMockAlarm([
             "PlayMode"  =>  "NORMAL",
         ]);
-        $this->speaker->shouldReceive("soap")->once()->with("AlarmClock", "UpdateAlarm", Mockery::subset(["PlayMode" => "REPEAT_ALL"]));
+        $this->speaker->shouldReceive("soap")->once()->with("AlarmClock", "UpdateAlarm", Mockery::subset(["PlayMode" => "REPEAT_ALL"]))->andReturn(new SoapResponse(null));
 
         $this->assertTrue($alarm->setRepeat(true)->getRepeat());
     }
@@ -402,7 +403,7 @@ class AlarmTest extends AbstractMockCase
         $alarm = $this->getMockAlarm([
             "PlayMode"  =>  "NORMAL",
         ]);
-        $this->speaker->shouldReceive("soap")->once()->with("AlarmClock", "UpdateAlarm", Mockery::subset(["PlayMode" => "SHUFFLE_NOREPEAT"]));
+        $this->speaker->shouldReceive("soap")->once()->with("AlarmClock", "UpdateAlarm", Mockery::subset(["PlayMode" => "SHUFFLE_NOREPEAT"]))->andReturn(new SoapResponse(null));
 
         $this->assertTrue($alarm->setShuffle(true)->getShuffle());
     }
@@ -439,7 +440,7 @@ class AlarmTest extends AbstractMockCase
         $alarm = $this->getMockAlarm([
             "Enabled"   =>  "0",
         ]);
-        $this->speaker->shouldReceive("soap")->once()->with("AlarmClock", "UpdateAlarm", Mockery::subset(["Enabled" => "1"]));
+        $this->speaker->shouldReceive("soap")->once()->with("AlarmClock", "UpdateAlarm", Mockery::subset(["Enabled" => "1"]))->andReturn(new SoapResponse(null));
 
         $this->assertTrue($alarm->activate()->isActive());
     }
@@ -450,7 +451,7 @@ class AlarmTest extends AbstractMockCase
         $alarm = $this->getMockAlarm([
             "Enabled"   =>  "1",
         ]);
-        $this->speaker->shouldReceive("soap")->once()->with("AlarmClock", "UpdateAlarm", Mockery::subset(["Enabled" => "0"]));
+        $this->speaker->shouldReceive("soap")->once()->with("AlarmClock", "UpdateAlarm", Mockery::subset(["Enabled" => "0"]))->andReturn(new SoapResponse(null));
 
         $this->assertFalse($alarm->deactivate()->isActive());
     }
@@ -464,7 +465,7 @@ class AlarmTest extends AbstractMockCase
         ]);
         $this->speaker->shouldReceive("soap")->once()->with("AlarmClock", "DestroyAlarm", [
             "ID"    =>  999,
-        ]);
+        ])->andReturn(new SoapResponse(null));
 
         $alarm->delete();
     }

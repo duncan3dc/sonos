@@ -7,6 +7,7 @@ use duncan3dc\DomParser\XmlParser;
 use duncan3dc\Sonos\Exceptions\InvalidArgumentException;
 use duncan3dc\Sonos\Exceptions\SoapException;
 use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
+use duncan3dc\Sonos\Utils\SoapResponse;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use Psr\Log\LoggerInterface;
@@ -149,10 +150,8 @@ final class Device implements DeviceInterface
      * @param string $service The service to send the request to
      * @param string $action The action to call
      * @param array<string, string|int|bool> $params The parameters to pass
-     *
-     * @return mixed
      */
-    public function soap(string $service, string $action, array $params = [])
+    public function soap(string $service, string $action, array $params = []): SoapResponse
     {
         switch ($service) {
             case "AVTransport":
@@ -201,6 +200,6 @@ final class Device implements DeviceInterface
             throw new SoapException($e, $soap);
         }
 
-        return $result;
+        return new SoapResponse($result);
     }
 }

@@ -10,7 +10,7 @@ use duncan3dc\Sonos\Interfaces\NetworkInterface;
 use duncan3dc\Sonos\Interfaces\SpeakerInterface;
 use duncan3dc\Sonos\Interfaces\UriInterface;
 use duncan3dc\Sonos\Interfaces\Utils\TimeInterface;
-use duncan3dc\Sonos\Tracks\Factory;
+use duncan3dc\Sonos\Utils\SoapResponse;
 use duncan3dc\Sonos\Utils\Time;
 
 /**
@@ -37,7 +37,7 @@ final class Alarm implements AlarmInterface
     protected $id;
 
     /**
-     * @var array<string, mixed> $attributes The attributes of the alarm
+     * @var array<string, string> $attributes The attributes of the alarm
      */
     protected $attributes;
 
@@ -66,10 +66,8 @@ final class Alarm implements AlarmInterface
      * @param string $service The service to send the request to
      * @param string $action The action to call
      * @param array<string, string|int|bool> $params The parameters to pass
-     *
-     * @return mixed
      */
-    protected function soap(string $service, string $action, array $params = [])
+    protected function soap(string $service, string $action, array $params = []): SoapResponse
     {
         $params["ID"] = $this->id;
 

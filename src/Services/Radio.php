@@ -58,7 +58,7 @@ final class Radio implements RadioInterface
             "StartingIndex"     =>  0,
             "RequestedCount"    =>  100,
             "SortCriteria"      =>  "",
-        ]);
+        ])->getArray();
         $parser = new XmlParser($result["Result"]);
 
         $tagName = ($type === self::STATIONS) ? "item" : "container";

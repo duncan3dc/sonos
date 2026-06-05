@@ -3,6 +3,7 @@
 namespace duncan3dc\Sonos\Interfaces;
 
 use duncan3dc\Sonos\Exceptions\UnknownGroupException;
+use duncan3dc\Sonos\Utils\SoapResponse;
 
 /**
  * Represents an individual Sonos speaker, to allow volume, equalisation, and other settings to be managed.
@@ -16,10 +17,9 @@ interface SpeakerInterface
      * @param string $action The action to call
      * @param array<string, string|int|bool> $params The parameters to pass
      *
-     * @return mixed
      * @internal
      */
-    public function soap(string $service, string $action, array $params = []);
+    public function soap(string $service, string $action, array $params = []): SoapResponse;
 
     /**
      * Get the IP address of this speaker.

@@ -3,13 +3,12 @@
 namespace duncan3dc\Sonos;
 
 use duncan3dc\Sonos\Devices\Device;
-use duncan3dc\Sonos\Exceptions\InvalidArgumentException;
 use duncan3dc\Sonos\Exceptions\UnknownGroupException;
 use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
 use duncan3dc\Sonos\Interfaces\SpeakerInterface;
+use duncan3dc\Sonos\Utils\SoapResponse;
 
 use function explode;
-use function preg_match;
 use function strpos;
 
 /**
@@ -60,10 +59,7 @@ final class Speaker implements SpeakerInterface
     }
 
 
-    /**
-     * @inheritDoc
-     */
-    public function soap(string $service, string $action, array $params = [])
+    public function soap(string $service, string $action, array $params = []): SoapResponse
     {
         return $this->device->soap($service, $action, $params);
     }
@@ -113,7 +109,7 @@ final class Speaker implements SpeakerInterface
             return;
         }
 
-        $attributes = $this->soap("ZoneGroupTopology", "GetZoneGroupAttributes");
+        $attributes = $this->soap("ZoneGroupTopology", "GetZoneGroupAttributes")->getArray();
 
         $this->setGroup($attributes["CurrentZoneGroupID"]);
 
@@ -193,9 +189,10 @@ final class Speaker implements SpeakerInterface
      */
     public function getVolume(): int
     {
-        return (int) $this->soap("RenderingControl", "GetVolume", [
-            "Channel"   =>  "Master",
+        $result = $this->soap("RenderingControl", "GetVolume", [
+            "Channel" => "Master",
         ]);
+        return $result->getInteger();
     }
 
 
@@ -242,9 +239,9 @@ final class Speaker implements SpeakerInterface
      */
     public function isMuted(): bool
     {
-        return (bool) $this->soap("RenderingControl", "GetMute", [
+        return $this->soap("RenderingControl", "GetMute", [
             "Channel"   =>  "Master",
-        ]);
+        ])->getBoolean();
     }
 
 
@@ -301,7 +298,7 @@ final class Speaker implements SpeakerInterface
      */
     public function getIndicator(): bool
     {
-        return ($this->soap("DeviceProperties", "GetLEDState") === "On");
+        return ($this->soap("DeviceProperties", "GetLEDState")->getString() === "On");
     }
 
 
@@ -333,14 +330,12 @@ final class Speaker implements SpeakerInterface
 
     /**
      * Get the treble equalisation level.
-     *
-     * @return int
      */
     public function getTreble(): int
     {
-        return (int) $this->soap("RenderingControl", "GetTreble", [
-            "Channel"           =>  "Master",
-        ]);
+        return $this->soap("RenderingControl", "GetTreble", [
+            "Channel" => "Master",
+        ])->getInteger();
     }
 
 
@@ -359,14 +354,12 @@ final class Speaker implements SpeakerInterface
 
     /**
      * Get the bass equalisation level.
-     *
-     * @return int
      */
     public function getBass(): int
     {
-        return (int) $this->soap("RenderingControl", "GetBass", [
-            "Channel"           =>  "Master",
-        ]);
+        return $this->soap("RenderingControl", "GetBass", [
+            "Channel" => "Master",
+        ])->getInteger();
     }
 
 
@@ -390,9 +383,9 @@ final class Speaker implements SpeakerInterface
      */
     public function getLoudness(): bool
     {
-        return (bool) $this->soap("RenderingControl", "GetLoudness", [
+        return $this->soap("RenderingControl", "GetLoudness", [
             "Channel"       =>  "Master",
-        ]);
+        ])->getBoolean();
     }
 
 

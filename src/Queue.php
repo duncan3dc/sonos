@@ -10,6 +10,7 @@ use duncan3dc\Sonos\Interfaces\TrackInterface;
 use duncan3dc\Sonos\Interfaces\Tracks\FactoryInterface;
 use duncan3dc\Sonos\Interfaces\UriInterface;
 use duncan3dc\Sonos\Tracks\Factory;
+use duncan3dc\Sonos\Utils\SoapResponse;
 
 use function is_string;
 
@@ -64,10 +65,8 @@ class Queue implements QueueInterface
      * @param string $service The service to send the request to
      * @param string $action The action to call
      * @param array<string, string|int|bool> $params The parameters to pass
-     *
-     * @return mixed
      */
-    protected function soap(string $service, string $action, array $params = [])
+    protected function soap(string $service, string $action, array $params = []): SoapResponse
     {
         $params["ObjectID"] = $this->id;
 
@@ -87,7 +86,7 @@ class Queue implements QueueInterface
      * @param int $start The position to start browsing from
      * @param int $limit The number of tracks from the queue to return
      *
-     * @return mixed
+     * @return array<string, string>
      */
     protected function browse(string $type, int $start = 0, int $limit = 1)
     {
@@ -97,7 +96,7 @@ class Queue implements QueueInterface
             "RequestedCount"    =>  $limit,
             "Filter"            =>  "",
             "SortCriteria"      =>  "",
-        ]);
+        ])->getArray();
     }
 
 
@@ -224,7 +223,7 @@ class Queue implements QueueInterface
                 "EnqueuedURIsMetaData"              =>  $metaData,
                 "DesiredFirstTrackNumberEnqueued"   =>  $position,
                 "EnqueueAsNext"                     =>  0,
-            ]);
+            ])->getArray();
             $this->updateId = $data["NewUpdateID"];
 
             $position += $numberOfTracks;
@@ -344,7 +343,7 @@ class Queue implements QueueInterface
                 "UpdateID"          =>  $this->getUpdateID(),
                 "StartingIndex"     =>  $position,
                 "NumberOfTracks"    =>  $limit,
-            ]);
+            ])->getString();
             $this->updateId = $data;
             $offset += $limit;
         }

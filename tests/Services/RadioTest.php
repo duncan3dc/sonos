@@ -6,6 +6,7 @@ use duncan3dc\Sonos\Exceptions\NotFoundException;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Services\Radio;
 use duncan3dc\Sonos\Tracks\Stream;
+use duncan3dc\Sonos\Utils\SoapResponse;
 use duncan3dc\SonosTests\AbstractMockCase;
 use Mockery;
 use Mockery\MockInterface;
@@ -37,9 +38,9 @@ class RadioTest extends AbstractMockCase
             "StartingIndex"     =>  0,
             "RequestedCount"    =>  100,
             "SortCriteria"      =>  "",
-        ])->andReturn([
+        ])->andReturn(new SoapResponse([
             "Result"    =>  "<item><title>Station 1</title><res>URI</res></item>",
-        ]);
+        ]));
 
         $result = $this->radio->getFavouriteStations();
 
@@ -56,9 +57,9 @@ class RadioTest extends AbstractMockCase
             "StartingIndex"     =>  0,
             "RequestedCount"    =>  100,
             "SortCriteria"      =>  "",
-        ])->andReturn([
+        ])->andReturn(new SoapResponse([
             "Result"    =>  "<item><title>Station 1</title><res>URI</res></item>",
-        ]);
+        ]));
 
         $result = $this->radio->getFavouriteStation("Station 1");
 
@@ -75,9 +76,9 @@ class RadioTest extends AbstractMockCase
             "StartingIndex"     =>  0,
             "RequestedCount"    =>  100,
             "SortCriteria"      =>  "",
-        ])->andReturn([
+        ])->andReturn(new SoapResponse([
             "Result"    =>  "<item><title>Station 1</title><res>URI</res></item>",
-        ]);
+        ]));
 
         $result = $this->radio->getFavouriteStation("STATION 1");
 
@@ -95,9 +96,9 @@ class RadioTest extends AbstractMockCase
             "StartingIndex"     =>  0,
             "RequestedCount"    =>  100,
             "SortCriteria"      =>  "",
-        ])->andReturn([
+        ])->andReturn(new SoapResponse([
             "Result"    =>  "<item><title>Station 1</title><res>URI</res></item>",
-        ]);
+        ]));
 
         $this->expectException(NotFoundException::class);
         $this->expectExceptionMessage("Unable to find a radio station by the name 'Station 2'");
@@ -114,9 +115,9 @@ class RadioTest extends AbstractMockCase
             "StartingIndex"     =>  0,
             "RequestedCount"    =>  100,
             "SortCriteria"      =>  "",
-        ])->andReturn([
+        ])->andReturn(new SoapResponse([
             "Result"    =>  "<container><title>Show 1</title><res>URI</res></container>",
-        ]);
+        ]));
 
         $result = $this->radio->getFavouriteShows();
 
@@ -133,9 +134,9 @@ class RadioTest extends AbstractMockCase
             "StartingIndex"     =>  0,
             "RequestedCount"    =>  100,
             "SortCriteria"      =>  "",
-        ])->andReturn([
+        ])->andReturn(new SoapResponse([
             "Result"    =>  "<container><title>Show 1</title><res>URI</res></container>",
-        ]);
+        ]));
 
         $result = $this->radio->getFavouriteShow("Show 1");
 
@@ -152,9 +153,9 @@ class RadioTest extends AbstractMockCase
             "StartingIndex"     =>  0,
             "RequestedCount"    =>  100,
             "SortCriteria"      =>  "",
-        ])->andReturn([
+        ])->andReturn(new SoapResponse([
             "Result"    =>  "<container><title>Show 1</title><res>URI</res></container>",
-        ]);
+        ]));
 
         $result = $this->radio->getFavouriteShow("show 1");
 
@@ -172,9 +173,9 @@ class RadioTest extends AbstractMockCase
             "StartingIndex"     =>  0,
             "RequestedCount"    =>  100,
             "SortCriteria"      =>  "",
-        ])->andReturn([
+        ])->andReturn(new SoapResponse([
             "Result"    =>  "<container><title>Show 1</title><res>URI</res></container>",
-        ]);
+        ]));
 
         $this->expectException(NotFoundException::class);
         $this->expectExceptionMessage("Unable to find a radio show by the name 'Show 2'");

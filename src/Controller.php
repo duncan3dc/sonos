@@ -15,6 +15,7 @@ use duncan3dc\Sonos\Interfaces\StateInterface;
 use duncan3dc\Sonos\Interfaces\UriInterface;
 use duncan3dc\Sonos\Interfaces\Utils\TimeInterface;
 use duncan3dc\Sonos\Tracks\Stream;
+use duncan3dc\Sonos\Utils\SoapResponse;
 use duncan3dc\Sonos\Utils\Time;
 
 use function strpos;
@@ -64,7 +65,7 @@ final class Controller implements ControllerInterface
      */
     public function getStateName(): string
     {
-        $data = $this->soap("AVTransport", "GetTransportInfo");
+        $data = $this->soap("AVTransport", "GetTransportInfo")->getArray();
         return $data["CurrentTransportState"];
     }
 
@@ -96,7 +97,7 @@ final class Controller implements ControllerInterface
      */
     public function getStateDetails(): StateInterface
     {
-        $data = $this->soap("AVTransport", "GetPositionInfo");
+        $data = $this->soap("AVTransport", "GetPositionInfo")->getArray();
 
         # Check for line in mode
         if ($data["TrackMetaData"] === "NOT_IMPLEMENTED") {
@@ -252,9 +253,12 @@ final class Controller implements ControllerInterface
     }
 
 
+    /**
+     * @return array<string, string>
+     */
     public function getMediaInfo(): array
     {
-        return $this->soap("AVTransport", "GetMediaInfo");
+        return $this->soap("AVTransport", "GetMediaInfo")->getArray();
     }
 
 
@@ -421,7 +425,7 @@ final class Controller implements ControllerInterface
 
     public function getMode(): array
     {
-        $data = $this->soap("AVTransport", "GetTransportSettings");
+        $data = $this->soap("AVTransport", "GetTransportSettings")->getArray();
         return Helper::getMode($data["PlayMode"]);
     }
 
@@ -527,7 +531,7 @@ final class Controller implements ControllerInterface
      */
     public function getCrossfade(): bool
     {
-        return (bool) $this->soap("AVTransport", "GetCrossfadeMode");
+        return $this->soap("AVTransport", "GetCrossfadeMode")->getBoolean();
     }
 
 
@@ -690,7 +694,7 @@ final class Controller implements ControllerInterface
     }
 
 
-    public function soap(string $service, string $action, array $params = [])
+    public function soap(string $service, string $action, array $params = []): SoapResponse
     {
         return $this->speaker->soap($service, $action, $params);
     }

@@ -5,6 +5,7 @@ namespace duncan3dc\SonosTests;
 use duncan3dc\Sonos\Exceptions\UnknownGroupException;
 use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
 use duncan3dc\Sonos\Speaker;
+use duncan3dc\Sonos\Utils\SoapResponse;
 use Mockery;
 use Mockery\MockInterface;
 
@@ -34,7 +35,7 @@ class SpeakerTest extends AbstractMockCase
     {
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "GetVolume", [
             "Channel"   =>  "Master",
-        ])->andReturn("3");
+        ])->andReturn(new SoapResponse("3"));
 
         $this->assertSame(3, $this->speaker->getVolume());
     }
@@ -45,7 +46,7 @@ class SpeakerTest extends AbstractMockCase
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetVolume", [
             "Channel"       =>  "Master",
             "DesiredVolume" =>  10,
-        ]);
+        ])->andReturn(new SoapResponse(null));
 
         $this->assertSame($this->speaker, $this->speaker->setVolume(10));
     }
@@ -56,7 +57,7 @@ class SpeakerTest extends AbstractMockCase
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetRelativeVolume", [
             "Channel"       =>  "Master",
             "Adjustment"    =>  5,
-        ]);
+        ])->andReturn(new SoapResponse(null));
 
         $this->assertSame($this->speaker, $this->speaker->adjustVolume(5));
     }
@@ -66,7 +67,7 @@ class SpeakerTest extends AbstractMockCase
     {
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "GetMute", [
             "Channel"   =>  "Master",
-        ])->andReturn(true);
+        ])->andReturn(new SoapResponse("1"));
 
         $this->assertSame(true, $this->speaker->isMuted());
     }
@@ -77,7 +78,7 @@ class SpeakerTest extends AbstractMockCase
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetMute", [
             "Channel"       =>  "Master",
             "DesiredMute"   =>  1,
-        ]);
+        ])->andReturn(new SoapResponse(null));
 
         $this->assertSame($this->speaker, $this->speaker->mute());
     }
@@ -88,7 +89,7 @@ class SpeakerTest extends AbstractMockCase
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetMute", [
             "Channel"       =>  "Master",
             "DesiredMute"   =>  0,
-        ]);
+        ])->andReturn(new SoapResponse(null));
 
         $this->assertSame($this->speaker, $this->speaker->unmute());
     }
@@ -96,7 +97,7 @@ class SpeakerTest extends AbstractMockCase
 
     public function testGetIndicator(): void
     {
-        $this->device->shouldReceive("soap")->once()->with("DeviceProperties", "GetLEDState", [])->andReturn(false);
+        $this->device->shouldReceive("soap")->once()->with("DeviceProperties", "GetLEDState", [])->andReturn(new SoapResponse("0"));
 
         $this->assertSame(false, $this->speaker->getIndicator());
     }
@@ -106,7 +107,7 @@ class SpeakerTest extends AbstractMockCase
     {
         $this->device->shouldReceive("soap")->once()->with("DeviceProperties", "SetLEDState", [
             "DesiredLEDState"   =>  "On",
-        ]);
+        ])->andReturn(new SoapResponse(null));
 
         $this->assertSame($this->speaker, $this->speaker->setIndicator(true));
     }
@@ -116,7 +117,7 @@ class SpeakerTest extends AbstractMockCase
     {
         $this->device->shouldReceive("soap")->once()->with("DeviceProperties", "SetLEDState", [
             "DesiredLEDState"   =>  "Off",
-        ]);
+        ])->andReturn(new SoapResponse(null));
 
         $this->assertSame($this->speaker, $this->speaker->setIndicator(false));
     }
@@ -126,7 +127,7 @@ class SpeakerTest extends AbstractMockCase
     {
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "GetTreble", [
             "Channel"   =>  "Master",
-        ])->andReturn(8);
+        ])->andReturn(new SoapResponse("8"));
 
         $this->assertSame(8, $this->speaker->getTreble());
     }
@@ -137,7 +138,7 @@ class SpeakerTest extends AbstractMockCase
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetTreble", [
             "Channel"       =>  "Master",
             "DesiredTreble" =>  7,
-        ]);
+        ])->andReturn(new SoapResponse(null));
 
         $this->assertSame($this->speaker, $this->speaker->setTreble(7));
     }
@@ -148,7 +149,7 @@ class SpeakerTest extends AbstractMockCase
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetTreble", [
             "Channel"       =>  "Master",
             "DesiredTreble" =>  10,
-        ]);
+        ])->andReturn(new SoapResponse(null));
 
         $this->assertSame($this->speaker, $this->speaker->setTreble(15));
     }
@@ -159,7 +160,7 @@ class SpeakerTest extends AbstractMockCase
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetTreble", [
             "Channel"       =>  "Master",
             "DesiredTreble" =>  -10,
-        ]);
+        ])->andReturn(new SoapResponse(null));
 
         $this->assertSame($this->speaker, $this->speaker->setTreble(-11));
     }
@@ -170,7 +171,7 @@ class SpeakerTest extends AbstractMockCase
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetBass", [
             "Channel"       =>  "Master",
             "DesiredBass"   =>  0,
-        ]);
+        ])->andReturn(new SoapResponse(null));
 
         $this->assertSame($this->speaker, $this->speaker->setBass(0));
     }
@@ -181,7 +182,7 @@ class SpeakerTest extends AbstractMockCase
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetBass", [
             "Channel"       =>  "Master",
             "DesiredBass"   =>  10,
-        ]);
+        ])->andReturn(new SoapResponse(null));
 
         $this->assertSame($this->speaker, $this->speaker->setBass(11));
     }
@@ -192,7 +193,7 @@ class SpeakerTest extends AbstractMockCase
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetBass", [
             "Channel"       =>  "Master",
             "DesiredBass"   =>  -10,
-        ]);
+        ])->andReturn(new SoapResponse(null));
 
         $this->assertSame($this->speaker, $this->speaker->setBass(-100));
     }
@@ -202,7 +203,7 @@ class SpeakerTest extends AbstractMockCase
     {
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "GetLoudness", [
             "Channel"           =>  "Master",
-        ])->andReturn(false);
+        ])->andReturn(new SoapResponse("0"));
 
         $this->assertSame(false, $this->speaker->getLoudness());
     }
@@ -213,7 +214,7 @@ class SpeakerTest extends AbstractMockCase
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetLoudness", [
             "Channel"           =>  "Master",
             "DesiredLoudness"   =>  1,
-        ]);
+        ])->andReturn(new SoapResponse(null));
 
         $this->assertSame($this->speaker, $this->speaker->setLoudness(true));
     }
@@ -224,7 +225,7 @@ class SpeakerTest extends AbstractMockCase
         $this->device->shouldReceive("soap")->once()->with("RenderingControl", "SetLoudness", [
             "Channel"           =>  "Master",
             "DesiredLoudness"   =>  0,
-        ]);
+        ])->andReturn(new SoapResponse(null));
 
         $this->assertSame($this->speaker, $this->speaker->setLoudness(false));
     }
@@ -234,10 +235,10 @@ class SpeakerTest extends AbstractMockCase
     {
         $device = $this->getDevice();
 
-        $device->shouldReceive("soap")->with("ZoneGroupTopology", "GetZoneGroupAttributes", [])->andReturn([
+        $device->shouldReceive("soap")->with("ZoneGroupTopology", "GetZoneGroupAttributes", [])->andReturn(new SoapResponse([
             "CurrentZoneGroupID" => "RINCON_5CAAFD472E1C01400:195",
             "CurrentZonePlayerUUIDsInGroup" => "RINCON_5CAAFD472E1C01400",
-        ]);
+        ]));
 
         $speaker = new Speaker($device);
 
@@ -247,10 +248,10 @@ class SpeakerTest extends AbstractMockCase
     {
         $device = $this->getDevice();
 
-        $device->shouldReceive("soap")->with("ZoneGroupTopology", "GetZoneGroupAttributes", [])->andReturn([
+        $device->shouldReceive("soap")->with("ZoneGroupTopology", "GetZoneGroupAttributes", [])->andReturn(new SoapResponse([
             "CurrentZoneGroupID" => "RINCON_5CAAFD472E1C01400:195",
             "CurrentZonePlayerUUIDsInGroup" => "RINCON_5CAAF0000A1A01400",
-        ]);
+        ]));
 
         $speaker = new Speaker($device);
 
@@ -260,10 +261,10 @@ class SpeakerTest extends AbstractMockCase
     {
         $device = $this->getDevice();
 
-        $device->shouldReceive("soap")->with("ZoneGroupTopology", "GetZoneGroupAttributes", [])->andReturn([
+        $device->shouldReceive("soap")->with("ZoneGroupTopology", "GetZoneGroupAttributes", [])->andReturn(new SoapResponse([
             "CurrentZoneGroupID" => "RINCON_5CAAFD472E1C01400:195",
             "CurrentZonePlayerUUIDsInGroup" => "RINCON_5CAAFD472E1C01400,RINCON_5CAAF0000A1A01400",
-        ]);
+        ]));
 
         $speaker = new Speaker($device);
 
@@ -273,10 +274,10 @@ class SpeakerTest extends AbstractMockCase
     {
         $device = $this->getDevice();
 
-        $device->shouldReceive("soap")->with("ZoneGroupTopology", "GetZoneGroupAttributes", [])->andReturn([
+        $device->shouldReceive("soap")->with("ZoneGroupTopology", "GetZoneGroupAttributes", [])->andReturn(new SoapResponse([
             "CurrentZoneGroupID" => "RINCON_5CAAF0000A1A01400:195",
             "CurrentZonePlayerUUIDsInGroup" => "RINCON_5CAAFD472E1C01400,RINCON_5CAAF0000A1A01400",
-        ]);
+        ]));
 
         $speaker = new Speaker($device);
 
@@ -288,10 +289,10 @@ class SpeakerTest extends AbstractMockCase
     {
         $device = $this->getDevice();
 
-        $device->shouldReceive("soap")->with("ZoneGroupTopology", "GetZoneGroupAttributes", [])->andReturn([
+        $device->shouldReceive("soap")->with("ZoneGroupTopology", "GetZoneGroupAttributes", [])->andReturn(new SoapResponse([
             "CurrentZoneGroupID" => "",
             "CurrentZonePlayerUUIDsInGroup" => "RINCON_5CAAFD472E1C01400",
-        ]);
+        ]));
 
         $speaker = new Speaker($device);
 

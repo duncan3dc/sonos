@@ -6,6 +6,7 @@ use duncan3dc\ObjectIntruder\Intruder;
 use duncan3dc\Sonos\Interfaces\Devices\CollectionInterface;
 use duncan3dc\Sonos\Interfaces\SpeakerInterface;
 use duncan3dc\Sonos\Network;
+use duncan3dc\Sonos\Utils\SoapResponse;
 use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
@@ -94,10 +95,10 @@ class NetworkTest extends AbstractMockCase
             $device->shouldReceive("isSpeaker")->with()->andReturn(true);
             $device->shouldReceive("soap")
                 ->with("ZoneGroupTopology", "GetZoneGroupAttributes", [])
-                ->andReturn([
+                ->andReturn(new SoapResponse([
                     "CurrentZoneGroupID" => $group,
                     "CurrentZonePlayerUUIDsInGroup" => "",
-                ]);
+                ]));
 
             $devices[] = $device;
         }
@@ -126,16 +127,16 @@ class NetworkTest extends AbstractMockCase
             "PlayMode" => "NORMAL",
             "Volume" => 10,
             "IncludeLinkedZones" => "0",
-        ])->andReturn(741);
+        ])->andReturn(new SoapResponse("741"));
 
         $network = new Intruder($this->network);
         $network->speakers = [$speaker];
 
         $speaker->shouldReceive("isCoordinator")->with()->andReturn(true);
         $speaker->shouldReceive("getIp")->with()->andReturn("127.0.0.3");
-        $speaker->shouldReceive("soap")->with("AlarmClock", "ListAlarms", [])->andReturn([
+        $speaker->shouldReceive("soap")->with("AlarmClock", "ListAlarms", [])->andReturn(new SoapResponse([
             "CurrentAlarmList" => "<Alarm ID='741'></Alarm>",
-        ]);
+        ]));
 
         $alarm = $this->network->createAlarm($speaker);
         self::assertSame(741, $alarm->getId());

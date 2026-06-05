@@ -101,7 +101,7 @@ final class Playlist extends Queue implements PlaylistInterface
                 "EnqueuedURI"           =>  $track->getUri(),
                 "EnqueuedURIMetaData"   =>  $track->getMetaData(),
                 "AddAtIndex"            =>  $position,
-            ]);
+            ])->getArray();
             $this->updateId = $data["NewUpdateID"];
 
             $position++;
@@ -122,7 +122,7 @@ final class Playlist extends Queue implements PlaylistInterface
             "UpdateID"              =>  $this->getUpdateID(),
             "TrackList"             =>  implode(",", $positions),
             "NewPositionList"       =>  "",
-        ]);
+        ])->getArray();
         $this->updateId = $data["NewUpdateID"];
 
         return ($data["QueueLengthChange"] == (count($positions) * -1));
@@ -143,7 +143,7 @@ final class Playlist extends Queue implements PlaylistInterface
             "UpdateID"              =>  $this->getUpdateID(),
             "TrackList"             =>  (string) $from,
             "NewPositionList"       =>  (string) $to,
-        ]);
+        ])->getArray();
         $this->updateId = $data["NewUpdateID"];
 
         return $this;

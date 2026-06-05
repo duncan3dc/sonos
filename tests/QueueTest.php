@@ -8,6 +8,7 @@ use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
 use duncan3dc\Sonos\Interfaces\UriInterface;
 use duncan3dc\Sonos\Playlist;
 use duncan3dc\Sonos\Queue;
+use duncan3dc\Sonos\Utils\SoapResponse;
 use Mockery;
 use Mockery\MockInterface;
 
@@ -57,9 +58,9 @@ class QueueTest extends AbstractMockCase
             "Filter"            =>  "",
             "SortCriteria"      =>  "",
             "ObjectID"          =>  "Q:0",
-        ])->andReturn([
+        ])->andReturn(new SoapResponse([
             "TotalMatches"      =>  "3",
-        ]);
+        ]));
 
         $this->assertSame(3, $this->queue->count());
         $this->assertSame(3, count($this->queue));
@@ -75,11 +76,11 @@ class QueueTest extends AbstractMockCase
             "Filter"            =>  "",
             "SortCriteria"      =>  "",
             "ObjectID"          =>  "Q:0",
-        ])->andReturn([
+        ])->andReturn(new SoapResponse([
             "Result"            =>  "<items><item></item><item></item><item></item><item></item><item></item></items>",
             "NumberReturned"    =>  2,
             "TotalMatches"      =>  10,
-        ]);
+        ]));
 
         $tracks = $this->queue->getTracks(0, 2);
         $this->assertSame(2, count($tracks));
@@ -95,11 +96,11 @@ class QueueTest extends AbstractMockCase
             "Filter"            =>  "",
             "SortCriteria"      =>  "",
             "ObjectID"          =>  "Q:0",
-        ])->andReturn([
+        ])->andReturn(new SoapResponse([
             "Result"            =>  "<items></items>",
             "NumberReturned"    =>  0,
             "TotalMatches"      =>  10,
-        ]);
+        ]));
 
         $tracks = $this->queue->getTracks(5, 2);
         $this->assertSame(0, count($tracks));
@@ -122,10 +123,10 @@ class QueueTest extends AbstractMockCase
             "Filter" => "",
             "SortCriteria" => "",
             "ObjectID" => "Q:0",
-        ])->andReturn([
+        ])->andReturn(new SoapResponse([
             "UpdateID" => 123,
             "TotalMatches" => 7,
-        ]);
+        ]));
 
         $this->device->shouldReceive("soap")->once()->with("AVTransport", "AddURIToQueue", [
             "UpdateID" => 0,
@@ -134,7 +135,7 @@ class QueueTest extends AbstractMockCase
             "DesiredFirstTrackNumberEnqueued" => 8,
             "EnqueueAsNext" => 0,
             "ObjectID" => "Q:0",
-        ]);
+        ])->andReturn(new SoapResponse(null));
 
         $result = $this->queue->addTrack($track);
         $this->assertSame($result, $this->queue);
@@ -159,10 +160,10 @@ class QueueTest extends AbstractMockCase
             "Filter" => "",
             "SortCriteria" => "",
             "ObjectID" => "Q:0",
-        ])->andReturn([
+        ])->andReturn(new SoapResponse([
             "UpdateID" => 123,
             "TotalMatches" => 0,
-        ]);
+        ]));
 
         $xml = '<DIDL-Lite ';
         $xml .= 'xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/" ';
@@ -186,7 +187,7 @@ class QueueTest extends AbstractMockCase
             "DesiredFirstTrackNumberEnqueued" => 1,
             "EnqueueAsNext" => 0,
             "ObjectID" => "Q:0",
-        ]);
+        ])->andReturn(new SoapResponse(null));
 
         $result = $this->queue->addTrack($playlist);
         $this->assertSame($result, $this->queue);
@@ -200,7 +201,7 @@ class QueueTest extends AbstractMockCase
             "StartingIndex"     =>  8,
             "NumberOfTracks"    =>  1,
             "ObjectID"          =>  "Q:0",
-        ])->andReturn(88);
+        ])->andReturn(new SoapResponse("88"));
 
         $this->mockUpdateId();
         $this->assertTrue($this->queue->removeTrack(7));
@@ -214,13 +215,13 @@ class QueueTest extends AbstractMockCase
             "StartingIndex"     =>  4,
             "NumberOfTracks"    =>  2,
             "ObjectID"          =>  "Q:0",
-        ])->andReturn(88);
+        ])->andReturn(new SoapResponse("88"));
         $this->device->shouldReceive("soap")->once()->with("AVTransport", "RemoveTrackRangeFromQueue", [
             "UpdateID"          =>  88,
             "StartingIndex"     =>  5,
             "NumberOfTracks"    =>  2,
             "ObjectID"          =>  "Q:0",
-        ])->andReturn(89);
+        ])->andReturn(new SoapResponse("89"));
 
         $this->mockUpdateId();
         $this->assertTrue($this->queue->removeTracks([3, 4, 6, 7]));
@@ -231,7 +232,7 @@ class QueueTest extends AbstractMockCase
     {
         $this->device->shouldReceive("soap")->once()->with("AVTransport", "RemoveAllTracksFromQueue", [
             "ObjectID"          =>  "Q:0",
-        ]);
+        ])->andReturn(new SoapResponse(null));
 
         $this->assertSame($this->queue, $this->queue->clear());
     }
