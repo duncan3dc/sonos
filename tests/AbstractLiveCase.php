@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 use function getenv;
 
-abstract class LiveTest extends TestCase
+abstract class AbstractLiveCase extends TestCase
 {
     /** @var NetworkInterface */
     protected $network;

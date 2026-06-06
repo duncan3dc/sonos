@@ -6,11 +6,11 @@ use duncan3dc\Sonos\Exceptions\NotFoundException;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Services\Radio;
 use duncan3dc\Sonos\Tracks\Stream;
-use duncan3dc\SonosTests\MockTest;
+use duncan3dc\SonosTests\AbstractMockCase;
 use Mockery;
 use Mockery\MockInterface;
 
-class RadioTest extends MockTest
+class RadioTest extends AbstractMockCase
 {
     /** @var ControllerInterface|MockInterface */
     private $controller;

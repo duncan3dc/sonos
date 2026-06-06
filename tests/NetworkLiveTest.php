@@ -8,7 +8,7 @@ use duncan3dc\Sonos\Exceptions\NotFoundException;
 use duncan3dc\Sonos\Playlist;
 use duncan3dc\Sonos\Speaker;
 
-class NetworkLiveTest extends LiveTest
+class NetworkLiveTest extends AbstractLiveCase
 {
     public function testGetSpeakers(): void
     {

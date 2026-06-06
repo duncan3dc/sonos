@@ -11,7 +11,7 @@ use duncan3dc\Sonos\Queue;
 use Mockery;
 use Mockery\MockInterface;
 
-class QueueTest extends MockTest
+class QueueTest extends AbstractMockCase
 {
     /** @var DeviceInterface&MockInterface  */
     protected $device;

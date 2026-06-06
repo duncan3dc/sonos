@@ -4,9 +4,9 @@ namespace duncan3dc\SonosTests\Devices;
 
 use duncan3dc\ObjectIntruder\Intruder;
 use duncan3dc\Sonos\Devices\Device;
-use duncan3dc\SonosTests\MockTest;
+use duncan3dc\SonosTests\AbstractMockCase;
 
-class DeviceTest extends MockTest
+class DeviceTest extends AbstractMockCase
 {
     /**
      * @return iterable<array<mixed>>

@@ -11,7 +11,7 @@ use Mockery\MockInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
-class NetworkTest extends MockTest
+class NetworkTest extends AbstractMockCase
 {
     /** @var Network */
     protected $network;

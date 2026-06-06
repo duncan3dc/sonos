@@ -8,7 +8,7 @@ use duncan3dc\Sonos\Speaker;
 use Mockery;
 use Mockery\MockInterface;
 
-class SpeakerTest extends MockTest
+class SpeakerTest extends AbstractMockCase
 {
     /** @var DeviceInterface&MockInterface  */
     protected $device;

@@ -6,7 +6,7 @@ use duncan3dc\Sonos\Interfaces\PlaylistInterface;
 use duncan3dc\Sonos\Playlist;
 use duncan3dc\Sonos\Tracks\Track;
 
-class PlaylistLiveTest extends LiveTest
+class PlaylistLiveTest extends AbstractLiveCase
 {
     /** @var PlaylistInterface */
     protected $playlist;

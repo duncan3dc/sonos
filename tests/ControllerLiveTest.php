@@ -7,7 +7,7 @@ use duncan3dc\Sonos\Interfaces\Utils\TimeInterface;
 use duncan3dc\Sonos\Queue;
 use duncan3dc\Sonos\Speaker;
 
-class ControllerLiveTest extends LiveTest
+class ControllerLiveTest extends AbstractLiveCase
 {
     public function testConstructor1(): void
     {

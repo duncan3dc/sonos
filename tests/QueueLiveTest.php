@@ -7,7 +7,7 @@ use duncan3dc\Sonos\Interfaces\ControllerStateInterface;
 use duncan3dc\Sonos\Interfaces\QueueInterface;
 use duncan3dc\Sonos\Tracks\Track;
 
-class QueueLiveTest extends LiveTest
+class QueueLiveTest extends AbstractLiveCase
 {
     /** @var ControllerInterface|null */
     protected $controller;

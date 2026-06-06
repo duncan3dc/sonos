@@ -12,9 +12,9 @@ use duncan3dc\Sonos\Tracks\GoogleUnlimited;
 use duncan3dc\Sonos\Tracks\Spotify;
 use duncan3dc\Sonos\Tracks\Stream;
 use duncan3dc\Sonos\Tracks\Track;
-use duncan3dc\SonosTests\MockTest;
+use duncan3dc\SonosTests\AbstractMockCase;
 
-class FactoryTest extends MockTest
+class FactoryTest extends AbstractMockCase
 {
     /** @var Factory */
     private $factory;

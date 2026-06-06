@@ -8,7 +8,7 @@ use duncan3dc\Sonos\Speaker;
 use function assert;
 use function reset;
 
-class SpeakerLiveTest extends LiveTest
+class SpeakerLiveTest extends AbstractLiveCase
 {
     /** @var SpeakerInterface */
     protected $speaker;

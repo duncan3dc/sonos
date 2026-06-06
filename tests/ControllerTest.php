@@ -9,7 +9,7 @@ use duncan3dc\Sonos\Tracks\Stream;
 use duncan3dc\Sonos\Utils\Time;
 use Mockery;
 
-class ControllerTest extends MockTest
+class ControllerTest extends AbstractMockCase
 {
     public function testPlay(): void
     {

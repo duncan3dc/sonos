@@ -10,7 +10,7 @@ use duncan3dc\Sonos\Uri;
 use Mockery;
 use Mockery\MockInterface;
 
-class AlarmTest extends MockTest
+class AlarmTest extends AbstractMockCase
 {
     /** @var SpeakerInterface|MockInterface */
     protected $speaker;

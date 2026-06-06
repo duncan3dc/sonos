@@ -11,7 +11,7 @@ use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 
-abstract class MockTest extends TestCase
+abstract class AbstractMockCase extends TestCase
 {
     /** @var NetworkInterface&MockInterface */
     protected $network;
