@@ -9,6 +9,7 @@ use duncan3dc\Sonos\Interfaces\SpeakerInterface;
 use duncan3dc\Sonos\Uri;
 use Mockery;
 use Mockery\MockInterface;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 
 class AlarmTest extends AbstractMockCase
 {
@@ -473,6 +474,7 @@ class AlarmTest extends AbstractMockCase
     }
 
 
+    #[DoesNotPerformAssertions]
     public function testDelete(): void
     {
         $alarm = $this->getMockAlarm([
@@ -483,6 +485,5 @@ class AlarmTest extends AbstractMockCase
         ]);
 
         $alarm->delete();
-        self::assertTrue(true);
     }
 }

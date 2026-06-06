@@ -9,6 +9,7 @@ use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
 use duncan3dc\Sonos\Interfaces\Utils\SocketInterface;
 use Mockery;
 use Mockery\MockInterface;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -37,6 +38,7 @@ class DiscoveryTest extends TestCase
     }
 
 
+    #[DoesNotPerformAssertions]
     public function testSetLogger(): void
     {
         $discovery = new Discovery($this->collection);
@@ -45,7 +47,6 @@ class DiscoveryTest extends TestCase
         $this->collection->shouldReceive("setLogger")->with($logger)->once();
 
         $discovery->setLogger($logger);
-        $this->assertTrue(true);
     }
 
 
@@ -141,6 +142,7 @@ class DiscoveryTest extends TestCase
     }
 
 
+    #[DoesNotPerformAssertions]
     public function testDiscoverDevicesNormal(): void
     {
         $socket = $this->getSocket("normal");
@@ -149,19 +151,19 @@ class DiscoveryTest extends TestCase
         $this->collection->shouldReceive("addIp")->with("192.168.7.103")->once()->andReturn($this->collection);
 
         $this->discovery->discoverDevices($socket);
-        $this->assertTrue(true);
     }
 
 
+    #[DoesNotPerformAssertions]
     public function testDiscoverDevicesEmpty(): void
     {
         $socket = $this->getSocket("empty");
 
         $this->discovery->discoverDevices($socket);
-        $this->assertTrue(true);
     }
 
 
+    #[DoesNotPerformAssertions]
     public function testDiscoverDevicesLineBreaks(): void
     {
         $socket = $this->getSocket("line-breaks");
@@ -170,10 +172,10 @@ class DiscoveryTest extends TestCase
         $this->collection->shouldReceive("addIp")->with("192.168.11.77")->once()->andReturn($this->collection);
 
         $this->discovery->discoverDevices($socket);
-        $this->assertTrue(true);
     }
 
 
+    #[DoesNotPerformAssertions]
     public function testDiscoverDevicesDuplicates(): void
     {
         $socket = $this->getSocket("duplicates");
@@ -181,7 +183,6 @@ class DiscoveryTest extends TestCase
         $this->collection->shouldReceive("addIp")->with("192.168.7.103")->once()->andReturn($this->collection);
 
         $this->discovery->discoverDevices($socket);
-        $this->assertTrue(true);
     }
 
 

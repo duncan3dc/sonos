@@ -28,10 +28,10 @@ class StateTest extends TrackTest
      */
     public function testItemId1(): void
     {
-        $this->assertTrue(true);
+        $this->markTestSkipped();
     }
     public function testGetId2(): void
     {
-        $this->assertTrue(true);
+        $this->markTestSkipped();
     }
 }

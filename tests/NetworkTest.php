@@ -8,6 +8,7 @@ use duncan3dc\Sonos\Interfaces\SpeakerInterface;
 use duncan3dc\Sonos\Network;
 use Mockery;
 use Mockery\MockInterface;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
@@ -33,12 +34,12 @@ class NetworkTest extends AbstractMockCase
     }
 
 
+    #[DoesNotPerformAssertions]
     public function testSetLogger(): void
     {
         $logger = Mockery::mock(LoggerInterface::class);
         $this->collection->shouldReceive("setLogger")->with($logger)->once();
         $this->network->setLogger($logger);
-        $this->assertTrue(true);
     }
 
 
