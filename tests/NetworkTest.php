@@ -10,10 +10,11 @@ use duncan3dc\Sonos\Utils\SoapResponse;
 use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
-class NetworkTest extends AbstractMockCase
+class NetworkTest extends TestCase
 {
     protected Network $network;
 
@@ -89,7 +90,8 @@ class NetworkTest extends AbstractMockCase
             "192.168.0.3" => "SPEAKER_B:1",
         ];
         foreach ($setup as $ip => $group) {
-            $device = $this->getDevice($ip);
+            $device = MockFactory::device($ip);
+
             $device->shouldReceive("isSpeaker")->with()->andReturn(true);
             $device->shouldReceive("soap")
                 ->with("ZoneGroupTopology", "GetZoneGroupAttributes", [])

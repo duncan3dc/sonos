@@ -3,38 +3,48 @@
 namespace duncan3dc\SonosTests;
 
 use duncan3dc\Sonos\Exceptions\SoapException;
+use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Interfaces\ControllerStateInterface;
+use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
 use duncan3dc\Sonos\Interfaces\PlayState;
 use duncan3dc\Sonos\Tracks\Stream;
 use duncan3dc\Sonos\Utils\SoapResponse;
 use duncan3dc\Sonos\Utils\Time;
 use Mockery;
+use PHPUnit\Framework\TestCase;
 
-class ControllerTest extends AbstractMockCase
+class ControllerTest extends TestCase
 {
+    private DeviceInterface&Mockery\MockInterface $device;
+
+    private ControllerInterface $controller;
+
+
+    public function setUp(): void
+    {
+        $this->device = MockFactory::device();
+        $this->controller = MockFactory::controller($this->device);
+    }
+
+
     public function testPlay(): void
     {
-        $device = $this->getDevice();
-        $controller = $this->getController($device);
-
-        $device->shouldReceive("soap")->once()->with("AVTransport", "Play", [
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "Play", [
             "Speed" =>  1,
         ])->andReturn(new SoapResponse(null));
 
-        $this->assertSame($controller, $controller->play());
+        $this->assertSame($this->controller, $this->controller->play());
     }
 
 
     public function testPlayEmptyQueue(): void
     {
-        $device = $this->getDevice();
-        $controller = $this->getController($device);
         $exception = new SoapException(Mockery::mock(\SoapFault::class), Mockery::mock(\SoapClient::class));
 
-        $device->shouldReceive("soap")->once()->with("AVTransport", "Play", [
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "Play", [
             "Speed" =>  1,
         ])->andThrow($exception);
-        $device->shouldReceive("soap")->once()->with("ContentDirectory", "Browse", [
+        $this->device->shouldReceive("soap")->once()->with("ContentDirectory", "Browse", [
             "BrowseFlag"        =>  "BrowseDirectChildren",
             "StartingIndex"     =>  0,
             "RequestedCount"    =>  1,
@@ -46,86 +56,68 @@ class ControllerTest extends AbstractMockCase
         ]));
 
         $this->expectException(\BadMethodCallException::class);
-        $controller->play();
+        $this->controller->play();
     }
 
 
 
     public function testSelectTrack(): void
     {
-        $device = $this->getDevice();
-        $controller = $this->getController($device);
-
-        $device->shouldReceive("soap")->once()->with("AVTransport", "Seek", [
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "Seek", [
             "Unit"      =>  "TRACK_NR",
             "Target"    =>  4,
         ])->andReturn(new SoapResponse(null));
 
-        $this->assertSame($controller, $controller->selectTrack(3));
+        $this->assertSame($this->controller, $this->controller->selectTrack(3));
     }
 
 
     public function testSeekSeconds(): void
     {
-        $device = $this->getDevice();
-        $controller = $this->getController($device);
-
-        $device->shouldReceive("soap")->once()->with("AVTransport", "Seek", [
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "Seek", [
             "Unit"      =>  "REL_TIME",
             "Target"    =>  "00:00:55",
         ])->andReturn(new SoapResponse(null));
 
-        $this->assertSame($controller, $controller->seek(Time::inSeconds(55)));
+        $this->assertSame($this->controller, $this->controller->seek(Time::inSeconds(55)));
     }
 
 
     public function testSeekMinutes(): void
     {
-        $device = $this->getDevice();
-        $controller = $this->getController($device);
-
-        $device->shouldReceive("soap")->once()->with("AVTransport", "Seek", [
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "Seek", [
             "Unit"      =>  "REL_TIME",
             "Target"    =>  "00:02:02",
         ])->andReturn(new SoapResponse(null));
 
-        $this->assertSame($controller, $controller->seek(Time::inSeconds(122)));
+        $this->assertSame($this->controller, $this->controller->seek(Time::inSeconds(122)));
     }
 
 
     public function testSeekHours(): void
     {
-        $device = $this->getDevice();
-        $controller = $this->getController($device);
-
-        $device->shouldReceive("soap")->once()->with("AVTransport", "Seek", [
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "Seek", [
             "Unit"      =>  "REL_TIME",
             "Target"    =>  "01:05:00",
         ])->andReturn(new SoapResponse(null));
 
-        $this->assertSame($controller, $controller->seek(Time::parse("1:5:0")));
+        $this->assertSame($this->controller, $this->controller->seek(Time::parse("1:5:0")));
     }
 
 
     public function testSeekZero(): void
     {
-        $device = $this->getDevice();
-        $controller = $this->getController($device);
-
-        $device->shouldReceive("soap")->once()->with("AVTransport", "Seek", [
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "Seek", [
             "Unit"      =>  "REL_TIME",
             "Target"    =>  "00:00:00",
         ])->andReturn(new SoapResponse(null));
 
-        $this->assertSame($controller, $controller->seek(Time::start()));
+        $this->assertSame($this->controller, $this->controller->seek(Time::start()));
     }
 
 
     public function testRestoreState(): void
     {
-        $device = $this->getDevice();
-        $controller = $this->getController($device);
-
         $state = Mockery::mock(ControllerStateInterface::class);
         $state->shouldReceive("getState")->once()->with()->andReturn(PlayState::Stopped);
         $state->shouldReceive("getRepeat")->once()->with()->andReturn(false);
@@ -135,23 +127,20 @@ class ControllerTest extends AbstractMockCase
         $state->shouldReceive("getTracks")->once()->with()->andReturn([]);
         $state->shouldReceive("getStream")->once()->with()->andReturn(null);
 
-        $device->shouldReceive("soap")->once()->with("AVTransport", "RemoveAllTracksFromQueue", ["ObjectID" => "Q:0"])->andReturn(new SoapResponse(null));
-        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", [])->andReturn(new SoapResponse(["PlayMode" => "TEST"]));
-        $device->shouldReceive("soap")->once()->with("AVTransport", "SetCrossfadeMode", ["CrossfadeMode" => false])->andReturn(new SoapResponse(null));
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "RemoveAllTracksFromQueue", ["ObjectID" => "Q:0"])->andReturn(new SoapResponse(null));
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", [])->andReturn(new SoapResponse(["PlayMode" => "TEST"]));
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "SetCrossfadeMode", ["CrossfadeMode" => false])->andReturn(new SoapResponse(null));
 
-        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportInfo", [])->andReturn(new SoapResponse(["CurrentTransportState" => "TEST"]));
-        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", [])->andReturn(new SoapResponse(["PlayMode" => "TEST"]));
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportInfo", [])->andReturn(new SoapResponse(["CurrentTransportState" => "TEST"]));
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", [])->andReturn(new SoapResponse(["PlayMode" => "TEST"]));
 
-        $result = $controller->restoreState($state);
-        $this->assertSame($controller, $result);
+        $result = $this->controller->restoreState($state);
+        $this->assertSame($this->controller, $result);
     }
 
 
     public function testRestoreStateWithTracks(): void
     {
-        $device = $this->getDevice();
-        $controller = $this->getController($device);
-
         $state = Mockery::mock(ControllerStateInterface::class);
         $state->shouldReceive("getState")->once()->with()->andReturn(PlayState::Stopped);
         $state->shouldReceive("getTrack")->once()->with()->andReturn(0);
@@ -163,11 +152,11 @@ class ControllerTest extends AbstractMockCase
         $state->shouldReceive("getTracks")->once()->with()->andReturn(["track"]);
         $state->shouldReceive("getStream")->once()->with()->andReturn(null);
 
-        $device->shouldReceive("soap")->once()->with("AVTransport", "RemoveAllTracksFromQueue", ["ObjectID" => "Q:0"])->andReturn(new SoapResponse(null));
-        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", [])->andReturn(new SoapResponse(["PlayMode" => "TEST"]));
-        $device->shouldReceive("soap")->once()->with("AVTransport", "SetCrossfadeMode", ["CrossfadeMode" => false])->andReturn(new SoapResponse(null));
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "RemoveAllTracksFromQueue", ["ObjectID" => "Q:0"])->andReturn(new SoapResponse(null));
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", [])->andReturn(new SoapResponse(["PlayMode" => "TEST"]));
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "SetCrossfadeMode", ["CrossfadeMode" => false])->andReturn(new SoapResponse(null));
 
-        $device->shouldReceive("soap")->once()->with("ContentDirectory", "Browse", [
+        $this->device->shouldReceive("soap")->once()->with("ContentDirectory", "Browse", [
             "BrowseFlag"        =>  "BrowseDirectChildren",
             "StartingIndex"     =>  0,
             "RequestedCount"    =>  1,
@@ -178,32 +167,29 @@ class ControllerTest extends AbstractMockCase
             "UpdateID" => 85,
             "TotalMatches" => 1,
         ]));
-        $device->shouldReceive("soap")->once()->with("AVTransport", "AddMultipleURIsToQueue", Mockery::any())->andReturn(new SoapResponse([
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "AddMultipleURIsToQueue", Mockery::any())->andReturn(new SoapResponse([
             "NumTracksAdded" => 1,
             "NewUpdateID" => 86,
         ]));
-        $device->shouldReceive("soap")->once()->with("AVTransport", "Seek", [
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "Seek", [
             "Unit"      =>  "TRACK_NR",
             "Target"    =>  1,
         ])->andReturn(new SoapResponse(null));
-        $device->shouldReceive("soap")->once()->with("AVTransport", "Seek", [
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "Seek", [
             "Unit"      =>  "REL_TIME",
             "Target"    =>  "05:03:01",
         ])->andReturn(new SoapResponse(null));
 
-        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportInfo", [])->andReturn(new SoapResponse(["CurrentTransportState" => "TEST"]));
-        $device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", [])->andReturn(new SoapResponse(["PlayMode" => "TEST"]));
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportInfo", [])->andReturn(new SoapResponse(["CurrentTransportState" => "TEST"]));
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "GetTransportSettings", [])->andReturn(new SoapResponse(["PlayMode" => "TEST"]));
 
-        $result = $controller->restoreState($state);
-        $this->assertSame($controller, $result);
+        $result = $this->controller->restoreState($state);
+        $this->assertSame($this->controller, $result);
     }
 
 
     public function testGetStateDetailsQueue(): void
     {
-        $device = $this->getDevice();
-        $controller = $this->getController($device);
-
         $xml = '<DIDL-Lite ';
             $xml .= 'xmlns:dc="http://purl.org/dc/elements/1.1/" ';
             $xml .= 'xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" ';
@@ -224,7 +210,7 @@ class ControllerTest extends AbstractMockCase
             $xml .= '</item>';
         $xml .= '</DIDL-Lite>';
 
-        $device->shouldReceive("soap")->once()->with("AVTransport", "GetPositionInfo", [])->andReturn(new SoapResponse([
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "GetPositionInfo", [])->andReturn(new SoapResponse([
             "Track"         =>  1,
             "TrackDuration" =>  "0:04:04",
             "TrackMetaData" =>  $xml,
@@ -232,7 +218,7 @@ class ControllerTest extends AbstractMockCase
             "RelTime"       =>  "0:00:15",
         ]));
 
-        $state = $controller->getStateDetails();
+        $state = $this->controller->getStateDetails();
 
         $this->assertSame("x-file-cifs://LEMIEUX/sonos/afi/burials/12-Anxious.mp3", $state->getUri());
         $this->assertSame("anxious", $state->getTitle());
@@ -247,9 +233,6 @@ class ControllerTest extends AbstractMockCase
 
     public function testGetStateDetailsStream(): void
     {
-        $device = $this->getDevice();
-        $controller = $this->getController($device);
-
         $xml = '<DIDL-Lite ';
             $xml .= 'xmlns:dc="http://purl.org/dc/elements/1.1/" ';
             $xml .= 'xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" ';
@@ -266,7 +249,7 @@ class ControllerTest extends AbstractMockCase
             $xml .= '</item>';
         $xml .= '</DIDL-Lite>';
 
-        $device->shouldReceive("soap")->once()->with("AVTransport", "GetPositionInfo", [])->andReturn(new SoapResponse([
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "GetPositionInfo", [])->andReturn(new SoapResponse([
             "Track"         =>  1,
             "TrackDuration" =>  "0:00:00",
             "TrackMetaData" =>  $xml,
@@ -289,12 +272,12 @@ class ControllerTest extends AbstractMockCase
             $xml .= '</item>';
         $xml .= '</DIDL-Lite>';
 
-        $device->shouldReceive("soap")->once()->with("AVTransport", "GetMediaInfo", [])->andReturn(new SoapResponse([
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "GetMediaInfo", [])->andReturn(new SoapResponse([
             "CurrentURI"            =>  "x-sonosapi-stream:s200662?sid=254&flags=8224&sn=0",
             "CurrentURIMetaData"    =>  $xml,
         ]));
 
-        $state = $controller->getStateDetails();
+        $state = $this->controller->getStateDetails();
 
         $this->assertSame("x-rincon-mp3radio://tx.sharp-stream.com/http_live.php?i=teamrock.mp3", $state->getUri());
         $this->assertSame("Hit Or Miss", $state->getTitle());
@@ -310,10 +293,7 @@ class ControllerTest extends AbstractMockCase
 
     public function testGetStateDetailsLineIn(): void
     {
-        $device = $this->getDevice();
-        $controller = $this->getController($device);
-
-        $device->shouldReceive("soap")->once()->with("AVTransport", "GetPositionInfo", [])->andReturn(new SoapResponse([
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "GetPositionInfo", [])->andReturn(new SoapResponse([
             "Track"         =>  1,
             "TrackDuration" =>  "NOT_IMPLEMENTED",
             "TrackMetaData" =>  "NOT_IMPLEMENTED",
@@ -321,7 +301,7 @@ class ControllerTest extends AbstractMockCase
             "RelTime"       =>  "NOT_IMPLEMENTED",
         ]));
 
-        $state = $controller->getStateDetails();
+        $state = $this->controller->getStateDetails();
 
         $this->assertSame("x-rincon-stream:RINCON_B8E9372C898401400", $state->getUri());
         $stream = $state->getStream();
@@ -332,10 +312,7 @@ class ControllerTest extends AbstractMockCase
 
     public function testGetStateDetailsEmptyQueue(): void
     {
-        $device = $this->getDevice();
-        $controller = $this->getController($device);
-
-        $device->shouldReceive("soap")->once()->with("AVTransport", "GetPositionInfo", [])->andReturn(new SoapResponse([
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "GetPositionInfo", [])->andReturn(new SoapResponse([
             "Track"         =>  0,
             "TrackDuration" =>  "0:00:00",
             "TrackMetaData" =>  "",
@@ -343,7 +320,7 @@ class ControllerTest extends AbstractMockCase
             "RelTime"       =>  "0:00:00",
         ]));
 
-        $state = $controller->getStateDetails();
+        $state = $this->controller->getStateDetails();
 
         $this->assertSame("", $state->getUri());
         $this->assertNull($state->getStream());
@@ -352,52 +329,40 @@ class ControllerTest extends AbstractMockCase
 
     public function testIsStreamingQueue(): void
     {
-        $device = $this->getDevice();
-        $controller = $this->getController($device);
-
-        $device->shouldReceive("soap")->once()->with("AVTransport", "GetMediaInfo", [])->andReturn(new SoapResponse([
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "GetMediaInfo", [])->andReturn(new SoapResponse([
             "CurrentURI"    =>  "x-rincon-queue:RINCON_B8E93759B3D601400#0",
         ]));
 
-        $this->assertFalse($controller->isStreaming());
+        $this->assertFalse($this->controller->isStreaming());
     }
 
 
     public function testIsStreamingStream(): void
     {
-        $device = $this->getDevice();
-        $controller = $this->getController($device);
-
-        $device->shouldReceive("soap")->once()->with("AVTransport", "GetMediaInfo", [])->andReturn(new SoapResponse([
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "GetMediaInfo", [])->andReturn(new SoapResponse([
             "CurrentURI"    =>  "x-sonosapi-stream:s200662?sid=254&flags=8224&sn=0",
         ]));
 
-        $this->assertTrue($controller->isStreaming());
+        $this->assertTrue($this->controller->isStreaming());
     }
 
 
     public function testIsStreamingAmazon(): void
     {
-        $device = $this->getDevice();
-        $controller = $this->getController($device);
-
-        $device->shouldReceive("soap")->once()->with("AVTransport", "GetMediaInfo", [])->andReturn(new SoapResponse([
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "GetMediaInfo", [])->andReturn(new SoapResponse([
             "CurrentURI"    =>  "x-sonosapi-radio:s200662?sid=254&flags=8224&sn=0",
         ]));
 
-        $this->assertTrue($controller->isStreaming());
+        $this->assertTrue($this->controller->isStreaming());
     }
 
 
     public function testIsStreamingPlaybar(): void
     {
-        $device = $this->getDevice();
-        $controller = $this->getController($device);
-
-        $device->shouldReceive("soap")->once()->with("AVTransport", "GetMediaInfo", [])->andReturn(new SoapResponse([
+        $this->device->shouldReceive("soap")->once()->with("AVTransport", "GetMediaInfo", [])->andReturn(new SoapResponse([
             "CurrentURI"    =>  "x-sonos-htastream:RINCON_5CAAFD0A251401400:spdif",
         ]));
 
-        $this->assertTrue($controller->isStreaming());
+        $this->assertTrue($this->controller->isStreaming());
     }
 }

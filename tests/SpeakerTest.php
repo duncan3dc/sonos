@@ -8,8 +8,9 @@ use duncan3dc\Sonos\Speaker;
 use duncan3dc\Sonos\Utils\SoapResponse;
 use Mockery;
 use Mockery\MockInterface;
+use PHPUnit\Framework\TestCase;
 
-class SpeakerTest extends AbstractMockCase
+class SpeakerTest extends TestCase
 {
     protected DeviceInterface&MockInterface $device;
 
@@ -17,10 +18,8 @@ class SpeakerTest extends AbstractMockCase
 
     protected function setUp(): void
     {
-        parent::setUp();
-
-        $this->device = $this->getDevice();
-        $this->speaker = $this->getSpeaker($this->device);
+        $this->device = MockFactory::device();
+        $this->speaker = new Speaker($this->device);
     }
 
     protected function tearDown(): void
@@ -231,8 +230,7 @@ class SpeakerTest extends AbstractMockCase
 
     public function testIsCoordinator1(): void
     {
-        $device = $this->getDevice();
-
+        $device = MockFactory::device();
         $device->shouldReceive("soap")->with("ZoneGroupTopology", "GetZoneGroupAttributes", [])->andReturn(new SoapResponse([
             "CurrentZoneGroupID" => "RINCON_5CAAFD472E1C01400:195",
             "CurrentZonePlayerUUIDsInGroup" => "RINCON_5CAAFD472E1C01400",
@@ -244,8 +242,7 @@ class SpeakerTest extends AbstractMockCase
     }
     public function testIsCoordinator2(): void
     {
-        $device = $this->getDevice();
-
+        $device = MockFactory::device();
         $device->shouldReceive("soap")->with("ZoneGroupTopology", "GetZoneGroupAttributes", [])->andReturn(new SoapResponse([
             "CurrentZoneGroupID" => "RINCON_5CAAFD472E1C01400:195",
             "CurrentZonePlayerUUIDsInGroup" => "RINCON_5CAAF0000A1A01400",
@@ -257,8 +254,7 @@ class SpeakerTest extends AbstractMockCase
     }
     public function testIsCoordinator3(): void
     {
-        $device = $this->getDevice();
-
+        $device = MockFactory::device();
         $device->shouldReceive("soap")->with("ZoneGroupTopology", "GetZoneGroupAttributes", [])->andReturn(new SoapResponse([
             "CurrentZoneGroupID" => "RINCON_5CAAFD472E1C01400:195",
             "CurrentZonePlayerUUIDsInGroup" => "RINCON_5CAAFD472E1C01400,RINCON_5CAAF0000A1A01400",
@@ -270,8 +266,7 @@ class SpeakerTest extends AbstractMockCase
     }
     public function testIsCoordinator4(): void
     {
-        $device = $this->getDevice();
-
+        $device = MockFactory::device();
         $device->shouldReceive("soap")->with("ZoneGroupTopology", "GetZoneGroupAttributes", [])->andReturn(new SoapResponse([
             "CurrentZoneGroupID" => "RINCON_5CAAF0000A1A01400:195",
             "CurrentZonePlayerUUIDsInGroup" => "RINCON_5CAAFD472E1C01400,RINCON_5CAAF0000A1A01400",
@@ -285,8 +280,7 @@ class SpeakerTest extends AbstractMockCase
 
     public function testGetGroup(): void
     {
-        $device = $this->getDevice();
-
+        $device = MockFactory::device();
         $device->shouldReceive("soap")->with("ZoneGroupTopology", "GetZoneGroupAttributes", [])->andReturn(new SoapResponse([
             "CurrentZoneGroupID" => "",
             "CurrentZonePlayerUUIDsInGroup" => "RINCON_5CAAFD472E1C01400",

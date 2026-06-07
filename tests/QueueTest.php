@@ -3,7 +3,7 @@
 namespace duncan3dc\SonosTests;
 
 use duncan3dc\DomParser\XmlElement;
-use duncan3dc\Sonos\Controller;
+use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
 use duncan3dc\Sonos\Interfaces\UriInterface;
 use duncan3dc\Sonos\Playlist;
@@ -11,21 +11,21 @@ use duncan3dc\Sonos\Queue;
 use duncan3dc\Sonos\Utils\SoapResponse;
 use Mockery;
 use Mockery\MockInterface;
+use PHPUnit\Framework\TestCase;
 
-class QueueTest extends AbstractMockCase
+class QueueTest extends TestCase
 {
     protected DeviceInterface&MockInterface $device;
 
-    protected Controller $controller;
+    protected ControllerInterface $controller;
 
     protected Queue $queue;
 
     protected function setUp(): void
     {
-        parent::setUp();
+        $this->device = MockFactory::device();
+        $this->controller = MockFactory::controller($this->device);
 
-        $this->device = $this->getDevice();
-        $this->controller = $this->getController($this->device);
         $this->queue = new Queue($this->controller);
     }
 

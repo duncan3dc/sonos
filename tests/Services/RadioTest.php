@@ -7,11 +7,11 @@ use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Services\Radio;
 use duncan3dc\Sonos\Tracks\Stream;
 use duncan3dc\Sonos\Utils\SoapResponse;
-use duncan3dc\SonosTests\AbstractMockCase;
 use Mockery;
 use Mockery\MockInterface;
+use PHPUnit\Framework\TestCase;
 
-class RadioTest extends AbstractMockCase
+class RadioTest extends TestCase
 {
     private ControllerInterface&MockInterface $controller;
 
@@ -20,8 +20,6 @@ class RadioTest extends AbstractMockCase
 
     protected function setUp(): void
     {
-        parent::setUp();
-
         $this->controller = Mockery::mock(ControllerInterface::class);
         $this->radio = new Radio($this->controller);
     }

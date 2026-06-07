@@ -7,11 +7,11 @@ use duncan3dc\Sonos\Devices\Speakers;
 use duncan3dc\Sonos\Exceptions\InvalidArgumentException;
 use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
 use duncan3dc\Sonos\Interfaces\Devices\FactoryInterface;
-use duncan3dc\SonosTests\AbstractMockCase;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
 
-final class SpeakersTest extends AbstractMockCase
+final class SpeakersTest extends TestCase
 {
     private Speakers $speakers;
 

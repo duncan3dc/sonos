@@ -11,8 +11,9 @@ use duncan3dc\Sonos\Utils\SoapResponse;
 use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
+use PHPUnit\Framework\TestCase;
 
-class AlarmTest extends AbstractMockCase
+class AlarmTest extends TestCase
 {
     protected SpeakerInterface&MockInterface $speaker;
 

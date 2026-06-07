@@ -10,18 +10,17 @@ use duncan3dc\Sonos\Tracks\Factory;
 use duncan3dc\Sonos\Tracks\Spotify;
 use duncan3dc\Sonos\Tracks\Stream;
 use duncan3dc\Sonos\Tracks\Track;
-use duncan3dc\SonosTests\AbstractMockCase;
+use duncan3dc\SonosTests\MockFactory;
+use PHPUnit\Framework\TestCase;
 
-class FactoryTest extends AbstractMockCase
+class FactoryTest extends TestCase
 {
     private Factory $factory;
 
     protected function setUp(): void
     {
-        parent::setUp();
-
-        $device = $this->getDevice();
-        $controller = $this->getController($device);
+        $device = MockFactory::device();
+        $controller = MockFactory::controller($device);
         $this->factory = new Factory($controller);
     }
 
