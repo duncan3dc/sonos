@@ -8,44 +8,38 @@ use duncan3dc\Sonos\Exceptions\InvalidArgumentException;
 use duncan3dc\Sonos\Exceptions\SoapException;
 use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
 use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Psr\SimpleCache\CacheInterface;
+
+use function preg_match;
 
 /**
  * Make http requests to a Sonos device.
  */
 final class Device implements DeviceInterface
 {
-    /**
-     * @var string $ip The IP address of the device.
-     */
-    private $ip;
+    private string $ip;
 
-    /**
-     * @var string $model The model of the device.
-     */
-    private $model;
+    private bool $lookedUp = false;
 
-    /**
-     * @var CacheInterface $cache The long-lived cache object from the Collection instance.
-     */
-    private $cache;
+    private string $name;
 
-    /**
-     * @var LoggerInterface $logger The logging object.
-     */
-    private $logger;
+    private string $room;
+
+    private string $model;
+
+    private string $uuid;
+
+    private CacheInterface $cache;
+
+    private LoggerInterface $logger;
+
+    private ClientInterface $client;
 
 
-    /**
-     * Create an instance of the Device class.
-     *
-     * @param string $ip The ip address that the device is listening on
-     * @param ?CacheInterface $cache The cache object to use for finding Sonos devices on the network
-     * @param ?LoggerInterface $logger A logging object
-     */
-    public function __construct(string $ip, ?CacheInterface $cache = null, ?LoggerInterface $logger = null)
+    public function __construct(string $ip, ?CacheInterface $cache = null, ?LoggerInterface $logger = null, ?ClientInterface $client = null)
     {
         $this->ip = $ip;
 
@@ -58,33 +52,54 @@ final class Device implements DeviceInterface
             $logger = new NullLogger();
         }
         $this->logger = $logger;
+
+        if ($client === null) {
+            $client = new Client();
+        }
+        $this->client = $client;
     }
 
 
-    /**
-     * @inheritDoc
-     */
     public function getIp()
     {
         return $this->ip;
     }
 
 
+    private function lookupDeviceDescription(): void
+    {
+        if ($this->lookedUp) {
+            return;
+        }
+
+        $parser = $this->getXml();
+        $device = $parser->getTag("device");
+
+        $this->name = (string) $device->getTag("friendlyName");
+        $this->room = (string) $device->getTag("roomName");
+        $this->model = (string) $device->getTag("modelNumber") ?: "UNKNOWN";
+        $this->logger->debug("{$this->ip} model: {$this->model}");
+
+        $udn = (string) $device->getTag("UDN");
+        if (preg_match("/^uuid:(.*)$/", $udn, $matches)) {
+            $this->uuid = $matches[1];
+        }
+
+        $this->lookedUp = true;
+    }
+
+
     /**
      * Retrieve some xml from the device.
-     *
-     * @param string $url The url to retrieve
-     *
-     * @return XmlParser
      */
-    public function getXml(string $url): XmlParser
+    private function getXml(): XmlParser
     {
-        $uri = "http://{$this->ip}:1400{$url}";
-        $key = str_replace("/", "_", $this->ip . $url);
+        $uri = "http://{$this->ip}:1400/xml/device_description.xml";
 
-        if ($this->cache->has($key)) {
+        $cacheKey = "get_xml_{$this->ip}";
+        if ($this->cache->has($cacheKey)) {
             $this->logger->info("getting xml from cache: {$uri}");
-            $xml = $this->cache->get($key);
+            $xml = $this->cache->get($cacheKey);
             if ($xml) {
                 return new XmlParser($xml);
             }
@@ -92,11 +107,39 @@ final class Device implements DeviceInterface
         }
 
         $this->logger->notice("requesting xml from: {$uri}");
-        $xml = (string) (new Client())->get($uri)->getBody();
+        $xml = (string) $this->client->request("GET", $uri)->getBody();
 
-        $this->cache->set($key, $xml, new \DateInterval("P1D"));
+        $this->cache->set($cacheKey, $xml, new \DateInterval("P1D"));
 
         return new XmlParser($xml);
+    }
+
+
+    public function getName(): string
+    {
+        $this->lookupDeviceDescription();
+        return $this->name;
+    }
+
+
+    public function getRoom(): string
+    {
+        $this->lookupDeviceDescription();
+        return $this->room;
+    }
+
+
+    public function getModel(): string
+    {
+        $this->lookupDeviceDescription();
+        return $this->model;
+    }
+
+
+    public function getUuid(): string
+    {
+        $this->lookupDeviceDescription();
+        return $this->uuid;
     }
 
 
@@ -159,30 +202,5 @@ final class Device implements DeviceInterface
         }
 
         return $result;
-    }
-
-
-    /**
-     * Get the model of this device.
-     *
-     * @return string
-     */
-    public function getModel(): string
-    {
-        if ($this->model === null) {
-            $parser = $this->getXml("/xml/device_description.xml");
-
-            if ($device = $parser->getTag("device")) {
-                $this->model = (string) $device->getTag("modelNumber");
-            }
-
-            if (!is_string($this->model) || strlen($this->model) === 0) {
-                $this->model = "UNKNOWN";
-            }
-
-            $this->logger->debug("{$this->ip} model: {$this->model}");
-        }
-
-        return $this->model;
     }
 }

@@ -28,16 +28,6 @@ final class Speaker implements SpeakerInterface
     private $device;
 
     /**
-     * @var string $name The "Friendly" name reported by the speaker.
-     */
-    private $name;
-
-    /**
-     * @var string $room The room name assigned to this speaker.
-     */
-    private $room;
-
-    /**
      * @var string $uuid The unique id of this speaker.
      */
     private $uuid;
@@ -66,16 +56,6 @@ final class Speaker implements SpeakerInterface
         } else {
             $this->ip = $param;
             $this->device = new Device($this->ip);
-        }
-
-        $parser = $this->device->getXml("/xml/device_description.xml");
-        $device = $parser->getTag("device");
-        $this->name = (string) $device->getTag("friendlyName");
-        $this->room = (string) $device->getTag("roomName");
-
-        $udn = (string) $device->getTag("UDN");
-        if (preg_match("/^uuid:(.*)$/", $udn, $matches)) {
-            $this->uuid = $matches[1];
         }
     }
 
@@ -107,7 +87,7 @@ final class Speaker implements SpeakerInterface
      */
     public function getName(): string
     {
-        return $this->name;
+        return $this->device->getName();
     }
 
 
@@ -118,7 +98,7 @@ final class Speaker implements SpeakerInterface
      */
     public function getRoom(): string
     {
-        return $this->room;
+        return $this->device->getRoom();
     }
 
 
@@ -202,7 +182,7 @@ final class Speaker implements SpeakerInterface
      */
     public function getUuid(): string
     {
-        return $this->uuid;
+        return $this->device->getUuid();
     }
 
 

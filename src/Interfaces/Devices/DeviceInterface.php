@@ -14,14 +14,16 @@ interface DeviceInterface
     public function getIp();
 
 
-    /**
-     * Retrieve some xml from the device.
-     *
-     * @param string $url The url to retrieve
-     *
-     * @return XmlParser
-     */
-    public function getXml(string $url): XmlParser;
+    public function getName(): string;
+
+
+    public function getRoom(): string;
+
+
+    public function getModel(): string;
+
+
+    public function getUuid(): string;
 
 
     /**
@@ -34,12 +36,4 @@ interface DeviceInterface
      * @return mixed
      */
     public function soap(string $service, string $action, array $params = []);
-
-
-    /**
-     * Get the model of this device.
-     *
-     * @return string
-     */
-    public function getModel(): string;
 }

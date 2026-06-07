@@ -36,13 +36,10 @@ abstract class AbstractMockCase extends TestCase
         $device = Mockery::mock(DeviceInterface::class);
         $device->shouldReceive("getIp")->andReturn($ip);
 
-        $parser = Mockery::mock(XmlParser::class);
-        $tag = Mockery::mock(XmlParser::class);
-        $parser->shouldReceive("getTag")->with("device")->once()->andReturn($tag);
-        $tag->shouldReceive("getTag")->with("friendlyName")->once()->andReturn("Test Name");
-        $tag->shouldReceive("getTag")->with("roomName")->once()->andReturn("Test Room");
-        $tag->shouldReceive("getTag")->with("UDN")->once()->andReturn("uuid:RINCON_5CAAFD472E1C01400");
-        $device->shouldReceive("getXml")->with("/xml/device_description.xml")->once()->andReturn($parser);
+        $device->shouldReceive("getName")->with()->andReturn("Test Name");
+        $device->shouldReceive("getRoom")->with()->andReturn("Test Room");
+        $device->shouldReceive("getUuid")->with()->andReturn("RINCON_5CAAFD472E1C01400");
+        $device->shouldReceive("getModel")->with()->andReturn("S1");
 
         return $device;
     }

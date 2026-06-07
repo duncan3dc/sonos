@@ -34,13 +34,14 @@ class FactoryTest extends TestCase
         $factory = new Factory($cache, $logger);
         $device = $factory->create("192.168.4.1");
 
-        $cache->shouldReceive("has")->with("192.168.4.1_test.xml")->once()->andReturn(true);
+        $xml = "<device><friendlyName>Disco</friendlyName><modelNumber>S12</modelNumber></device>";
 
-        $logger->shouldReceive("info")->with("getting xml from cache: http://192.168.4.1:1400/test.xml")->once()->andReturn(true);
+        $cache->shouldReceive("has")->with("get_xml_192.168.4.1")->once()->andReturn(true);
+        $logger->shouldReceive("info")->with("getting xml from cache: http://192.168.4.1:1400/xml/device_description.xml")->once();
+        $cache->shouldReceive("get")->with("get_xml_192.168.4.1")->once()->andReturn($xml);
+        $logger->shouldReceive("debug")->with("192.168.4.1 model: S12")->once();
 
-        $cache->shouldReceive("get")->with("192.168.4.1_test.xml")->once()->andReturn("<test>ok</test>");
-
-        $result = $device->getXml("/test.xml");
-        $this->assertSame("ok", $result->getTag("test")->nodeValue);
+        $result = $device->getName();
+        $this->assertSame("Disco", $result);
     }
 }
