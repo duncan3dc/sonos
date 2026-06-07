@@ -4,21 +4,17 @@ namespace duncan3dc\Sonos;
 
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Interfaces\ControllerStateInterface;
-use duncan3dc\Sonos\Interfaces\SpeakerInterface;
+use duncan3dc\Sonos\Interfaces\PlayState;
 use duncan3dc\Sonos\Interfaces\TrackInterface;
 use duncan3dc\Sonos\Interfaces\Utils\TimeInterface;
 use duncan3dc\Sonos\Tracks\Stream;
-use duncan3dc\Sonos\Utils\Time;
 
 /**
  * Representation of the current state of a controller.
  */
 final class ControllerState implements ControllerStateInterface
 {
-    /**
-     * @var int One of the ControllerInterface::STATE_ constants
-     */
-    private $state;
+    private PlayState $state;
 
     /**
      * @var int $track The zero-based number of the track in the queue.
@@ -154,11 +150,9 @@ final class ControllerState implements ControllerStateInterface
     /**
      * Set the playing mode of the controller.
      *
-     * @param int $state One of the ControllerInterface::STATE_ constants
-     *
      * @return $this
      */
-    public function setState($state): ControllerStateInterface
+    public function setState(PlayState $state): ControllerStateInterface
     {
         $this->state = $state;
         return $this;
@@ -167,10 +161,8 @@ final class ControllerState implements ControllerStateInterface
 
     /**
      * Get the playing mode of the controller.
-     *
-     * @return int One of the ControllerInterface::STATE_ constants
      */
-    public function getState(): int
+    public function getState(): PlayState
     {
         return $this->state;
     }

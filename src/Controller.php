@@ -8,6 +8,7 @@ use duncan3dc\Sonos\Exceptions\SoapException;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Interfaces\ControllerStateInterface;
 use duncan3dc\Sonos\Interfaces\NetworkInterface;
+use duncan3dc\Sonos\Interfaces\PlayState;
 use duncan3dc\Sonos\Interfaces\QueueInterface;
 use duncan3dc\Sonos\Interfaces\SpeakerInterface;
 use duncan3dc\Sonos\Interfaces\StateInterface;
@@ -70,23 +71,21 @@ final class Controller implements ControllerInterface
 
     /**
      * Get the current state of the group of speakers.
-     *
-     * @return int One of the class STATE_ constants
      */
-    public function getState(): int
+    public function getState(): PlayState
     {
         $name = $this->getStateName();
         switch ($name) {
             case "STOPPED":
-                return self::STATE_STOPPED;
+                return PlayState::Stopped;
             case "PLAYING":
-                return self::STATE_PLAYING;
+                return PlayState::Playing;
             case "PAUSED_PLAYBACK":
-                return self::STATE_PAUSED;
+                return PlayState::Paused;
             case "TRANSITIONING":
-                return self::STATE_TRANSITIONING;
+                return PlayState::Transitioning;
         }
-        return self::STATE_UNKNOWN;
+        return PlayState::Unknown;
     }
 
 
@@ -140,21 +139,19 @@ final class Controller implements ControllerInterface
     /**
      * Set the state of the group.
      *
-     * @param int $state One of the class STATE_ constants
-     *
      * @return $this
      */
-    public function setState(int $state): ControllerInterface
+    public function setState(PlayState $state): ControllerInterface
     {
         switch ($state) {
-            case self::STATE_PLAYING:
+            case PlayState::Playing:
                 return $this->play();
-            case self::STATE_PAUSED:
+            case PlayState::Paused:
                 return $this->pause();
-            case self::STATE_STOPPED:
+            case PlayState::Stopped:
                 return $this->pause();
         }
-        throw new InvalidArgumentException("Unknown state: {$state})");
+        throw new InvalidArgumentException("Unknown state");
     }
 
 
@@ -573,7 +570,7 @@ final class Controller implements ControllerInterface
     {
         if ($pause) {
             $state = $this->getState();
-            if ($state === self::STATE_PLAYING) {
+            if ($state === PlayState::Playing) {
                 $this->pause();
             }
         }
@@ -628,11 +625,11 @@ final class Controller implements ControllerInterface
         }
 
         # If the exported state was playing then start it playing now
-        if ($state->getState() === self::STATE_PLAYING) {
+        if ($state->getState() === PlayState::Playing) {
             $this->play();
 
         # If the exported state was stopped and we are playing then stop it now
-        } elseif ($this->getState() === self::STATE_PLAYING) {
+        } elseif ($this->getState() === PlayState::Playing) {
             $this->pause();
         }
 
@@ -682,7 +679,7 @@ final class Controller implements ControllerInterface
         sleep(1);
 
         # Wait for the track to finish
-        while ($this->getState() === self::STATE_PLAYING) {
+        while ($this->getState() === PlayState::Playing) {
             usleep(500000);
         }
 

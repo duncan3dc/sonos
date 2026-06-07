@@ -5,6 +5,7 @@ Changelog
 
 ### Changed
 
+* [PlayState] The `ControllerInterface::STATE_*` constants have been replaced by a `PlayState` enum.
 * [Device] Removed the isSpeaker() method, this is now handled by the Speakers collection.
 * [DeviceInterface] Replaced the getXml() method with getName(), getRoom(), and getUuid().
 * [Logging] setLogger() no longer returns anything (to match the psr/log interface).

@@ -14,38 +14,6 @@ use duncan3dc\Sonos\Tracks\Stream;
 interface ControllerInterface extends SpeakerInterface
 {
     /**
-     * No music playing, but not paused.
-     *
-     * This is a rare state, but can be encountered after an upgrade, or if the queue was cleared
-     */
-    public const STATE_STOPPED = 201;
-
-    /**
-     * Currently plating music.
-     */
-    public const STATE_PLAYING = 202;
-
-    /**
-     * Music is currently paused.
-     */
-    public const STATE_PAUSED = 203;
-
-    /**
-     * The speaker is currently working on either playing or pausing.
-     *
-     * Check it's state again in a second or two
-     */
-    public const STATE_TRANSITIONING = 204;
-
-    /**
-     * The speaker is in an unknown state.
-     *
-     * This should only happen if Sonos introduce a new state that this code has not been updated to handle.
-     */
-    public const STATE_UNKNOWN = 205;
-
-
-    /**
      * Get the current state of the group of speakers as the string reported by sonos: PLAYING, PAUSED_PLAYBACK, etc
      *
      * @return string
@@ -55,10 +23,8 @@ interface ControllerInterface extends SpeakerInterface
 
     /**
      * Get the current state of the group of speakers.
-     *
-     * @return int One of the class STATE_ constants
      */
-    public function getState(): int;
+    public function getState(): PlayState;
 
 
     /**
@@ -72,11 +38,9 @@ interface ControllerInterface extends SpeakerInterface
     /**
      * Set the state of the group.
      *
-     * @param int $state One of the class STATE_ constants
-     *
      * @return self
      */
-    public function setState(int $state): ControllerInterface;
+    public function setState(PlayState $state): ControllerInterface;
 
 
     /**

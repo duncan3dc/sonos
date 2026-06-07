@@ -2,9 +2,9 @@
 
 namespace duncan3dc\SonosTests;
 
-use duncan3dc\Sonos\Controller;
 use duncan3dc\Sonos\Exceptions\SoapException;
 use duncan3dc\Sonos\Interfaces\ControllerStateInterface;
+use duncan3dc\Sonos\Interfaces\PlayState;
 use duncan3dc\Sonos\Tracks\Stream;
 use duncan3dc\Sonos\Utils\Time;
 use Mockery;
@@ -126,7 +126,7 @@ class ControllerTest extends AbstractMockCase
         $controller = $this->getController($device);
 
         $state = Mockery::mock(ControllerStateInterface::class);
-        $state->shouldReceive("getState")->once()->with()->andReturn(Controller::STATE_STOPPED);
+        $state->shouldReceive("getState")->once()->with()->andReturn(PlayState::Stopped);
         $state->shouldReceive("getRepeat")->once()->with()->andReturn(false);
         $state->shouldReceive("getShuffle")->once()->with()->andReturn(false);
         $state->shouldReceive("getCrossfade")->once()->with()->andReturn(false);
@@ -152,7 +152,7 @@ class ControllerTest extends AbstractMockCase
         $controller = $this->getController($device);
 
         $state = Mockery::mock(ControllerStateInterface::class);
-        $state->shouldReceive("getState")->once()->with()->andReturn(Controller::STATE_STOPPED);
+        $state->shouldReceive("getState")->once()->with()->andReturn(PlayState::Stopped);
         $state->shouldReceive("getTrack")->once()->with()->andReturn(0);
         $state->shouldReceive("getPosition")->once()->with()->andReturn(Time::parse("05:03:01"));
         $state->shouldReceive("getRepeat")->once()->with()->andReturn(false);

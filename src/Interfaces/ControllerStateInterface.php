@@ -12,10 +12,8 @@ interface ControllerStateInterface
 {
     /**
      * Get the playing mode of the controller.
-     *
-     * @return int One of the ControllerInterface::STATE_ constants
      */
-    public function getState(): int;
+    public function getState(): PlayState;
 
     /**
      * Get the number of the active track in the queue

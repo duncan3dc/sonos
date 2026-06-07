@@ -3,6 +3,7 @@
 namespace duncan3dc\SonosTests;
 
 use duncan3dc\Sonos\Controller;
+use duncan3dc\Sonos\Interfaces\PlayState;
 use duncan3dc\Sonos\Interfaces\Utils\TimeInterface;
 use duncan3dc\Sonos\Queue;
 use duncan3dc\Sonos\Speaker;
@@ -56,10 +57,10 @@ class ControllerLiveTest extends AbstractLiveCase
     public function testGetState(): void
     {
         $states = [
-            Controller::STATE_STOPPED,
-            Controller::STATE_PLAYING,
-            Controller::STATE_PAUSED,
-            Controller::STATE_TRANSITIONING,
+            PlayState::Stopped,
+            PlayState::Playing,
+            PlayState::Paused,
+            PlayState::Transitioning,
         ];
 
         foreach ($this->network->getControllers() as $controller) {
