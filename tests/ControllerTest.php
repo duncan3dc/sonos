@@ -28,7 +28,7 @@ class ControllerTest extends AbstractMockCase
     {
         $device = $this->getDevice();
         $controller = $this->getController($device);
-        $exception = Mockery::mock(SoapException::class);
+        $exception = new SoapException(Mockery::mock(\SoapFault::class), Mockery::mock(\SoapClient::class));
 
         $device->shouldReceive("soap")->once()->with("AVTransport", "Play", [
             "Speed" =>  1,

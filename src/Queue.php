@@ -3,7 +3,7 @@
 namespace duncan3dc\Sonos;
 
 use duncan3dc\DomParser\XmlParser;
-use duncan3dc\Sonos\Exceptions\SonosException;
+use duncan3dc\Sonos\Exceptions\InvalidArgumentException;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Interfaces\QueueInterface;
 use duncan3dc\Sonos\Interfaces\TrackInterface;
@@ -248,8 +248,7 @@ class Queue implements QueueInterface
         }
 
         if (!$track instanceof UriInterface) {
-            $error = "The first argument to addTrack() should be an object that implements " . UriInterface::class;
-            throw new \InvalidArgumentException($error);
+            throw new InvalidArgumentException("The first argument to addTrack() should be an object that implements " . UriInterface::class);
         }
 
         if ($position === null) {
@@ -286,8 +285,7 @@ class Queue implements QueueInterface
             }
 
             if (!$track instanceof UriInterface) {
-                $error = "The tracks must contain either string URIs or objects that implement " . UriInterface::class;
-                throw new \InvalidArgumentException($error);
+                throw new InvalidArgumentException("The tracks must contain either string URIs or objects that implement " . UriInterface::class);
             }
 
             $uris[] = $track;

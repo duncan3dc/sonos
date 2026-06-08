@@ -3,6 +3,8 @@
 namespace duncan3dc\Sonos;
 
 use duncan3dc\DomParser\XmlElement;
+use duncan3dc\Sonos\Exceptions\NotFoundException;
+use duncan3dc\Sonos\Exceptions\UnexpectedValueException;
 use duncan3dc\Sonos\Interfaces\AlarmInterface;
 use duncan3dc\Sonos\Interfaces\NetworkInterface;
 use duncan3dc\Sonos\Interfaces\SpeakerInterface;
@@ -125,7 +127,7 @@ final class Alarm implements AlarmInterface
             }
         }
 
-        throw new \RuntimeException("Unable to find a speaker for this alarm");
+        throw new NotFoundException("Unable to find a speaker for this alarm");
     }
 
 
@@ -217,8 +219,7 @@ final class Alarm implements AlarmInterface
             $data = "ON_06";
         }
         if (!preg_match("/^ON_([0-9]+)$/", $data, $matches)) {
-            $error = "Unrecognised frequency for alarm ({$data}), please report this issue on github.com";
-            throw new \RuntimeException($error);
+            throw new UnexpectedValueException("Unrecognised frequency for alarm ({$data}), please report this issue on github.com");
         }
 
         $data = $matches[1];

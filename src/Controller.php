@@ -3,6 +3,7 @@
 namespace duncan3dc\Sonos;
 
 use duncan3dc\DomParser\XmlParser;
+use duncan3dc\Sonos\Exceptions\InvalidArgumentException;
 use duncan3dc\Sonos\Exceptions\SoapException;
 use duncan3dc\Sonos\Interfaces\ControllerInterface;
 use duncan3dc\Sonos\Interfaces\ControllerStateInterface;
@@ -47,8 +48,7 @@ final class Controller implements ControllerInterface
     public function __construct(SpeakerInterface $speaker, NetworkInterface $network)
     {
         if (!$speaker->isCoordinator()) {
-            $error = "You cannot create a Controller instance from a Speaker that is not the coordinator of its group";
-            throw new \InvalidArgumentException($error);
+            throw new InvalidArgumentException("You cannot create a Controller instance from a Speaker that is not the coordinator of its group");
         }
 
         $this->network = $network;
@@ -154,7 +154,7 @@ final class Controller implements ControllerInterface
             case self::STATE_STOPPED:
                 return $this->pause();
         }
-        throw new \InvalidArgumentException("Unknown state: {$state})");
+        throw new InvalidArgumentException("Unknown state: {$state})");
     }
 
 

@@ -2,6 +2,6 @@
 
 namespace duncan3dc\Sonos\Exceptions;
 
-class NotFoundException extends SonosException
+class NotFoundException extends \RuntimeException implements Exception
 {
 }

@@ -2,6 +2,6 @@
 
 namespace duncan3dc\Sonos\Exceptions;
 
-class NetworkException extends SonosException
+class NetworkException extends \RuntimeException implements Exception
 {
 }

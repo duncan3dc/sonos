@@ -5,12 +5,12 @@ namespace duncan3dc\Sonos\Exceptions;
 /**
  * Provides extra information about upnp exceptions
  */
-class SoapException extends SonosException
+final class SoapException extends \Exception implements Exception
 {
     /**
      * @var \SoapClient $client The SoapClient instance that threw the SoapFault
      */
-    protected $client;
+    private \SoapClient $client;
 
     /**
      * Create a new SoapException.

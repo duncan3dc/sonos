@@ -4,6 +4,7 @@ namespace duncan3dc\Sonos\Devices;
 
 use duncan3dc\Cache\ArrayPool;
 use duncan3dc\DomParser\XmlParser;
+use duncan3dc\Sonos\Exceptions\InvalidArgumentException;
 use duncan3dc\Sonos\Exceptions\SoapException;
 use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
 use GuzzleHttp\Client;
@@ -124,7 +125,7 @@ final class Device implements DeviceInterface
                 $path = null;
                 break;
             default:
-                throw new \InvalidArgumentException("Unknown service: {$service}");
+                throw new InvalidArgumentException("Unknown service: {$service}");
         }
 
         $location = "http://{$this->ip}:1400/";

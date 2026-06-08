@@ -3,12 +3,12 @@
 namespace duncan3dc\Sonos;
 
 use duncan3dc\Sonos\Devices\Device;
+use duncan3dc\Sonos\Exceptions\InvalidArgumentException;
 use duncan3dc\Sonos\Exceptions\UnknownGroupException;
 use duncan3dc\Sonos\Interfaces\Devices\DeviceInterface;
 use duncan3dc\Sonos\Interfaces\SpeakerInterface;
 
 use function explode;
-use function in_array;
 use function preg_match;
 use function strpos;
 
@@ -79,8 +79,7 @@ final class Speaker implements SpeakerInterface
         }
 
         if (!$this->device->isSpeaker()) {
-            $error = "You cannot create a Speaker instance for this model: " . $this->device->getModel();
-            throw new \InvalidArgumentException($error);
+            throw new InvalidArgumentException("You cannot create a Speaker instance for this model: " . $this->device->getModel());
         }
     }
 
