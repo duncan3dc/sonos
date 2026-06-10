@@ -159,10 +159,12 @@ final class Device implements DeviceInterface
                 $path = "MediaRenderer";
                 break;
             case "ContentDirectory":
+            case "ConnectionManager":
                 $path = "MediaServer";
                 break;
             case "AlarmClock":
             case "DeviceProperties":
+            case "MusicServices":
             case "ZoneGroupTopology":
                 $path = null;
                 break;
