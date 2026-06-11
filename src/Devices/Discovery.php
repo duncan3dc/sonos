@@ -101,6 +101,7 @@ final class Discovery implements CollectionInterface
     public function addDevice(DeviceInterface $device): CollectionInterface
     {
         $this->collection->addDevice($device);
+        $this->discovered = true;
         return $this;
     }
 
@@ -115,6 +116,7 @@ final class Discovery implements CollectionInterface
     public function addIp(string $address): CollectionInterface
     {
         $this->collection->addIp($address);
+        $this->discovered = true;
         return $this;
     }
 
@@ -203,6 +205,7 @@ final class Discovery implements CollectionInterface
     public function clear(): CollectionInterface
     {
         $this->collection->clear();
+        $this->discovered = false;
 
         return $this;
     }

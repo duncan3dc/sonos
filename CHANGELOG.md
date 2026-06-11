@@ -15,6 +15,7 @@ Changelog
 * [DeviceInterface] The `soap()` method now returns a `SoapResponse` instance.
 * [TrackInterface] Added the static `createFromXml()`.
 * [Logging] setLogger() no longer returns anything (to match the psr/log interface).
+* [Discovery] If you manually add devices to the discovery collection then discovery will no longer be performed.
 * [Dependencies] Switched to league/flysystem v3 ([#132](https://github.com/duncan3dc/sonos/issues/132)).
 * [Tracks] Dropped the Google and GoogleUnlimited tracks as the service has been shutdown.
 * [Exceptions] The `SonosException` class is now the `Exception` interface.
