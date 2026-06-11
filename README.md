@@ -27,7 +27,8 @@ _Read more at https://duncan3dc.github.io/sonos/_
 
 Changelog
 ---------
-A [Changelog](CHANGELOG.md) has been available since version 0.8.8
+A [Changelog](CHANGELOG.md) has been available since version 0.8.8  
+This library was based on the great work done by both [DjMomo/sonos](https://github.com/DjMomo/sonos) and [phil-lavin/sonos](https://github.com/phil-lavin/sonos)
 
 
 Where to get help
