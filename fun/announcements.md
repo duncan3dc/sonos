@@ -2,18 +2,18 @@
 layout: default
 title: Announcements
 permalink: /fun/announcements/
-api: Interfaces.Utils.DirectoryInterface
+api: Interfaces-Utils-DirectoryInterface
 ---
 
 The Sonos library supports making announcements via [text to speech](../text-to-speech/) functionality.
 
-First you need to have a [SMB](//en.wikipedia.org/wiki/Server_Message_Block) share available, then you can setup a `Directory` instance using [Flysystem](//flysystem.thephpleague.com/).
+First you need to have a [SMB](https://en.wikipedia.org/wiki/Server_Message_Block) share available, then you can setup a `Directory` instance using [Flysystem](https://flysystem.thephpleague.com/).
 
 ```php
 use duncan3dc\Sonos\Utils\Directory;
 
 # The flysystem instance used to store temporary audio files for Sonos to retrieve
-$adapter = new \League\Flysystem\Adapter\Local("/var/shares/sonos");
+$adapter = new \League\Flysystem\Local\LocalFilesystemAdapter("/var/shares/sonos");
 $filesystem = new \League\Flysystem\Filesystem($adapter);
 
 # The SMB server (this must be in uppercase, and using an IP has been reported not to work)

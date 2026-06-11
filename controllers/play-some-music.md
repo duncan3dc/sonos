@@ -3,7 +3,7 @@ layout: default
 title: Play Some Music
 page-title: Start the party!
 permalink: /controllers/play-some-music/
-api: Interfaces.ControllerInterface
+api: Interfaces-ControllerInterface
 ---
 
 
@@ -19,7 +19,7 @@ foreach ($controllers as $controller) {
 ```
 
 
-Or check on your networks current status:
+Or check on your network's current status:
 
 ```php
 $controllers = $sonos->getControllers();

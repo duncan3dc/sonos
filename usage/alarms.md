@@ -2,7 +2,7 @@
 layout: default
 title: Alarms
 permalink: /usage/alarms/
-api: Interfaces.AlarmInterface
+api: Interfaces-AlarmInterface
 ---
 
 You can get existing alarms from the [Network class](../getting-started/#alarms) and delete one like so:

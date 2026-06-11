@@ -2,7 +2,7 @@
 layout: default
 title: Playlists
 permalink: /usage/playlists/
-api: Interfaces.PlaylistInterface
+api: Interfaces-PlaylistInterface
 ---
 
 You can get existing playlists from the [Network class](../getting-started/#playlists) or create a new one like so:

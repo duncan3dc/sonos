@@ -2,7 +2,7 @@
 layout: default
 title: Line-In
 permalink: /controllers/line-in/
-api: Interfaces.ControllerInterface
+api: Interfaces-ControllerInterface
 ---
 
 When using speakers that have Line-In support, you can set controllers to play them like so:

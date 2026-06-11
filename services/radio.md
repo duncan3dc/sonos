@@ -2,7 +2,7 @@
 layout: default
 title: Radio
 permalink: /services/radio/
-api: Interfaces.Services.RadioInterface
+api: Interfaces-Services-RadioInterface
 ---
 
 Radio streaming (provided by TuneIn) is supported using the `Radio` class, which can be created like so:

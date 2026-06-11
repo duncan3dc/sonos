@@ -2,7 +2,7 @@
 layout: default
 title: Streams
 permalink: /controllers/streams/
-api: Tracks.Stream
+api: Tracks-Stream
 ---
 
 When a controller is not using a [Queue](../queue/) it is often using a stream instead.  

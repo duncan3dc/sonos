@@ -2,11 +2,10 @@
 layout: default
 title: Tracks
 permalink: /usage/tracks/
-api: Interfaces.TrackInterface
+api: Interfaces-TrackInterface
 ---
 
-When working with Queues and Playlists you will often be dealing with instances of the Track class.  
-These are very basic objects with public properties:
+When working with Queues and Playlists you will often be dealing with instances of the Track class:
 
 ```php
 # Get the name of the song
@@ -38,7 +37,7 @@ $queue->addTrack($track);
 ```
 
 
-If you want to pass a custom object to addTrack(s) then your class must implement the <a href='{{ site.baseurl }}/api/classes/duncan3dc.Sonos.Interfaces.UriInterface.html'>UriInterface</a>:
+If you want to pass a custom object to addTrack(s) then your class must implement the [UriInterface](../../api/classes/duncan3dc-Sonos-Interfaces-UriInterface.html):
 
 ```php
 class Smb implements \duncan3dc\Sonos\Interfaces\UriInterface
@@ -79,7 +78,7 @@ $playlist->addTracks($tracks);
 ## State Details
 
 When getting state details from a controller the result is similar to the track class.  
-The available methods can be seen on the [ControllerStateInterface](../..//api/classes/duncan3dc.Sonos.Interfaces.ControllerStateInterface.html)
+The available methods can be seen on the [ControllerStateInterface](../../api/classes/duncan3dc-Sonos-Interfaces-ControllerStateInterface.html)
 
 ```php
 $state = $controller->getStateDetails();

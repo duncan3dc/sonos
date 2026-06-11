@@ -2,7 +2,7 @@
 layout: default
 title: Speakers
 permalink: /usage/speakers/
-api: Interfaces.SpeakerInterface
+api: Interfaces-SpeakerInterface
 ---
 
 Most actions related to speakers take place on [Controllers](../../controllers/play-some-music/), but there are a few that should be handled via speakers.

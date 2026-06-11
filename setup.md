@@ -12,7 +12,7 @@ require_once __DIR__ . "vendor/autoload.php";
 
 use duncan3dc\Sonos\Network;
 
-$sonos = new Network;
+$sonos = new Network();
 ```
 
 
@@ -26,6 +26,4 @@ This search can take a couple of seconds, so you may want to use a [CachedCollec
 Device Collections
 ------------------
 
-If you have an unusual network set up, or want more control over the devices available, [device collections](devices/) are the answer.  
-
-
+If you have an unusual network set up, or want more control over the devices available, [device collections](devices/) are the answer.

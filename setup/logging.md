@@ -4,7 +4,7 @@ title: Logging
 permalink: /setup/logging/
 ---
 
-You can trace what is happening and log any errors using a [PSR-3](//www.php-fig.org/psr/psr-3/) compatible logger.
+You can trace what is happening and log any errors using a [PSR-3](https://www.php-fig.org/psr/psr-3/) compatible logger.
 
 The logger can be passed in the constructor, or attached at any point using the `setLogger()` method:
 

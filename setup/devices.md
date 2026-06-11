@@ -4,7 +4,7 @@ title: Device Collections
 permalink: /setup/devices/
 ---
 
-The `Network` constructor can be passed a [CollectionInterface](../../api/classes/duncan3dc.Sonos.Interfaces.Devices.CollectionInterface.html).  
+The `Network` constructor can be passed a [CollectionInterface](../../api/classes/duncan3dc-Sonos-Interfaces-Devices-CollectionInterface.html).  
 This collection handles the Sonos devices that are available on your network, there are two implementations that ship with the library:
 
 ```php
@@ -20,10 +20,36 @@ $devices->addIp("192.168.1.5");
 $sonos = new \duncan3dc\Sonos\Network($devices);
 ```
 
-SSDP Discovery
---------------
+## New Sonos Speakers
 
-If you need to use an alternative multicast address for [SSDP](//en.wikipedia.org/wiki/Simple_Service_Discovery_Protocol) you can do so using the following method:
+Some Sonos devices can not be used by this library, because they do not support playing music.
+We maintain a list of supported devices in the library, but when a new one is released there is normally a delay before support is added.
+If you have one of these new devices then you can bypass the check by setting up like so:
+
+```php
+$devices = new \duncan3dc\Sonos\Devices\Discovery();
+$sonos = new \duncan3dc\Sonos\Network($devices);
+```
+
+However if you also have devices that don't support playing music (as well as brand new devices that do) then you'll need to implement your own filter to avoid errors:
+
+```php
+$devices = new \duncan3dc\Sonos\Devices\Collection();
+$discovery = new \duncan3dc\Sonos\Devices\Discovery();
+foreach ($discovery->getDevices() as $device) {
+    if ($device->getModel() === "BR100") {
+        continue;
+    }
+    $devices->addDevice($device);
+}
+$sonos = new \duncan3dc\Sonos\Network($devices);
+```
+
+
+
+## SSDP Discovery
+
+If you need to use an alternative multicast address for [SSDP](https://en.wikipedia.org/wiki/Simple_Service_Discovery_Protocol) you can do so using the following method:
 
 ```php
 $devices = new \duncan3dc\Sonos\Devices\Discovery();

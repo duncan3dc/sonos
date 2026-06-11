@@ -24,6 +24,7 @@ Controllers:
 
 Services:
     Radio: /services/radio/
+    Tidal: /services/tidal/
     Spotify: /services/spotify/
     Deezer: /services/deezer/
 

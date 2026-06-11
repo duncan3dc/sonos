@@ -2,7 +2,7 @@
 layout: default
 title: Queue
 permalink: /controllers/queue/
-api: Interfaces.QueueInterface
+api: Interfaces-QueueInterface
 ---
 
 When playing tracks from your library or other music services you'll be using the queue.  

@@ -2,7 +2,7 @@
 layout: default
 title: Deezer
 permalink: /services/deezer/
-api: Tracks.Deezer
+api: Tracks-Deezer
 ---
 
 <p class="message-info">This feature was added in v1.6.0</p>

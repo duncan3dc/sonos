@@ -2,7 +2,7 @@
 layout: default
 title: Spotify
 permalink: /services/spotify/
-api: Tracks.Spotify
+api: Tracks-Spotify
 ---
 
 <p class="message-info">This feature was added in v1.6.0</p>
