@@ -10,6 +10,7 @@ use duncan3dc\Sonos\Interfaces\QueueInterface;
 use duncan3dc\Sonos\Interfaces\UriInterface;
 use duncan3dc\Sonos\Utils\Xml;
 
+use function is_string;
 use function substr;
 
 /**
@@ -71,6 +72,27 @@ final class Playlist extends Queue implements PlaylistInterface
     protected function getNextPosition(): int
     {
         return parent::getNextPosition() - 1;
+    }
+
+
+    /**
+     * Add a track to the playlist.
+     *
+     * @param string|UriInterface $track The URI of the track to add, or an object that implements the UriInterface
+     * @param ?int $position The position to insert the track in the playlist (zero-based), by default the track will be added to the end of the playlist
+     *
+     * @return $this
+     */
+    public function addTrack(UriInterface|string $track, ?int $position = null): PlaylistInterface
+    {
+        # If a simple uri has been passed then convert it to a Track instance
+        if (is_string($track)) {
+            $track = $this->trackFactory->createFromUri($track);
+        }
+
+        $this->addUris([$track], $position);
+
+        return $this;
     }
 
 

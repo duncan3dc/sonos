@@ -20,6 +20,10 @@ Changelog
 * [Exceptions] The `SonosException` class is now the `Exception` interface.
 * [Support] Dropped support for PHP 7.3, 7.4, and 8.0.
 
+### Fixed
+
+* [Playlists] Corrected the `addTrack()` method.
+
 --------
 
 ## 2.3.0 - 2025-07-12
