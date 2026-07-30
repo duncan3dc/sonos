@@ -19,4 +19,4 @@ test:
 coverage:
 	docker exec -ti sonos vendor/bin/phpunit --coverage-html=dev/coverage
 	sudo chown -R $$USER dev/coverage/
-	firefox dev/coverage/index.html
+	xdg-open dev/coverage/index.html
