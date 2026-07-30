@@ -16,7 +16,7 @@
         "duncan3dc/domparser": "^2.2.1",
         "duncan3dc/sonos-common": "^1.0",
         "duncan3dc/speaker": "^1.0",
-        "guzzlehttp/guzzle": "^6.0 || ^7.0",
+        "guzzlehttp/guzzle": "^6.0 || ^7.0 || ^8.0",
         "league/flysystem": "^3.7",
         "league/flysystem-local": "^3.0",
         "psr/log": "^1.1 || ^2.0 || ^3.0",
