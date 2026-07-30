@@ -1,6 +1,16 @@
 Changelog
 =========
 
+--------
+
+## 3.0.1 - 2026-07-30
+
+### Changed
+
+* [Support] Added support for Guzzle 8.
+
+--------
+
 ## 3.0.0 - 2026-06-11
 
 ### Added
